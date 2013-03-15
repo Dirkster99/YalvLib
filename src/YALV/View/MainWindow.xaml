@@ -1,0 +1,253 @@
+﻿<Window
+    x:Class="YALV.View.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+    xmlns:common="clr-namespace:YALV.View.Components"
+
+    xmlns:behav="clr-namespace:YalvLib.Behaviour;assembly=YalvLib"
+    xmlns:conv="clr-namespace:YavLib.Converter;assembly=YalvLib"
+    xmlns:busi="clr-namespace:YalvLib.Behaviour.BusyIndicatorBehavior;assembly=YalvLib"
+    xmlns:view="clr-namespace:YalvLib.View;assembly=YalvLib"
+
+    xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
+
+    xmlns:cult="clr-namespace:YalvLib.ViewModel;assembly=YalvLib"
+    xmlns:Properties="clr-namespace:YalvLib.Strings;assembly=YalvLib"
+
+    Style="{StaticResource DefaultWindowStyle}"
+    Height="950"
+    Width="1250"
+    Title="{Binding Title}"
+    WindowStartupLocation="CenterScreen">
+  <Window.Resources>
+    <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <converters:MultiValueEqualsToBoolConverter x:Key="MultiValueEqualsToBoolConverter" />
+    <converters:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter" />
+    <converters:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter" />
+  </Window.Resources>
+
+  <Window.InputBindings>
+    <KeyBinding Command="{Binding Path=YalvLogViewModel.CommandRefresh}" Key="F5" />
+    <KeyBinding Command="{Binding Path=YalvLogViewModel.LogItems.CommandClearFilters}" Key="D" Modifiers="Control" />
+    <KeyBinding Command="{Binding Path=YalvLogViewModel.CommandDelete}" Key="DEL" />
+  </Window.InputBindings>
+
+  <Grid busi:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogItems.LogFile.IsLoading}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- MENU -->
+    <common:MainMenu x:Name="mainMenu" Grid.Row="0" />
+
+    <Grid Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="5" />
+          <RowDefinition Height="300" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="350" />
+          <ColumnDefinition Width="5" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Splitter between ToggleButton and DataGrid View -->
+        <GridSplitter Grid.Column="1" 
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Style="{StaticResource DefaultGridSplitterStyle}" />
+
+        <Grid Grid.Column="0" Grid.Row="0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <Grid Grid.Row="0" HorizontalAlignment="Right" Margin="3">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <StackPanel Orientation="Horizontal">
+                  <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_OpenFile_ToolTip}"
+                          Command="{Binding Path=CommandOpenFile}"
+                          CommandParameter="Open" BorderBrush="Transparent" Background="Transparent">
+                  <StackPanel>
+                    <Image Source="/YALV;component/Resources/Icons/open_file.png" Width="32" Height="32" />
+                  </StackPanel>
+                </Button>
+
+                <Button Command="{Binding YalvLogViewModel.CommandRefresh}"
+                        Grid.Row="1" Margin="3"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Grid.Column="0"
+                        BorderBrush="Transparent"
+                        Background="Transparent">
+                  <Image Width="32" Height="32" Source="/Resources/Icons/Refresh/Refresh_32.png"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3"/>
+                </Button>
+
+                <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_ClearFilters_Tooltip}"
+                        Command="{Binding Path=YalvLogViewModel.LogItems.CommandClearFilters}"
+                        Background="Transparent"
+                        BorderBrush="Transparent">
+                  <StackPanel>
+                    <Image Source="/YALV;component/Resources/Icons/ClearFilter/ClearFilters_32.png" Width="32" Height="32" />
+                  </StackPanel>
+                </Button>
+
+                <ToggleButton DataContext="{Binding YalvLogViewModel}"
+                            Command="{Binding FilterYalvView}"
+                            IsChecked="{Binding LogItems.IsFiltered, Mode=OneWay}"
+                            Margin="3"
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                            ToolTip="Activate the filter and type a criteria to filter the display"
+                            ToolTipService.ShowOnDisabled="True"
+                            Grid.Column="1"
+                          >
+                  <ToggleButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}">
+                      <Setter Property="BorderBrush" Value="Transparent" />
+                      <Setter Property="Background" Value="Transparent" />
+                      <Setter Property="Content">
+                        <Setter.Value>
+                          <Image Width="32" Height="32" Source="/Resources/Icons/Filter/filter_NotApplied_32.png"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="3" />
+                        </Setter.Value>
+                      </Setter>
+                      <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <Image Width="32" Height="32" Source="/Resources/Icons/Filter/filter_Applied_32.png"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="3" />
+                            </Setter.Value>
+                          </Setter>
+                        </Trigger>
+                      </Style.Triggers>
+                    </Style>
+                  </ToggleButton.Style>
+                </ToggleButton>
+
+              </StackPanel>
+
+            </Grid>
+
+            <!-- Additional Filter Grid -->
+            <common:FilterPanel Grid.Row="2"
+                                HorizontalAlignment="Stretch"
+                                Margin="3"
+                                IsEnabled="{Binding YalvLogViewModel.HasData}" />
+          </Grid>
+
+          <common:PropertiesView Grid.Row="1"
+                                 DataContext="{Binding YalvLogViewModel}"
+                                 IsEnabled="{Binding HasData}"
+                                  />
+        </Grid>
+
+        <view:YalvView Grid.Row="0" Grid.Column="3"
+                       DataContext="{Binding YalvLogViewModel}"
+                       Columns="{Binding LogItems.DataGridColumns}" />
+        <!-- CenterCellStyle="{StaticResource CenterDataGridCellStyle}" -->
+
+        <!-- horizontal splitter -->
+        <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}"
+                      Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                      ResizeDirection="Rows" />
+
+        <common:MessageView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+                            IsEnabled="{Binding YalvLogViewModel.HasData}"/>
+      </Grid>
+
+      <!-- StatusBar-->
+      <StackPanel Grid.Row="1"
+                  HorizontalAlignment="Right"
+                  Orientation="Horizontal">
+
+          <StackPanel.Resources>
+            <Style x:Key="LabelBaseStyle"
+                   TargetType="{x:Type TextBlock}">
+              <Setter Property="FontSize"
+                      Value="{StaticResource DefaultFontSize}">
+              </Setter>
+              <Setter Property="FontWeight"
+                      Value="DemiBold">
+              </Setter>
+              <Setter Property="HorizontalAlignment"
+                      Value="Left">
+              </Setter>
+            </Style>
+            <Style x:Key="TextBlockBaseStyle"
+                   TargetType="{x:Type TextBlock}">
+              <Setter
+                  Property="FontSize"
+                  Value="{StaticResource DefaultFontSize}">
+              </Setter>
+              <Setter Property="Margin"
+                      Value="3,0,0,0">
+              </Setter>
+              <Setter Property="MinWidth" Value="80">
+              </Setter>
+            </Style>
+            <Style x:Key="PanelBaseStyle" TargetType="{x:Type StackPanel}">
+              <Setter Property="Margin" Value="20,3,5,3">
+              </Setter>
+              <Setter Property="Orientation" Value="Horizontal">
+              </Setter>
+            </Style>
+          </StackPanel.Resources>
+          <StackPanel Style="{StaticResource PanelBaseStyle}">
+          <TextBlock Style="{StaticResource LabelBaseStyle}"
+                     Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}">
+          </TextBlock>
+          <TextBlock Style="{StaticResource TextBlockBaseStyle}"
+                     Text="{Binding Path=SelectedLogItem.Class, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}">
+          </TextBlock>
+        </StackPanel>
+        <StackPanel Style="{StaticResource PanelBaseStyle}">
+          <TextBlock Style="{StaticResource LabelBaseStyle}"
+                     Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Method_Text}">
+          </TextBlock>
+          <TextBlock Style="{StaticResource TextBlockBaseStyle}"
+                     Text="{Binding Path=SelectedLogItem.Method, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}">
+          </TextBlock>
+        </StackPanel>
+        <StackPanel Style="{StaticResource PanelBaseStyle}">
+          <TextBlock Style="{StaticResource LabelBaseStyle}"
+                     Text="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}">
+          </TextBlock>
+          <TextBlock Style="{StaticResource TextBlockBaseStyle}"
+                     Text="{Binding Path=SelectedLogItem.File, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}">
+          </TextBlock>
+        </StackPanel>
+        <StackPanel Style="{StaticResource PanelBaseStyle}">
+          <TextBlock Style="{StaticResource LabelBaseStyle}"
+                     Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}">
+          </TextBlock>
+          <TextBlock Style="{StaticResource TextBlockBaseStyle}"
+                     Text="{Binding Path=SelectedLogItem.Line, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}">
+          </TextBlock>
+        </StackPanel>
+      </StackPanel>
+    </Grid>
+  </Grid>
+
+</Window>
