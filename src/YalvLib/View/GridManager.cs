@@ -1,6 +1,5 @@
 ﻿namespace YalvLib.View
 {
-  using System;
   using System.Collections.Generic;
   using System.Windows;
   using System.Windows.Controls;
@@ -13,10 +12,12 @@
   internal class GridManager
   {
     private static AdjustValueConverter mAdjustConverter = null;
+    private static BoolToVisibilityConverter mBoolToVisConverter = null;
 
     static GridManager()
     {
       GridManager.mAdjustConverter = new AdjustValueConverter();
+      GridManager.mBoolToVisConverter = new BoolToVisibilityConverter();
     }
 
     /// <summary>
@@ -36,11 +37,6 @@
       if (dataGrid == null)
         return;
 
-      if (colVM.FilterProperties == null)
-        colVM.FilterProperties = new List<string>();
-      else
-        colVM.FilterProperties.Clear();
-
       if (colVM.DataGridColumns != null)
       {
         foreach (ColumnItem item in colVM.DataGridColumns)
@@ -48,14 +44,17 @@
           DataGridTextColumn col = new DataGridTextColumn();
           col.Header = item.Header;
 
+          // Bind column to visibility property via bool - visibility converter
+          var visiblityBinding = new Binding("IsColumnVisible");
+          visiblityBinding.Source = item;
+          visiblityBinding.Converter = GridManager.mBoolToVisConverter;
+          BindingOperations.SetBinding(col, DataGridTextColumn.VisibilityProperty, visiblityBinding);
+
           if (item.Alignment == CellAlignment.CENTER && centerCellStyle != null)
             col.CellStyle = centerCellStyle;
 
-          if (item.MinWidth != null)
-            col.MinWidth = item.MinWidth.Value;
-
-          if (item.Width != null)
-            col.Width = item.Width.Value;
+          col.MinWidth = item.MinWidth;
+          col.Width = item.Width;
 
           Binding bind = new Binding(item.Field) { Mode = BindingMode.OneWay };
           bind.ConverterCulture = System.Globalization.CultureInfo.GetCultureInfo(YalvLib.Strings.Resources.CultureName);
@@ -68,17 +67,15 @@
           // Add column to datagrid
           dataGrid.Columns.Add(col);
 
-          BuildTextSearchPanel(colVM.FilterProperties, keyUpEvent, txtSearchPanel, item, col, item, watermarkTextbox);
+          BuildTextSearchPanel(keyUpEvent, txtSearchPanel, col, item, watermarkTextbox);
         }
       }
     }
 
-    private static void BuildTextSearchPanel(IList<string> filterPropertyList,
-                                             KeyEventHandler keyUpEvent,
+    private static void BuildTextSearchPanel(KeyEventHandler keyUpEvent,
                                              Panel txtSearchPanel,
-                                             ColumnItem item,
                                              DataGridTextColumn col,
-                                             ColumnItem columnItem,
+                                             ColumnItem columnVM,
                                              Style watermarkTextbox)
     {
       if (txtSearchPanel != null)
@@ -92,18 +89,34 @@
           ConverterParameter = "-2"
         };
 
+        Binding visibilityBind = new Binding()
+        {
+          Path = new PropertyPath("Visibility"),
+          Source = col,
+          Mode = BindingMode.OneWay,
+        };
+
         TextBox txt = new TextBox();
 
         if (watermarkTextbox != null)
           txt.Style = watermarkTextbox;
 
-        columnItem.FilterControlName = txt.Name = getTextBoxName(item.Field);
-        txt.ToolTip = string.Format(YalvLib.Strings.Resources.FilteredGridManager_BuildDataGrid_FilterTextBox_Tooltip, item.Header);
+        columnVM.FilterControlName = txt.Name = getTextBoxName(columnVM.Field);
+        txt.ToolTip = string.Format(YalvLib.Strings.Resources.FilteredGridManager_BuildDataGrid_FilterTextBox_Tooltip, columnVM.Header);
         txt.Tag = txt.ToolTip.ToString().ToLower();
         txt.Text = string.Empty;
         txt.AcceptsReturn = false;
-        txt.SetBinding(TextBox.WidthProperty, widthBind);    // Bind width of filter text box to ActualWidth of datagrid column
-        filterPropertyList.Add(item.Field);
+
+        // Bind width of filter text box to ActualWidth of datagrid column
+        txt.SetBinding(TextBox.WidthProperty, widthBind);
+        
+        // Bind visibility of text box to visibility of the column
+        txt.SetBinding(TextBox.VisibilityProperty, visibilityBind);
+
+        // Bind column to width property to viewmodel to enable its persistence
+        // The save function copies ActualWidth into the Width field and persists it
+        Binding b = new Binding("ActualWidth") { Source = col };
+        BindingOperations.SetBinding(columnVM.ActualWidth, BindSupport.WidthProperty, b);
 
         if (keyUpEvent != null)
           txt.KeyUp += keyUpEvent;

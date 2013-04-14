@@ -3,6 +3,11 @@
   using System.Collections.Generic;
   using YalvLib.Common;
   using YalvLib.Domain;
+  using System.IO;
+  using System.Xml.Serialization;
+  using System;
+  using System.Xml;
+  using System.Windows;
 
   public class ColumnsVM : BindableObject
   {
@@ -13,7 +18,7 @@
 
     #region constructor
     /// <summary>
-    /// Constructor
+    /// Standard constructor
     /// </summary>
     public ColumnsVM()
     {
@@ -39,23 +44,6 @@
       get
       {
         return this.mDataGridColumns;
-      }
-    }
-
-    public List<string> FilterProperties
-    {
-      get
-      {
-        return this.mFilterProperties;
-      }
-
-      set
-      {
-        if (this.mFilterProperties != value)
-        {
-          this.mFilterProperties = value;
-          this.OnAfterPropertyChanged("FilterProperties");
-        }
       }
     }
     #endregion properties
@@ -85,37 +73,147 @@
       {
         this.mDataGridColumns = new List<ColumnItem>()
         {
-          new ColumnItem("Id",          32, null, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
-          new ColumnItem("TimeStamp",   32, null, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
-          new ColumnItem("Level",       32, null, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
+          new ColumnItem("Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
+          new ColumnItem("TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
+          new ColumnItem("Level",       32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
           new ColumnItem("Message",     32, 400) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MessageColumn_Header },
-          new ColumnItem("Logger",      32, null) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
-          new ColumnItem("MachineName", 32, null, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },
-          new ColumnItem("HostName",    32, null, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header },
-          new ColumnItem("UserName",    32, null, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header },
-          new ColumnItem("App",         32, null) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_AppColumn_Header },
-          new ColumnItem("Thread",      32, null, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header },
-          new ColumnItem("Class",       32, null) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ClassColumn_Header },
-          new ColumnItem("Method",      32, null) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MethodColumn_Header },
-          new ColumnItem("Delta",       32, null, CellAlignment.CENTER, null, "Δ"),
+          new ColumnItem("Logger",      32, 100) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
+          new ColumnItem("MachineName", 32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },
+          new ColumnItem("HostName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header },
+          new ColumnItem("UserName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header },
+          new ColumnItem("App",         32, 50) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_AppColumn_Header },
+          new ColumnItem("Thread",      32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header },
+          new ColumnItem("Class",       32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ClassColumn_Header },
+          new ColumnItem("Method",      32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MethodColumn_Header },
+          new ColumnItem("Delta",       32, 50, CellAlignment.CENTER, null, "Δ") {IsColumnVisible = false},
           ////new ColumnItem("Path", 32)
         };
 
-        int size = (this.mDataGridColumns == null ? 0 : this.mDataGridColumns.Count);
-
-        this.mFilterProperties = new List<string>(size);
-        for (int i = 0; i < size; i++)
-        {
-          this.mFilterProperties.Add(string.Empty);
-
-          if (columnFilterUpdate != null)
-            this.mDataGridColumns[i].UpdateColumnFilter += columnFilterUpdate;
-        }
+        this.ResetColumnProperties(columnFilterUpdate);
       }
       catch
       {
       }
     }
+
+    /// <summary>
+    /// Save layout of data columns for re-load at a later time
+    /// </summary>
+    /// <param name="pathFileName"></param>
+    public void SaveColumnsLayout(string pathFileName)
+    {
+      if (this.mDataGridColumns == null)
+        return;
+
+      // Copy actual width values into width field for persistence
+      for (int i = 0; i < this.mDataGridColumns.Count; i++)
+      {
+        if (this.mDataGridColumns[i].ActualWidth != null)
+          this.mDataGridColumns[i].Width = this.mDataGridColumns[i].ActualWidth.Width;
+      }
+
+      ColumnsVM.SaveColumnLayout(pathFileName, this.DataGridColumns);
+    }
+
+    /// <summary>
+    /// Load data of column layouts to re-create column visibility and other layout details
+    /// </summary>
+    /// <param name="pathFileName"></param>
+    /// <param name="columnFilterUpdate"></param>
+    internal void LoadColumnsLayout(string pathFileName,
+                                    System.EventHandler columnFilterUpdate = null)
+    {
+      if ((this.mDataGridColumns = LoadColumnLayout(pathFileName)) == null)
+        this.BuidColumns(columnFilterUpdate);
+      else
+        this.ResetColumnProperties(columnFilterUpdate);
+
+      this.RaisePropertyChanged("DataGridColumns");
+    }
+
+    /// <summary>
+    /// Re-compute column properties each time when columns are reset (eg.: Layout is reloaded).
+    /// </summary>
+    /// <param name="columnFilterUpdate"></param>
+    private void ResetColumnProperties(System.EventHandler columnFilterUpdate = null)
+    {
+      int size = (this.mDataGridColumns == null ? 0 : this.mDataGridColumns.Count);
+
+      this.mFilterProperties = new List<string>(size);
+      for (int i = 0; i < size; i++)
+      {
+        this.mFilterProperties.Add(string.Empty);
+
+        if (columnFilterUpdate != null)
+          this.mDataGridColumns[i].UpdateColumnFilter += columnFilterUpdate;
+      }
+    }
+
+    #region Load Save Columns Layout
+    private static IList<ColumnItem> LoadColumnLayout(string pathFileName)
+    {
+      IList<ColumnItem> loadedClass = null;
+
+      if (System.IO.File.Exists(pathFileName))
+      {
+        using (FileStream readFileStream = new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+        {
+          try
+          {
+            XmlSerializer serializerObj = new XmlSerializer(typeof(List<ColumnItem>));
+
+            loadedClass = (List<ColumnItem>)serializerObj.Deserialize(readFileStream);
+          }
+          catch (Exception e)
+          {
+            Console.WriteLine(e.ToString());
+
+            return null;
+          }
+          finally
+          {
+            readFileStream.Close();
+          }
+        }
+      }
+
+      return loadedClass;
+    }
+
+    private static bool SaveColumnLayout(string settingsFileName,
+                                         IList<ColumnItem> iList)
+    {
+      try
+      {
+        List<ColumnItem> vm = new List<ColumnItem>(iList);
+
+        XmlWriterSettings xws = new XmlWriterSettings();
+        xws.NewLineOnAttributes = true;
+        xws.Indent = true;
+        xws.IndentChars = "  ";
+        xws.Encoding = System.Text.Encoding.UTF8;
+
+        using (XmlWriter xw = XmlWriter.Create(settingsFileName, xws))
+        {
+          // Create a new XmlSerializer instance with the type of the class
+          XmlSerializer serializerObj = new XmlSerializer(typeof(List<ColumnItem>));
+
+          serializerObj.Serialize(xw, vm);
+
+          xw.Close();
+
+          return true;
+        }
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show(e.Message, e.StackTrace.ToString(),
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+
+        return false;
+      }
+    }
+    #endregion Load Save Columns Layout
     #endregion methods
   }
 }

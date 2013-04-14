@@ -698,6 +698,12 @@
     #endregion Properties
 
     #region Methodes
+    public void LoadColumnsLayout(string pathFileName)
+    {
+      this.mDataGridColumns.LoadColumnsLayout(pathFileName,
+                                              this.ColumnsVM_UpdateColumnFilter);
+    }
+
     public static bool MatchTextFilterColumn(ColumnsVM col, LogItem logitem)
     {
       // Match View Column filter Value (if any) with item property value

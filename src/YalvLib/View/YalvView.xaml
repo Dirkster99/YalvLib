@@ -92,35 +92,6 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
-              <!-- ToggleButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-                            Command="{Binding FilterYalvView}"
-                            IsChecked="{Binding LogItems.IsFiltered, Mode=OneWay}"
-                            Margin="3,0"
-                            HorizontalAlignment="Center" VerticalAlignment="Top"
-                            ToolTip="Activate the filter and type a criteria to filter the display"
-                            ToolTipService.ShowOnDisabled="True"
-                            IsEnabled="{Binding Path=LogItems.LogView.Count, Converter={conv:ZeroToBoolConverter}}"
-                            >
-                <ToggleButton.Style>
-                  <Style TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Content">
-                      <Setter.Value>
-                        <Image Width="16" Source="/YalvLib;component/Resources/icons/filter_NotApplied_16.png"/>
-                      </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                      <Trigger Property="IsChecked" Value="True">
-                        <Setter Property="Content">
-                          <Setter.Value>
-                            <Image Width="16" Source="/YalvLib;component/Resources/icons/filter_Applied_16.png"/>
-                          </Setter.Value>
-                        </Setter>
-                      </Trigger>
-                    </Style.Triggers>
-                  </Style>
-                </ToggleButton.Style>
-              </ToggleButton -->
-
               <!-- txtSearchPanel -->
               <Border Grid.Row="0" Grid.Column="0">
                 <ScrollViewer HorizontalScrollBarVisibility="Hidden"
@@ -135,24 +106,36 @@
 
               <!-- dgItems -->
               <DataGrid  Grid.Row="1" Grid.Column="0"
-                          Style="{StaticResource DefaultDataGridStyle}"
-                          CellStyle="{StaticResource DefaultDataGridCellStyle}"
-                          ColumnHeaderStyle="{StaticResource DefaultDataGridHeaderStyle}"
-                          RowStyle="{StaticResource LogItemDataGridRowStyle}"
+                         Style="{StaticResource DefaultDataGridStyle}"
+                         CellStyle="{StaticResource DefaultDataGridCellStyle}"
+                         ColumnHeaderStyle="{StaticResource DefaultDataGridHeaderStyle}"
+                         RowStyle="{StaticResource LogItemDataGridRowStyle}"
 
-                          Margin="3,1,0,0"
-                          IsSynchronizedWithCurrentItem="True"
-                          SelectedItem="{Binding Path=LogItems.SelectedLogItem}"
-                          ItemsSource="{Binding Path=LogItems.LogView}"
-                          behav:SelectedItem.IsBroughtIntoViewWhenSelected="True"
-                          Name="PART_DataGrid"
+                         Margin="3,1,0,0"
+                         IsSynchronizedWithCurrentItem="True"
+                         SelectedItem="{Binding Path=LogItems.SelectedLogItem}"
+                         ItemsSource="{Binding Path=LogItems.LogView}"
+                         behav:SelectedItem.IsBroughtIntoViewWhenSelected="True"
+                         Name="PART_DataGrid"
                   >
                 <DataGrid.ContextMenu>
                   <ContextMenu>
                     <MenuItem Header="{x:Static Properties:Resources.MainWindow_GridContextMenu_CopyToClipboard}"
                               Command="ApplicationCommands.Copy" />
-                  </ContextMenu>
-                </DataGrid.ContextMenu>
+                    <Separator />
+                    <MenuItem ItemsSource="{Binding Path=DataGridColumns.DataGridColumns}"
+                              Header="Columns"
+                              DataContext="{Binding LogItems}">
+                        <MenuItem.ItemContainerStyle>
+                          <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="IsChecked" Value="{Binding IsColumnVisible}" />
+                            <Setter Property="IsCheckable" Value="True" />
+                            <Setter Property="Header" Value="{Binding Header}" />
+                          </Style>
+                        </MenuItem.ItemContainerStyle>
+                      </MenuItem>
+                    </ContextMenu>
+                  </DataGrid.ContextMenu>
 
                 <DataGrid.Resources>
                   <Style TargetType="ScrollViewer">
