@@ -1,0 +1,429 @@
+<stylecopresultscache>
+  <version>11</version>
+  <sourcecode name="MultiValueEqualsToBoolConverter.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 21:29:49</timestamp>
+    <milliseconds>168</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="FileEntriesProvider.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:55:33</timestamp>
+    <milliseconds>616</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-340490559">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="FrameRateHelper.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 21:29:25</timestamp>
+    <milliseconds>229</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="SelectedItem.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/07/2013 01:44:24</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ScrollSynchronizer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:28:34</timestamp>
+    <milliseconds>487</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BindableObject.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:35:46</timestamp>
+    <milliseconds>880</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AdjustValueConverter.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 21:42:00</timestamp>
+    <milliseconds>372</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DisposableObject.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:27:28</timestamp>
+    <milliseconds>659</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="CommandRelay.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 21:52:44</timestamp>
+    <milliseconds>560</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ICommandAncestor.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:45:50</timestamp>
+    <milliseconds>783</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="GlobalHelper.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:36:42</timestamp>
+    <milliseconds>385</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BoolToVisibilityConverter.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:18:24</timestamp>
+    <milliseconds>894</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BoolToOppositeVisibilityConverter.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:21:45</timestamp>
+    <milliseconds>474</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="StringEmptyToVisibilityConverter.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:15:21</timestamp>
+    <milliseconds>971</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BindSupport.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:11:10</timestamp>
+    <milliseconds>447</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ZeroToBoolConverter.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 21:29:00</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BusyIndicatorBehavior.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:58:20</timestamp>
+    <milliseconds>414</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="EntriesProviderType.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:15:44</timestamp>
+    <milliseconds>947</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ZeroToVisibilityConverter.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/01/2013 10:24:50</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/25/2013 23:36:12</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="FilterParams.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:29:05</timestamp>
+    <milliseconds>124</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AbstractEntriesProvider.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:21:08</timestamp>
+    <milliseconds>204</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ColumnItem.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:54:13</timestamp>
+    <milliseconds>987</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="SqliteEntriesProvider.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/13/2013 21:08:18</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="EntriesProviderFactory.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:02:37</timestamp>
+    <milliseconds>912</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MsSqlServerEntriesProvider.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:10:34</timestamp>
+    <milliseconds>927</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Resources.it.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/25/2013 22:56:26</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Resources.ja.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/25/2013 22:56:26</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Resources.ru.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/25/2013 22:56:26</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AbstractEntriesProviderBase.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:55:08</timestamp>
+    <milliseconds>291</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Cultures.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:02:09</timestamp>
+    <milliseconds>305</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Resources.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/06/2013 20:10:36</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="LogFileLoader.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:54:09</timestamp>
+    <milliseconds>290</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ColumnsVM.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:01:01</timestamp>
+    <milliseconds>367</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="LevelToSolidColorConverter.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:33:21</timestamp>
+    <milliseconds>532</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="LogFileVM.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 21:59:32</timestamp>
+    <milliseconds>566</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="YalvViewModel.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:00:57</timestamp>
+    <milliseconds>561</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="LogItem.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:47:41</timestamp>
+    <milliseconds>33</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="GeneratedInternalTypeHelper.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:44</timestamp>
+    <milliseconds>483</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name=".NETFramework,Version=v4.0.AssemblyAttributes.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/07/2013 17:01:45</timestamp>
+    <milliseconds>365</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="NotValidValueException.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 21:44:28</timestamp>
+    <milliseconds>53</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="XmlEntriesProvider.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:51:09</timestamp>
+    <milliseconds>348</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="GridManager.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 22:34:25</timestamp>
+    <milliseconds>648</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="YalvView.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:03:05</timestamp>
+    <milliseconds>674</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DisplayLogVM.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:01:51</timestamp>
+    <milliseconds>282</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="CircularProgressBar.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:42</timestamp>
+    <milliseconds>511</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="CircularProgressBar.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 20:34:17</timestamp>
+    <milliseconds>307</milliseconds>
+    <violations />
+  </sourcecode>
+</stylecopresultscache>

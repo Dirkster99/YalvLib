@@ -3,7 +3,7 @@
   using System;
   using System.Windows.Data;
 
-  public class AdjustValueConverter : IValueConverter
+  internal class AdjustValueConverter : IValueConverter
   {
     #region IValueConverter Members
 

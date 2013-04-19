@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\YalvLib.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\YalvLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -59,28 +61,26 @@
     <Compile Include="Behaviour\SelectedItem.cs" />
     <Compile Include="Common\BindableObject.cs" />
     <Compile Include="Common\CommandRelay.cs" />
+    <Compile Include="Common\Converter\AdjustValueConverter.cs" />
     <Compile Include="Common\DisposableObject.cs" />
     <Compile Include="Common\Exceptions\NotValidValueException.cs" />
     <Compile Include="Common\GlobalHelper.cs" />
     <Compile Include="Common\Interfaces\ICommandAncestor.cs" />
-    <Compile Include="Common\Converter\AdjustValueConverter.cs" />
     <Compile Include="Common\Converter\BoolToOppositeVisibilityConverter.cs" />
     <Compile Include="Common\Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Common\Converter\LevelToSolidColorConverter.cs" />
-    <Compile Include="Common\Converter\MultiValueEqualsToBoolConverter.cs" />
     <Compile Include="Common\Converter\StringEmptyToVisibilityConverter.cs" />
     <Compile Include="Common\Converter\ZeroToBoolConverter.cs" />
     <Compile Include="Common\Converter\ZeroToVisibilityConverter.cs" />
     <Compile Include="Domain\BindSupport.cs" />
-    <Compile Include="Domain\ColumnItem.cs" />
+    <Compile Include="ViewModel\ColumnItem.cs" />
     <Compile Include="Domain\EntriesProviderType.cs" />
     <Compile Include="Domain\FilterParams.cs" />
-    <Compile Include="Domain\LogItem.cs" />
+    <Compile Include="ViewModel\LogItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AbstractEntriesProvider.cs" />
     <Compile Include="Providers\AbstractEntriesProviderBase.cs" />
     <Compile Include="Providers\EntriesProviderFactory.cs" />
-    <Compile Include="Providers\FileEntriesProvider.cs" />
     <Compile Include="Providers\MsSqlServerEntriesProvider.cs" />
     <Compile Include="Providers\SqliteEntriesProvider.cs" />
     <Compile Include="Providers\XmlEntriesProvider.cs" />

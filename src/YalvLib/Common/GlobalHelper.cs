@@ -6,10 +6,17 @@
   using System.Windows;
   using YalvLib.Domain;
   using YalvLib.Providers;
+  using YalvLib.ViewModel;
 
+  /// <summary>
+  /// Class to supply global utility properties and methods
+  /// </summary>
   public class GlobalHelper
   {
     #region fields
+    /// <summary>
+    /// XML namespace for log4net logger XML format
+    /// </summary>
     public const string LAYOUT_LOG4J = "http://jakarta.apache.org/log4j";
 
     // Default date time format (used if there is no localized version available)
@@ -29,6 +36,12 @@
       }
     }
 
+    /// <summary>
+    /// Helper method to return a delta data item between two <seealso cref="DateTime"/> parameters.
+    /// </summary>
+    /// <param name="prevDate"></param>
+    /// <param name="currentDate"></param>
+    /// <returns></returns>
     public static string GetTimeDelta(DateTime prevDate, DateTime currentDate)
     {
       double delta = (currentDate - prevDate).TotalSeconds;

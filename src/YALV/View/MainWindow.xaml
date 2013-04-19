@@ -23,7 +23,6 @@
   <Window.Resources>
     <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <converters:MultiValueEqualsToBoolConverter x:Key="MultiValueEqualsToBoolConverter" />
     <converters:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter" />
     <converters:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter" />
   </Window.Resources>

@@ -1,0 +1,249 @@
+<stylecopresultscache>
+  <version>11</version>
+  <project key="715449878">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="IWinSimple.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/22/2013 15:45:28</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Resources.ja.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/19/2013 08:46:46</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 17:46:00</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="GeneratedInternalTypeHelper.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:47</timestamp>
+    <milliseconds>734</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name=".NETFramework,Version=v4.0,Profile=Client.AssemblyAttributes.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/07/2013 17:01:46</timestamp>
+    <milliseconds>930</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Resources.it.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/19/2013 08:46:46</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Resources.ru.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/19/2013 08:46:46</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MainWindowVM.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:08</timestamp>
+    <milliseconds>352</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Resources.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/19/2013 08:46:46</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="RecentFileList.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 22:59:12</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="FilterPanel.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 20:57:26</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="About.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 17:35:44</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="PropertiesView.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/12/2013 07:49:28</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AppWindow.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 17:43:42</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MessageView.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 20:57:42</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MessageView.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:46</timestamp>
+    <milliseconds>718</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MainWindow.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:46</timestamp>
+    <milliseconds>756</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="About.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:46</timestamp>
+    <milliseconds>796</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="PropertiesView.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:46</timestamp>
+    <milliseconds>828</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="App.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:46</timestamp>
+    <milliseconds>382</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MainMenu.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:46</timestamp>
+    <milliseconds>695</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="FilterPanel.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:46</timestamp>
+    <milliseconds>675</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Settings.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>02/19/2013 08:46:46</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MainWindow.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 21:04:30</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AppWindow.g.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/19/2013 23:07:46</timestamp>
+    <milliseconds>632</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="App.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>04/13/2013 23:42:38</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MainMenu.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>03/11/2013 22:24:40</timestamp>
+      <milliseconds>0</milliseconds>
+    </settings>
+    <timestamp>03/11/2013 20:58:48</timestamp>
+    <milliseconds>0</milliseconds>
+    <violations />
+  </sourcecode>
+</stylecopresultscache>

@@ -5,12 +5,15 @@
   using System.Windows;
   using YalvLib.Common;
 
+  /// <summary>
+  /// Class to manage data for a logfile
+  /// </summary>
   public class LogFileVM : BindableObject
   {
     #region fields
-    public const string PROP_IsLoading = "IsLoading";
-    public const string PROP_FilePath = "FilePath";
-    public const string PROP_IsFileLoaded = "IsFileLoaded";
+    private const string PROP_IsLoading = "IsLoading";
+    private const string PROP_FilePath = "FilePath";
+    private const string PROP_IsFileLoaded = "IsFileLoaded";
 
     private bool mIsLoading;
     #endregion fields
@@ -52,6 +55,9 @@
       }
     }
 
+    /// <summary>
+    /// Get whether a log file has been loaded or not
+    /// </summary>
     public bool IsFileLoaded
     {
       get
@@ -69,6 +75,9 @@
       }
     }
 
+    /// <summary>
+    /// Get a the file system path of the log file
+    /// </summary>
     public string FilePath
     {
       get
@@ -136,7 +145,6 @@
       }
     }
     #endregion commandDelete
-
     #endregion Methods
   }
 }

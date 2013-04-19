@@ -8,10 +8,14 @@
   using System.Windows;
   using System.Windows.Data;
   using System.Windows.Input;
+
   using YalvLib.Common;
   using YalvLib.Common.Interfaces;
-  using YalvLib.Domain;
 
+  /// <summary>
+  /// ViewModel class to organize all items relevant to a loaded logfile display
+  /// (columns displayed, file name etc).
+  /// </summary>
   public class DisplayLogVM : BindableObject
   {
     #region fields
@@ -86,6 +90,9 @@
     #endregion fields
 
     #region Constructor
+    /// <summary>
+    /// Class constructor
+    /// </summary>
     public DisplayLogVM()
     {
       this.CommandClearFilters = new CommandRelay(this.commandClearFiltersExecute, this.commandClearFilterCanExecute);
@@ -105,6 +112,10 @@
     #endregion Constructor
 
     #region delegate
+    /// <summary>
+    /// Declare a type of method to be called upon succesful load of log file.
+    /// </summary>
+    /// <param name="LoadWasSuccessful"></param>
     public delegate void EvaluateLoadResult(bool LoadWasSuccessful);
     #endregion delegate
 
@@ -145,6 +156,10 @@
       }
     }
 
+    /// <summary>
+    /// This property represents the datagrid viewmodel part and enables sorting and filtering
+    /// being implemented in the viewmodel class.
+    /// </summary>
     public CollectionView LogView { get; private set; }
 
     #region LogProperties
@@ -698,16 +713,15 @@
     #endregion Properties
 
     #region Methodes
-    public void LoadColumnsLayout(string pathFileName)
-    {
-      this.mDataGridColumns.LoadColumnsLayout(pathFileName,
-                                              this.ColumnsVM_UpdateColumnFilter);
-    }
-
+    /// <summary>
+    /// Match View Column filter Value (if any) with item property value
+    /// and determine if this item should be displayed or not
+    /// </summary>
+    /// <param name="col"></param>
+    /// <param name="logitem"></param>
+    /// <returns></returns>
     public static bool MatchTextFilterColumn(ColumnsVM col, LogItem logitem)
     {
-      // Match View Column filter Value (if any) with item property value
-      // and determine if this item should be dispalyed or not
       if (col != null)
       {
         foreach (ColumnItem colItem in col.DataGridColumns)
@@ -734,6 +748,35 @@
       }
 
       return true;
+    }
+
+    /// <summary>
+    /// Set the column layout indicated by the <paramref name="columnCollection"/> parameter
+    /// </summary>
+    /// <param name="columnCollection"></param>
+    public void SetColumnsLayout(List<ColumnItem> columnCollection)
+    {
+      this.mDataGridColumns.SetColumnsLayout(columnCollection,
+                                             this.ColumnsVM_UpdateColumnFilter);
+    }
+
+    /// <summary>
+    /// Load data of column layouts to re-create column visibility and other layout details
+    /// </summary>
+    /// <param name="pathFileName"></param>
+    public void LoadColumnsLayout(string pathFileName)
+    {
+      this.mDataGridColumns.LoadColumnsLayout(pathFileName,
+                                              this.ColumnsVM_UpdateColumnFilter);
+    }
+
+    /// <summary>
+    /// Save data of column layouts to re-create column visibility and other layout details
+    /// </summary>
+    /// <param name="pathFileName"></param>
+    public void SaveColumnsLayout(string pathFileName)
+    {
+      this.mDataGridColumns.SaveColumnsLayout(pathFileName);
     }
 
     internal void updateCounters()
@@ -1060,7 +1103,7 @@
     /// This is required to implemented Filter and Group Features
     /// for a DataGrid in an MVVM fashion.
     /// </summary>
-    /// <param name="Items"></param>
+    /// <param name="items"></param>
     private void RebuildLogView(ObservableCollection<LogItem> items)
     {
       this.Items = new ObservableCollection<LogItem>(items);
@@ -1137,6 +1180,7 @@
               this.RemoveAllItems();
 
             // Always update views
+            this.SelectedLogItem = null;
             this.updateCounters();
             this.RefreshView();
 

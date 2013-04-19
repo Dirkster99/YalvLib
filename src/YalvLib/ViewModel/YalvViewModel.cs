@@ -3,15 +3,21 @@
   using YalvLib.Common;
   using YalvLib.Common.Interfaces;
 
+  /// <summary>
+  /// Main ViewModel of Valv Lib control
+  /// </summary>
   public class YalvViewModel : BindableObject
   {
     #region fields
-    public const string PROP_FilePath = "FilePath";
+    private const string PROP_FilePath = "FilePath";
 
     private DisplayLogVM mLogItems = null;
     #endregion fields
 
     #region constructor
+    /// <summary>
+    /// Standard constructor
+    /// </summary>
     public YalvViewModel()
     {
       this.mLogItems = new DisplayLogVM();
@@ -112,6 +118,11 @@
       return this.HasData;
     }
 
+    /// <summary>
+    /// Default command method for applying column filters.
+    /// </summary>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
     protected virtual object commandFilterYalvView(object parameter)
     {
       if (this.mLogItems != null)

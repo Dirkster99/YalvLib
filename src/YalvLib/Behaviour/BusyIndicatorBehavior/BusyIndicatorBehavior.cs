@@ -16,33 +16,53 @@ namespace YalvLib.Behaviour.BusyIndicatorBehavior
   public static class BusyIndicatorBehavior
   {
     #region Attached Properties
+    /// <summary>
+    /// AddMargins attachable property
+    /// </summary>
     public static readonly DependencyProperty AddMarginsProperty = DependencyProperty.RegisterAttached("AddMargins", typeof(bool),
                                                                                                        typeof(BusyIndicatorBehavior),
                                                                                                        new UIPropertyMetadata(false));
 
+    /// <summary>
+    /// BusyState attachable property
+    /// </summary>
     public static readonly DependencyProperty BusyStateProperty = DependencyProperty.RegisterAttached("BusyState", typeof(bool),
                                                                                                       typeof(BusyIndicatorBehavior),
                                                                                                       new UIPropertyMetadata(false, OnBusyStateChanged));
 
+    /// <summary>
+    /// DimBackground attachable property
+    /// </summary>
     public static readonly DependencyProperty DimBackgroundProperty = DependencyProperty.RegisterAttached("DimBackground", typeof(bool),
                                                                                                           typeof(BusyIndicatorBehavior),
-                                                                                                          new UIPropertyMetadata(true,
-                                                                                                                                 OnDimBackgroundChanged));
+                                                                                                          new UIPropertyMetadata(true, OnDimBackgroundChanged));
 
+    /// <summary>
+    /// DimmerBrush attachable property
+    /// </summary>
     public static readonly DependencyProperty DimmerBrushProperty = DependencyProperty.RegisterAttached("DimmerBrush", typeof(Brush),
                                                                                                         typeof(BusyIndicatorBehavior),
                                                                                                         new UIPropertyMetadata(Brushes.Black));
 
+    /// <summary>
+    /// DimmerOpacity attachable property
+    /// </summary>
     public static readonly DependencyProperty DimmerOpacityProperty = DependencyProperty.RegisterAttached("DimmerOpacity", typeof(double),
                                                                                                           typeof(BusyIndicatorBehavior),
                                                                                                           new UIPropertyMetadata(0.35));
 
+    /// <summary>
+    /// DimTransitionDuration attachable property
+    /// </summary>
     public static readonly DependencyProperty DimTransitionDurationProperty = DependencyProperty.RegisterAttached("DimTransitionDuration",
                                                                                                                   typeof(Duration),
                                                                                                                   typeof(BusyIndicatorBehavior),
                                                                                                                   new UIPropertyMetadata(
                                                                                                                     new Duration(TimeSpan.FromSeconds(0.0))));
 
+    /// <summary>
+    /// TargetVisual attachable property
+    /// </summary>
     public static readonly DependencyProperty TargetVisualProperty = DependencyProperty.RegisterAttached("TargetVisual", typeof(UIElement),
                                                                                                          typeof(BusyIndicatorBehavior),
                                                                                                          new UIPropertyMetadata(null));
@@ -71,71 +91,141 @@ namespace YalvLib.Behaviour.BusyIndicatorBehavior
     }
 
     #region Attached Properties
+    /// <summary>
+    /// Get method of DimmerOpacity dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static double GetDimmerOpacity(DependencyObject obj)
     {
       return (double)obj.GetValue(DimmerOpacityProperty);
     }
 
+    /// <summary>
+    /// Set method of DimmerOpacity dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="value"></param>
     public static void SetDimmerOpacity(DependencyObject obj, double value)
     {
       obj.SetValue(DimmerOpacityProperty, value);
     }
 
+    /// <summary>
+    /// Get method of AddMargín dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static bool GetAddMargins(DependencyObject obj)
     {
       return (bool)obj.GetValue(AddMarginsProperty);
     }
 
+    /// <summary>
+    /// Set method of AddMargín dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="value"></param>
     public static void SetAddMargins(DependencyObject obj, bool value)
     {
       obj.SetValue(AddMarginsProperty, value);
     }
 
+    /// <summary>
+    /// Get method of DimTransitionDuration dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static Duration GetDimTransitionDuration(DependencyObject obj)
     {
       return (Duration)obj.GetValue(DimTransitionDurationProperty);
     }
 
+    /// <summary>
+    /// Set method of DimTransitionDuration dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="value"></param>
     public static void SetDimTransitionDuration(DependencyObject obj, Duration value)
     {
       obj.SetValue(DimTransitionDurationProperty, value);
     }
 
+    /// <summary>
+    /// Get method of DimmmerBrush dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static Brush GetDimmerBrush(DependencyObject obj)
     {
       return (Brush)obj.GetValue(DimmerBrushProperty);
     }
 
+    /// <summary>
+    /// Set method of DimmmerBrush dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="value"></param>
     public static void SetDimmerBrush(DependencyObject obj, Brush value)
     {
       obj.SetValue(DimmerBrushProperty, value);
     }
 
+    /// <summary>
+    /// Get method of DimBackground dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static bool GetDimBackground(DependencyObject obj)
     {
       return (bool)obj.GetValue(DimBackgroundProperty);
     }
 
+    /// <summary>
+    /// Set method of DimBackground dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="value"></param>
     public static void SetDimBackground(DependencyObject obj, bool value)
     {
       obj.SetValue(DimBackgroundProperty, value);
     }
 
+    /// <summary>
+    /// Get method of GetTargetVisual dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static UIElement GetTargetVisual(DependencyObject obj)
     {
       return (UIElement)obj.GetValue(TargetVisualProperty);
     }
 
+    /// <summary>
+    /// Set method of SetTargetVisual dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="value"></param>
     public static void SetTargetVisual(DependencyObject obj, UIElement value)
     {
       obj.SetValue(TargetVisualProperty, value);
     }
 
+    /// <summary>
+    /// Get method of GetBusyState dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static bool GetBusyState(DependencyObject obj)
     {
       return (bool)obj.GetValue(BusyStateProperty);
     }
 
+    /// <summary>
+    /// Set method of GetBusyState dependency property
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="value"></param>
     public static void SetBusyState(DependencyObject obj, bool value)
     {
       obj.SetValue(BusyStateProperty, value);

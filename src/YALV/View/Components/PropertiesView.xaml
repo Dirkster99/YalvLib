@@ -13,7 +13,6 @@
     d:DesignHeight="450" d:DesignWidth="300">
   <UserControl.Resources>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <converters:MultiValueEqualsToBoolConverter x:Key="MultiValueEqualsToBoolConverter" />
     <converters:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter" />
     <converters:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter" />
     <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />

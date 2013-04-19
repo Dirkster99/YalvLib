@@ -1,14 +1,28 @@
-﻿namespace YalvLib.Domain
+﻿namespace YalvLib.ViewModel
 {
   using System;
   using YalvLib.Common;
+  using YalvLib.Domain;
 
+  /// <summary>
+  /// Indicate whether cells in a column are to be arranged by their default or center.
+  /// </summary>
   public enum CellAlignment
   {
+    /// <summary>
+    /// Apply default alignment in column.
+    /// </summary>
     DEFAULT = 0,
+
+    /// <summary>
+    /// Center cell contents in a datagrid column.
+    /// </summary>
     CENTER = 1
   }
 
+  /// <summary>
+  /// Objects of this class store layout data about a column in a data grid
+  /// </summary>
   [Serializable]
   public class ColumnItem : BindableObject
   {
@@ -150,6 +164,11 @@
     /// </summary>
     public double Width { get; set; }
 
+    /// <summary>
+    /// Get property to bind the actual width of a column to
+    /// (this readonly dp requires a dependency property which in turn
+    /// requires an inheritance from DependencyObject)
+    /// </summary>
     [System.Xml.Serialization.XmlIgnore]
     public BindSupport ActualWidth { get; private set; }
     

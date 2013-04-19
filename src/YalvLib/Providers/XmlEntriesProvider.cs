@@ -7,6 +7,7 @@
 
   using YalvLib.Common;
   using YalvLib.Domain;
+  using YalvLib.ViewModel;
 
   internal class XmlEntriesProvider : AbstractEntriesProvider
   {

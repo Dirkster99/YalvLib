@@ -1,14 +1,18 @@
 ﻿namespace YalvLib.ViewModel
 {
-  using System.Collections.Generic;
-  using YalvLib.Common;
-  using YalvLib.Domain;
-  using System.IO;
-  using System.Xml.Serialization;
   using System;
-  using System.Xml;
+  using System.Collections.Generic;
+  using System.IO;
   using System.Windows;
+  using System.Xml;
+  using System.Xml.Serialization;
+  using YalvLib.Common;
 
+  /// <summary>
+  /// ViewModel class to organize all items that apply on a column of the log4net (YalvView) column.
+  /// These items are the actual column layouts (number and columns and their names) and contents
+  /// of the filter search boxes.
+  /// </summary>
   public class ColumnsVM : BindableObject
   {
     #region fields
@@ -64,43 +68,10 @@
     }
 
     /// <summary>
-    /// Build an intial layout of GridView columns and their text filter textboxes.
-    /// </summary>
-    /// <param name="columnFilterUpdate"></param>
-    private void BuidColumns(System.EventHandler columnFilterUpdate = null)
-    {
-      try
-      {
-        this.mDataGridColumns = new List<ColumnItem>()
-        {
-          new ColumnItem("Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
-          new ColumnItem("TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
-          new ColumnItem("Level",       32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
-          new ColumnItem("Message",     32, 400) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MessageColumn_Header },
-          new ColumnItem("Logger",      32, 100) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
-          new ColumnItem("MachineName", 32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },
-          new ColumnItem("HostName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header },
-          new ColumnItem("UserName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header },
-          new ColumnItem("App",         32, 50) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_AppColumn_Header },
-          new ColumnItem("Thread",      32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header },
-          new ColumnItem("Class",       32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ClassColumn_Header },
-          new ColumnItem("Method",      32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MethodColumn_Header },
-          new ColumnItem("Delta",       32, 50, CellAlignment.CENTER, null, "Δ") {IsColumnVisible = false},
-          ////new ColumnItem("Path", 32)
-        };
-
-        this.ResetColumnProperties(columnFilterUpdate);
-      }
-      catch
-      {
-      }
-    }
-
-    /// <summary>
     /// Save layout of data columns for re-load at a later time
     /// </summary>
     /// <param name="pathFileName"></param>
-    public void SaveColumnsLayout(string pathFileName)
+    internal void SaveColumnsLayout(string pathFileName)
     {
       if (this.mDataGridColumns == null)
         return;
@@ -113,6 +84,28 @@
       }
 
       ColumnsVM.SaveColumnLayout(pathFileName, this.DataGridColumns);
+    }
+
+    /// <summary>
+    /// Set the column layout indicated by the <paramref name="columnCollection"/> parameter
+    /// </summary>
+    /// <param name="columnFilterUpdate"></param>
+    /// <param name="columnCollection"></param>
+    internal void SetColumnsLayout(List<ColumnItem> columnCollection,
+                                   System.EventHandler columnFilterUpdate = null)
+    {
+      try
+      {
+        if (columnCollection != null)
+          this.mDataGridColumns = new List<ColumnItem>(columnCollection);
+        else
+          this.mDataGridColumns = new List<ColumnItem>();
+
+        this.ResetColumnProperties(columnFilterUpdate);
+      }
+      catch
+      {
+      }
     }
 
     /// <summary>
@@ -129,24 +122,6 @@
         this.ResetColumnProperties(columnFilterUpdate);
 
       this.RaisePropertyChanged("DataGridColumns");
-    }
-
-    /// <summary>
-    /// Re-compute column properties each time when columns are reset (eg.: Layout is reloaded).
-    /// </summary>
-    /// <param name="columnFilterUpdate"></param>
-    private void ResetColumnProperties(System.EventHandler columnFilterUpdate = null)
-    {
-      int size = (this.mDataGridColumns == null ? 0 : this.mDataGridColumns.Count);
-
-      this.mFilterProperties = new List<string>(size);
-      for (int i = 0; i < size; i++)
-      {
-        this.mFilterProperties.Add(string.Empty);
-
-        if (columnFilterUpdate != null)
-          this.mDataGridColumns[i].UpdateColumnFilter += columnFilterUpdate;
-      }
     }
 
     #region Load Save Columns Layout
@@ -214,6 +189,57 @@
       }
     }
     #endregion Load Save Columns Layout
+
+    /// <summary>
+    /// Build an intial layout of GridView columns and their text filter textboxes.
+    /// </summary>
+    /// <param name="columnFilterUpdate"></param>
+    private void BuidColumns(System.EventHandler columnFilterUpdate = null)
+    {
+      try
+      {
+        this.mDataGridColumns = new List<ColumnItem>()
+        {
+          new ColumnItem("Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
+          new ColumnItem("TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
+          new ColumnItem("Level",       32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
+          new ColumnItem("Message",     32, 400) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MessageColumn_Header },
+          new ColumnItem("Logger",      32, 100) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
+          new ColumnItem("MachineName", 32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },
+          new ColumnItem("HostName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header },
+          new ColumnItem("UserName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header },
+          new ColumnItem("App",         32, 50) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_AppColumn_Header },
+          new ColumnItem("Thread",      32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header },
+          new ColumnItem("Class",       32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ClassColumn_Header },
+          new ColumnItem("Method",      32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MethodColumn_Header },
+          new ColumnItem("Delta",       32, 50, CellAlignment.CENTER, null, "Δ") { IsColumnVisible = false },
+          ////new ColumnItem("Path", 32)
+        };
+
+        this.ResetColumnProperties(columnFilterUpdate);
+      }
+      catch
+      {
+      }
+    }
+
+    /// <summary>
+    /// Re-compute column properties each time when columns are reset (eg.: Layout is reloaded).
+    /// </summary>
+    /// <param name="columnFilterUpdate"></param>
+    private void ResetColumnProperties(System.EventHandler columnFilterUpdate = null)
+    {
+      int size = (this.mDataGridColumns == null ? 0 : this.mDataGridColumns.Count);
+
+      this.mFilterProperties = new List<string>(size);
+      for (int i = 0; i < size; i++)
+      {
+        this.mFilterProperties.Add(string.Empty);
+
+        if (columnFilterUpdate != null)
+          this.mDataGridColumns[i].UpdateColumnFilter += columnFilterUpdate;
+      }
+    }
     #endregion methods
   }
 }

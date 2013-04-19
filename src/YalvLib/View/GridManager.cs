@@ -24,11 +24,11 @@
     /// This code builds a list of columns and their corresponding filter textboxes
     /// </summary>
     /// <param name="dataGrid"></param>
-    /// <param name="columns"></param>
-    /// <param name="filterPropertyList"></param>
     /// <param name="centerCellStyle"></param>
     /// <param name="keyUpEvent"></param>
     /// <param name="txtSearchPanel"></param>
+    /// <param name="colVM"></param>
+    /// <param name="watermarkTextbox"></param>
     internal static void BuildDataGrid(DataGrid dataGrid, ColumnsVM colVM,
                                        Style centerCellStyle, Style watermarkTextbox,
                                        KeyEventHandler keyUpEvent,
@@ -36,6 +36,9 @@
     {
       if (dataGrid == null)
         return;
+
+      // Remove available columns if there are any
+      dataGrid.Columns.Clear();
 
       if (colVM.DataGridColumns != null)
       {
@@ -85,7 +88,7 @@
           Path = new PropertyPath("ActualWidth"),
           Source = col,
           Mode = BindingMode.OneWay,
-          Converter = mAdjustConverter,
+          Converter = GridManager.mAdjustConverter,
           ConverterParameter = "-2"
         };
 

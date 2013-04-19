@@ -30,11 +30,12 @@
       win.Loaded += delegate
       {
         if (args != null && args.Length > 0) // Just attempt to load the first entry
-          viewmodel.LoadFileList(args[0]);
+          viewmodel.LoadLog4NetFile(args[0]);
       };
 
       win.Closing += delegate
       {
+        viewmodel.SaveColumnLayout();
         viewmodel.Dispose();
       };
 

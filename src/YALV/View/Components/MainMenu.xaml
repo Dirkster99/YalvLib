@@ -34,6 +34,7 @@
               InputGestureText="Alt+F4">
     </MenuItem>
   </MenuItem>
+
   <!-- View Items -->
   <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_Header}">
     <MenuItem
@@ -51,7 +52,20 @@
             Command="{Binding Path=YalvLogViewModel.CommandDelete}"
             InputGestureText="DEL">
     </MenuItem>
+
+      <MenuItem ItemsSource="{Binding Path=LogItems.DataGridColumns.DataGridColumns}"
+                Header="Columns"
+                DataContext="{Binding YalvLogViewModel}">
+        <MenuItem.ItemContainerStyle>
+          <Style TargetType="{x:Type MenuItem}">
+            <Setter Property="IsChecked" Value="{Binding IsColumnVisible}" />
+            <Setter Property="IsCheckable" Value="True" />
+            <Setter Property="Header" Value="{Binding Header}" />
+          </Style>
+        </MenuItem.ItemContainerStyle>
+    </MenuItem>
   </MenuItem>
+
   <!-- About Items -->
   <MenuItem
         Header="{x:Static strs:Resources.Common_Components_MainMenu_AboutMenu_Header}"

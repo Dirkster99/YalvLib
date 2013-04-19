@@ -2,14 +2,12 @@
 {
   using System;
   using System.IO;
+  using System.Reflection;
   using System.Windows;
-  using System.Windows.Controls;
-  using System.Windows.Input;
   using System.Windows.Shell;
 
   using YALV.Common;
   using YALV.Interfaces;
-  using YALV.View.Components;
   using YalvLib.Common;
   using YalvLib.Common.Interfaces;
   using YalvLib.ViewModel;
@@ -20,11 +18,13 @@
     public const string PropTitle = "Title";
     public const string PropRecentFileList = "RecentFileList";
 
+    private readonly string mLayoutFileName;
+
     private readonly YalvViewModel mYalvLogViewModel = null;
     private RecentFileList mRecentFileList;
 
     /// <summary>
-    /// Window to which the viewmodel is attached
+    /// Window to which the viewmodel is attached to
     /// </summary>
     private IWinSimple mCallingWin;
     #endregion fields
@@ -33,9 +33,17 @@
     public MainWindowVM(IWinSimple win,
                         RecentFileList recentFileList)
     {
+      this.mLayoutFileName = System.IO.Path.Combine(MainWindowVM.AppDataDirectoryPath,
+                                                    Assembly.GetEntryAssembly().GetName().Name + ".ColLayout");
+
       this.mCallingWin = win;
 
       this.mYalvLogViewModel = new YalvViewModel();
+
+      if (MainWindowVM.CreateAppDataDir() == true)
+      {
+        this.mYalvLogViewModel.LogItems.LoadColumnsLayout(this.mLayoutFileName);
+      }
 
       this.RecentFileList = recentFileList;
 
@@ -45,6 +53,20 @@
       this.CommandAbout = new CommandRelay(this.commandAboutExecute, p => true);
     }
     #endregion constructor
+
+    #region static properties
+    /// <summary>
+    /// Get the application data directory where session and config data is to be stored.
+    /// </summary>
+    public static string AppDataDirectoryPath
+    {
+      get
+      {
+        return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+                                         + System.IO.Path.DirectorySeparatorChar + "Yalv";
+      }
+    }
+    #endregion static properties
 
     #region Commands
 
@@ -65,6 +87,9 @@
     #endregion
 
     #region Public Properties
+    /// <summary>
+    /// Get title of application to be displayed in the header of the window
+    /// </summary>
     public string Title
     {
       get
@@ -105,7 +130,7 @@
         {
           this.mRecentFileList.MenuClick += (s, e) =>
           {
-            this.LoadFileList(e.Filepath);
+            this.LoadLog4NetFile(e.Filepath);
           };
 
           this.updateJumpList();
@@ -115,7 +140,34 @@
     #endregion
 
     #region Public Methods
-    public void LoadFileList(string filePath)
+    /// <summary>
+    /// Create user data directory for storing application session data and
+    /// return true/false to indicate whether directory was already there or not.
+    /// </summary>
+    /// <returns></returns>
+    public static bool CreateAppDataDir()
+    {
+      try
+      {
+        if (System.IO.Directory.Exists(MainWindowVM.AppDataDirectoryPath) == false)
+        {
+          System.IO.Directory.CreateDirectory(MainWindowVM.AppDataDirectoryPath);
+          return false;
+        }
+
+        return true;
+      }
+      catch
+      {
+        return false;
+      }
+    }
+
+    /// <summary>
+    /// Load a log4net file to display its contents
+    /// </summary>
+    /// <param name="filePath"></param>
+    public void LoadLog4NetFile(string filePath)
     {
       try
       {
@@ -129,6 +181,21 @@
     #endregion
 
     #region Privates
+    /// <summary>
+    /// Save the column layout of the main data grid control.
+    /// </summary>
+    internal void SaveColumnLayout()
+    {
+      try
+      {
+        this.mYalvLogViewModel.LogItems.SaveColumnsLayout(this.mLayoutFileName);
+      }
+      catch (Exception exp)
+      {
+        MessageBox.Show(exp.Message, exp.StackTrace.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+      }
+    }
+
     #region Commands
     protected virtual object commandExitExecute(object parameter)
     {

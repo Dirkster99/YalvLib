@@ -1,0 +1,27 @@
+﻿<mui:ModernWindow x:Class="ModernYalv.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+
+  xmlns:strs="clr-namespace:YalvLib.Strings;assembly=YalvLib"
+
+  ContentSource="/View/Pages/MainPage.xaml"
+  LogoData="M 50.463333,52.04 L 100.463333,154.04 L 103.463333,241.04 L 132.463333,276.04 L 132.463333,155.04 L 195.463333,54.04"
+  Title="MainWindow" Height="850" Width="1125">
+
+  <mui:ModernWindow.TitleLinks>
+    <mui:Link DisplayName="Settings" Source="/View/Pages/Settings.xaml" />
+  </mui:ModernWindow.TitleLinks>
+
+  <mui:ModernWindow.MenuLinkGroups>
+    <mui:LinkGroup DisplayName="Yalv! Yet Another Log Viewer" >
+      <mui:LinkGroup.Links>
+        <mui:Link DisplayName="Start"  Source="/View/Pages/Start.xaml"/>
+        <mui:Link DisplayName="View"  Source="/View/Pages/MainPage.xaml"/>
+        <mui:Link DisplayName="Settings" Source="/View/Pages/Settings.xaml" />
+        <mui:Link DisplayName="About"   Source="/View/Pages/About.xaml"/>
+      </mui:LinkGroup.Links>
+    </mui:LinkGroup>
+  </mui:ModernWindow.MenuLinkGroups>
+
+</mui:ModernWindow>

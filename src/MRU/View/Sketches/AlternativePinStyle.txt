@@ -1,0 +1,97 @@
+﻿
+Alternative Pin Style for PinnableListView
+
+              <Grid>
+                <Canvas Width="100" Height="100" x:Name="NoCheckMark" Opacity="0" Visibility="Visible">
+                  <!-- Needle Pin in unpined mode (Opacity is set to different value on MouseOver) -->
+                  <Path VerticalAlignment="Center" Fill="Black">
+                    <Path.Data>
+                      <PathGeometry>
+                        <PathGeometry.Figures>
+                          <PathFigureCollection>
+                            <PathFigure IsClosed="True" StartPoint="0,0">
+                              <PathFigure.Segments>
+                                <PathSegmentCollection>
+                                  <LineSegment Point="75,65" />
+                                  <LineSegment Point="75,85" />
+                                </PathSegmentCollection>
+                              </PathFigure.Segments>
+                            </PathFigure>
+                          </PathFigureCollection>
+                        </PathGeometry.Figures>
+                      </PathGeometry>
+                    </Path.Data>
+                  </Path>
+
+                  <Line X1="0" Y1="0" X2="75" Y2="65" Stroke="Black" />
+                  <Line X1="0" Y1="0" X2="75" Y2="85" Stroke="Black" />
+
+                  <Ellipse Canvas.Left="50" Canvas.Top="50" Width="50" Height="50" Fill="Blue" />
+                  <Ellipse Canvas.Left="50" Canvas.Top="50" Width="50" Height="50">
+                    <Ellipse.Fill>
+                      <RadialGradientBrush GradientOrigin="0.15,0">
+                        <!-- Source: http://www.codeproject.com/Articles/32257/A-Style-for-Round-Glassy-WPF-Buttons -->
+                        <RadialGradientBrush.RelativeTransform>
+                          <TransformGroup>
+                            <RotateTransform Angle="0.45" CenterX="50" CenterY="20"/>
+                            <ScaleTransform CenterX="0.5" 
+		                                                            CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
+                            <TranslateTransform X="0.02" Y="0.3"/>
+                          </TransformGroup>
+                        </RadialGradientBrush.RelativeTransform>
+                        <GradientStop Offset="1" Color="#00000000"/>
+                        <GradientStop Offset="0.4" Color="#FFFFFFFF"/>
+                      </RadialGradientBrush>
+                    </Ellipse.Fill>
+                  </Ellipse>
+                </Canvas>
+
+                <Canvas Width="100" Height="100" x:Name="CheckMark">
+                  <!-- Needle Pin in pined mode XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+                  <!-- Canvas.LayoutTransform>
+  		                                      <ScaleTransform CenterX="50" CenterY="50" ScaleX=".15" ScaleY=".15" />
+  	                                          </Canvas.LayoutTransform -->
+                  <!-- Border BorderBrush="Black" BorderThickness="1" Width ="100" Height="100" / -->
+
+                  <Path VerticalAlignment="Center" Fill="Red">
+                    <Path.Data>
+                      <PathGeometry>
+                        <PathGeometry.Figures>
+                          <PathFigureCollection>
+                            <PathFigure IsClosed="True" StartPoint="50,90">
+                              <PathFigure.Segments>
+                                <PathSegmentCollection>
+                                  <LineSegment Point="40,25" />
+                                  <LineSegment Point="60,25" />
+                                </PathSegmentCollection>
+                              </PathFigure.Segments>
+                            </PathFigure>
+                          </PathFigureCollection>
+                        </PathGeometry.Figures>
+                      </PathGeometry>
+                    </Path.Data>
+                  </Path>
+
+                  <Line X1="50" Y1="90" X2="40" Y2="25" Stroke="Black" />
+                  <Line X1="50" Y1="90" X2="60" Y2="25" Stroke="Black" />
+
+                  <Ellipse Canvas.Left="25" Canvas.Top="5" Width="50" Height="50" Fill="Blue" />
+                  <Ellipse Canvas.Left="25" Canvas.Top="5" Width="50" Height="50">
+                    <Ellipse.Fill>
+                      <RadialGradientBrush GradientOrigin="0.15,0">
+                        <!-- Source: http://www.codeproject.com/Articles/32257/A-Style-for-Round-Glassy-WPF-Buttons -->
+                        <RadialGradientBrush.RelativeTransform>
+                          <TransformGroup>
+                            <RotateTransform Angle="0.45" CenterX="50" CenterY="20"/>
+                            <ScaleTransform CenterX="0.5" 
+		                                                            CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
+                            <TranslateTransform X="0.02" Y="0.3"/>
+                          </TransformGroup>
+                        </RadialGradientBrush.RelativeTransform>
+                        <GradientStop Offset="1" Color="#00000000"/>
+                        <GradientStop Offset="0.4" Color="#FFFFFFFF"/>
+                      </RadialGradientBrush>
+                    </Ellipse.Fill>
+                  </Ellipse>
+                </Canvas>
+              </Grid>

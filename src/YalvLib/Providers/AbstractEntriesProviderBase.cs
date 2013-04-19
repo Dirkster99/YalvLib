@@ -6,15 +6,32 @@ namespace YalvLib.Providers
   using System.Linq;
 
   using YalvLib.Domain;
+  using YalvLib.ViewModel;
 
+  /// <summary>
+  /// Base class for database data providers.
+  /// </summary>
   public abstract class AbstractEntriesProviderBase : AbstractEntriesProvider
   {
+    /// <summary>
+    /// Get log file entries from a datasource with an applied filter in <paramref name="filter"/>.
+    /// </summary>
+    /// <param name="dataSource"></param>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public override IEnumerable<LogItem> GetEntries(string dataSource, FilterParams filter)
     {
       IEnumerable<LogItem> enumerable = this.InternalGetEntries(dataSource, filter);
-      return enumerable.ToArray(); // avoid file locks            
+
+      // avoid file locks
+      return enumerable.ToArray();
     }
 
+    /// <summary>
+    /// Create a database connection based on a string connection descriptor.
+    /// </summary>
+    /// <param name="dataSource"></param>
+    /// <returns></returns>
     protected abstract IDbConnection CreateConnection(string dataSource);
 
     private static void AddLevelClause(IDbCommand command, string level)
@@ -99,7 +116,7 @@ namespace YalvLib.Providers
       return items.Where(i => i.StartsWith(key)).SingleOrDefault();
     }
 
-    private IEnumerable<LogItem> InternalGetEntries(string dataSource, FilterParams filter)
+    private IEnumerable<YalvLib.ViewModel.LogItem> InternalGetEntries(string dataSource, FilterParams filter)
     {
       using (IDbConnection connection = this.CreateConnection(dataSource))
       {

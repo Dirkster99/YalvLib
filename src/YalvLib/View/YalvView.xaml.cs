@@ -8,29 +8,46 @@
   using YalvLib.Domain;
   using YalvLib.ViewModel;
 
+  /// <summary>
+  /// ValvView is a look-less WPF control that displays log4net log data entries (by default) in a gridview.
+  /// </summary>
   public class YalvView : Control
   {
     #region fields
+    /// <summary>
+    /// Dependency property to bind column meta data definitions to the view
+    /// </summary>
     public static readonly DependencyProperty ColumnsProperty =
     DependencyProperty.Register("Columns",
                                 typeof(ColumnsVM),
                                 typeof(YalvView),
                                 new UIPropertyMetadata(null, YalvView.OnDataGridChanged));
 
+    /// <summary>
+    /// Dependency property to bind grid cell default style to the view
+    /// </summary>
     public static readonly DependencyProperty CenterCellStyleProperty =
         DependencyProperty.Register("CenterCellStyle", typeof(Style), typeof(YalvView), new UIPropertyMetadata(null));
 
-    // Using a DependencyProperty as the backing store for WaterMarkTextBox.  This enables animation, styling, binding, etc...
+    /// <summary>
+    /// Dependency property to bind WaterMark textbox style to the view
+    /// </summary>
     public static readonly DependencyProperty WaterMarkTextBoxProperty =
         DependencyProperty.Register("WaterMarkTextBox", typeof(Style), typeof(YalvView), new UIPropertyMetadata(null));
     #endregion fields
 
     #region constructor
+    /// <summary>
+    /// Static class constructor
+    /// </summary>
     static YalvView()
     {
       DefaultStyleKeyProperty.OverrideMetadata(typeof(YalvView), new FrameworkPropertyMetadata(typeof(YalvView)));
     }
 
+    /// <summary>
+    /// Standard constructor
+    /// </summary>
     public YalvView()
     {
       this.Loaded += new RoutedEventHandler(this.YalvView_Loaded);
@@ -38,18 +55,27 @@
     #endregion constructor
 
     #region properties
+    /// <summary>
+    /// Class constructor
+    /// </summary>
     public ColumnsVM Columns
     {
       get { return (ColumnsVM)GetValue(ColumnsProperty); }
       set { SetValue(ColumnsProperty, value); }
     }
 
+    /// <summary>
+    /// Data grid column cell style dependency property
+    /// </summary>
     public Style CenterCellStyle
     {
       get { return (Style)GetValue(CenterCellStyleProperty); }
       set { SetValue(CenterCellStyleProperty, value); }
     }
 
+    /// <summary>
+    /// WatermarkTextBox style dependency property
+    /// </summary>
     public Style WaterMarkTextBox
     {
       get { return (Style)GetValue(WaterMarkTextBoxProperty); }
@@ -67,7 +93,8 @@
     }
 
     /// <summary>
-    /// Handle the case in which the user has entered a character into any of the filter columns
+    /// Handle the case in which the user has entered a character into any of the filter columns -
+    /// update the corresponding filter column string in the viewmodel.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -99,18 +126,35 @@
     private static void OnDataGridChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs e)
     {
       YalvView yalvControl = depObj as YalvView;
-
+      
       if (yalvControl == null)
         return;
 
-      // Runtime optimization: Execute this only if control was already loaded (onLoad method initializes otherwise)
-      if (yalvControl.IsLoaded == true)
-        yalvControl.RebuildGrid();
+      if (e.NewValue != null && e.OldValue != null)
+      {
+        if (e.NewValue != e.OldValue)
+        {
+          // Runtime optimization: Execute this only if control was already loaded (onLoad method initializes otherwise)
+          if (yalvControl.IsLoaded == true)
+            yalvControl.RebuildGrid();
+        }
+        else
+        {
+          if (e.NewValue != null && e.OldValue == null)
+          {
+            // Runtime optimization: Execute this only if control was already loaded (onLoad method initializes otherwise)
+            if (yalvControl.IsLoaded == true)
+              yalvControl.RebuildGrid();
+          }
+        }
+      }
     }
 
     private void YalvView_Loaded(object sender, RoutedEventArgs e)
     {
       this.RebuildGrid();
+
+      this.Loaded -= this.YalvView_Loaded;
     }
 
     /// <summary>
