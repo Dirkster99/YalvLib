@@ -72,7 +72,7 @@
     <Compile Include="Common\Converter\StringEmptyToVisibilityConverter.cs" />
     <Compile Include="Common\Converter\ZeroToBoolConverter.cs" />
     <Compile Include="Common\Converter\ZeroToVisibilityConverter.cs" />
-    <Compile Include="Domain\BindSupport.cs" />
+    <Compile Include="ViewModel\Common\BindSupport.cs" />
     <Compile Include="ViewModel\ColumnItem.cs" />
     <Compile Include="Domain\EntriesProviderType.cs" />
     <Compile Include="Domain\FilterParams.cs" />

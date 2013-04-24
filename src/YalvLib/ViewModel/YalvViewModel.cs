@@ -14,6 +14,23 @@
     private DisplayLogVM mLogItems = null;
     #endregion fields
 
+    public static string FileExtensionDialogFilter
+    {
+      get
+      {
+        return string.Format("*.log4j,*.log,*.txt,*.xml|*.log4j;*.log;*.txt;*.xml" +
+                             "|{0} (*.log4j)|*.log4j" +
+                             "|{1} (*.log)|*.log" +
+                             "|{2} (*.txt)|*.txt" +
+                             "|{3} (*.xml)|*.xml" +
+                             "|{4} (*.*)|*.*", "Log4j files",
+                                               "Log files",
+                                               "Text files",
+                                               YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_XmlFilesCaption,
+                                               YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
+      }
+    }
+
     #region constructor
     /// <summary>
     /// Standard constructor

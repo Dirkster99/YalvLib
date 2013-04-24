@@ -208,9 +208,9 @@
       Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
       bool addFile = parameter != null && parameter.Equals("ADD");
-      dlg.Filter = string.Format("{0} (*.xml)|*.xml|{1} (*.*)|*.*", YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_XmlFilesCaption,
-                                                                    YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
-      dlg.DefaultExt = "xml";
+
+      dlg.Filter = YalvViewModel.FileExtensionDialogFilter;
+      dlg.DefaultExt = "*.log4j";
       dlg.Multiselect = false;
       dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
                             YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;

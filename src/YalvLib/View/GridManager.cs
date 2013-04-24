@@ -8,6 +8,7 @@
   using YalvLib.Common.Converters;
   using YalvLib.Domain;
   using YalvLib.ViewModel;
+  using YalvLib.ViewModel.Common;
 
   internal class GridManager
   {

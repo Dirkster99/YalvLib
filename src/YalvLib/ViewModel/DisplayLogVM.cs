@@ -294,7 +294,7 @@
     {
       get
       {
-        return this.mShowLevelWarn;        
+        return this.mShowLevelWarn;
       }
 
       set
@@ -811,7 +811,7 @@
     {
       this.IsFiltered = !this.IsFiltered;
     }
-    
+
     /// <summary>
     /// Implementation of the Refresh command
     /// </summary>
@@ -976,24 +976,24 @@
           this.ItemsFilterCount = fltList.Count();
 
           this.ItemsDebugFilterCount = (from it in fltList
-                                         where it.Level.Equals("DEBUG", StringComparison.OrdinalIgnoreCase)
-                                         select it).Count();
+                                        where it.Level.Equals("DEBUG", StringComparison.OrdinalIgnoreCase)
+                                        select it).Count();
 
           this.ItemsInfoFilterCount = (from it in fltList
-                                        where it.Level.Equals("INFO", StringComparison.OrdinalIgnoreCase)
-                                        select it).Count();
+                                       where it.Level.Equals("INFO", StringComparison.OrdinalIgnoreCase)
+                                       select it).Count();
 
           this.ItemsWarnFilterCount = (from it in fltList
-                                        where it.Level.Equals("WARN", StringComparison.OrdinalIgnoreCase)
-                                        select it).Count();
+                                       where it.Level.Equals("WARN", StringComparison.OrdinalIgnoreCase)
+                                       select it).Count();
 
           this.ItemsErrorFilterCount = (from it in fltList
-                                         where it.Level.Equals("ERROR", StringComparison.OrdinalIgnoreCase)
-                                         select it).Count();
+                                        where it.Level.Equals("ERROR", StringComparison.OrdinalIgnoreCase)
+                                        select it).Count();
 
           this.ItemsFatalFilterCount = (from it in fltList
-                                         where it.Level.Equals("FATAL", StringComparison.OrdinalIgnoreCase)
-                                         select it).Count();
+                                        where it.Level.Equals("FATAL", StringComparison.OrdinalIgnoreCase)
+                                        select it).Count();
         }
       }
       else
@@ -1137,6 +1137,42 @@
     }
 
     /// <summary>
+    /// Analyse an exception and return a human read-able string containing messages from the stacktrace
+    /// 
+    /// Exception Message 1
+    ///  +- Exception Message 2
+    ///    +- Exception Message 3
+    /// </summary>
+    /// <param name="exp"></param>
+    /// <returns></returns>
+    public static string GetExceptionTreeAsString(Exception exp)
+    {
+      string messageBoxText = "Unknown error occured.";
+
+      try
+      {
+        messageBoxText = exp.Message;
+
+        Exception innerEx = exp.InnerException;
+
+        for (int i = 0; innerEx != null; i++, innerEx = innerEx.InnerException)
+        {
+          string spaces = string.Empty;
+
+          for (int j = 0; j < i; j++)
+            spaces += "  ";
+
+          messageBoxText += "\n" + spaces + "+->" + innerEx.Message;
+        }
+      }
+      catch
+      {
+      }
+
+      return messageBoxText;
+    }
+
+    /// <summary>
     /// This function is called as soon as the load log file parser finishes.
     /// </summary>
     /// <param name="sender"></param>
@@ -1159,9 +1195,17 @@
 
           if (e.Cancel == true || e.Error == true)
           {
-            MessageBox.Show(string.Format(YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Text, e.Error.ToString()),
+            string errorMess = e.Message;
+
+            // Extend error message if there is more data available (exception message is usually more relevant than generic message)
+            if (e.InnerException != null)
+              errorMess = string.Format("{0}\n\n({1})", GetExceptionTreeAsString(e.InnerException), errorMess);
+
+            MessageBox.Show(string.Format(YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Text, errorMess),
                                           YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Title,
                                           MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+            this.LogFile.IsLoading = false;
 
             return;
           }

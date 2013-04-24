@@ -3,6 +3,7 @@
   using System;
   using YalvLib.Common;
   using YalvLib.Domain;
+  using YalvLib.ViewModel.Common;
 
   /// <summary>
   /// Indicate whether cells in a column are to be arranged by their default or center.

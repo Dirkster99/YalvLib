@@ -21,12 +21,18 @@
     /// </summary>
     public Session()
     {
+      this.DataGridColumns = new List<ColumnItem>();
+      this.MRU = new MRUListVM();
+      this.MainWindowPosSz = new ViewPosSize();
+      this.LastFileLoad = string.Empty;
+      this.DefaultFileExtensionIndex = 0;
     }
 
     /// <summary>
     /// Standard constructor from parameters
     /// </summary>
     public Session(IList<ColumnItem> dataGridColumns, MRUListVM mru, ViewPosSize mainWindowPosSz)
+    : this()
     {
       if (dataGridColumns != null)
         this.DataGridColumns = new List<ColumnItem>(dataGridColumns);
@@ -60,6 +66,12 @@
     /// </summary>
     [XmlElement(ElementName = "LastFileLoad")]
     public string LastFileLoad { get; set; }
+
+    /// <summary>
+    /// Get/set index into file extension used the last time when opening a file
+    /// </summary>
+    [XmlElement(ElementName = "DefaultFileExtensionIndex")]
+    public int DefaultFileExtensionIndex { get; set; }
     #endregion properties
 
     #region methods

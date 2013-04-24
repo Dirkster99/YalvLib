@@ -88,22 +88,31 @@
     internal static IList<LogItem> ParseLogFile(string path)
     {
       IEnumerable<LogItem> result = null;
-      try
-      {
+
+      ////try
+      ////{
         AbstractEntriesProvider provider = EntriesProviderFactory.GetProvider();
         result = provider.GetEntries(path);
         return result.ToList();
-      }
-      catch (Exception ex)
-      {
-        string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path, ex.Message);
-
-        MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-        return result == null ? new List<LogItem>() : result.ToList();
-      }
+      ////}
+      ////catch (Exception)
+      ////{
+        ////throw;
+        ////string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path, ex.Message);
+        ////
+        ////MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title,
+        ////                MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        ////
+        ////return result == null ? new List<LogItem>() : result.ToList();
+      ////}
     }
 
+    /// <summary>
+    /// load the contents of a log file in an async task and return
+    /// the result through an event object (event is setup prior to this call).
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="async"></param>
     internal void LoadFile(string path, bool async)
     {
       this.SaveThreadContext(async);
@@ -134,9 +143,7 @@
           this.mLogFile.FilePath = path;
 
           IList<LogItem> res = LogFileLoader.ParseLogFile(path);
-          this.mObjColl.Add(LogFileLoader.KeyLogItems, res);
-
-          // End of async processing
+          this.mObjColl.Add(LogFileLoader.KeyLogItems, res);       // End of asynchronous processing
         }
         catch (OperationCanceledException exp)
         {
@@ -246,9 +253,9 @@
       if (this.loadResultEvent != null)
       {
         if (this.mAbortedWithErrors == false && this.mAbortedWithCancel == false)
-          this.loadResultEvent(this, new ResultEvent("Execution succeeded", false, false, this.mObjColl));
+          this.loadResultEvent(this, new ResultEvent("Processing succeeded", false, false, this.mObjColl));
         else
-          this.loadResultEvent(this, new ResultEvent("Execution was not succesfull", this.mAbortedWithErrors,
+          this.loadResultEvent(this, new ResultEvent("Processing was not succesfull", this.mAbortedWithErrors,
                                                       this.mAbortedWithCancel, this.mObjColl, this.mInnerException));
       }
     }

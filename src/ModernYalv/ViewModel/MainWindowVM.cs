@@ -21,7 +21,15 @@
 
     private readonly string mLayoutFileName;
 
+    /// <summary>
+    /// Point to the last file that has been loaded into the software
+    /// </summary>
     private string mLastFileLoad;
+
+    /// <summary>
+    /// Remember the default file filter index to display in File Open dialog
+    /// </summary>
+    private int mLastFileExtensionFilterIndex = 0;
 
     /// <summary>
     /// Window to which the viewmodel is attached
@@ -224,6 +232,8 @@
             {
               this.mLastFileLoad = s.LastFileLoad;
             }
+
+            this.mLastFileExtensionFilterIndex = s.DefaultFileExtensionIndex;
           }
         }
         catch (Exception)
@@ -243,6 +253,8 @@
                                   this.mRecentFiles, mainWindowSz);
 
         set.LastFileLoad = this.mLastFileLoad;
+
+        set.DefaultFileExtensionIndex = this.mLastFileExtensionFilterIndex;
 
         set.SaveSession(this.mLayoutFileName);
       }
@@ -267,17 +279,17 @@
       dlg.InitialDirectory = MainWindowVM.GetFileOpenDefaultDirectory(this.mLastFileLoad);
 
       bool addFile = parameter != null && parameter.Equals("ADD");
-      dlg.Filter = string.Format("{0} (*.log4net)|*.log4net|{0} (*.xml)|*.xml|{1} (*.*)|*.*",
-                                 YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_XmlFilesCaption,
-                                 YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
 
-      dlg.DefaultExt = "xml";
+      dlg.Filter = YalvViewModel.FileExtensionDialogFilter;
+      dlg.FilterIndex = this.mLastFileExtensionFilterIndex;
+
       dlg.Multiselect = false;
       dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
                             YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
 
       if (dlg.ShowDialog().GetValueOrDefault() == true)
       {
+        this.mLastFileExtensionFilterIndex = dlg.FilterIndex;
         this.LoadLog4NetFile(dlg.FileName);
       }
 

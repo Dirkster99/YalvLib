@@ -1,4 +1,4 @@
-﻿namespace YalvLib.Domain
+﻿namespace YalvLib.ViewModel.Common
 {
   using System.Windows;
 
