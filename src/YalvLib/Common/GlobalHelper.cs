@@ -1,4 +1,6 @@
-﻿namespace YalvLib.Common
+﻿using YalvLib.Model;
+
+namespace YalvLib.Common
 {
   using System;
   using System.Collections.Generic;
@@ -61,9 +63,9 @@
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    public static IList<LogItem> ParseLogFile(string path)
+    public static IList<LogEntry> ParseLogFile(string path)
     {
-      IEnumerable<LogItem> result = null;
+        IEnumerable<LogEntry> result = null;
       try
       {
         AbstractEntriesProvider provider = EntriesProviderFactory.GetProvider();
@@ -76,7 +78,7 @@
 
         MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
-        return result == null ? new List<LogItem>() : result.ToList();
+        return result == null ? new List<LogEntry>() : result.ToList();
       }
     }
     #endregion methods

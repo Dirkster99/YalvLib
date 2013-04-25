@@ -1,3 +1,5 @@
+using YalvLib.Model;
+
 namespace YalvLib.Providers
 {
   using System;
@@ -19,9 +21,9 @@ namespace YalvLib.Providers
     /// <param name="dataSource"></param>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public override IEnumerable<LogItem> GetEntries(string dataSource, FilterParams filter)
+      public override IEnumerable<LogEntry> GetEntries(string dataSource, FilterParams filter)
     {
-      IEnumerable<LogItem> enumerable = this.InternalGetEntries(dataSource, filter);
+        IEnumerable<LogEntry> enumerable = this.InternalGetEntries(dataSource, filter);
 
       // avoid file locks
       return enumerable.ToArray();
@@ -116,7 +118,7 @@ namespace YalvLib.Providers
       return items.Where(i => i.StartsWith(key)).SingleOrDefault();
     }
 
-    private IEnumerable<YalvLib.ViewModel.LogItem> InternalGetEntries(string dataSource, FilterParams filter)
+    private IEnumerable<LogEntry> InternalGetEntries(string dataSource, FilterParams filter)
     {
       using (IDbConnection connection = this.CreateConnection(dataSource))
       {
@@ -196,7 +198,7 @@ namespace YalvLib.Providers
                 string message = reader.GetString(5);
                 string exception = reader.GetString(6);
 
-                LogItem entry = new LogItem
+                LogEntry entry = new LogEntry
                 {
                   Id = ++index,
                   TimeStamp = timeStamp,

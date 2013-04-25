@@ -1,4 +1,6 @@
-﻿namespace YalvLib.ViewModel
+﻿using YalvLib.Model;
+
+namespace YalvLib.ViewModel
 {
   using System;
   using System.Collections.Generic;
@@ -54,8 +56,8 @@
     private LogFileVM mLogFile = null;
     private LogFileLoader fileFoader = null;
 
-    private ObservableCollection<LogItem> mItems;
-    private LogItem mSelectedLogItem;
+    private ObservableCollection<LogEntry> mItems;
+    private LogEntry mSelectedLogItem;
 
     private string mGoToLogItemId;
 
@@ -99,7 +101,7 @@
 
       this.SelectAll = true;
       this.IsFiltered = false;
-      this.Items = new ObservableCollection<LogItem>();
+      this.Items = new ObservableCollection<LogEntry>();
       this.RebuildLogView(this.Items);
 
       // Default constructor contains column definitions
@@ -166,7 +168,7 @@
     /// <summary>
     /// SelectedLogItem Property
     /// </summary>
-    public LogItem SelectedLogItem
+    public LogEntry SelectedLogItem
     {
       get
       {
@@ -205,7 +207,7 @@
         {
           var selectItem = (from it in this.Items
                             where it.Id == idGoTo
-                            select it).FirstOrDefault<LogItem>();
+                            select it).FirstOrDefault<LogEntry>();
 
           if (selectItem != null)
             this.SelectedLogItem = selectItem;
@@ -698,7 +700,7 @@
     /// LogItems property which is the main list of logitems
     /// (this property is bound to a view via CollectionView property)
     /// </summary>
-    protected ObservableCollection<LogItem> Items
+    protected ObservableCollection<LogEntry> Items
     {
       get
       {
@@ -720,7 +722,7 @@
     /// <param name="col"></param>
     /// <param name="logitem"></param>
     /// <returns></returns>
-    public static bool MatchTextFilterColumn(ColumnsVM col, LogItem logitem)
+    public static bool MatchTextFilterColumn(ColumnsVM col, LogEntry logitem)
     {
       if (col != null)
       {
@@ -920,7 +922,7 @@
 
     private void RefreshView()
     {
-      LogItem l = this.SelectedLogItem;
+        LogEntry l = this.SelectedLogItem;
       this.SelectedLogItem = null;
 
       if (this.LogView != null)
@@ -970,7 +972,7 @@
     {
       if (filteredList != null)
       {
-        IEnumerable<LogItem> fltList = filteredList.Cast<LogItem>();
+          IEnumerable<LogEntry> fltList = filteredList.Cast<LogEntry>();
         if (fltList != null)
         {
           this.ItemsFilterCount = fltList.Count();
@@ -1014,7 +1016,7 @@
     /// <returns></returns>
     private bool levelCheckFilter(object item)
     {
-      LogItem logItem = item as LogItem;
+        LogEntry logItem = item as LogEntry;
 
       if (logItem != null)
       {
@@ -1047,7 +1049,7 @@
     /// <returns>Returns true if item is not filtered and false otherwise</returns>
     private bool OnFilterLogItems(object item)
     {
-      LogItem logitem = item as LogItem;
+        LogEntry logitem = item as LogEntry;
 
       if (logitem == null)
         return true;        // Item is not filtered
@@ -1104,9 +1106,9 @@
     /// for a DataGrid in an MVVM fashion.
     /// </summary>
     /// <param name="items"></param>
-    private void RebuildLogView(ObservableCollection<LogItem> items)
+    private void RebuildLogView(ObservableCollection<LogEntry> items)
     {
-      this.Items = new ObservableCollection<LogItem>(items);
+        this.Items = new ObservableCollection<LogEntry>(items);
       this.LogView = (CollectionView)CollectionViewSource.GetDefaultView(items);
       this.LogView.Filter = this.OnFilterLogItems;
       this.RefreshView();
@@ -1215,11 +1217,11 @@
             object o;
             e.ResultObjects.TryGetValue(LogFileLoader.KeyLogItems, out o);
 
-            IList<LogItem> list = o as IList<LogItem>;
+            IList<LogEntry> list = o as IList<LogEntry>;
 
             // (Re-)load file and display content in view
             if (list != null)
-              this.RebuildLogView(new ObservableCollection<LogItem>(list));
+                this.RebuildLogView(new ObservableCollection<LogEntry>(list));
             else
               this.RemoveAllItems();
 
@@ -1232,7 +1234,7 @@
             {
               var lastItem = (from it in this.Items
                               where this.levelCheckFilter(it)
-                              select it).LastOrDefault<LogItem>();
+                              select it).LastOrDefault<LogEntry>();
 
               // Select the last item to scroll viewer down to last entry
               this.SelectedLogItem = lastItem != null ? lastItem : this.Items[this.Items.Count - 1];

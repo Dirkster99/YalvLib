@@ -1,4 +1,6 @@
-﻿namespace YalvLib.Providers
+﻿using YalvLib.Model;
+
+namespace YalvLib.Providers
 {
   using System;
   using System.Collections.Generic;
@@ -20,7 +22,7 @@
     /// </summary>
     /// <param name="dataSource"></param>
     /// <returns></returns>
-    public IEnumerable<LogItem> GetEntries(string dataSource)
+    public IEnumerable<LogEntry> GetEntries(string dataSource)
     {
       return this.GetEntries(dataSource, new FilterParams());
     }
@@ -32,6 +34,6 @@
     /// <param name="dataSource"></param>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public abstract IEnumerable<LogItem> GetEntries(string dataSource, FilterParams filter);
+    public abstract IEnumerable<LogEntry> GetEntries(string dataSource, FilterParams filter);
   }
 }

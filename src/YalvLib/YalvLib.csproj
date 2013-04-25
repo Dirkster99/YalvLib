@@ -72,11 +72,15 @@
     <Compile Include="Common\Converter\StringEmptyToVisibilityConverter.cs" />
     <Compile Include="Common\Converter\ZeroToBoolConverter.cs" />
     <Compile Include="Common\Converter\ZeroToVisibilityConverter.cs" />
+    <Compile Include="Model\LevelIndex.cs" />
+    <Compile Include="Model\LogAnalysisSession.cs" />
+    <Compile Include="Model\LogEntry.cs" />
+    <Compile Include="Model\LogEntryFileRepository.cs" />
+    <Compile Include="Model\LogEntryRepository.cs" />
     <Compile Include="ViewModel\Common\BindSupport.cs" />
     <Compile Include="ViewModel\ColumnItem.cs" />
     <Compile Include="Domain\EntriesProviderType.cs" />
     <Compile Include="Domain\FilterParams.cs" />
-    <Compile Include="ViewModel\LogItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AbstractEntriesProvider.cs" />
     <Compile Include="Providers\AbstractEntriesProviderBase.cs" />

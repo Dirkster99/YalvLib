@@ -1,4 +1,6 @@
-﻿namespace YalvLib.Providers
+﻿using YalvLib.Model;
+
+namespace YalvLib.Providers
 {
   using System;
   using System.Collections.Generic;
@@ -11,7 +13,7 @@
 
   internal class XmlEntriesProvider : AbstractEntriesProvider
   {
-    public override IEnumerable<LogItem> GetEntries(string dataSource, FilterParams filter)
+    public override IEnumerable<LogEntry> GetEntries(string dataSource, FilterParams filter)
     {
       var settings = new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Fragment };
       var nt = new NameTable();
@@ -33,7 +35,7 @@
               if ((xmlTextReader.NodeType != XmlNodeType.Element) || (xmlTextReader.Name != "log4j:event"))
                 continue;
 
-              var entry = new LogItem { Id = entryId, Path = dataSource };
+              var entry = new LogEntry { Id = entryId, Path = dataSource };
 
               entry.Logger = xmlTextReader.GetAttribute("logger");
 
@@ -106,7 +108,7 @@
       }
     }
 
-    private static bool filterByParameters(LogItem entry, FilterParams parameters)
+    private static bool filterByParameters(LogEntry entry, FilterParams parameters)
     {
       if (entry == null)
         throw new ArgumentNullException("entry");

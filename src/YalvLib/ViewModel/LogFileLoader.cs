@@ -1,4 +1,6 @@
-﻿namespace YalvLib.ViewModel
+﻿using YalvLib.Model;
+
+namespace YalvLib.ViewModel
 {
   using System;
   using System.Collections.Generic;
@@ -85,28 +87,20 @@
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    internal static IList<LogItem> ParseLogFile(string path)
+    internal static LogAnalysisSession CreateLogAnalysisSession(string path)
     {
-      IEnumerable<LogItem> result = null;
-
-      ////try
-      ////{
-        AbstractEntriesProvider provider = EntriesProviderFactory.GetProvider();
-        result = provider.GetEntries(path);
-        return result.ToList();
-      ////}
-      ////catch (Exception)
-      ////{
-        ////throw;
-        ////string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path, ex.Message);
-        ////
-        ////MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title,
-        ////                MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        ////
-        ////return result == null ? new List<LogItem>() : result.ToList();
-      ////}
+        LogAnalysisSession session = new LogAnalysisSession();
+        try
+        {
+            session.AddSourceRepository(new LogEntryFileRepository(path));
+        }
+        catch (Exception exception)
+        {
+            string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path, exception.Message);
+            MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
+        return session;
     }
-
     /// <summary>
     /// load the contents of a log file in an async task and return
     /// the result through an event object (event is setup prior to this call).
@@ -141,9 +135,9 @@
           }
 
           this.mLogFile.FilePath = path;
-
-          IList<LogItem> res = LogFileLoader.ParseLogFile(path);
-          this.mObjColl.Add(LogFileLoader.KeyLogItems, res);       // End of asynchronous processing
+            
+          LogAnalysisSession session = CreateLogAnalysisSession(path);
+          this.mObjColl.Add(LogFileLoader.KeyLogItems, session.LogEntries);
         }
         catch (OperationCanceledException exp)
         {
