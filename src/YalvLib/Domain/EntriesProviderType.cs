@@ -9,8 +9,11 @@ namespace YalvLib.Domain
       /// Provide log file via XML persistence
       /// </summary>
       Xml,
-      
-      //// Sqlite,
+
+      /// <summary>
+      /// Provide log file via Sqlite persistence
+      /// </summary>
+      Sqlite,
       
       /// <summary>
       /// Provide log file via SQL Server persistence

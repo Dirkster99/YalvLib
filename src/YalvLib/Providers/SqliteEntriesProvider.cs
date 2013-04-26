@@ -1,9 +1,7 @@
 namespace YalvLib.Providers
 {
-  /*** Dirkster Deactivated due to unavalability of AnyCPU implementation of SQLite
     using System.Data;
     using System.Data.SQLite;
-    using YalvLib.Providers;
 
     public class SqliteEntriesProvider : AbstractEntriesProviderBase
     {
@@ -14,5 +12,4 @@ namespace YalvLib.Providers
         return new SQLiteConnection(connectionString);
       }
     }
-   ***/
 }

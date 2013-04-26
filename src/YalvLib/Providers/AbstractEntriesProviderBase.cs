@@ -172,7 +172,14 @@ namespace YalvLib.Providers
               int index = 0;
               while (reader.Read())
               {
-                string caller = reader.GetString(0);
+                  string caller = "";
+                  try
+                  {
+                      reader.GetString(0);                      
+                  } catch (Exception e)
+                  {
+                      // [FT] catching exception because when using sqlite, caller is empty text and the getstring raises an exception.
+                  }
                 string[] split = caller.Split(',');
 
                 const string MachineKey = "{log4jmachinename=";
