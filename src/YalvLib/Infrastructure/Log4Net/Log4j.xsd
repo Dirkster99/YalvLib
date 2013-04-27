@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  elementFormDefault="qualified" 
+  targetNamespace="http://jakarta.apache.org/log4j/" 
+  xmlns:log4j="http://jakarta.apache.org/log4j/">
+  
+  <xs:element name="event">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="log4j:message"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="log4j:NDC"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="log4j:throwable"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="log4j:locationInfo"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="log4j:properties" />
+      </xs:sequence>
+      <xs:attribute name="logger" type="xs:string" use="required"/>
+      <xs:attribute name="timestamp" type="xs:string" use="required" />
+      <xs:attribute name="level" type="xs:string" use="required"/>
+      <xs:attribute name="thread" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="message" type="xs:string" />
+  <xs:element name="NDC" type="xs:string" />
+  <xs:element name="throwable" type="xs:string" />
+
+  <xs:element name="properties">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="1">
+        <xs:element ref="log4j:data"  minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="value" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="locationInfo">
+    <xs:complexType>
+      <xs:attribute name="class" type="xs:string" use="required"/>
+      <xs:attribute name="method" type="xs:string" use="required"/>
+      <xs:attribute name="file" type="xs:string" use="required"/>
+      <xs:attribute name="line" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

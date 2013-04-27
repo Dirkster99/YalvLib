@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 
 namespace YalvLib.Model
 {
@@ -10,13 +11,12 @@ namespace YalvLib.Model
     [Serializable]
     public class LogEntry
     {
-        private string mLevel;
 
         #region properties
         /// <summary>
         /// Get/set Id of the log item
         /// </summary>
-        public int Id { get; internal set; }
+        public UInt32 Id { get; internal set; }
 
         /// <summary>
         /// Get/set Path of the file containing this log item
@@ -91,7 +91,7 @@ namespace YalvLib.Model
         /// <summary>
         /// Get/set line of code that logged this item.
         /// </summary>
-        public string Line { get; internal set; }
+        public UInt32 Line { get; internal set; }
 
         /// <summary>
         /// Get/set data from uncategorized column.
@@ -103,42 +103,6 @@ namespace YalvLib.Model
         /// </summary>
         public LevelIndex LevelIndex { get; internal set; }
 
-        /// <summary>
-        /// Get/set kind of log4net message (Info, Warn, Debug, Error etc) as string
-        /// </summary>
-        public string Level
-        {
-            get
-            {
-                return this.mLevel;
-            }
-            set
-            {
-                if (value != this.mLevel)
-                {
-                    this.mLevel = value;
-                    this.AssignLevelIndex(this.mLevel);
-                }
-            }
-        }
-
-
         #endregion properties
-
-        #region private methods
-        private void AssignLevelIndex(String level)
-        {
-            String ul = !string.IsNullOrWhiteSpace(level) ? level.Trim().ToUpper() : String.Empty;
-            LevelIndex levelIndexParsed;
-            try
-            {
-                Enum.TryParse(ul, true, out levelIndexParsed);                
-            } catch
-            {
-                levelIndexParsed = LevelIndex.NONE;
-            }
-            LevelIndex = levelIndexParsed;
-        }
-        #endregion private methods
     }
 }

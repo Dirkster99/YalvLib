@@ -5,7 +5,7 @@ namespace YalvLib.Providers
 
     public static class EntriesProviderFactory
     {
-        public static AbstractEntriesProvider GetProvider(EntriesProviderType type = EntriesProviderType.Xml)
+        public static AbstractEntriesProviderBase GetProvider(EntriesProviderType type = EntriesProviderType.Xml)
         {
             switch (type)
             {

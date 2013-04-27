@@ -202,7 +202,7 @@
         {
           new ColumnItem("Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
           new ColumnItem("TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
-          new ColumnItem("Level",       32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
+          new ColumnItem("LevelIndex",  32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
           new ColumnItem("Message",     32, 400) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MessageColumn_Header },
           new ColumnItem("Logger",      32, 100) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
           new ColumnItem("MachineName", 32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },

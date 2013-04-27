@@ -201,7 +201,7 @@ namespace YalvLib.ViewModel
 
         int idGoTo = 0;
         int.TryParse(value, out idGoTo);
-        int currentId = this.SelectedLogItem != null ? this.SelectedLogItem.Id : 0;
+        UInt32 currentId = this.SelectedLogItem != null ? this.SelectedLogItem.Id : 0;
 
         if (idGoTo > 0 && idGoTo != currentId)
         {
@@ -784,23 +784,23 @@ namespace YalvLib.ViewModel
     internal void updateCounters()
     {
       this.ItemsDebugCount = (from it in this.Items
-                              where it.Level.Equals("DEBUG", StringComparison.OrdinalIgnoreCase)
+                              where it.LevelIndex.Equals(LevelIndex.DEBUG)
                               select it).Count();
 
       this.ItemsInfoCount = (from it in this.Items
-                             where it.Level.Equals("INFO", StringComparison.OrdinalIgnoreCase)
+                             where it.LevelIndex.Equals(LevelIndex.DEBUG)
                              select it).Count();
 
       this.ItemsWarnCount = (from it in this.Items
-                             where it.Level.Equals("WARN", StringComparison.OrdinalIgnoreCase)
+                             where it.LevelIndex.Equals(LevelIndex.WARN)
                              select it).Count();
 
       this.ItemsErrorCount = (from it in this.Items
-                              where it.Level.Equals("ERROR", StringComparison.OrdinalIgnoreCase)
+                              where it.LevelIndex.Equals(LevelIndex.ERROR)
                               select it).Count();
 
       this.ItemsFatalCount = (from it in this.Items
-                              where it.Level.Equals("FATAL", StringComparison.OrdinalIgnoreCase)
+                              where it.LevelIndex.Equals(LevelIndex.FATAL)
                               select it).Count();
 
       ////this.RefreshView();
@@ -978,23 +978,23 @@ namespace YalvLib.ViewModel
           this.ItemsFilterCount = fltList.Count();
 
           this.ItemsDebugFilterCount = (from it in fltList
-                                        where it.Level.Equals("DEBUG", StringComparison.OrdinalIgnoreCase)
+                                        where it.LevelIndex.Equals(LevelIndex.DEBUG)
                                         select it).Count();
 
           this.ItemsInfoFilterCount = (from it in fltList
-                                       where it.Level.Equals("INFO", StringComparison.OrdinalIgnoreCase)
+                                       where it.LevelIndex.Equals(LevelIndex.INFO)
                                        select it).Count();
 
           this.ItemsWarnFilterCount = (from it in fltList
-                                       where it.Level.Equals("WARN", StringComparison.OrdinalIgnoreCase)
+                                       where it.LevelIndex.Equals(LevelIndex.WARN)
                                        select it).Count();
 
           this.ItemsErrorFilterCount = (from it in fltList
-                                        where it.Level.Equals("ERROR", StringComparison.OrdinalIgnoreCase)
+                                        where it.LevelIndex.Equals(LevelIndex.ERROR)
                                         select it).Count();
 
           this.ItemsFatalFilterCount = (from it in fltList
-                                        where it.Level.Equals("FATAL", StringComparison.OrdinalIgnoreCase)
+                                        where it.LevelIndex.Equals(LevelIndex.FATAL)
                                         select it).Count();
         }
       }

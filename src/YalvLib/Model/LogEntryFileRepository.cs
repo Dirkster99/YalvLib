@@ -13,7 +13,7 @@ namespace YalvLib.Model
     {
         public LogEntryFileRepository(String path)
         {
-            AbstractEntriesProvider provider = EntriesProviderFactory.GetProvider();
+            AbstractEntriesProviderBase provider = EntriesProviderFactory.GetProvider();
             _logEntries = provider.GetEntries(path).ToList();
         }
     }

@@ -33,6 +33,15 @@
     <DocumentationFile>bin\Release\YalvLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
@@ -78,6 +87,9 @@
     <Compile Include="Common\Converter\StringEmptyToVisibilityConverter.cs" />
     <Compile Include="Common\Converter\ZeroToBoolConverter.cs" />
     <Compile Include="Common\Converter\ZeroToVisibilityConverter.cs" />
+    <Compile Include="Infrastructure\LevelConverter.cs" />
+    <Compile Include="Infrastructure\Log4Net\Event2LogEntry.cs" />
+    <Compile Include="Infrastructure\Log4Net\Log4j.Designer.cs" />
     <Compile Include="Model\LevelIndex.cs" />
     <Compile Include="Model\LogAnalysisSession.cs" />
     <Compile Include="Model\LogEntry.cs" />
@@ -89,7 +101,7 @@
     <Compile Include="Domain\EntriesProviderType.cs" />
     <Compile Include="Domain\FilterParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\AbstractEntriesProvider.cs" />
+    <Compile Include="Providers\ORMEntriesProvider.cs" />
     <Compile Include="Providers\AbstractEntriesProviderBase.cs" />
     <Compile Include="Providers\EntriesProviderFactory.cs" />
     <Compile Include="Providers\MsSqlServerEntriesProvider.cs" />
@@ -182,6 +194,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Infrastructure\Log4Net\Log4j.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
