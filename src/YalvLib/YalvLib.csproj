@@ -90,6 +90,8 @@
     <Compile Include="Infrastructure\LevelConverter.cs" />
     <Compile Include="Infrastructure\Log4Net\Event2LogEntry.cs" />
     <Compile Include="Infrastructure\Log4Net\Log4j.Designer.cs" />
+    <Compile Include="Infrastructure\Log4Net\Log4jConverter.cs" />
+    <Compile Include="Infrastructure\Log4Net\LogEntry2Event.cs" />
     <Compile Include="Model\LevelIndex.cs" />
     <Compile Include="Model\LogAnalysisSession.cs" />
     <Compile Include="Model\LogEntry.cs" />

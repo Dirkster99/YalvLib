@@ -11,14 +11,35 @@ namespace YalvLib.Tests.Infrastructure.Log4net
 {
 
     [TestFixture]
-    public class Event2LogEntryTests
+    public class Log4jConverterTests
     {
 
         [Test]
-        public void Test1()
+        public void LogEntry2Event()
+        {
+            LogEntry entry = TestDataProvider.CreateLogEntry();
+            Event e = Log4jConverter.Convert(entry);
+            Assert.AreEqual("ERROR", e.Level);
+            Assert.AreEqual("This is an error message!", e.Message);
+            Assert.AreEqual("YALV.Samples.vshost.exe", e.Properties.First(x => x.Name.Equals(Log4jConverter.AppKey)).Value);
+            Assert.AreEqual("YALV.Samples.MainWindow", e.LocationInfo.Class);
+            Assert.AreEqual(@"c:\Workspace\YalvLib\src\YALV.Samples\MainWindow.xaml.cs", e.LocationInfo.File);
+            Assert.AreEqual("tongbong-PC", e.Properties.First(x => x.Name.Equals(Log4jConverter.HostKey)).Value);
+            Assert.AreEqual("76", e.LocationInfo.Line);
+            Assert.AreEqual("YALV.Samples.LogService", e.Logger);
+            Assert.AreEqual("tongbong-PC", e.Properties.First(x => x.Name.Equals(Log4jConverter.MachineKey)).Value);
+            Assert.AreEqual("method4", e.LocationInfo.Method);
+            Assert.AreEqual("10", e.Thread);
+            Assert.AreEqual("System.Exception: Warning Exception!", e.Throwable);
+            Assert.AreEqual(new TimeSpan(0, 0, 0, 1).TotalMilliseconds.ToString(), e.Timestamp);
+            Assert.AreEqual("tongbong-PC\tongbong", e.Properties.First(x => x.Name.Equals(Log4jConverter.UserKey)).Value);
+        }
+
+        [Test]
+        public void Event2LogEntry()
         {
             Event e = TestDataProvider.CreateLog4jEvent("ERROR");
-            LogEntry logEntry = Event2LogEntry.Convert(e);
+            LogEntry logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.ERROR, logEntry.LevelIndex);
             Assert.AreEqual("This is an error message!", logEntry.Message);
             Assert.AreEqual("YALV.Samples.vshost.exe", logEntry.App);
@@ -39,11 +60,11 @@ namespace YalvLib.Tests.Infrastructure.Log4net
         public void LevelIndex_Error()
         {
             Event e = TestDataProvider.CreateLog4jEvent("Error");
-            LogEntry logEntry = Event2LogEntry.Convert(e);
+            LogEntry logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.ERROR, logEntry.LevelIndex);
 
             e = TestDataProvider.CreateLog4jEvent("ERror");
-            logEntry = Event2LogEntry.Convert(e);
+            logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.ERROR, logEntry.LevelIndex);
         }
 
@@ -51,11 +72,11 @@ namespace YalvLib.Tests.Infrastructure.Log4net
         public void LevelIndex_Debug()
         {
             Event e = TestDataProvider.CreateLog4jEvent("Debug");
-            LogEntry logEntry = Event2LogEntry.Convert(e);
+            LogEntry logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.DEBUG, logEntry.LevelIndex);
 
             e = TestDataProvider.CreateLog4jEvent("DEbug");
-            logEntry = Event2LogEntry.Convert(e);
+            logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.DEBUG, logEntry.LevelIndex);
         }
 
@@ -63,11 +84,11 @@ namespace YalvLib.Tests.Infrastructure.Log4net
         public void LevelIndex_Fatal()
         {
             Event e = TestDataProvider.CreateLog4jEvent("Fatal");
-            LogEntry logEntry = Event2LogEntry.Convert(e);
+            LogEntry logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.FATAL, logEntry.LevelIndex);
 
             e = TestDataProvider.CreateLog4jEvent("FAtal");
-            logEntry = Event2LogEntry.Convert(e);
+            logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.FATAL, logEntry.LevelIndex);
         }
 
@@ -75,11 +96,11 @@ namespace YalvLib.Tests.Infrastructure.Log4net
         public void LevelIndex_Info()
         {
             Event e = TestDataProvider.CreateLog4jEvent("Info");
-            LogEntry logEntry = Event2LogEntry.Convert(e);
+            LogEntry logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.INFO, logEntry.LevelIndex);
 
             e = TestDataProvider.CreateLog4jEvent("INfo");
-            logEntry = Event2LogEntry.Convert(e);
+            logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.INFO, logEntry.LevelIndex);
         }
 
@@ -87,11 +108,11 @@ namespace YalvLib.Tests.Infrastructure.Log4net
         public void LevelIndex_Warn()
         {
             Event e = TestDataProvider.CreateLog4jEvent("Warn");
-            LogEntry logEntry = Event2LogEntry.Convert(e);
+            LogEntry logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.WARN, logEntry.LevelIndex);
 
             e = TestDataProvider.CreateLog4jEvent("WArn");
-            logEntry = Event2LogEntry.Convert(e);
+            logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.WARN, logEntry.LevelIndex);
         }
 
@@ -99,10 +120,9 @@ namespace YalvLib.Tests.Infrastructure.Log4net
         public void LevelIndex_None()
         {
             Event e = TestDataProvider.CreateLog4jEvent("cannot be parsed");
-            LogEntry logEntry = Event2LogEntry.Convert(e);
+            LogEntry logEntry = Log4jConverter.Convert(e);
             Assert.AreEqual(LevelIndex.NONE, logEntry.LevelIndex);
         } 
-
     }
 
 }

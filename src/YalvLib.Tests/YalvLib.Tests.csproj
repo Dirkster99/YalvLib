@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\Log4net\Event2LogEntryTests.cs" />
+    <Compile Include="Infrastructure\Log4net\Log4jConverterTests.cs" />
     <Compile Include="Infrastructure\Log4net\TestDataProvider.cs" />
     <Compile Include="Model\LogAnalysisSessionTests.cs" />
     <Compile Include="Model\LogEntryRepositoryTests.cs" />
