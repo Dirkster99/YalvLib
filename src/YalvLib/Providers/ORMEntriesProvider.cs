@@ -175,7 +175,6 @@ namespace YalvLib.Providers
 
               using (IDataReader reader = command.ExecuteReader())
               {
-                UInt32 index = 0;
                 while (reader.Read())
                 {
                     string caller = "";
@@ -213,7 +212,6 @@ namespace YalvLib.Providers
 
                   LogEntry entry = new LogEntry
                   {
-                    Id = ++index,
                     TimeStamp = timeStamp,
                     LevelIndex = LevelConverter.From(level),
                     Thread = thread,

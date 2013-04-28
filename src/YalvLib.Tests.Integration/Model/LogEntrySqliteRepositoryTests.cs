@@ -18,6 +18,8 @@ namespace YalvLib.Tests.Integration.Model
         {
             LogEntrySqliteRepository repository = new LogEntrySqliteRepository("Model/SampleLogs.db3");
             Assert.AreEqual(2, repository.LogEntries.Count);
+            Assert.AreEqual(1, repository.LogEntries[0].Id);
+            Assert.AreEqual(2, repository.LogEntries[1].Id);
         }
 
     }

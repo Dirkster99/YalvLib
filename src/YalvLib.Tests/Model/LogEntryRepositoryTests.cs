@@ -18,8 +18,14 @@ namespace YalvLib.Tests.Model
         {
             LogEntryRepository repository = new LogEntryRepository();
             LogEntry entry = new LogEntry();
+            Assert.AreEqual(0, entry.Id);
             repository.AddLogEntry(entry);
             Assert.AreEqual(1, repository.LogEntries.Count());
+            Assert.AreEqual(1, entry.Id);
+
+            entry = new LogEntry();
+            repository.AddLogEntry(entry);
+            Assert.AreEqual(2, entry.Id);
         }
 
         [Test]
