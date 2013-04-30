@@ -100,8 +100,8 @@
     <Compile Include="Model\LogEntrySqliteRepository.cs" />
     <Compile Include="ViewModel\Common\BindSupport.cs" />
     <Compile Include="ViewModel\ColumnItem.cs" />
-    <Compile Include="Domain\EntriesProviderType.cs" />
-    <Compile Include="Domain\FilterParams.cs" />
+    <Compile Include="Providers\EntriesProviderType.cs" />
+    <Compile Include="Providers\FilterParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ORMEntriesProvider.cs" />
     <Compile Include="Providers\AbstractEntriesProviderBase.cs" />
