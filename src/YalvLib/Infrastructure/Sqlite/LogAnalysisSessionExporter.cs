@@ -14,12 +14,12 @@ using YalvLib.Model;
 namespace YalvLib.Infrastructure.Sqlite
 {
 
-    public class ExportSession
+    public class LogAnalysisSessionExporter
     {
 
         private String _path;
 
-        public ExportSession(String path)
+        public LogAnalysisSessionExporter(String path)
         {
             _path = path;            
         }
@@ -31,6 +31,7 @@ namespace YalvLib.Infrastructure.Sqlite
                                       .Mappings(m =>
                                       {
                                           m.FluentMappings.Add<LogAnalysisSessionMapping>();
+                                          m.FluentMappings.Add<LogEntryFileRepositoryMapping>();
                                           m.FluentMappings.Add<LogEntryRepositoryMapping>();
                                           m.FluentMappings.Add<LogEntryMapping>();
                                       })
@@ -56,7 +57,7 @@ namespace YalvLib.Infrastructure.Sqlite
             // this NHibernate tool takes a configuration (with mapping info in)
             // and exports a database schema from it
             new SchemaExport(config)
-              .Create(false, true);
+              .Create(true, true);
         }
 
     }

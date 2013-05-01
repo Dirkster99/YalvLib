@@ -12,11 +12,18 @@ namespace YalvLib.Model
 
     public class LogEntryFileRepository : LogEntryRepository
     {
+
+        public LogEntryFileRepository()
+        {}
+
         public LogEntryFileRepository(string path)
         {
+            Path = path;
             AbstractEntriesProviderBase provider = EntriesProviderFactory.GetProvider(EntriesProviderType.Xml);
             AddLogEntries(provider.GetEntries(path));
         }
+
+        public String Path { get; set; }
     }
 
 }

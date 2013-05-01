@@ -16,9 +16,7 @@ namespace YalvLib.Model
 
         public IList<LogEntry> LogEntries
         {
-            //get { return new ReadOnlyCollection<LogEntry>(_logEntries); }
             get { return _logEntries; }
-            protected set {}
         }
 
         public Guid Uid { get; set; }

@@ -1,4 +1,5 @@
-﻿using YalvLib.Model;
+﻿using YalvLib.Infrastructure.Sqlite;
+using YalvLib.Model;
 
 namespace YalvLib.ViewModel
 {
@@ -95,8 +96,15 @@ namespace YalvLib.ViewModel
         LogAnalysisSession session = new LogAnalysisSession();
         try
         {
-            LogEntryRepository repository = CreateLogFileEntryRepository(path);
-            session.AddSourceRepository(repository);
+            if (ProviderType.Equals(EntriesProviderType.Yalv))
+            {
+                LogAnalysisSessionLoader loader = new LogAnalysisSessionLoader(path);
+                session = loader.Load();
+            } else
+            {
+                LogEntryRepository repository = CreateLogFileEntryRepository(path);
+                session.AddSourceRepository(repository);                
+            }
         }
         catch (Exception exception)
         {
@@ -154,7 +162,7 @@ namespace YalvLib.ViewModel
           this.mLogFile.FilePath = path;
             
           LogAnalysisSession session = CreateLogAnalysisSession(path);
-            YalvRegistry.Instance.AddLogAnalysisSession(session);
+            YalvRegistry.Instance.SetActualLogAnalysisSession(session);
             this.mObjColl.Add(LogFileLoader.KeyLogItems, session.LogEntries);
         }
         catch (OperationCanceledException exp)

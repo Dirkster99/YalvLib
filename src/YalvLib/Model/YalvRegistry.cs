@@ -27,9 +27,20 @@ namespace YalvLib.Model
             }
         }
 
-        public void AddLogAnalysisSession(LogAnalysisSession session)
+        public void SetActualLogAnalysisSession(LogAnalysisSession session)
         {
+            _sessions.Clear();
             _sessions.Add(session);
+        }
+
+        public LogAnalysisSession ActualSession
+        {
+            get
+            {
+                if (LogAnalysisSessions.Count == 0)
+                    return null;
+                return LogAnalysisSessions[0];
+            }
         }
 
         public ReadOnlyCollection<LogAnalysisSession> LogAnalysisSessions

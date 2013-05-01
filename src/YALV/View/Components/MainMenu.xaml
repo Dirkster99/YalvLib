@@ -26,6 +26,10 @@
                   Command="{Binding Path=CommandOpenSqliteDatabase}"
                   CommandParameter="OPEN">
         </MenuItem>
+        <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_OpenLogAnalysisSession_Header}"
+                  Command="{Binding Path=CommandOpenLogAnalysisSession}"
+                  CommandParameter="OPEN">
+        </MenuItem>
 
         <Separator />
         <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_RecentFiles_Header}">

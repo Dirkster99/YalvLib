@@ -15,7 +15,9 @@ namespace YalvLib.Infrastructure.Mappings
         {
             Not.LazyLoad();
             Id(x => x.Uid).GeneratedBy.Guid();
-            HasMany(x => x.LogEntries).Cascade.All();
+            HasMany(x => x.LogEntries)
+                .Cascade.All()
+                .Not.LazyLoad();
         }
 
     }

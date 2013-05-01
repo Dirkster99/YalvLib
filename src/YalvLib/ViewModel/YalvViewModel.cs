@@ -1,4 +1,5 @@
 ﻿using YalvLib.Domain;
+using YalvLib.Providers;
 
 namespace YalvLib.ViewModel
 {
@@ -123,7 +124,10 @@ namespace YalvLib.ViewModel
     {
         this.mLogItems.LoadFile(path, EntriesProviderType.Sqlite, this.loadFinishedEvent);
     }
-
+    public void LoadLogAnalysisSession(string path)
+    {
+        this.mLogItems.LoadFile(path, EntriesProviderType.Yalv, this.loadFinishedEvent);
+    }
     /// <summary>
     /// Implementation of the Refresh command (reload data and apply filters)
     /// </summary>

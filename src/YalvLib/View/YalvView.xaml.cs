@@ -11,7 +11,7 @@
   /// <summary>
   /// ValvView is a look-less WPF control that displays log4net log data entries (by default) in a gridview.
   /// </summary>
-  public class YalvView : Control
+  public partial class YalvView : Control
   {
     #region fields
     /// <summary>

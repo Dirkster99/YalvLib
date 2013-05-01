@@ -5,19 +5,24 @@ namespace YalvLib.Providers
     /// </summary>
     public enum EntriesProviderType
     {
-      /// <summary>
-      /// Provide log file via XML persistence
-      /// </summary>
-      Xml,
+        /// <summary>
+        /// Provide log file via XML persistence
+        /// </summary>
+        Xml,
 
-      /// <summary>
-      /// Provide log file via Sqlite persistence
-      /// </summary>
-      Sqlite,
-      
-      /// <summary>
-      /// Provide log file via SQL Server persistence
-      /// </summary>
-      MsSqlServer
+        /// <summary>
+        /// Provide log file via Sqlite persistence
+        /// </summary>
+        Sqlite,
+
+        /// <summary>
+        /// Provide log file via SQL Server persistence
+        /// </summary>
+        MsSqlServer,
+
+        /// <summary>
+        /// Provide log file via a log analysis session
+        /// </summary>
+        Yalv
     }
 }

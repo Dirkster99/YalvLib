@@ -20,9 +20,7 @@ namespace YalvLib.Model
 
         public IList<LogEntryRepository> SourceRepositories
         {
-            //            get { return new ReadOnlyCollection<LogEntryRepository>(_sourceRepositories); }
             get { return _sourceRepositories; }
-            protected set {}
         }
 
         public ReadOnlyCollection<LogEntry> LogEntries

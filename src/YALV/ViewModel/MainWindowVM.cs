@@ -56,6 +56,7 @@ namespace YALV.ViewModel
             this.CommandAbout = new CommandRelay(this.commandAboutExecute, p => true);
             CommandExport = new CommandRelay(CommandExportExecute, p => true);
             CommandOpenSqliteDatabase = new CommandRelay(CommandOpenSqliteDatabaseExecute, p => true);
+            CommandOpenLogAnalysisSession = new CommandRelay(CommandOpenLogAnalysisSessionExecute, p => true);
         }
         #endregion constructor
 
@@ -92,6 +93,7 @@ namespace YALV.ViewModel
 
         public ICommandAncestor CommandExport { get; protected set; }
         public ICommandAncestor CommandOpenSqliteDatabase { get; protected set; }
+        public ICommandAncestor CommandOpenLogAnalysisSession { get; protected set; }
         #endregion
 
         #region Public Properties
@@ -251,12 +253,10 @@ namespace YALV.ViewModel
 
         protected virtual object CommandExportExecute(object parameter)
         {
-            LogAnalysisSession session = null;
-            if (YalvRegistry.Instance.LogAnalysisSessions.Count > 0)
-                session = YalvRegistry.Instance.LogAnalysisSessions[0];
+            LogAnalysisSession session = YalvRegistry.Instance.ActualSession;
             if (session != null)
             {
-                new ExportSession("logs.db3").Export(session);
+                new LogAnalysisSessionExporter("LogAnalysisSession.yalv").Export(session);
             }
             return null;
         }
@@ -276,6 +276,26 @@ namespace YALV.ViewModel
             if (dlg.ShowDialog().GetValueOrDefault() == true)
             {
                 this.mYalvLogViewModel.LoadSqliteDatabase(dlg.FileName);
+                this.RecentFileList.InsertFile(dlg.FileName);
+                this.updateJumpList();
+            }
+            return null;
+        }
+        protected virtual object CommandOpenLogAnalysisSessionExecute(object parameter)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            bool addFile = parameter != null && parameter.Equals("ADD");
+
+            dlg.Filter = YalvViewModel.FileExtensionDialogFilter;
+            dlg.DefaultExt = "*.db3";
+            dlg.Multiselect = false;
+            dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
+                                  YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
+
+            if (dlg.ShowDialog().GetValueOrDefault() == true)
+            {
+                this.mYalvLogViewModel.LoadLogAnalysisSession(dlg.FileName);
                 this.RecentFileList.InsertFile(dlg.FileName);
                 this.updateJumpList();
             }

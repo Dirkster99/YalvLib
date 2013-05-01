@@ -361,6 +361,15 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open log analysis session....
+        /// </summary>
+        public static string Common_Components_MainMenu_FileMenu_OpenLogAnalysisSession_Header {
+            get {
+                return ResourceManager.GetString("Common_Components_MainMenu_FileMenu_OpenLogAnalysisSession_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open sqlite database....
         /// </summary>
         public static string Common_Components_MainMenu_FileMenu_OpenSqliteDatabase_Header {

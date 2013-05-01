@@ -95,10 +95,12 @@
     <Compile Include="Infrastructure\Log4Net\Log4j.Designer.cs" />
     <Compile Include="Infrastructure\Log4Net\Log4jConverter.cs" />
     <Compile Include="Infrastructure\Log4Net\LogEntry2Event.cs" />
+    <Compile Include="Infrastructure\Mappings\LogEntryFileRepositoryMapping.cs" />
     <Compile Include="Infrastructure\Mappings\LogAnalysisSessionMapping.cs" />
     <Compile Include="Infrastructure\Mappings\LogEntryMapping.cs" />
     <Compile Include="Infrastructure\Mappings\LogEntryRepositoryMapping.cs" />
-    <Compile Include="Infrastructure\Sqlite\ExportSession.cs" />
+    <Compile Include="Infrastructure\Sqlite\LogAnalysisSessionLoader.cs" />
+    <Compile Include="Infrastructure\Sqlite\LogAnalysisSessionExporter.cs" />
     <Compile Include="Model\LevelIndex.cs" />
     <Compile Include="Model\LogAnalysisSession.cs" />
     <Compile Include="Model\LogEntry.cs" />
@@ -107,10 +109,10 @@
     <Compile Include="Model\LogEntrySqliteRepository.cs" />
     <Compile Include="Model\RepositoryMerger.cs" />
     <Compile Include="Model\YalvRegistry.cs" />
-    <Compile Include="ViewModel\Common\BindSupport.cs" />
-    <Compile Include="ViewModel\ColumnItem.cs" />
     <Compile Include="Providers\EntriesProviderType.cs" />
     <Compile Include="Providers\FilterParams.cs" />
+    <Compile Include="ViewModel\Common\BindSupport.cs" />
+    <Compile Include="ViewModel\ColumnItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ORMEntriesProvider.cs" />
     <Compile Include="Providers\AbstractEntriesProviderBase.cs" />
