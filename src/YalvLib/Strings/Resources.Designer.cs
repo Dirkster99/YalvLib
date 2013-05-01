@@ -334,6 +334,15 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export session to sqlite.
+        /// </summary>
+        public static string Common_Components_MainMenu_FileMenu_ExportToSqlite_Header {
+            get {
+                return ResourceManager.GetString("Common_Components_MainMenu_FileMenu_ExportToSqlite_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _File.
         /// </summary>
         public static string Common_Components_MainMenu_FileMenu_Header {
@@ -348,6 +357,15 @@ namespace YalvLib.Strings {
         public static string Common_Components_MainMenu_FileMenu_OpenFile_Header {
             get {
                 return ResourceManager.GetString("Common_Components_MainMenu_FileMenu_OpenFile_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open sqlite database....
+        /// </summary>
+        public static string Common_Components_MainMenu_FileMenu_OpenSqliteDatabase_Header {
+            get {
+                return ResourceManager.GetString("Common_Components_MainMenu_FileMenu_OpenSqliteDatabase_Header", resourceCulture);
             }
         }
         

@@ -33,13 +33,16 @@
     <DocumentationFile>bin\Release\YalvLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentNHibernate">
+    <Reference Include="FluentNHibernate, Version=1.3.0.733, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Iesi.Collections">
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate">
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -92,12 +95,18 @@
     <Compile Include="Infrastructure\Log4Net\Log4j.Designer.cs" />
     <Compile Include="Infrastructure\Log4Net\Log4jConverter.cs" />
     <Compile Include="Infrastructure\Log4Net\LogEntry2Event.cs" />
+    <Compile Include="Infrastructure\Mappings\LogAnalysisSessionMapping.cs" />
+    <Compile Include="Infrastructure\Mappings\LogEntryMapping.cs" />
+    <Compile Include="Infrastructure\Mappings\LogEntryRepositoryMapping.cs" />
+    <Compile Include="Infrastructure\Sqlite\ExportSession.cs" />
     <Compile Include="Model\LevelIndex.cs" />
     <Compile Include="Model\LogAnalysisSession.cs" />
     <Compile Include="Model\LogEntry.cs" />
     <Compile Include="Model\LogEntryFileRepository.cs" />
     <Compile Include="Model\LogEntryRepository.cs" />
     <Compile Include="Model\LogEntrySqliteRepository.cs" />
+    <Compile Include="Model\RepositoryMerger.cs" />
+    <Compile Include="Model\YalvRegistry.cs" />
     <Compile Include="ViewModel\Common\BindSupport.cs" />
     <Compile Include="ViewModel\ColumnItem.cs" />
     <Compile Include="Domain\EntriesProviderType.cs" />

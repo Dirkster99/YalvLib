@@ -10,16 +10,19 @@ namespace YalvLib.Model
 
     public class LogAnalysisSession
     {
-        private List<LogEntryFileRepository> _sourceRepositories = new List<LogEntryFileRepository>();
 
-        public void AddSourceRepository(LogEntryFileRepository sourceRepository)
+        private List<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
+
+        public void AddSourceRepository(LogEntryRepository sourceRepository)
         {
             _sourceRepositories.Add(sourceRepository);
         }
 
-        public ReadOnlyCollection<LogEntryFileRepository> SourceRepositories
+        public IList<LogEntryRepository> SourceRepositories
         {
-            get { return new ReadOnlyCollection<LogEntryFileRepository>(_sourceRepositories); }
+            //            get { return new ReadOnlyCollection<LogEntryRepository>(_sourceRepositories); }
+            get { return _sourceRepositories; }
+            protected set {}
         }
 
         public ReadOnlyCollection<LogEntry> LogEntries
@@ -34,6 +37,8 @@ namespace YalvLib.Model
                 return new ReadOnlyCollection<LogEntry>(entries);
             }
         }
+
+        public Guid Uid { get; protected set; }
     }
 
 }

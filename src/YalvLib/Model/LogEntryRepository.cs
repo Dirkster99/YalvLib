@@ -14,10 +14,14 @@ namespace YalvLib.Model
 
         private List<LogEntry> _logEntries = new List<LogEntry>();
 
-        public ReadOnlyCollection<LogEntry> LogEntries
+        public IList<LogEntry> LogEntries
         {
-            get { return new ReadOnlyCollection<LogEntry>(_logEntries); }
+            //get { return new ReadOnlyCollection<LogEntry>(_logEntries); }
+            get { return _logEntries; }
+            protected set {}
         }
+
+        public Guid Uid { get; set; }
 
         public void AddLogEntry(LogEntry entry)
         {

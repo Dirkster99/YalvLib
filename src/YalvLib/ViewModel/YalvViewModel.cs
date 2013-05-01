@@ -1,4 +1,6 @@
-﻿namespace YalvLib.ViewModel
+﻿using YalvLib.Domain;
+
+namespace YalvLib.ViewModel
 {
   using YalvLib.Common;
   using YalvLib.Common.Interfaces;
@@ -115,7 +117,11 @@
     /// <param name="path"></param>
     public void LoadFile(string path)
     {
-      this.mLogItems.LoadFile(path, this.loadFinishedEvent);
+        this.mLogItems.LoadFile(path, EntriesProviderType.Xml, this.loadFinishedEvent);
+    }
+    public void LoadSqliteDatabase(string path)
+    {
+        this.mLogItems.LoadFile(path, EntriesProviderType.Sqlite, this.loadFinishedEvent);
     }
 
     /// <summary>

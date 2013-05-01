@@ -16,59 +16,70 @@
     Height="20"
     BorderThickness="0,0,0,1"
     BorderBrush="{StaticResource BorderColor}">
-  <!-- File Items -->
-  <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_Header}">
-    <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_OpenFile_Header}"
+    <!-- File Items -->
+    <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_Header}">
+        <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_OpenFile_Header}"
                   Command="{Binding Path=CommandOpenFile}"
                   CommandParameter="OPEN">
-    </MenuItem>
+        </MenuItem>
+        <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_OpenSqliteDatabase_Header}"
+                  Command="{Binding Path=CommandOpenSqliteDatabase}"
+                  CommandParameter="OPEN">
+        </MenuItem>
 
-    <Separator />
-    <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_RecentFiles_Header}">
-      <recentList:RecentFileList x:Name="RecentFileListMenu" />
-    </MenuItem>
-    <Separator />
+        <Separator />
+        <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_RecentFiles_Header}">
+            <recentList:RecentFileList x:Name="RecentFileListMenu" />
+        </MenuItem>
+        <Separator />
 
-    <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_Exit_Header}"
+        <Separator />
+        <MenuItem 
+            Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_ExportToSqlite_Header}"
+            Command="{Binding Path=CommandExport}">
+        </MenuItem>
+        <Separator />
+
+        <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_Exit_Header}"
               Command="{Binding Path=CommandExit}"
               InputGestureText="Alt+F4">
+        </MenuItem>
     </MenuItem>
-  </MenuItem>
 
-  <!-- View Items -->
-  <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_Header}">
-    <MenuItem
+    <!-- View Items -->
+    <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_Header}">
+        <MenuItem
             Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_RefreshLog_Header}"
             Command="{Binding Path=YalvLogViewModel.CommandRefresh}"
             InputGestureText="F5">
-    </MenuItem>
-    <MenuItem
+        </MenuItem>
+        <MenuItem
             Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_ClearFilters_Header}"
             Command="{Binding Path=YalvLogViewModel.LogItems.CommandClearFilters}"
             InputGestureText="Ctrl+D">
-    </MenuItem>
-    <MenuItem
+        </MenuItem>
+        <MenuItem
             Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_DeleteFile_Header}"
             Command="{Binding Path=YalvLogViewModel.CommandDelete}"
             InputGestureText="DEL">
-    </MenuItem>
+        </MenuItem>
 
-      <MenuItem ItemsSource="{Binding Path=LogItems.DataGridColumns.DataGridColumns}"
+        <MenuItem ItemsSource="{Binding Path=LogItems.DataGridColumns.DataGridColumns}"
                 Header="Columns"
                 DataContext="{Binding YalvLogViewModel}">
-        <MenuItem.ItemContainerStyle>
-          <Style TargetType="{x:Type MenuItem}">
-            <Setter Property="IsChecked" Value="{Binding IsColumnVisible}" />
-            <Setter Property="IsCheckable" Value="True" />
-            <Setter Property="Header" Value="{Binding Header}" />
-          </Style>
-        </MenuItem.ItemContainerStyle>
+            <MenuItem.ItemContainerStyle>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="IsChecked" Value="{Binding IsColumnVisible}" />
+                    <Setter Property="IsCheckable" Value="True" />
+                    <Setter Property="Header" Value="{Binding Header}" />
+                </Style>
+            </MenuItem.ItemContainerStyle>
+        </MenuItem>
     </MenuItem>
-  </MenuItem>
 
-  <!-- About Items -->
-  <MenuItem
+    <!-- About Items -->
+    <MenuItem
         Header="{x:Static strs:Resources.Common_Components_MainMenu_AboutMenu_Header}"
         Command="{Binding Path=CommandAbout}">
-  </MenuItem>
+    </MenuItem>
 </Menu>

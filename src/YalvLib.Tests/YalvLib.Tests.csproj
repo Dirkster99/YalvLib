@@ -47,6 +47,7 @@
     <Compile Include="Model\LogAnalysisSessionTests.cs" />
     <Compile Include="Model\LogEntryRepositoryTests.cs" />
     <Compile Include="Model\LogEntryTests.cs" />
+    <Compile Include="Model\RepositoryMergerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

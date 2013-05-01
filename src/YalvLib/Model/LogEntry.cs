@@ -12,9 +12,30 @@ namespace YalvLib.Model
     public class LogEntry
     {
 
+        public LogEntry()
+        {}
+
+        public LogEntry(LogEntry entry)
+        {
+            App = entry.App;
+            TimeStamp = entry.TimeStamp;
+            Logger = entry.Logger;
+            Thread = entry.Thread;
+            Message = entry.Message;
+            Throwable = entry.Throwable;
+            MachineName = entry.MachineName;
+            UserName = entry.UserName;
+            HostName = entry.HostName;
+            Class = entry.Class;
+            File = entry.File;
+            Method = entry.Method;
+            Line = entry.Line;
+            LevelIndex = entry.LevelIndex;
+        }
+
         #region properties
         /// <summary>
-        /// Get/set Id of the log item
+        /// Get/set Id of the log item relatively to its repository.
         /// </summary>
         public UInt32 Id { get; internal set; }
 
@@ -102,6 +123,11 @@ namespace YalvLib.Model
         /// Indicate kind of log4net message (Info, Warn, Debug, Error etc)
         /// </summary>
         public LevelIndex LevelIndex { get; set; }
+
+        /// <summary>
+        /// A unique identifier in the system.
+        /// </summary>
+        public Guid Uid { get; set; }
 
         #endregion properties
     }

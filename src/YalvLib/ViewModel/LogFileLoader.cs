@@ -79,7 +79,10 @@ namespace YalvLib.ViewModel
       get { return this.mInnerException; }
       set { this.mInnerException = value; }
     }
-    #endregion Properties
+
+      public EntriesProviderType ProviderType { get; set; }
+
+      #endregion Properties
 
     #region Methods
     /// <summary>
@@ -87,12 +90,13 @@ namespace YalvLib.ViewModel
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    internal static LogAnalysisSession CreateLogAnalysisSession(string path)
+    internal LogAnalysisSession CreateLogAnalysisSession(string path)
     {
         LogAnalysisSession session = new LogAnalysisSession();
         try
         {
-            session.AddSourceRepository(new LogEntryFileRepository(path));
+            LogEntryRepository repository = CreateLogFileEntryRepository(path);
+            session.AddSourceRepository(repository);
         }
         catch (Exception exception)
         {
@@ -101,7 +105,20 @@ namespace YalvLib.ViewModel
         }
         return session;
     }
-    /// <summary>
+
+    private LogEntryRepository CreateLogFileEntryRepository(string path)
+    {
+        switch (ProviderType)
+        {
+            case EntriesProviderType.Sqlite:
+                return new LogEntrySqliteRepository(path);
+            case EntriesProviderType.Xml:
+                return new LogEntryFileRepository(path);
+        }
+        throw new NotImplementedException();
+    }
+
+      /// <summary>
     /// load the contents of a log file in an async task and return
     /// the result through an event object (event is setup prior to this call).
     /// </summary>
@@ -137,7 +154,8 @@ namespace YalvLib.ViewModel
           this.mLogFile.FilePath = path;
             
           LogAnalysisSession session = CreateLogAnalysisSession(path);
-          this.mObjColl.Add(LogFileLoader.KeyLogItems, session.LogEntries);
+            YalvRegistry.Instance.AddLogAnalysisSession(session);
+            this.mObjColl.Add(LogFileLoader.KeyLogItems, session.LogEntries);
         }
         catch (OperationCanceledException exp)
         {

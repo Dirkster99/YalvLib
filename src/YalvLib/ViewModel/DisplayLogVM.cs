@@ -1,4 +1,5 @@
-﻿using YalvLib.Model;
+﻿using YalvLib.Domain;
+using YalvLib.Model;
 
 namespace YalvLib.ViewModel
 {
@@ -822,7 +823,7 @@ namespace YalvLib.ViewModel
     {
       if (this.LogFile.IsFileLoaded == true)
       {
-        this.LoadFile(this.LogFile.FilePath, callbackOnFinishedparameter);
+          this.LoadFile(this.LogFile.FilePath, EntriesProviderType.Xml, callbackOnFinishedparameter);
       }
     }
 
@@ -871,7 +872,7 @@ namespace YalvLib.ViewModel
     /// <param name="path"></param>
     /// <param name="callbackOnFinished"></param>
     /// <returns></returns>
-    internal bool LoadFile(string path, EvaluateLoadResult callbackOnFinished)
+    internal bool LoadFile(string path, EntriesProviderType providerType, EvaluateLoadResult callbackOnFinished)
     {
       lock (this.lockObject)
       {
@@ -884,6 +885,7 @@ namespace YalvLib.ViewModel
         if (this.fileFoader == null)
         {
           this.fileFoader = new LogFileLoader();
+            fileFoader.ProviderType = providerType;
           this.fileFoader.loadResultEvent += new EventHandler<LogFileLoader.ResultEvent>(this.fileFoader_ResultEvent);
 
           this.LogFile.IsLoading = true;
@@ -894,7 +896,6 @@ namespace YalvLib.ViewModel
           return true;
         }
       }
-
       return false;
     }
 
