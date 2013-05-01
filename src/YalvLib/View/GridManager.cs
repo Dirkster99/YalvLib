@@ -1,146 +1,147 @@
 ﻿namespace YalvLib.View
 {
-  using System.Collections.Generic;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Data;
   using System.Windows.Input;
   using YalvLib.Common.Converters;
-  using YalvLib.Domain;
   using YalvLib.ViewModel;
   using YalvLib.ViewModel.Common;
 
-  internal class GridManager
+  public partial class YalvView : Control
   {
-    private static AdjustValueConverter mAdjustConverter = null;
-    private static BoolToVisibilityConverter mBoolToVisConverter = null;
-
-    static GridManager()
+    private class GridManager
     {
-      GridManager.mAdjustConverter = new AdjustValueConverter();
-      GridManager.mBoolToVisConverter = new BoolToVisibilityConverter();
-    }
+      private static AdjustValueConverter mAdjustConverter = null;
+      private static BoolToVisibilityConverter mBoolToVisConverter = null;
 
-    /// <summary>
-    /// This code builds a list of columns and their corresponding filter textboxes
-    /// </summary>
-    /// <param name="dataGrid"></param>
-    /// <param name="centerCellStyle"></param>
-    /// <param name="keyUpEvent"></param>
-    /// <param name="txtSearchPanel"></param>
-    /// <param name="colVM"></param>
-    /// <param name="watermarkTextbox"></param>
-    internal static void BuildDataGrid(DataGrid dataGrid, ColumnsVM colVM,
-                                       Style centerCellStyle, Style watermarkTextbox,
-                                       KeyEventHandler keyUpEvent,
-                                       Panel txtSearchPanel)
-    {
-      if (dataGrid == null)
-        return;
-
-      // Remove available columns if there are any
-      dataGrid.Columns.Clear();
-
-      if (colVM.DataGridColumns != null)
+      static GridManager()
       {
-        foreach (ColumnItem item in colVM.DataGridColumns)
+        GridManager.mAdjustConverter = new AdjustValueConverter();
+        GridManager.mBoolToVisConverter = new BoolToVisibilityConverter();
+      }
+
+      /// <summary>
+      /// This code builds a list of columns and their corresponding filter textboxes
+      /// </summary>
+      /// <param name="dataGrid"></param>
+      /// <param name="centerCellStyle"></param>
+      /// <param name="keyUpEvent"></param>
+      /// <param name="txtSearchPanel"></param>
+      /// <param name="colVM"></param>
+      /// <param name="watermarkTextbox"></param>
+      internal static void BuildDataGrid(DataGrid dataGrid, ColumnsVM colVM,
+                                         Style centerCellStyle, Style watermarkTextbox,
+                                         KeyEventHandler keyUpEvent,
+                                         Panel txtSearchPanel)
+      {
+        if (dataGrid == null)
+          return;
+
+        // Remove available columns if there are any
+        dataGrid.Columns.Clear();
+
+        if (colVM.DataGridColumns != null)
         {
-          DataGridTextColumn col = new DataGridTextColumn();
-          col.Header = item.Header;
+          foreach (ColumnItem item in colVM.DataGridColumns)
+          {
+            DataGridTextColumn col = new DataGridTextColumn();
+            col.Header = item.Header;
 
-          // Bind column to visibility property via bool - visibility converter
-          var visiblityBinding = new Binding("IsColumnVisible");
-          visiblityBinding.Source = item;
-          visiblityBinding.Converter = GridManager.mBoolToVisConverter;
-          BindingOperations.SetBinding(col, DataGridTextColumn.VisibilityProperty, visiblityBinding);
+            // Bind column to visibility property via bool - visibility converter
+            var visiblityBinding = new Binding("IsColumnVisible");
+            visiblityBinding.Source = item;
+            visiblityBinding.Converter = GridManager.mBoolToVisConverter;
+            BindingOperations.SetBinding(col, DataGridTextColumn.VisibilityProperty, visiblityBinding);
 
-          if (item.Alignment == CellAlignment.CENTER && centerCellStyle != null)
-            col.CellStyle = centerCellStyle;
+            if (item.Alignment == CellAlignment.CENTER && centerCellStyle != null)
+              col.CellStyle = centerCellStyle;
 
-          col.MinWidth = item.MinWidth;
-          col.Width = item.Width;
+            col.MinWidth = item.MinWidth;
+            col.Width = item.Width;
 
-          Binding bind = new Binding(item.Field) { Mode = BindingMode.OneWay };
-          bind.ConverterCulture = System.Globalization.CultureInfo.GetCultureInfo(YalvLib.Strings.Resources.CultureName);
+            Binding bind = new Binding(item.Field) { Mode = BindingMode.OneWay };
+            bind.ConverterCulture = System.Globalization.CultureInfo.GetCultureInfo(YalvLib.Strings.Resources.CultureName);
 
-          if (!string.IsNullOrWhiteSpace(item.StringFormat))
-            bind.StringFormat = item.StringFormat;
+            if (!string.IsNullOrWhiteSpace(item.StringFormat))
+              bind.StringFormat = item.StringFormat;
 
-          col.Binding = bind;
+            col.Binding = bind;
 
-          // Add column to datagrid
-          dataGrid.Columns.Add(col);
+            // Add column to datagrid
+            dataGrid.Columns.Add(col);
 
-          BuildTextSearchPanel(keyUpEvent, txtSearchPanel, col, item, watermarkTextbox);
+            BuildTextSearchPanel(keyUpEvent, txtSearchPanel, col, item, watermarkTextbox);
+          }
         }
       }
-    }
 
-    private static void BuildTextSearchPanel(KeyEventHandler keyUpEvent,
-                                             Panel txtSearchPanel,
-                                             DataGridTextColumn col,
-                                             ColumnItem columnVM,
-                                             Style watermarkTextbox)
-    {
-      if (txtSearchPanel != null)
+      private static void BuildTextSearchPanel(KeyEventHandler keyUpEvent,
+                                               Panel txtSearchPanel,
+                                               DataGridTextColumn col,
+                                               ColumnItem columnVM,
+                                               Style watermarkTextbox)
       {
-        Binding widthBind = new Binding()
+        if (txtSearchPanel != null)
         {
-          Path = new PropertyPath("ActualWidth"),
-          Source = col,
-          Mode = BindingMode.OneWay,
-          Converter = GridManager.mAdjustConverter,
-          ConverterParameter = "-2"
-        };
+          Binding widthBind = new Binding()
+          {
+            Path = new PropertyPath("ActualWidth"),
+            Source = col,
+            Mode = BindingMode.OneWay,
+            Converter = GridManager.mAdjustConverter,
+            ConverterParameter = "-2"
+          };
 
-        Binding visibilityBind = new Binding()
-        {
-          Path = new PropertyPath("Visibility"),
-          Source = col,
-          Mode = BindingMode.OneWay,
-        };
+          Binding visibilityBind = new Binding()
+          {
+            Path = new PropertyPath("Visibility"),
+            Source = col,
+            Mode = BindingMode.OneWay,
+          };
 
-        TextBox txt = new TextBox();
+          TextBox txt = new TextBox();
 
-        if (watermarkTextbox != null)
-          txt.Style = watermarkTextbox;
+          if (watermarkTextbox != null)
+            txt.Style = watermarkTextbox;
 
-        columnVM.FilterControlName = txt.Name = getTextBoxName(columnVM.Field);
-        txt.ToolTip = string.Format(YalvLib.Strings.Resources.FilteredGridManager_BuildDataGrid_FilterTextBox_Tooltip, columnVM.Header);
-        txt.Tag = txt.ToolTip.ToString().ToLower();
-        txt.Text = string.Empty;
-        txt.AcceptsReturn = false;
+          columnVM.FilterControlName = txt.Name = getTextBoxName(columnVM.Field);
+          txt.ToolTip = string.Format(YalvLib.Strings.Resources.FilteredGridManager_BuildDataGrid_FilterTextBox_Tooltip, columnVM.Header);
+          txt.Tag = txt.ToolTip.ToString().ToLower();
+          txt.Text = string.Empty;
+          txt.AcceptsReturn = false;
 
-        // Bind width of filter text box to ActualWidth of datagrid column
-        txt.SetBinding(TextBox.WidthProperty, widthBind);
-        
-        // Bind visibility of text box to visibility of the column
-        txt.SetBinding(TextBox.VisibilityProperty, visibilityBind);
+          // Bind width of filter text box to ActualWidth of datagrid column
+          txt.SetBinding(TextBox.WidthProperty, widthBind);
 
-        // Bind column to width property to viewmodel to enable its persistence
-        // The save function copies ActualWidth into the Width field and persists it
-        Binding b = new Binding("ActualWidth") { Source = col };
-        BindingOperations.SetBinding(columnVM.ActualWidth, BindSupport.WidthProperty, b);
+          // Bind visibility of text box to visibility of the column
+          txt.SetBinding(TextBox.VisibilityProperty, visibilityBind);
 
-        if (keyUpEvent != null)
-          txt.KeyUp += keyUpEvent;
+          // Bind column to width property to viewmodel to enable its persistence
+          // The save function copies ActualWidth into the Width field and persists it
+          Binding b = new Binding("ActualWidth") { Source = col };
+          BindingOperations.SetBinding(columnVM.ActualWidth, BindSupport.WidthProperty, b);
 
-        RegisterControl<TextBox>(txtSearchPanel, txt.Name, txt);
-        txtSearchPanel.Children.Add(txt);
+          if (keyUpEvent != null)
+            txt.KeyUp += keyUpEvent;
+
+          RegisterControl<TextBox>(txtSearchPanel, txt.Name, txt);
+          txtSearchPanel.Children.Add(txt);
+        }
       }
-    }
 
-    private static void RegisterControl<T>(FrameworkElement element, string controlName, T control)
-    {
-      if ((T)element.FindName(controlName) != null)
-        element.UnregisterName(controlName);
+      private static void RegisterControl<T>(FrameworkElement element, string controlName, T control)
+      {
+        if ((T)element.FindName(controlName) != null)
+          element.UnregisterName(controlName);
 
-      element.RegisterName(controlName, control);
-    }
+        element.RegisterName(controlName, control);
+      }
 
-    private static string getTextBoxName(string prop)
-    {
-      return string.Format("txtFilter{0}", prop).Replace(".", string.Empty);
+      private static string getTextBoxName(string prop)
+      {
+        return string.Format("txtFilter{0}", prop).Replace(".", string.Empty);
+      }
     }
   }
 }

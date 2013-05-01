@@ -6,7 +6,7 @@
     xmlns:common="clr-namespace:YALV.View.Components"
 
     xmlns:behav="clr-namespace:YalvLib.Behaviour;assembly=YalvLib"
-    xmlns:conv="clr-namespace:YavLib.Converter;assembly=YalvLib"
+    xmlns:conv="clr-namespace:YalvLib.Converter;assembly=YalvLib"
     xmlns:busi="clr-namespace:YalvLib.Behaviour.BusyIndicatorBehavior;assembly=YalvLib"
     xmlns:view="clr-namespace:YalvLib.View;assembly=YalvLib"
 

@@ -3,7 +3,7 @@
 					xmlns:local="clr-namespace:YalvLib.View"
 
           xmlns:behav="clr-namespace:YalvLib.Behaviour"
-          xmlns:conv="clr-namespace:YavLib.Converter"
+          xmlns:conv="clr-namespace:YalvLib.Converter"
           xmlns:Properties="clr-namespace:YalvLib.Strings"
 
           xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
