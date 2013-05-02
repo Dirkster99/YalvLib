@@ -120,6 +120,18 @@ namespace YalvLib.ViewModel
     {
         this.mLogItems.LoadFile(path, EntriesProviderType.Xml, this.loadFinishedEvent);
     }
+
+
+    public void LoadFiles(string[] paths)
+    {
+        foreach(string path in paths)
+        {
+            this.LoadFile(path);
+        }
+        
+    }
+
+
     public void LoadSqliteDatabase(string path)
     {
         this.mLogItems.LoadFile(path, EntriesProviderType.Sqlite, this.loadFinishedEvent);

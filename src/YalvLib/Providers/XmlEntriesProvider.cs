@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Text;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using YalvLib.Infrastructure;
 using YalvLib.Infrastructure.Log4Net;
@@ -33,6 +34,10 @@ namespace YalvLib.Providers
             mgr.AddNamespace("log4j", Log4jNs);
 
             XmlParserContext pc = new XmlParserContext(nt, mgr, "", XmlSpace.Default);
+
+            // Specifying encoding for the xml files
+            // Still having some display issues on the dataGrid, special characters are not well displayed on it.
+            pc.Encoding = Encoding.UTF8;
 
             using (XmlReader xr = XmlReader.Create(dataSource, settings, pc))
             {

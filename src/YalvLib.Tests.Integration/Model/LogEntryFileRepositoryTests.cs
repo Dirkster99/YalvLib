@@ -25,6 +25,18 @@ namespace YalvLib.Tests.Integration.Model
             //new ExportSession().Export(session);
         }
 
+        [Test]
+        public void LoadFileWithSpecialCharacters()
+        {
+            LogEntryFileRepository repository = null;
+            Assert.DoesNotThrow(delegate
+            {
+               repository = new LogEntryFileRepository("Model/sample_encoding.xml");
+            });
+            Assert.AreEqual(@"tongbong-PC\Gwenaël", repository.LogEntries[0].UserName);
+            // Tests on the dataGrid display are still to be written to ensure the "good looking" of the app.
+        }
+
     }
 
 }
