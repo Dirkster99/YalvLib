@@ -1,0 +1,20 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/YalvLib.Tests/bin/Debug
+/src/ModernYalv/bin/x86/Debug
+/src/ModernYalv/obj/x86/Debug
+/src/MRU/bin/x86/Debug
+/src/MRU/obj/x86/Debug
+/src/YALV/bin/Debug
+/src/YALV/obj/x86/Debug
+/src/YalvLib/bin/Debug
+/src/YalvLib/obj/Debug
+/src/YalvLib.Tests/obj/Debug
+/src/YalvLib.Tests.Integration/bin/Debug
+/src/YalvLib.Tests.Integration/obj/Debug
+/src/_ReSharper.YALV
+/src/YALV.Samples/bin/Debug
+/src/YALV.Samples/obj/x86/Debug
+/src/YALV.v11.suo
