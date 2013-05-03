@@ -1,4 +1,6 @@
-﻿namespace ModernYalv
+﻿using YalvLib.View.BusyIndicatorBehavior;
+
+namespace ModernYalv
 {
   using System;
   using System.Globalization;

@@ -1,9 +1,9 @@
-﻿namespace YalvLib.Behaviour
-{
-  using System.Windows;
-  using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Controls;
 
-  /// <summary>
+namespace YalvLib.View
+{
+    /// <summary>
   /// DataGrid Behavior class
   /// This class implements an attached behaviour to scroll to an
   /// item that can programatically be selected via ViewModel binding

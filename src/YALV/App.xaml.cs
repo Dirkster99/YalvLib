@@ -1,4 +1,6 @@
-﻿namespace YALV
+﻿using YalvLib.View.BusyIndicatorBehavior;
+
+namespace YALV
 {
   using System;
   using System.Configuration;

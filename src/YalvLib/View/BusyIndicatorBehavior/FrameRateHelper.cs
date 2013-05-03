@@ -1,10 +1,10 @@
-﻿namespace YalvLib.Behaviour.BusyIndicatorBehavior
-{
-  using System.Windows;
-  using System.Windows.Media;
-  using System.Windows.Media.Animation;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
-  public static class FrameRateHelper
+namespace YalvLib.View.BusyIndicatorBehavior
+{
+    public static class FrameRateHelper
   {
     private static int? mDesiredFrameRate;
 

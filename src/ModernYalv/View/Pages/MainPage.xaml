@@ -4,10 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 
-    xmlns:common="clr-namespace:YALV.View.Components"
-
-    xmlns:behav="clr-namespace:YalvLib.Behaviour;assembly=YalvLib"
-    xmlns:conv="clr-namespace:YalvLib.Converter;assembly=YalvLib"
+    xmlns:common="clr-namespace:YALV.View.Components" xmlns:conv="clr-namespace:YalvLib.Converter;assembly=YalvLib"
     xmlns:busi="clr-namespace:YalvLib.Behaviour.BusyIndicatorBehavior;assembly=YalvLib"
     xmlns:view="clr-namespace:YalvLib.View;assembly=YalvLib"
 
@@ -15,8 +12,7 @@
 
     xmlns:cult="clr-namespace:YalvLib.ViewModel;assembly=YalvLib"
     xmlns:Properties="clr-namespace:YalvLib.Strings;assembly=YalvLib"
-
-    mc:Ignorable="d" 
+      xmlns:BusyIndicatorBehavior="clr-namespace:YalvLib.View.BusyIndicatorBehavior;assembly=YalvLib" mc:Ignorable="d" 
     d:DesignHeight="600" d:DesignWidth="800"
 
     Title="{Binding Title}"
@@ -33,7 +29,7 @@
     <KeyBinding Command="{Binding Path=YalvLogViewModel.LogItems.CommandClearFilters}" Key="D" Modifiers="Control" />
   </Page.InputBindings>
 
-  <Grid busi:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogItems.LogFile.IsLoading}">
+  <Grid BusyIndicatorBehavior:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogItems.LogFile.IsLoading}">
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />

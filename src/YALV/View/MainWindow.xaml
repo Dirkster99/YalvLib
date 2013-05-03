@@ -3,10 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-    xmlns:common="clr-namespace:YALV.View.Components"
-
-    xmlns:behav="clr-namespace:YalvLib.Behaviour;assembly=YalvLib"
-    xmlns:conv="clr-namespace:YalvLib.Converter;assembly=YalvLib"
+    xmlns:common="clr-namespace:YALV.View.Components" xmlns:conv="clr-namespace:YalvLib.Converter;assembly=YalvLib"
     xmlns:busi="clr-namespace:YalvLib.Behaviour.BusyIndicatorBehavior;assembly=YalvLib"
     xmlns:view="clr-namespace:YalvLib.View;assembly=YalvLib"
 
@@ -14,7 +11,7 @@
 
     xmlns:cult="clr-namespace:YalvLib.ViewModel;assembly=YalvLib"
     xmlns:Properties="clr-namespace:YalvLib.Strings;assembly=YalvLib"
-
+    xmlns:BusyIndicatorBehavior="clr-namespace:YalvLib.View.BusyIndicatorBehavior;assembly=YalvLib"
     Style="{StaticResource DefaultWindowStyle}"
     Height="950"
     Width="1250"
@@ -33,7 +30,7 @@
     <KeyBinding Command="{Binding Path=YalvLogViewModel.CommandDelete}" Key="DEL" />
   </Window.InputBindings>
 
-  <Grid busi:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogItems.LogFile.IsLoading}">
+  <Grid BusyIndicatorBehavior:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogItems.LogFile.IsLoading}">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />

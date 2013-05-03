@@ -1,10 +1,9 @@
-namespace YalvLib.Behaviour.BusyIndicatorBehavior
-{
-  using System.Windows;
-  using System.Windows.Controls;
-  using System.Windows.Media.Animation;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
-  /// <summary>
+namespace YalvLib.View.BusyIndicatorBehavior
+{
+    /// <summary>
   /// Provides a circular progress bar
   /// </summary>
   public partial class CircularProgressBar : UserControl

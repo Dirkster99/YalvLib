@@ -70,13 +70,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviour\BusyIndicatorBehavior\BusyIndicatorBehavior.cs" />
-    <Compile Include="Behaviour\BusyIndicatorBehavior\CircularProgressBar.xaml.cs">
-      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Behaviour\BusyIndicatorBehavior\FrameRateHelper.cs" />
-    <Compile Include="Behaviour\ScrollSynchronizer.cs" />
-    <Compile Include="Behaviour\SelectedItem.cs" />
     <Compile Include="Common\BindableObject.cs" />
     <Compile Include="Common\CommandRelay.cs" />
     <Compile Include="Common\Converter\AdjustValueConverter.cs" />
@@ -146,21 +139,28 @@
     <Compile Include="ViewModel\LogFileLoader.cs" />
     <Compile Include="ViewModel\LogFileVM.cs" />
     <Compile Include="ViewModel\YalvViewModel.cs" />
+    <Compile Include="View\BusyIndicatorBehavior\BusyIndicatorBehavior.cs" />
+    <Compile Include="View\BusyIndicatorBehavior\CircularProgressBar.xaml.cs">
+      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BusyIndicatorBehavior\FrameRateHelper.cs" />
     <Compile Include="View\GridManager.cs" />
+    <Compile Include="View\ScrollSynchronizer.cs" />
+    <Compile Include="View\SelectedItem.cs" />
     <Compile Include="View\YalvView.xaml.cs">
       <DependentUpon>YalvView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Behaviour\BusyIndicatorBehavior\CircularProgressBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\GridStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\BusyIndicatorBehavior\CircularProgressBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

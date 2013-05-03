@@ -1,11 +1,11 @@
-﻿namespace YalvLib.Behaviour
-{
-  using System.Collections.Generic;
-  using System.Linq;
-  using System.Windows;
-  using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 
-  /// <summary>
+namespace YalvLib.View
+{
+    /// <summary>
   /// Refs: http://www.codeproject.com/Articles/39244/Scroll-Synchronization
   /// </summary>
   public class ScrollSynchronizer : DependencyObject

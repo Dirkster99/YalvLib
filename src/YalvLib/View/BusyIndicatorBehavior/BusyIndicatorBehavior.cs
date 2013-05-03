@@ -1,16 +1,16 @@
-namespace YalvLib.Behaviour.BusyIndicatorBehavior
-{
-  using System;
-  using System.Diagnostics;
-  using System.Windows;
-  using System.Windows.Controls;
-  using System.Windows.Data;
-  using System.Windows.Input;
-  using System.Windows.Media;
-  using System.Windows.Media.Animation;
-  using System.Windows.Shapes;
+using System;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 
-  /// <summary>
+namespace YalvLib.View.BusyIndicatorBehavior
+{
+    /// <summary>
   /// Refs: http://gallery.expression.microsoft.com/en-us/BusyIndicator
   /// </summary>
   public static class BusyIndicatorBehavior
