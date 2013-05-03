@@ -8,7 +8,6 @@ namespace YALV
   using System.Windows;
 
   using YALV.ViewModel;
-  using YalvLib.Behaviour.BusyIndicatorBehavior;
 
   /// <summary>
   /// Interaction logic for App.xaml

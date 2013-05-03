@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
     xmlns:common="clr-namespace:YALV.View.Components" xmlns:conv="clr-namespace:YalvLib.Converter;assembly=YalvLib"
-    xmlns:busi="clr-namespace:YalvLib.Behaviour.BusyIndicatorBehavior;assembly=YalvLib"
     xmlns:view="clr-namespace:YalvLib.View;assembly=YalvLib"
 
     xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
