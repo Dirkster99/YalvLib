@@ -103,6 +103,13 @@ namespace YalvLib.ViewModel
             } else
             {
                 LogEntryRepository repository = CreateLogFileEntryRepository(path);
+                if(!repository.LogEntries.Any())
+                {
+                    string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path,
+                                                  "No entries in the Logfile");
+                    MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title,
+                                   MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
                 session.AddSourceRepository(repository);                
             }
         }

@@ -78,10 +78,7 @@ namespace YalvLib.Providers
 
         private static XmlRootAttribute CreateRootAttribute()
         {
-            var rootAttribute = new XmlRootAttribute();
-            rootAttribute.ElementName = "event";
-            rootAttribute.Namespace = Log4jNs;
-            rootAttribute.IsNullable = true;
+            var rootAttribute = new XmlRootAttribute {ElementName = "event", Namespace = Log4jNs, IsNullable = true};
             return rootAttribute;
         }
 

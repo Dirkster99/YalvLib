@@ -17,6 +17,9 @@ namespace YalvLib.ViewModel
     private DisplayLogVM mLogItems = null;
     #endregion fields
 
+    /// <summary>
+    /// Defines files available extensions
+    /// </summary>
     public static string FileExtensionDialogFilter
     {
       get
@@ -34,6 +37,33 @@ namespace YalvLib.ViewModel
       }
     }
 
+
+    /// <summary>
+    /// Defines databases available extensions
+    /// </summary>
+    public static string DatabaseExtensionDialogFilter
+    {
+        get
+        {
+            return string.Format("{0}| *.db*" +
+                           "|{1} (*.*)|*.*", "Database files",
+                                             YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
+        }
+    }
+
+      /// <summary>
+      /// Defines yalv files extension
+      /// </summary>
+      public static string LogAnalysisExtensionDialogFilter
+      {
+          get
+          {
+              return string.Format("{0}| *.yalv*" +
+                             "|{1} (*.*)|*.*", "LogAnalysis files",
+                                               YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
+          }
+      }
+
     #region constructor
     /// <summary>
     /// Standard constructor
@@ -42,9 +72,9 @@ namespace YalvLib.ViewModel
     {
       this.mLogItems = new DisplayLogVM();
 
-      this.CommandRefresh = new CommandRelay(this.commandRefreshExecute, this.commandRequiresDataCanExecute);
+      this.CommandRefresh = new CommandRelay(this.CommandRefreshExecute, this.CommandRequiresDataCanExecute);
       this.CommandDelete = new CommandRelay(this.LogItems.commandDeleteExecute, this.LogItems.commandDeleteCanExecute);
-      this.FilterYalvView = new CommandRelay(this.commandFilterYalvView, this.commandRequiresDataCanExecute);
+      this.FilterYalvView = new CommandRelay(this.CommandFilterYalvView, this.CommandRequiresDataCanExecute);
     }
     #endregion constructor
 
@@ -115,13 +145,18 @@ namespace YalvLib.ViewModel
     /// <summary>
     /// Load a log4nez log file to display its content through this ViewModel.
     /// </summary>
-    /// <param name="path"></param>
+    /// <param name="path">file path</param>
     public void LoadFile(string path)
     {
-        this.mLogItems.LoadFile(path, EntriesProviderType.Xml, this.loadFinishedEvent);
+        this.mLogItems.LoadFile(path, EntriesProviderType.Xml, this.LoadFinishedEvent);
     }
 
 
+    /// <summary>
+    /// Load multiple files 
+    /// not working for the moment
+    /// </summary>
+    /// <param name="paths">file path</param>
     public void LoadFiles(string[] paths)
     {
         foreach(string path in paths)
@@ -132,27 +167,39 @@ namespace YalvLib.ViewModel
     }
 
 
+    /// <summary>
+    /// Load a database file
+    /// </summary>
+    /// <param name="path">file path</param>
     public void LoadSqliteDatabase(string path)
     {
-        this.mLogItems.LoadFile(path, EntriesProviderType.Sqlite, this.loadFinishedEvent);
+        this.mLogItems.LoadFile(path, EntriesProviderType.Sqlite, this.LoadFinishedEvent);
     }
+
+
+    /// <summary>
+    /// Load an entire LogAnalysis session
+    /// </summary>
+    /// <param name="path">file path</param>
     public void LoadLogAnalysisSession(string path)
     {
-        this.mLogItems.LoadFile(path, EntriesProviderType.Yalv, this.loadFinishedEvent);
+        this.mLogItems.LoadFile(path, EntriesProviderType.Yalv, this.LoadFinishedEvent);
     }
+
+
     /// <summary>
     /// Implementation of the Refresh command (reload data and apply filters)
     /// </summary>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    internal virtual object commandRefreshExecute(object parameter)
+    internal virtual object CommandRefreshExecute(object parameter)
     {
-      this.LogItems.commandRefreshExecute(this.loadFinishedEvent);
+      this.LogItems.commandRefreshExecute(this.LoadFinishedEvent);
 
       return null;
     }
 
-    internal virtual bool commandRequiresDataCanExecute(object parameter)
+    internal virtual bool CommandRequiresDataCanExecute(object parameter)
     {
       return this.HasData;
     }
@@ -162,7 +209,7 @@ namespace YalvLib.ViewModel
     /// </summary>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    protected virtual object commandFilterYalvView(object parameter)
+    protected virtual object CommandFilterYalvView(object parameter)
     {
       if (this.mLogItems != null)
       {
@@ -178,12 +225,12 @@ namespace YalvLib.ViewModel
     /// (even when it failed to finish after initialization).
     /// </summary>
     /// <param name="loadWasSuccessful"></param>
-    private void loadFinishedEvent(bool loadWasSuccessful)
+    private void LoadFinishedEvent(bool loadWasSuccessful)
     {
-      this.refreshCommandsCanExecute();
+      this.RefreshCommandsCanExecute();
     }
 
-    private void refreshCommandsCanExecute()
+    private void RefreshCommandsCanExecute()
     {
       this.CommandRefresh.OnCanExecuteChanged();
       this.CommandDelete.OnCanExecuteChanged();

@@ -524,12 +524,12 @@ Log4Net config file must be setup with XmlLayoutSchemaLog4j layout; just need a 
 It is a WPF Application based on .NET Framework 4.0 and written with C# language.</value>
   </data>
   <data name="Common_Components_MainMenu_FileMenu_ExportToSqlite_Header" xml:space="preserve">
-    <value>Export session to sqlite</value>
+    <value>Export Session to SQLite</value>
   </data>
   <data name="Common_Components_MainMenu_FileMenu_OpenSqliteDatabase_Header" xml:space="preserve">
-    <value>Open sqlite database...</value>
+    <value>Open SQLite Database...</value>
   </data>
   <data name="Common_Components_MainMenu_FileMenu_OpenLogAnalysisSession_Header" xml:space="preserve">
-    <value>Open log analysis session...</value>
+    <value>Open Log Analysis Session...</value>
   </data>
 </root>

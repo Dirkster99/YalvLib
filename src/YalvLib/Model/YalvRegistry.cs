@@ -13,6 +13,9 @@ namespace YalvLib.Model
         private YalvRegistry()
         {}
 
+        // This class actually manage only one session at a time (cf getter)
+        // but still have a list of session that can be returned to be read
+
         private List<LogAnalysisSession> _sessions = new List<LogAnalysisSession>(); 
 
         private static YalvRegistry _singleton;
@@ -27,12 +30,19 @@ namespace YalvLib.Model
             }
         }
 
+        /// <summary>
+        /// Clears and replace the actual session 
+        /// </summary>
+        /// <param name="session"></param>
         public void SetActualLogAnalysisSession(LogAnalysisSession session)
         {
             _sessions.Clear();
             _sessions.Add(session);
         }
 
+        /// <summary>
+        /// return actual session or null if there is none
+        /// </summary>
         public LogAnalysisSession ActualSession
         {
             get
@@ -43,6 +53,9 @@ namespace YalvLib.Model
             }
         }
 
+        /// <summary>
+        /// Return a readonly collection containing the sessions
+        /// </summary>
         public ReadOnlyCollection<LogAnalysisSession> LogAnalysisSessions
         {
             get

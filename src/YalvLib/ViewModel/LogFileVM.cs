@@ -98,7 +98,7 @@
 
     #region Methods
     #region commandDelete
-    internal virtual void commandDeleteExecute()
+    internal virtual void CommandDeleteExecute()
     {
       if (string.IsNullOrEmpty(this.FilePath) == false && this.IsFileLoaded == true)
       {
@@ -107,7 +107,7 @@
           return;
 
         // Delete all selected file
-        if (this.deleteFile(this.FilePath) == true)
+        if (this.DeleteFile(this.FilePath) == true)
         {
           this.FilePath = string.Empty;
           this.IsFileLoaded = false;
@@ -117,7 +117,7 @@
       return;
     }
 
-    internal virtual bool commandDeleteCanExecute()
+    internal virtual bool CommandDeleteCanExecute()
     {
       return (string.IsNullOrEmpty(this.FilePath) == false && this.IsFileLoaded == true);
     }
@@ -127,7 +127,7 @@
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    private bool deleteFile(string path)
+    private bool DeleteFile(string path)
     {
       try
       {

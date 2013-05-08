@@ -334,7 +334,7 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export session to sqlite.
+        ///   Looks up a localized string similar to Export Session to SQLite.
         /// </summary>
         public static string Common_Components_MainMenu_FileMenu_ExportToSqlite_Header {
             get {
@@ -361,7 +361,7 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open log analysis session....
+        ///   Looks up a localized string similar to Open Log Analysis Session....
         /// </summary>
         public static string Common_Components_MainMenu_FileMenu_OpenLogAnalysisSession_Header {
             get {
@@ -370,7 +370,7 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open sqlite database....
+        ///   Looks up a localized string similar to Open SQLite Database....
         /// </summary>
         public static string Common_Components_MainMenu_FileMenu_OpenSqliteDatabase_Header {
             get {

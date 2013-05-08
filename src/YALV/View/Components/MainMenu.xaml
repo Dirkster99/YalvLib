@@ -36,8 +36,6 @@
             <recentList:RecentFileList x:Name="RecentFileListMenu" />
         </MenuItem>
         <Separator />
-
-        <Separator />
         <MenuItem 
             Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_ExportToSqlite_Header}"
             Command="{Binding Path=CommandExport}">

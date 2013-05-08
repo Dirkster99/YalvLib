@@ -109,7 +109,7 @@ namespace YalvLib.ViewModel
             // Default constructor contains column definitions
             // The callback is invocked when a column filter string item is changed
             // so we know that we should update the viewmodel filter
-            this.mDataGridColumns = new ColumnsVM(this.ColumnsVM_UpdateColumnFilter);
+            this.mDataGridColumns = new ColumnsVM(this.ColumnsVmUpdateColumnFilter);
 
             this.mLogFile = new LogFileVM();
         }
@@ -119,8 +119,8 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Declare a type of method to be called upon succesful load of log file.
         /// </summary>
-        /// <param name="LoadWasSuccessful"></param>
-        public delegate void EvaluateLoadResult(bool LoadWasSuccessful);
+        /// <param name="loadWasSuccessful"></param>
+        public delegate void EvaluateLoadResult(bool loadWasSuccessful);
         #endregion delegate
 
         #region Properties
@@ -263,7 +263,7 @@ namespace YalvLib.ViewModel
                 {
                     this.mShowLevelDebug = value;
                     this.RaisePropertyChanged(PROP_ShowLevelDebug);
-                    this.resetLevelSelection();
+                    this.ResetLevelSelection();
                     this.RefreshView();
                 }
             }
@@ -285,7 +285,7 @@ namespace YalvLib.ViewModel
                 {
                     this.mShowLevelInfo = value;
                     this.RaisePropertyChanged(PROP_ShowLevelInfo);
-                    this.resetLevelSelection();
+                    this.ResetLevelSelection();
                     this.RefreshView();
                 }
             }
@@ -307,7 +307,7 @@ namespace YalvLib.ViewModel
                 {
                     this.mShowLevelWarn = value;
                     this.RaisePropertyChanged(PROP_ShowLevelWarn);
-                    this.resetLevelSelection();
+                    this.ResetLevelSelection();
                     this.RefreshView();
                 }
             }
@@ -329,7 +329,7 @@ namespace YalvLib.ViewModel
                 {
                     this.mShowLevelError = value;
                     this.RaisePropertyChanged(PROP_ShowLevelError);
-                    this.resetLevelSelection();
+                    this.ResetLevelSelection();
                     this.RefreshView();
                 }
             }
@@ -351,7 +351,7 @@ namespace YalvLib.ViewModel
                 {
                     this.mShowLevelFatal = value;
                     this.RaisePropertyChanged(PROP_ShowLevelFatal);
-                    this.resetLevelSelection();
+                    this.ResetLevelSelection();
                     this.RefreshView();
                 }
             }
@@ -379,7 +379,7 @@ namespace YalvLib.ViewModel
                     if (this.mSelectAll)
                     {
                         this.mShowLevelDebug = this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = true;
-                        this.refreshCheckBoxBinding();
+                        this.RefreshCheckBoxBinding();
                         this.RefreshView();
                     }
 
@@ -409,7 +409,7 @@ namespace YalvLib.ViewModel
                     {
                         this.mSelectAll = this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = false;
                         this.mShowLevelDebug = true;
-                        this.refreshCheckBoxBinding();
+                        this.RefreshCheckBoxBinding();
                         this.RefreshView();
 
                         this.CommandClearFilters.OnCanExecuteChanged();
@@ -439,7 +439,7 @@ namespace YalvLib.ViewModel
                     {
                         this.mSelectAll = this.mShowLevelDebug = this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = false;
                         this.mShowLevelInfo = true;
-                        this.refreshCheckBoxBinding();
+                        this.RefreshCheckBoxBinding();
                         this.RefreshView();
 
                         this.CommandClearFilters.OnCanExecuteChanged();
@@ -469,7 +469,7 @@ namespace YalvLib.ViewModel
                     {
                         this.mSelectAll = this.mShowLevelDebug = this.mShowLevelInfo = this.mShowLevelError = this.mShowLevelFatal = false;
                         this.mShowLevelWarn = true;
-                        this.refreshCheckBoxBinding();
+                        this.RefreshCheckBoxBinding();
                     }
 
                     this.RefreshView();
@@ -500,7 +500,7 @@ namespace YalvLib.ViewModel
                     {
                         this.mSelectAll = this.mShowLevelDebug = this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelFatal = false;
                         this.mShowLevelError = true;
-                        this.refreshCheckBoxBinding();
+                        this.RefreshCheckBoxBinding();
                         this.RefreshView();
                     }
 
@@ -530,7 +530,7 @@ namespace YalvLib.ViewModel
                     {
                         this.mSelectAll = this.mShowLevelDebug = this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelError = false;
                         this.mShowLevelFatal = true;
-                        this.refreshCheckBoxBinding();
+                        this.RefreshCheckBoxBinding();
                         this.RefreshView();
                     }
 
@@ -732,7 +732,7 @@ namespace YalvLib.ViewModel
                 {
                     if (string.IsNullOrEmpty(colItem.ColumnFilterValue) == false)
                     {
-                        object val = getItemValue(logitem, colItem.Header);
+                        object val = GetItemValue(logitem, colItem.Header);
 
                         if (val != null)
                         {
@@ -761,7 +761,7 @@ namespace YalvLib.ViewModel
         public void SetColumnsLayout(List<ColumnItem> columnCollection)
         {
             this.mDataGridColumns.SetColumnsLayout(columnCollection,
-                                                   this.ColumnsVM_UpdateColumnFilter);
+                                                   this.ColumnsVmUpdateColumnFilter);
         }
 
         /// <summary>
@@ -771,7 +771,7 @@ namespace YalvLib.ViewModel
         public void LoadColumnsLayout(string pathFileName)
         {
             this.mDataGridColumns.LoadColumnsLayout(pathFileName,
-                                                    this.ColumnsVM_UpdateColumnFilter);
+                                                    this.ColumnsVmUpdateColumnFilter);
         }
 
         /// <summary>
@@ -831,14 +831,14 @@ namespace YalvLib.ViewModel
         #region commandDelete
         internal virtual object commandDeleteExecute(object parameter)
         {
-            this.mLogFile.commandDeleteExecute();
+            this.mLogFile.CommandDeleteExecute();
 
             return null;
         }
 
         internal virtual bool commandDeleteCanExecute(object parameter)
         {
-            return this.mLogFile.commandDeleteCanExecute();
+            return this.mLogFile.CommandDeleteCanExecute();
         }
         #endregion commandDelete
 
@@ -871,6 +871,7 @@ namespace YalvLib.ViewModel
         /// This function is calles to initiate a load file process.
         /// </summary>
         /// <param name="path"></param>
+        /// <param name="providerType"> </param>
         /// <param name="callbackOnFinished"></param>
         /// <returns></returns>
         internal bool LoadFile(string path, EntriesProviderType providerType, EvaluateLoadResult callbackOnFinished)
@@ -887,7 +888,7 @@ namespace YalvLib.ViewModel
                 {
                     this.fileFoader = new LogFileLoader();
                     fileFoader.ProviderType = providerType;
-                    this.fileFoader.loadResultEvent += new EventHandler<LogFileLoader.ResultEvent>(this.fileFoader_ResultEvent);
+                    this.fileFoader.loadResultEvent += new EventHandler<LogFileLoader.ResultEvent>(this.FileFoaderResultEvent);
 
                     this.LogFile.IsLoading = true;
                     this.LogFile.FilePath = path;
@@ -907,7 +908,7 @@ namespace YalvLib.ViewModel
         /// <param name="item"></param>
         /// <param name="prop"></param>
         /// <returns></returns>
-        protected static object getItemValue(object item, string prop)
+        protected static object GetItemValue(object item, string prop)
         {
             object val = null;
             try
@@ -948,7 +949,7 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Refresh bindings for all log level filter (Debug, Info, Warn ...) elements
         /// </summary>
-        private void refreshCheckBoxBinding()
+        private void RefreshCheckBoxBinding()
         {
             RaisePropertyChanged(PROP_ShowLevelDebug);
             RaisePropertyChanged(PROP_ShowLevelInfo);
@@ -960,7 +961,7 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Reset the filter selection of all log4net levels (SelectAll, Debug, Info, Warn ...) to false.
         /// </summary>
-        private void resetLevelSelection()
+        private void ResetLevelSelection()
         {
             this.SelectAll = false;
             this.SelectDebug = false;
@@ -970,7 +971,7 @@ namespace YalvLib.ViewModel
             this.SelectFatal = false;
         }
 
-        private void updateFilteredCounters(ICollectionView filteredList)
+        private void UpdateFilteredCounters(ICollectionView filteredList)
         {
             if (filteredList != null)
             {
@@ -1016,7 +1017,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        private bool levelCheckFilter(object item)
+        private bool LevelCheckFilter(object item)
         {
             LogEntry logItem = item as LogEntry;
 
@@ -1126,7 +1127,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ColumnsVM_UpdateColumnFilter(object sender, System.EventArgs e)
+        private void ColumnsVmUpdateColumnFilter(object sender, System.EventArgs e)
         {
             //// Justification: It might be better to let the user decide when a filter is on or off
             //// since typing can be a slow down experience if the filter is updated on every keyboard press
@@ -1181,7 +1182,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void fileFoader_ResultEvent(object sender, LogFileLoader.ResultEvent e)
+        private void FileFoaderResultEvent(object sender, LogFileLoader.ResultEvent e)
         {
             lock (this.lockObject)
             {
@@ -1191,7 +1192,7 @@ namespace YalvLib.ViewModel
                 {
                     try
                     {
-                        this.fileFoader.loadResultEvent -= this.fileFoader_ResultEvent;
+                        this.fileFoader.loadResultEvent -= this.FileFoaderResultEvent;
                     }
                     catch
                     {
@@ -1235,7 +1236,7 @@ namespace YalvLib.ViewModel
                         if (this.Items.Count > 0)         // select the last item in the list to scroll down the view
                         {
                             var lastItem = (from it in this.Items
-                                            where this.levelCheckFilter(it)
+                                            where this.LevelCheckFilter(it)
                                             select it).LastOrDefault<LogEntry>();
 
                             // Select the last item to scroll viewer down to last entry
