@@ -38,7 +38,6 @@
     /// </summary>
     public ColumnItem()
     {
-      this.ColumnFilterValue = 
       this.FilterControlName = string.Empty;
 
       this.ActualWidth = new BindSupport();
@@ -130,6 +129,7 @@
     /// <summary>
     /// Get/set string that can be used to filter the view by the contents of this column
     /// </summary>
+    [System.Xml.Serialization.XmlIgnore]
     public string ColumnFilterValue
     {
       get

@@ -104,8 +104,8 @@ namespace YALV.ViewModel
         {
             get
             {
-                string sFile = (string.IsNullOrEmpty(this.mYalvLogViewModel.FilePath) ? string.Empty :
-                                                                                        " - " + this.mYalvLogViewModel.FilePath);
+                string sFile = (this.YalvLogViewModel.FilePaths.Length == 0? string.Empty :
+                                                                                        " - " + this.mYalvLogViewModel.FilePaths[0]);
 
                 return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
             }
@@ -177,7 +177,7 @@ namespace YALV.ViewModel
         {
             try
             {
-                this.mYalvLogViewModel.LoadFile(filePath);
+                this.mYalvLogViewModel.LoadFiles(new string[]{filePath});
             }
             finally
             {
@@ -217,14 +217,14 @@ namespace YALV.ViewModel
 
             dlg.Filter = YalvViewModel.FileExtensionDialogFilter;
             dlg.DefaultExt = "*.log4j";
-            dlg.Multiselect = false;
+            dlg.Multiselect = true;
             dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
                                   YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
 
             if (dlg.ShowDialog().GetValueOrDefault() == true)
             {
-                this.mYalvLogViewModel.LoadFile(dlg.FileName);
-                ////this.mYalvLogViewModel.LogItems.LoadFileList(dlg.FileName);
+                this.mYalvLogViewModel.LoadFiles(dlg.FileNames);
+         
 
                 this.RecentFileList.InsertFile(dlg.FileName);
 

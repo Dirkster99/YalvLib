@@ -7,7 +7,6 @@ namespace ModernYalv
   using System.Windows;
   using ModernYalv.Settings;
   using ModernYalv.ViewModel;
-  using YalvLib.Behaviour.BusyIndicatorBehavior;
 
   /// <summary>
   /// Interaction logic for App.xaml

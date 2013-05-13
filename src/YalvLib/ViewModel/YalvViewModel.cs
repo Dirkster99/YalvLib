@@ -1,4 +1,5 @@
-﻿using YalvLib.Domain;
+﻿using System.Collections.Generic;
+using YalvLib.Domain;
 using YalvLib.Providers;
 
 namespace YalvLib.ViewModel
@@ -12,7 +13,7 @@ namespace YalvLib.ViewModel
   public class YalvViewModel : BindableObject
   {
     #region fields
-    private const string PROP_FilePath = "FilePath";
+    private const string PROP_FilePath = "FilePaths";
 
     private DisplayLogVM mLogItems = null;
     #endregion fields
@@ -84,7 +85,7 @@ namespace YalvLib.ViewModel
     /// the currently viewed log4net file or
     /// empty string if there is no file being viewed at present.
     /// </summary>
-    public string FilePath
+    public string[] FilePaths
     {
       get
       {
@@ -92,11 +93,16 @@ namespace YalvLib.ViewModel
         {
           if (this.LogItems.LogFile != null)
           {
-            return this.LogItems.LogFile.FilePath;
+              var filePaths = new string[this.LogItems.LogFile.FilePaths.Count];
+              for (int i = 0; i < this.LogItems.LogFile.FilePaths.Count; i++)
+              {
+                  filePaths[i] = this.LogItems.LogFile.FilePaths[i];
+              }
+            return filePaths;
           }
         }
 
-        return string.Empty;
+        return new string[0];
       }
     }
 
@@ -145,26 +151,14 @@ namespace YalvLib.ViewModel
     /// <summary>
     /// Load a log4nez log file to display its content through this ViewModel.
     /// </summary>
-    /// <param name="path">file path</param>
-    public void LoadFile(string path)
-    {
-        this.mLogItems.LoadFile(path, EntriesProviderType.Xml, this.LoadFinishedEvent);
-    }
-
-
-    /// <summary>
-    /// Load multiple files 
-    /// not working for the moment
-    /// </summary>
     /// <param name="paths">file path</param>
     public void LoadFiles(string[] paths)
     {
-        foreach(string path in paths)
-        {
-            this.LoadFile(path);
-        }
-        
+        List<string> pathsList = new List<string>();
+        pathsList.AddRange(paths);
+        this.mLogItems.LoadFile(pathsList, EntriesProviderType.Xml, this.LoadFinishedEvent);
     }
+
 
 
     /// <summary>
@@ -173,7 +167,7 @@ namespace YalvLib.ViewModel
     /// <param name="path">file path</param>
     public void LoadSqliteDatabase(string path)
     {
-        this.mLogItems.LoadFile(path, EntriesProviderType.Sqlite, this.LoadFinishedEvent);
+        this.mLogItems.LoadFile(new List<string>() {path}, EntriesProviderType.Sqlite, this.LoadFinishedEvent);
     }
 
 
@@ -183,7 +177,7 @@ namespace YalvLib.ViewModel
     /// <param name="path">file path</param>
     public void LoadLogAnalysisSession(string path)
     {
-        this.mLogItems.LoadFile(path, EntriesProviderType.Yalv, this.LoadFinishedEvent);
+        this.mLogItems.LoadFile(new List<string>() {path}, EntriesProviderType.Yalv, this.LoadFinishedEvent);
     }
 
 

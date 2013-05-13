@@ -1,4 +1,6 @@
-﻿namespace YalvLib.ViewModel
+﻿using System.Collections.Generic;
+
+namespace YalvLib.ViewModel
 {
   using System;
   using System.IO;
@@ -12,13 +14,13 @@
   {
     #region fields
     private const string PROP_IsLoading = "IsLoading";
-    private const string PROP_FilePath = "FilePath";
+    private const string PROP_FilePath = "FilePaths";
     private const string PROP_IsFileLoaded = "IsFileLoaded";
 
     private bool mIsLoading;
     #endregion fields
 
-    private string mFilePath;
+    private List<string> mFilePaths;
     private bool mIsFileLoaded;
 
     #region Constructors
@@ -27,7 +29,7 @@
     /// </Summary>
     public LogFileVM()
     {
-      this.mFilePath = string.Empty;
+      this.mFilePaths = new List<string>();
 
       this.mIsFileLoaded = false;
       this.mIsLoading = false;
@@ -78,18 +80,18 @@
     /// <summary>
     /// Get a the file system path of the log file
     /// </summary>
-    public string FilePath
+    public List<string> FilePaths
     {
       get
       {
-        return (this.mFilePath == null ? string.Empty : this.mFilePath);
+        return (this.mFilePaths == null ? new List<string>() : this.mFilePaths);
       }
 
       internal set
       {
-        if (this.mFilePath != value)
+        if (this.mFilePaths != value)
         {
-          this.mFilePath = value;
+          this.mFilePaths = value;
           this.RaisePropertyChanged(PROP_FilePath);
         }
       }
@@ -100,16 +102,16 @@
     #region commandDelete
     internal virtual void CommandDeleteExecute()
     {
-      if (string.IsNullOrEmpty(this.FilePath) == false && this.IsFileLoaded == true)
+      if (this.FilePaths.Count == 0 && this.IsFileLoaded == true)
       {
         if (MessageBox.Show(YalvLib.Strings.Resources.MainWindowVM_commandDeleteExecute_DeleteCheckedFiles_ConfirmText,
                             YalvLib.Strings.Resources.MainWindowVM_commandDeleteExecute_DeleteCheckedFiles_ConfirmTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
           return;
 
         // Delete all selected file
-        if (this.DeleteFile(this.FilePath) == true)
+        if (this.DeleteFiles(this.FilePaths) == true)
         {
-          this.FilePath = string.Empty;
+          this.FilePaths = new List<string>();
           this.IsFileLoaded = false;
         }
       }
@@ -119,27 +121,31 @@
 
     internal virtual bool CommandDeleteCanExecute()
     {
-      return (string.IsNullOrEmpty(this.FilePath) == false && this.IsFileLoaded == true);
+      return (this.FilePaths.Count == 0 && this.IsFileLoaded == true);
     }
 
     /// <summary>
     /// Physically delete a file in the file system.
     /// </summary>
-    /// <param name="path"></param>
+    /// <param name="paths"></param>
     /// <returns></returns>
-    private bool DeleteFile(string path)
+    private bool DeleteFiles(List<string> paths)
     {
       try
       {
-        FileInfo fileInfo = new FileInfo(path);
-        if (fileInfo != null)
-          fileInfo.Delete();
+          foreach (var path in paths)
+          {
+              FileInfo fileInfo = new FileInfo(path);
+              if (fileInfo != null)
+                  fileInfo.Delete();
+          }
+
 
         return true;
       }
       catch (Exception ex)
       {
-        MessageBox.Show(string.Format(YalvLib.Strings.Resources.MainWindowVM_deleteFile_ErrorMessage_Text, path, ex.Message),
+        MessageBox.Show(string.Format(YalvLib.Strings.Resources.MainWindowVM_deleteFile_ErrorMessage_Text, paths, ex.Message),
                                       YalvLib.Strings.Resources.MainWindowVM_deleteFile_ErrorMessage_Title, MessageBoxButton.OK, MessageBoxImage.Error);
         return false;
       }

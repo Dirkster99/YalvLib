@@ -150,6 +150,7 @@
             readFileStream.Close();
           }
         }
+
       }
 
       return loadedClass;

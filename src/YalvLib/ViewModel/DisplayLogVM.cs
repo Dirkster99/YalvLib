@@ -824,7 +824,7 @@ namespace YalvLib.ViewModel
         {
             if (this.LogFile.IsFileLoaded == true)
             {
-                this.LoadFile(this.LogFile.FilePath, EntriesProviderType.Xml, callbackOnFinishedparameter);
+                this.LoadFile(this.LogFile.FilePaths, EntriesProviderType.Xml, callbackOnFinishedparameter);
             }
         }
 
@@ -870,11 +870,11 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// This function is calles to initiate a load file process.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="paths"></param>
         /// <param name="providerType"> </param>
         /// <param name="callbackOnFinished"></param>
         /// <returns></returns>
-        internal bool LoadFile(string path, EntriesProviderType providerType, EvaluateLoadResult callbackOnFinished)
+        internal bool LoadFile(List<string> paths, EntriesProviderType providerType, EvaluateLoadResult callbackOnFinished)
         {
             lock (this.lockObject)
             {
@@ -890,10 +890,11 @@ namespace YalvLib.ViewModel
                     fileFoader.ProviderType = providerType;
                     this.fileFoader.loadResultEvent += new EventHandler<LogFileLoader.ResultEvent>(this.FileFoaderResultEvent);
 
-                    this.LogFile.IsLoading = true;
-                    this.LogFile.FilePath = path;
-
-                    this.fileFoader.LoadFile(path, true);
+                    {
+                        this.LogFile.IsLoading = true;
+                        this.LogFile.FilePaths = paths;
+                        this.fileFoader.LoadFile(paths, true);
+                    }
 
                     return true;
                 }
@@ -1111,8 +1112,12 @@ namespace YalvLib.ViewModel
         /// <param name="items"></param>
         private void RebuildLogView(ObservableCollection<LogEntry> items)
         {
-            this.Items = new ObservableCollection<LogEntry>(items);
-            this.LogView = (CollectionView)CollectionViewSource.GetDefaultView(items);
+            if (this.Items != null)
+                foreach (var item in items)
+                    this.Items.Add(item);
+            else
+                this.Items = new ObservableCollection<LogEntry>();
+            this.LogView = (CollectionView)CollectionViewSource.GetDefaultView(this.Items);
             this.LogView.Filter = this.OnFilterLogItems;
             this.RefreshView();
         }

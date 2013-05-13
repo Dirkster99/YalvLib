@@ -89,33 +89,33 @@ namespace YalvLib.ViewModel
     /// <summary>
     /// Parse a log4net log file via abstract parser provider class for SQL, Sqlite, XML file etc...
     /// </summary>
-    /// <param name="path"></param>
+    /// <param name="paths"></param>
     /// <returns></returns>
-    internal LogAnalysisSession CreateLogAnalysisSession(string path)
+    internal LogAnalysisSession CreateLogAnalysisSession(List<string> paths)
     {
         LogAnalysisSession session = new LogAnalysisSession();
         try
         {
             if (ProviderType.Equals(EntriesProviderType.Yalv))
             {
-                LogAnalysisSessionLoader loader = new LogAnalysisSessionLoader(path);
+                LogAnalysisSessionLoader loader = new LogAnalysisSessionLoader(paths[0]);
                 session = loader.Load();
             } else
             {
-                LogEntryRepository repository = CreateLogFileEntryRepository(path);
-                if(!repository.LogEntries.Any())
+                List<LogEntryRepository> repositories = new List<LogEntryRepository>();
+                foreach (string path in paths)
                 {
-                    string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path,
-                                                  "No entries in the Logfile");
-                    MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title,
-                                   MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    LogEntryRepository repository = CreateLogFileEntryRepository(path);
+                    repositories.Add(repository);
                 }
-                session.AddSourceRepository(repository);                
+                RepositoryMerger merger = new RepositoryMerger(repositories);
+                LogEntryRepository sourceRepository = merger.Merge();
+                session.AddSourceRepository(sourceRepository);
             }
         }
         catch (Exception exception)
         {
-            string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path, exception.Message);
+            string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, paths, exception.Message);
             MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
         return session;
@@ -137,9 +137,9 @@ namespace YalvLib.ViewModel
     /// load the contents of a log file in an async task and return
     /// the result through an event object (event is setup prior to this call).
     /// </summary>
-    /// <param name="path"></param>
+    /// <param name="paths"></param>
     /// <param name="async"></param>
-    internal void LoadFile(string path, bool async)
+    internal void LoadFile(List<string> paths, bool async)
     {
       this.SaveThreadContext(async);
 
@@ -160,16 +160,21 @@ namespace YalvLib.ViewModel
         {
           cancelToken.ThrowIfCancellationRequested();
 
-          if (System.IO.File.Exists(path) == false)
-          {
-            MessageBox.Show(string.Format("Cannot access file '{0}'.", path));
-            return Results;
-          }
+            foreach (string path in paths)
+            {
+                if (System.IO.File.Exists(path) == false)
+                {
+                    MessageBox.Show(string.Format("Cannot access file '{0}'.", path));
+                    return Results;
+                }
+            }
 
-          this.mLogFile.FilePath = path;
+
+            this.mLogFile.FilePaths = paths;
             
-          LogAnalysisSession session = CreateLogAnalysisSession(path);
+            LogAnalysisSession session = CreateLogAnalysisSession(paths);
             YalvRegistry.Instance.SetActualLogAnalysisSession(session);
+            
             this.mObjColl.Add(LogFileLoader.KeyLogItems, session.LogEntries);
         }
         catch (OperationCanceledException exp)

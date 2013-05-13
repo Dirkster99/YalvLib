@@ -9,7 +9,18 @@ namespace YalvLib.Model
     public class RepositoryMerger
     {
 
-        private List<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>(); 
+        private List<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
+
+        public RepositoryMerger()
+        {
+
+        }
+
+
+        public RepositoryMerger(List<LogEntryRepository> repos)
+        {
+            this._sourceRepositories = repos;
+        }
 
         public void AddSourceRepository(LogEntryRepository sourceRepository)
         {

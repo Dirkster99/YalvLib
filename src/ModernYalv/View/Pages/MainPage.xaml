@@ -5,7 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 
     xmlns:common="clr-namespace:YALV.View.Components" xmlns:conv="clr-namespace:YalvLib.Converter;assembly=YalvLib"
-    xmlns:busi="clr-namespace:YalvLib.Behaviour.BusyIndicatorBehavior;assembly=YalvLib"
     xmlns:view="clr-namespace:YalvLib.View;assembly=YalvLib"
 
     xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"

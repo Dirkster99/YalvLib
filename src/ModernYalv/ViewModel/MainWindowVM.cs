@@ -78,13 +78,13 @@
 
     public string Title
     {
-      get
-      {
-        string sFile = (string.IsNullOrEmpty(this.mYalvLogViewModel.FilePath) ? string.Empty :
-                                                                                " - " + this.mYalvLogViewModel.FilePath);
+        get
+        {
+            string sFile = (this.YalvLogViewModel.FilePaths.Length == 0 ? string.Empty :
+                                                                                    " - " + this.mYalvLogViewModel.FilePaths[0]);
 
-        return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
-      }
+            return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
+        }
     }
 
     #region Commands
@@ -184,7 +184,7 @@
     {
       try
       {
-        this.mYalvLogViewModel.LoadFile(filePath);
+          this.mYalvLogViewModel.LoadFiles(new string[] { filePath });
       }
       finally
       {
@@ -388,7 +388,7 @@
     {
       try
       {
-        this.mYalvLogViewModel.LoadFile(sfileName);
+          this.mYalvLogViewModel.LoadFiles(new string[] { sfileName });
 
         this.mLastFileLoad = sfileName;
 
