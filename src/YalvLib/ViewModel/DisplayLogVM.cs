@@ -742,15 +742,14 @@ namespace YalvLib.ViewModel
                             else
                                 valToCompare = val.ToString();
 
-                            if (valToCompare.ToString().IndexOf(colItem.ColumnFilterValue, StringComparison.OrdinalIgnoreCase) >= 0)
-                                return true;
-                            else
+                            if (valToCompare.ToString().IndexOf(colItem.ColumnFilterValue, StringComparison.OrdinalIgnoreCase) < 0)
                                 return false;
                         }
                     }
                 }
+                return true;
             }
-
+            // Why do we return true if the column is null??
             return true;
         }
 
