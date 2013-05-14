@@ -694,7 +694,7 @@ namespace YalvLib.ViewModel
         {
             get
             {
-                return (this.mItems == null ? false : (this.mItems.Count == 0 ? false : true));
+                return (this.mItems != null && (this.mItems.Count != 0));
             }
         }
 
@@ -730,7 +730,8 @@ namespace YalvLib.ViewModel
             {
                 foreach (ColumnItem colItem in col.DataGridColumns)
                 {
-                    if (string.IsNullOrEmpty(colItem.ColumnFilterValue) == false)
+                    // Crashs on filtering LevelIndex field is fixed with the second condition of this if, but it´s not a clean fix...
+                    if (string.IsNullOrEmpty(colItem.ColumnFilterValue) == false && !colItem.Field.Equals("LevelIndex"))
                     {
                         object val = GetItemValue(logitem, colItem.Header);
 
