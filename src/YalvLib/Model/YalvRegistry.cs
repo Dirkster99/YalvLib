@@ -13,10 +13,10 @@ namespace YalvLib.Model
         private YalvRegistry()
         {}
 
-        // This class actually manage only one session at a time (cf getter)
-        // but still have a list of session that can be returned to be read
+        // This class actually manage only one workspace at a time (cf getter)
+        // but still have a list of workspace that can be returned to be read
 
-        private List<LogAnalysisSession> _sessions = new List<LogAnalysisSession>(); 
+        private List<LogAnalysisWorkspace> _sessions = new List<LogAnalysisWorkspace>(); 
 
         private static YalvRegistry _singleton;
 
@@ -31,19 +31,19 @@ namespace YalvLib.Model
         }
 
         /// <summary>
-        /// Clears and replace the actual session 
+        /// Clears and replace the actual workspace 
         /// </summary>
-        /// <param name="session"></param>
-        public void SetActualLogAnalysisSession(LogAnalysisSession session)
+        /// <param name="workspace"></param>
+        public void SetActualLogAnalysisSession(LogAnalysisWorkspace workspace)
         {
             _sessions.Clear();
-            _sessions.Add(session);
+            _sessions.Add(workspace);
         }
 
         /// <summary>
-        /// return actual session or null if there is none
+        /// return actual workspace or null if there is none
         /// </summary>
-        public LogAnalysisSession ActualSession
+        public LogAnalysisWorkspace ActualWorkspace
         {
             get
             {
@@ -56,11 +56,11 @@ namespace YalvLib.Model
         /// <summary>
         /// Return a readonly collection containing the sessions
         /// </summary>
-        public ReadOnlyCollection<LogAnalysisSession> LogAnalysisSessions
+        public ReadOnlyCollection<LogAnalysisWorkspace> LogAnalysisSessions
         {
             get
             {
-                return new ReadOnlyCollection<LogAnalysisSession>(_sessions);
+                return new ReadOnlyCollection<LogAnalysisWorkspace>(_sessions);
             }
         }
     }

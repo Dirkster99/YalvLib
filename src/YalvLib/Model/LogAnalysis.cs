@@ -10,16 +10,16 @@ namespace YalvLib.Model
     /// This class is some kind of layer where markers, custom filters and
     /// others features will be add
     /// </summary>
-    public class LogAnalysisDecorator
+    public class LogAnalysis
     {
 
-        //private static LogAnalysisDecorator _singleton = null;
+        //private static LogAnalysis _singleton = null;
         //static readonly object padlock = new object();
 
         /// <summary>
-        /// LogAnalysisDecorator Constructor
+        /// LogAnalysis Constructor
         /// </summary>
-        public LogAnalysisDecorator()
+        public LogAnalysis()
         {
             Markers = new List<AbstractMarker>
                                {
@@ -29,13 +29,13 @@ namespace YalvLib.Model
                                };
         }
 
-        /*public static LogAnalysisDecorator Instance
+        /*public static LogAnalysis Instance
         {
             get
             {
                 lock(padlock)
                 {
-                    return _singleton ?? (_singleton = new LogAnalysisDecorator());
+                    return _singleton ?? (_singleton = new LogAnalysis());
                 }
             }
         }*/

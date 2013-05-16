@@ -97,8 +97,8 @@
     <Compile Include="Model\AbstractMarker.cs" />
     <Compile Include="Model\ColorMarker.cs" />
     <Compile Include="Model\LevelIndex.cs" />
-    <Compile Include="Model\LogAnalysisDecorator.cs" />
-    <Compile Include="Model\LogAnalysisSession.cs" />
+    <Compile Include="Model\LogAnalysis.cs" />
+    <Compile Include="Model\LogAnalysisWorkspace.cs" />
     <Compile Include="Model\LogEntry.cs" />
     <Compile Include="Model\LogEntryFileRepository.cs" />
     <Compile Include="Model\LogEntryRepository.cs" />

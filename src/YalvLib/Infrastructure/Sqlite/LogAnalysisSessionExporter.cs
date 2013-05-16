@@ -24,7 +24,7 @@ namespace YalvLib.Infrastructure.Sqlite
             _path = path;            
         }
 
-        public void Export(LogAnalysisSession logSession)
+        public void Export(LogAnalysisWorkspace logWorkspace)
         {
             var sessionFactory = Fluently.Configure()
                                         .Database(SQLiteConfiguration.Standard.UsingFile(_path))
@@ -42,7 +42,7 @@ namespace YalvLib.Infrastructure.Sqlite
             {
                 using(ITransaction transaction = session.BeginTransaction())
                 {
-                    session.SaveOrUpdate(logSession);
+                    session.SaveOrUpdate(logWorkspace);
                     transaction.Commit();
                 }
             }

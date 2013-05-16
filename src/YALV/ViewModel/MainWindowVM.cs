@@ -249,10 +249,10 @@ namespace YALV.ViewModel
 
         protected virtual object CommandExportExecute(object parameter)
         {
-            LogAnalysisSession session = YalvRegistry.Instance.ActualSession;
-            if (session != null)
+            LogAnalysisWorkspace workspace = YalvRegistry.Instance.ActualWorkspace;
+            if (workspace != null)
             {
-                new LogAnalysisSessionExporter("LogAnalysisSession.yalv").Export(session);
+                new LogAnalysisSessionExporter("LogAnalysisSession.yalv").Export(workspace);
             }
             return null;
         }

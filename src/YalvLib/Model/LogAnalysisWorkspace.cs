@@ -5,15 +5,15 @@ using System.Collections.ObjectModel;
 namespace YalvLib.Model
 {
     /// <summary>
-    /// The LogAnalysisSession contains every reporitories of LogEntries, ie all the log entries 
-    /// are to be findable in an instance of LogAnalysisSession
+    /// The LogAnalysisWorkspace contains every reporitories of LogEntries, ie all the log entries 
+    /// are to be findable in an instance of LogAnalysisWorkspace
     /// </summary>
-    public class LogAnalysisSession
+    public class LogAnalysisWorkspace
     {
         private readonly List<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
 
         /// <summary>
-        /// Adds a sourceRepository to the source repositories of the actual LogAnalysisSession
+        /// Adds a sourceRepository to the source repositories of the actual LogAnalysisWorkspace
         /// </summary>
         /// <param name="sourceRepository"></param>
         public void AddSourceRepository(LogEntryRepository sourceRepository)

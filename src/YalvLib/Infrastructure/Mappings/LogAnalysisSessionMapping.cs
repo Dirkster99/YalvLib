@@ -8,7 +8,7 @@ using YalvLib.Model;
 namespace YalvLib.Infrastructure.Mappings
 {
 
-    public class LogAnalysisSessionMapping : ClassMap<LogAnalysisSession>
+    public class LogAnalysisSessionMapping : ClassMap<LogAnalysisWorkspace>
     {
 
         public LogAnalysisSessionMapping()

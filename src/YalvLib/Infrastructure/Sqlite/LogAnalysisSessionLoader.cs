@@ -25,7 +25,7 @@ namespace YalvLib.Infrastructure.Sqlite
             _path = path;
         }
 
-        public LogAnalysisSession Load()
+        public LogAnalysisWorkspace Load()
         {
             var sessionFactory = Fluently.Configure()
                                         .Database(SQLiteConfiguration.Standard.UsingFile(_path))
@@ -39,18 +39,18 @@ namespace YalvLib.Infrastructure.Sqlite
                                       .ExposeConfiguration(BuildSchema)
                                       .BuildSessionFactory();
 
-            LogAnalysisSession logAnalysisSession = null;
+            LogAnalysisWorkspace logAnalysisWorkspace = null;
             using (ISession session = sessionFactory.OpenSession())
             {
                 using(ITransaction transaction = session.BeginTransaction())
                 {
-                    IList l = session.CreateCriteria<LogAnalysisSession>().List();
+                    IList l = session.CreateCriteria<LogAnalysisWorkspace>().List();
                     if (l.Count > 0)
-                        logAnalysisSession = l[0] as LogAnalysisSession;
+                        logAnalysisWorkspace = l[0] as LogAnalysisWorkspace;
                     transaction.Commit();
                 }
             }
-            return logAnalysisSession;
+            return logAnalysisWorkspace;
         }
 
         private void BuildSchema(Configuration config)

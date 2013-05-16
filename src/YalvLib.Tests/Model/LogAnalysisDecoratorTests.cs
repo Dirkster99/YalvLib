@@ -12,7 +12,7 @@ namespace YalvLib.Tests.Model
         [Test]
         public void CreateInstance()
         {
-            var analysis = new LogAnalysisDecorator();
+            var analysis = new LogAnalysis();
             Assert.AreEqual(3, analysis.Markers.Count);
             Assert.IsTrue(analysis.ColorMarkers.Any(x => x.HighlightColor.Equals(Color.Chocolate)));
             Assert.IsTrue(analysis.ColorMarkers.Any(x => x.HighlightColor.Equals(Color.BlueViolet)));
@@ -22,7 +22,7 @@ namespace YalvLib.Tests.Model
         [Test]
         public void IsMultiMarker()
         {
-            var analysis = new LogAnalysisDecorator();
+            var analysis = new LogAnalysis();
             var entry1 = new LogEntry();
             var entry2 = new LogEntry();
             TextMarker marker = analysis.AddTextMarker(new List<LogEntry> {entry1, entry2}, "ME", "My message");
@@ -35,7 +35,7 @@ namespace YalvLib.Tests.Model
         [Test]
         public void AddTextMarker()
         {
-            var analysis = new LogAnalysisDecorator();
+            var analysis = new LogAnalysis();
             var entry = new LogEntry();
             analysis.AddTextMarker(new List<LogEntry> {entry}, "ME", "My message");
             Assert.AreEqual(1, analysis.TextMarkers.Count);
@@ -44,7 +44,7 @@ namespace YalvLib.Tests.Model
         [Test]
         public void RemoveTextMarkerFromEntry()
         {
-            var analysis = new LogAnalysisDecorator();
+            var analysis = new LogAnalysis();
             var entry1 = new LogEntry();
             analysis.AddTextMarker(new List<LogEntry> {entry1}, "ME", "My message");
             analysis.RemoveTextMarker(entry1);
@@ -54,7 +54,7 @@ namespace YalvLib.Tests.Model
         [Test]
         public void DoNotDeleteTextMarker()
         {
-            var analysis = new LogAnalysisDecorator();
+            var analysis = new LogAnalysis();
             var entry1 = new LogEntry();
             var entry2 = new LogEntry();
             analysis.AddTextMarker(new List<LogEntry> {entry1, entry2}, "ME", "My message");
@@ -66,7 +66,7 @@ namespace YalvLib.Tests.Model
         [Test]
         public void DeleteTextMarkerFromMarker()
         {
-            var analysis = new LogAnalysisDecorator();
+            var analysis = new LogAnalysis();
             var entry1 = new LogEntry();
             var entry2 = new LogEntry();
             TextMarker marker = analysis.AddTextMarker(new List<LogEntry> {entry1, entry2}, "ME", "My message");

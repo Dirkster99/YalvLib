@@ -20,7 +20,7 @@ namespace YalvLib.Tests.Integration.Model
             LogEntryFileRepository repository = new LogEntryFileRepository("Model/sample.xml");
             Assert.AreEqual(2, repository.LogEntries.Count);
             // [FT] Following is working but should be placed in a nice unit test.
-            //LogAnalysisSession session = new LogAnalysisSession();
+            //LogAnalysisWorkspace session = new LogAnalysisWorkspace();
             //session.AddSourceRepository(repository);
             //new ExportSession().Export(session);
         }

@@ -60,7 +60,7 @@ namespace YalvLib.ViewModel
           get
           {
               return string.Format("{0}| *.yalv*" +
-                             "|{1} (*.*)|*.*", "LogAnalysisDecorator files",
+                             "|{1} (*.*)|*.*", "LogAnalysis files",
                                                YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
           }
       }
@@ -172,7 +172,7 @@ namespace YalvLib.ViewModel
 
 
     /// <summary>
-    /// Load an entire LogAnalysisDecorator session
+    /// Load an entire LogAnalysis session
     /// </summary>
     /// <param name="path">file path</param>
     public void LoadLogAnalysisSession(string path)

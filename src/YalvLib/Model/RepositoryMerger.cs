@@ -36,7 +36,7 @@ namespace YalvLib.Model
 
         private IEnumerable<LogEntry> GetLogEntries()
         {
-            var session = new LogAnalysisSession();
+            var session = new LogAnalysisWorkspace();
             foreach (LogEntryRepository repository in _sourceRepositories)
             {
                 session.AddSourceRepository(repository);

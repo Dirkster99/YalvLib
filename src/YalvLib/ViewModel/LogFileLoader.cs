@@ -91,15 +91,15 @@ namespace YalvLib.ViewModel
     /// </summary>
     /// <param name="paths"></param>
     /// <returns></returns>
-    internal LogAnalysisSession CreateLogAnalysisSession(List<string> paths)
+    internal LogAnalysisWorkspace CreateLogAnalysisSession(List<string> paths)
     {
-        LogAnalysisSession session = new LogAnalysisSession();
+        LogAnalysisWorkspace workspace = new LogAnalysisWorkspace();
         try
         {
             if (ProviderType.Equals(EntriesProviderType.Yalv))
             {
                 LogAnalysisSessionLoader loader = new LogAnalysisSessionLoader(paths[0]);
-                session = loader.Load();
+                workspace = loader.Load();
             } else
             {
                 List<LogEntryRepository> repositories = new List<LogEntryRepository>();
@@ -110,7 +110,7 @@ namespace YalvLib.ViewModel
                 }
                 RepositoryMerger merger = new RepositoryMerger(repositories);
                 LogEntryRepository sourceRepository = merger.Merge();
-                session.AddSourceRepository(sourceRepository);
+                workspace.AddSourceRepository(sourceRepository);
             }
         }
         catch (Exception exception)
@@ -118,7 +118,7 @@ namespace YalvLib.ViewModel
             string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, paths, exception.Message);
             MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
-        return session;
+        return workspace;
     }
 
     private LogEntryRepository CreateLogFileEntryRepository(string path)
@@ -172,10 +172,10 @@ namespace YalvLib.ViewModel
 
             this.mLogFile.FilePaths = paths;
             
-            LogAnalysisSession session = CreateLogAnalysisSession(paths);
-            YalvRegistry.Instance.SetActualLogAnalysisSession(session);
+            LogAnalysisWorkspace workspace = CreateLogAnalysisSession(paths);
+            YalvRegistry.Instance.SetActualLogAnalysisSession(workspace);
             
-            this.mObjColl.Add(LogFileLoader.KeyLogItems, session.LogEntries);
+            this.mObjColl.Add(LogFileLoader.KeyLogItems, workspace.LogEntries);
         }
         catch (OperationCanceledException exp)
         {
