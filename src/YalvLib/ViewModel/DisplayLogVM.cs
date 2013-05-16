@@ -12,7 +12,6 @@ namespace YalvLib.ViewModel
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Input;
-
     using YalvLib.Common;
     using YalvLib.Common.Interfaces;
 
@@ -23,6 +22,7 @@ namespace YalvLib.ViewModel
     public class DisplayLogVM : BindableObject
     {
         #region fields
+
         private const string PROP_FileDir = "FileDir";
         private const string PROP_LogView = "LogView";
         private const string PROP_HasData = "HasData";
@@ -91,15 +91,18 @@ namespace YalvLib.ViewModel
         private int mItemsFilterCount;
 
         private EvaluateLoadResult loadResultCallback = null;
+
         #endregion fields
 
         #region Constructor
+
         /// <summary>
         /// Class constructor
         /// </summary>
         public DisplayLogVM()
         {
-            this.CommandClearFilters = new CommandRelay(this.commandClearFiltersExecute, this.commandClearFilterCanExecute);
+            this.CommandClearFilters = new CommandRelay(this.commandClearFiltersExecute,
+                                                        this.commandClearFilterCanExecute);
 
             this.SelectAll = true;
             this.IsFiltered = false;
@@ -113,17 +116,21 @@ namespace YalvLib.ViewModel
 
             this.mLogFile = new LogFileVM();
         }
+
         #endregion Constructor
 
         #region delegate
+
         /// <summary>
         /// Declare a type of method to be called upon succesful load of log file.
         /// </summary>
         /// <param name="loadWasSuccessful"></param>
         public delegate void EvaluateLoadResult(bool loadWasSuccessful);
+
         #endregion delegate
 
         #region Properties
+
         /// <summary>
         /// Clear Command
         /// </summary>
@@ -134,10 +141,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ColumnsVM DataGridColumns
         {
-            get
-            {
-                return this.mDataGridColumns;
-            }
+            get { return this.mDataGridColumns; }
         }
 
         /// <summary>
@@ -145,10 +149,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public LogFileVM LogFile
         {
-            get
-            {
-                return this.mLogFile;
-            }
+            get { return this.mLogFile; }
 
             set
             {
@@ -167,15 +168,13 @@ namespace YalvLib.ViewModel
         public CollectionView LogView { get; private set; }
 
         #region LogProperties
+
         /// <summary>
         /// SelectedLogItem Property
         /// </summary>
         public LogEntry SelectedLogItem
         {
-            get
-            {
-                return this.mSelectedLogItem;
-            }
+            get { return this.mSelectedLogItem; }
 
             set
             {
@@ -192,10 +191,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public string GoToLogItemId
         {
-            get
-            {
-                return this.mGoToLogItemId;
-            }
+            get { return this.mGoToLogItemId; }
 
             set
             {
@@ -220,19 +216,18 @@ namespace YalvLib.ViewModel
                 this.RaisePropertyChanged(PROP_GoToLogItemId);
             }
         }
+
         #endregion LogProperties
 
         #region LogFilterProperties
+
         /// <summary>
         /// Get/set property to determine whether CollectionView is
         /// is filtered by a column's content or not.
         /// </summary>
         public bool IsFiltered
         {
-            get
-            {
-                return this.mIsFiltered;
-            }
+            get { return this.mIsFiltered; }
 
             set
             {
@@ -252,10 +247,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelDebug
         {
-            get
-            {
-                return this.mShowLevelDebug;
-            }
+            get { return this.mShowLevelDebug; }
 
             set
             {
@@ -274,10 +266,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelInfo
         {
-            get
-            {
-                return this.mShowLevelInfo;
-            }
+            get { return this.mShowLevelInfo; }
 
             set
             {
@@ -296,10 +285,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelWarn
         {
-            get
-            {
-                return this.mShowLevelWarn;
-            }
+            get { return this.mShowLevelWarn; }
 
             set
             {
@@ -318,10 +304,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelError
         {
-            get
-            {
-                return this.mShowLevelError;
-            }
+            get { return this.mShowLevelError; }
 
             set
             {
@@ -340,10 +323,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelFatal
         {
-            get
-            {
-                return this.mShowLevelFatal;
-            }
+            get { return this.mShowLevelFatal; }
 
             set
             {
@@ -356,18 +336,17 @@ namespace YalvLib.ViewModel
                 }
             }
         }
+
         #endregion LogFilterProperties
 
         #region LogSelectionProperties
+
         /// <summary>
         /// SelectAll Property
         /// </summary>
         public bool SelectAll
         {
-            get
-            {
-                return this.mSelectAll;
-            }
+            get { return this.mSelectAll; }
 
             set
             {
@@ -378,7 +357,9 @@ namespace YalvLib.ViewModel
 
                     if (this.mSelectAll)
                     {
-                        this.mShowLevelDebug = this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = true;
+                        this.mShowLevelDebug =
+                            this.mShowLevelInfo =
+                            this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = true;
                         this.RefreshCheckBoxBinding();
                         this.RefreshView();
                     }
@@ -393,10 +374,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectDebug
         {
-            get
-            {
-                return this.mSelectDebug;
-            }
+            get { return this.mSelectDebug; }
 
             set
             {
@@ -407,7 +385,9 @@ namespace YalvLib.ViewModel
 
                     if (this.mSelectDebug)
                     {
-                        this.mSelectAll = this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = false;
+                        this.mSelectAll =
+                            this.mShowLevelInfo =
+                            this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = false;
                         this.mShowLevelDebug = true;
                         this.RefreshCheckBoxBinding();
                         this.RefreshView();
@@ -423,10 +403,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectInfo
         {
-            get
-            {
-                return this.mSelectInfo;
-            }
+            get { return this.mSelectInfo; }
 
             set
             {
@@ -437,7 +414,9 @@ namespace YalvLib.ViewModel
 
                     if (this.mSelectInfo)
                     {
-                        this.mSelectAll = this.mShowLevelDebug = this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = false;
+                        this.mSelectAll =
+                            this.mShowLevelDebug =
+                            this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = false;
                         this.mShowLevelInfo = true;
                         this.RefreshCheckBoxBinding();
                         this.RefreshView();
@@ -453,10 +432,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectWarn
         {
-            get
-            {
-                return this.mSelectWarn;
-            }
+            get { return this.mSelectWarn; }
 
             set
             {
@@ -467,7 +443,9 @@ namespace YalvLib.ViewModel
 
                     if (this.mSelectWarn)
                     {
-                        this.mSelectAll = this.mShowLevelDebug = this.mShowLevelInfo = this.mShowLevelError = this.mShowLevelFatal = false;
+                        this.mSelectAll =
+                            this.mShowLevelDebug =
+                            this.mShowLevelInfo = this.mShowLevelError = this.mShowLevelFatal = false;
                         this.mShowLevelWarn = true;
                         this.RefreshCheckBoxBinding();
                     }
@@ -484,10 +462,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectError
         {
-            get
-            {
-                return this.mSelectError;
-            }
+            get { return this.mSelectError; }
 
             set
             {
@@ -498,7 +473,9 @@ namespace YalvLib.ViewModel
 
                     if (this.mSelectError)
                     {
-                        this.mSelectAll = this.mShowLevelDebug = this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelFatal = false;
+                        this.mSelectAll =
+                            this.mShowLevelDebug =
+                            this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelFatal = false;
                         this.mShowLevelError = true;
                         this.RefreshCheckBoxBinding();
                         this.RefreshView();
@@ -514,10 +491,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectFatal
         {
-            get
-            {
-                return this.mSelectFatal;
-            }
+            get { return this.mSelectFatal; }
 
             set
             {
@@ -528,7 +502,9 @@ namespace YalvLib.ViewModel
 
                     if (this.mSelectFatal)
                     {
-                        this.mSelectAll = this.mShowLevelDebug = this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelError = false;
+                        this.mSelectAll =
+                            this.mShowLevelDebug =
+                            this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelError = false;
                         this.mShowLevelFatal = true;
                         this.RefreshCheckBoxBinding();
                         this.RefreshView();
@@ -538,6 +514,7 @@ namespace YalvLib.ViewModel
                 }
             }
         }
+
         #endregion LogSelectionProperties
 
         #region Counters
@@ -684,6 +661,7 @@ namespace YalvLib.ViewModel
                 RaisePropertyChanged(PROP_ItemsFilterCount);
             }
         }
+
         #endregion
 
         /// <summary>
@@ -692,10 +670,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         internal bool HasData
         {
-            get
-            {
-                return (this.mItems != null && (this.mItems.Count != 0));
-            }
+            get { return (this.mItems != null && (this.mItems.Count != 0)); }
         }
 
         /// <summary>
@@ -704,19 +679,15 @@ namespace YalvLib.ViewModel
         /// </summary>
         protected ObservableCollection<LogEntry> Items
         {
-            get
-            {
-                return this.mItems;
-            }
+            get { return this.mItems; }
 
-            set
-            {
-                this.mItems = value;
-            }
+            set { this.mItems = value; }
         }
+
         #endregion Properties
 
         #region Methodes
+
         /// <summary>
         /// Match View Column filter Value (if any) with item property value
         /// and determine if this item should be displayed or not
@@ -739,11 +710,15 @@ namespace YalvLib.ViewModel
                         {
                             string valToCompare = string.Empty;
                             if (val is DateTime)
-                                valToCompare = ((DateTime)val).ToString(GlobalHelper.DisplayDateTimeFormat, System.Globalization.CultureInfo.GetCultureInfo(YalvLib.Strings.Resources.CultureName));
+                                valToCompare = ((DateTime) val).ToString(GlobalHelper.DisplayDateTimeFormat,
+                                                                         System.Globalization.CultureInfo.GetCultureInfo
+                                                                             (YalvLib.Strings.Resources.CultureName));
                             else
                                 valToCompare = val.ToString();
 
-                            if (valToCompare.ToString().IndexOf(colItem.ColumnFilterValue, StringComparison.OrdinalIgnoreCase) < 0)
+                            if (
+                                valToCompare.ToString().IndexOf(colItem.ColumnFilterValue,
+                                                                StringComparison.OrdinalIgnoreCase) < 0)
                                 return false;
                         }
                     }
@@ -829,6 +804,7 @@ namespace YalvLib.ViewModel
         }
 
         #region commandDelete
+
         internal virtual object commandDeleteExecute(object parameter)
         {
             this.mLogFile.CommandDeleteExecute();
@@ -840,13 +816,15 @@ namespace YalvLib.ViewModel
         {
             return this.mLogFile.CommandDeleteCanExecute();
         }
+
         #endregion commandDelete
 
         #region commandClear
+
         internal virtual object commandClearFiltersExecute(object parameter)
         {
-            this.IsFiltered = false;   // Reset column text filter
-            this.SelectAll = true;    // Reset level classification filter
+            this.IsFiltered = false; // Reset column text filter
+            this.SelectAll = true; // Reset level classification filter
 
             ////if (this.DataGridColumns != null)
             ////  this.DataGridColumns.ResetSearchTextBox();
@@ -865,6 +843,7 @@ namespace YalvLib.ViewModel
 
             return false;
         }
+
         #endregion commandClear
 
         /// <summary>
@@ -874,7 +853,8 @@ namespace YalvLib.ViewModel
         /// <param name="providerType"> </param>
         /// <param name="callbackOnFinished"></param>
         /// <returns></returns>
-        internal bool LoadFile(List<string> paths, EntriesProviderType providerType, EvaluateLoadResult callbackOnFinished)
+        internal bool LoadFile(List<string> paths, EntriesProviderType providerType,
+                               EvaluateLoadResult callbackOnFinished)
         {
             lock (this.lockObject)
             {
@@ -888,7 +868,8 @@ namespace YalvLib.ViewModel
                 {
                     this.fileFoader = new LogFileLoader();
                     fileFoader.ProviderType = providerType;
-                    this.fileFoader.loadResultEvent += new EventHandler<LogFileLoader.ResultEvent>(this.FileFoaderResultEvent);
+                    this.fileFoader.loadResultEvent +=
+                        new EventHandler<LogFileLoader.ResultEvent>(this.FileFoaderResultEvent);
 
                     {
                         this.LogFile.IsLoading = true;
@@ -1056,7 +1037,7 @@ namespace YalvLib.ViewModel
             LogEntry logitem = item as LogEntry;
 
             if (logitem == null)
-                return true;        // Item is not filtered
+                return true; // Item is not filtered
 
             // Evaluate text filters if we are in filter mode, otherwise, display EVERY item!
             if (this.IsFiltered == true)
@@ -1117,7 +1098,7 @@ namespace YalvLib.ViewModel
                     this.Items.Add(item);
             else
                 this.Items = new ObservableCollection<LogEntry>();
-            this.LogView = (CollectionView)CollectionViewSource.GetDefaultView(this.Items);
+            this.LogView = (CollectionView) CollectionViewSource.GetDefaultView(this.Items);
             this.LogView.Filter = this.OnFilterLogItems;
             this.RefreshView();
         }
@@ -1142,7 +1123,7 @@ namespace YalvLib.ViewModel
             ////else
             if (this.IsFiltered == true)
             {
-                this.RefreshView();               // otherwise, just refresh if filter is already in place
+                this.RefreshView(); // otherwise, just refresh if filter is already in place
             }
         }
 
@@ -1209,11 +1190,14 @@ namespace YalvLib.ViewModel
 
                         // Extend error message if there is more data available (exception message is usually more relevant than generic message)
                         if (e.InnerException != null)
-                            errorMess = string.Format("{0}\n\n({1})", GetExceptionTreeAsString(e.InnerException), errorMess);
+                            errorMess = string.Format("{0}\n\n({1})", GetExceptionTreeAsString(e.InnerException),
+                                                      errorMess);
 
-                        MessageBox.Show(string.Format(YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Text, errorMess),
-                                                      YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Title,
-                                                      MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show(
+                            string.Format(YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Text,
+                                          errorMess),
+                            YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Title,
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
                         this.LogFile.IsLoading = false;
 
@@ -1238,7 +1222,7 @@ namespace YalvLib.ViewModel
                         this.updateCounters();
                         this.RefreshView();
 
-                        if (this.Items.Count > 0)         // select the last item in the list to scroll down the view
+                        if (this.Items.Count > 0) // select the last item in the list to scroll down the view
                         {
                             var lastItem = (from it in this.Items
                                             where this.LevelCheckFilter(it)
@@ -1264,6 +1248,7 @@ namespace YalvLib.ViewModel
                 }
             }
         }
+
         #endregion Methodes
     }
 }

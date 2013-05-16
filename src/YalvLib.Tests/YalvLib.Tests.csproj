@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,9 +46,11 @@
     <Compile Include="Infrastructure\Log4net\Log4jConverterTests.cs" />
     <Compile Include="Infrastructure\Log4net\TestDataProvider.cs" />
     <Compile Include="Model\LogAnalysisSessionTests.cs" />
+    <Compile Include="Model\LogAnalysisDecoratorTests.cs" />
     <Compile Include="Model\LogEntryRepositoryTests.cs" />
     <Compile Include="Model\LogEntryTests.cs" />
     <Compile Include="Model\RepositoryMergerTests.cs" />
+    <Compile Include="Model\TextMarkerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

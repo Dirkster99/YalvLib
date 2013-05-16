@@ -94,13 +94,17 @@
     <Compile Include="Infrastructure\Mappings\LogEntryRepositoryMapping.cs" />
     <Compile Include="Infrastructure\Sqlite\LogAnalysisSessionLoader.cs" />
     <Compile Include="Infrastructure\Sqlite\LogAnalysisSessionExporter.cs" />
+    <Compile Include="Model\AbstractMarker.cs" />
+    <Compile Include="Model\ColorMarker.cs" />
     <Compile Include="Model\LevelIndex.cs" />
+    <Compile Include="Model\LogAnalysisDecorator.cs" />
     <Compile Include="Model\LogAnalysisSession.cs" />
     <Compile Include="Model\LogEntry.cs" />
     <Compile Include="Model\LogEntryFileRepository.cs" />
     <Compile Include="Model\LogEntryRepository.cs" />
     <Compile Include="Model\LogEntrySqliteRepository.cs" />
     <Compile Include="Model\RepositoryMerger.cs" />
+    <Compile Include="Model\TextMarker.cs" />
     <Compile Include="Model\YalvRegistry.cs" />
     <Compile Include="Providers\EntriesProviderType.cs" />
     <Compile Include="Providers\FilterParams.cs" />

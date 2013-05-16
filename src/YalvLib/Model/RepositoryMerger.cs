@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace YalvLib.Model
 {
-
     public class RepositoryMerger
     {
-
-        private List<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
+        private readonly List<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
 
         public RepositoryMerger()
         {
-
         }
 
 
         public RepositoryMerger(List<LogEntryRepository> repos)
         {
-            this._sourceRepositories = repos;
+            _sourceRepositories = repos;
         }
 
         public void AddSourceRepository(LogEntryRepository sourceRepository)
@@ -29,10 +24,10 @@ namespace YalvLib.Model
 
         public LogEntryRepository Merge()
         {
-            var logEntries = GetLogEntries();
+            IEnumerable<LogEntry> logEntries = GetLogEntries();
             IEnumerable<LogEntry> sortedLogEntries = logEntries.OrderBy(x => x.TimeStamp);
-            LogEntryRepository targetRepository = new LogEntryRepository();
-            foreach (var logEntry in sortedLogEntries)
+            var targetRepository = new LogEntryRepository();
+            foreach (LogEntry logEntry in sortedLogEntries)
             {
                 targetRepository.AddLogEntry(new LogEntry(logEntry));
             }
@@ -41,8 +36,8 @@ namespace YalvLib.Model
 
         private IEnumerable<LogEntry> GetLogEntries()
         {
-            LogAnalysisSession session = new LogAnalysisSession();
-            foreach (var repository in _sourceRepositories)
+            var session = new LogAnalysisSession();
+            foreach (LogEntryRepository repository in _sourceRepositories)
             {
                 session.AddSourceRepository(repository);
             }
@@ -50,5 +45,4 @@ namespace YalvLib.Model
             return logEntries;
         }
     }
-
 }
