@@ -910,6 +910,42 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Markers :.
+        /// </summary>
+        public static string MainWindow_MarkerBox_Title_Text {
+            get {
+                return ResourceManager.GetString("MainWindow_MarkerBox_Title_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string MainWindow_MarkerRow_ButtonConfirm_Text {
+            get {
+                return ResourceManager.GetString("MainWindow_MarkerRow_ButtonConfirm_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string MainWindow_MarkerRow_ButtonDelete_Text {
+            get {
+                return ResourceManager.GetString("MainWindow_MarkerRow_ButtonDelete_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Marker - Author :.
+        /// </summary>
+        public static string MainWindow_MarkerRow_Title_Text {
+            get {
+                return ResourceManager.GetString("MainWindow_MarkerRow_Title_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select File To Merge.
         /// </summary>
         public static string MainWindow_MergeFile_Tooltip {

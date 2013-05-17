@@ -101,8 +101,8 @@ namespace YalvLib.ViewModel
         /// </summary>
         public DisplayLogVM()
         {
-            this.CommandClearFilters = new CommandRelay(this.commandClearFiltersExecute,
-                                                        this.commandClearFilterCanExecute);
+            this.CommandClearFilters = new CommandRelay(this.CommandClearFiltersExecute,
+                                                        this.CommandClearFilterCanExecute);
 
             this.SelectAll = true;
             this.IsFiltered = false;
@@ -758,7 +758,7 @@ namespace YalvLib.ViewModel
             this.mDataGridColumns.SaveColumnsLayout(pathFileName);
         }
 
-        internal void updateCounters()
+        internal void UpdateCounters()
         {
             this.ItemsDebugCount = (from it in this.Items
                                     where it.LevelIndex.Equals(LevelIndex.DEBUG)
@@ -795,7 +795,7 @@ namespace YalvLib.ViewModel
         /// Implementation of the Refresh command
         /// </summary>
         /// <param name="callbackOnFinishedparameter"></param>
-        internal virtual void commandRefreshExecute(EvaluateLoadResult callbackOnFinishedparameter)
+        internal virtual void CommandRefreshExecute(EvaluateLoadResult callbackOnFinishedparameter)
         {
             if (this.LogFile.IsFileLoaded == true)
             {
@@ -805,14 +805,14 @@ namespace YalvLib.ViewModel
 
         #region commandDelete
 
-        internal virtual object commandDeleteExecute(object parameter)
+        internal virtual object CommandDeleteExecute(object parameter)
         {
             this.mLogFile.CommandDeleteExecute();
 
             return null;
         }
 
-        internal virtual bool commandDeleteCanExecute(object parameter)
+        internal virtual bool CommandDeleteCanExecute(object parameter)
         {
             return this.mLogFile.CommandDeleteCanExecute();
         }
@@ -821,7 +821,7 @@ namespace YalvLib.ViewModel
 
         #region commandClear
 
-        internal virtual object commandClearFiltersExecute(object parameter)
+        internal virtual object CommandClearFiltersExecute(object parameter)
         {
             this.IsFiltered = false; // Reset column text filter
             this.SelectAll = true; // Reset level classification filter
@@ -834,7 +834,7 @@ namespace YalvLib.ViewModel
             return null;
         }
 
-        internal virtual bool commandClearFilterCanExecute(object parameter)
+        internal virtual bool CommandClearFilterCanExecute(object parameter)
         {
             if (this.HasData == true)
             {
@@ -1219,7 +1219,7 @@ namespace YalvLib.ViewModel
 
                         // Always update views
                         this.SelectedLogItem = null;
-                        this.updateCounters();
+                        this.UpdateCounters();
                         this.RefreshView();
 
                         if (this.Items.Count > 0) // select the last item in the list to scroll down the view
@@ -1229,7 +1229,7 @@ namespace YalvLib.ViewModel
                                             select it).LastOrDefault<LogEntry>();
 
                             // Select the last item to scroll viewer down to last entry
-                            this.SelectedLogItem = lastItem != null ? lastItem : this.Items[this.Items.Count - 1];
+                            this.SelectedLogItem = lastItem ?? this.Items[this.Items.Count - 1];
                         }
                     }
 

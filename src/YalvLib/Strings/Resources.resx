@@ -532,4 +532,16 @@ It is a WPF Application based on .NET Framework 4.0 and written with C# language
   <data name="Common_Components_MainMenu_FileMenu_OpenLogAnalysisSession_Header" xml:space="preserve">
     <value>Open Log Analysis Session...</value>
   </data>
+  <data name="MainWindow_MarkerBox_Title_Text" xml:space="preserve">
+    <value>Markers :</value>
+  </data>
+  <data name="MainWindow_MarkerRow_ButtonConfirm_Text" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="MainWindow_MarkerRow_ButtonDelete_Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MainWindow_MarkerRow_Title_Text" xml:space="preserve">
+    <value>Marker - Author :</value>
+  </data>
 </root>

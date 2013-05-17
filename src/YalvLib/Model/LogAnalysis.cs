@@ -6,15 +6,11 @@ namespace YalvLib.Model
 {
     
     /// <summary>
-    /// Class name is not definitive, I don't think it's a clear one.
-    /// This class is some kind of layer where markers, custom filters and
-    /// others features will be add
+    /// This class is some acting as a layer where markers, custom filters and
+    /// others features will be add to analyse the datas
     /// </summary>
     public class LogAnalysis
     {
-
-        //private static LogAnalysis _singleton = null;
-        //static readonly object padlock = new object();
 
         /// <summary>
         /// LogAnalysis Constructor
@@ -28,18 +24,6 @@ namespace YalvLib.Model
                                    new ColorMarker(Color.CadetBlue)
                                };
         }
-
-        /*public static LogAnalysis Instance
-        {
-            get
-            {
-                lock(padlock)
-                {
-                    return _singleton ?? (_singleton = new LogAnalysis());
-                }
-            }
-        }*/
-       
 
         /// <summary>-
         /// Get / Set Markers list

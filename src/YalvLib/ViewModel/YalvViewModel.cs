@@ -74,7 +74,7 @@ namespace YalvLib.ViewModel
       this.mLogItems = new DisplayLogVM();
 
       this.CommandRefresh = new CommandRelay(this.CommandRefreshExecute, this.CommandRequiresDataCanExecute);
-      this.CommandDelete = new CommandRelay(this.LogItems.commandDeleteExecute, this.LogItems.commandDeleteCanExecute);
+      this.CommandDelete = new CommandRelay(this.LogItems.CommandDeleteExecute, this.LogItems.CommandDeleteCanExecute);
       this.FilterYalvView = new CommandRelay(this.CommandFilterYalvView, this.CommandRequiresDataCanExecute);
     }
     #endregion constructor
@@ -188,7 +188,7 @@ namespace YalvLib.ViewModel
     /// <returns></returns>
     internal virtual object CommandRefreshExecute(object parameter)
     {
-      this.LogItems.commandRefreshExecute(this.LoadFinishedEvent);
+      this.LogItems.CommandRefreshExecute(this.LoadFinishedEvent);
 
       return null;
     }
