@@ -11,17 +11,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YalvLib.Model;
+using YalvLib.ViewModel;
 
 namespace YALV.View.Components
 {
     /// <summary>
-    /// Interaction logic for MarkerToolBox.xaml
+    /// Interaction logic for TextMarkerToolBoxView.xaml
     /// </summary>
-    public partial class MarkerToolBox : UserControl
+    public partial class TextMarkerToolBoxView : UserControl
     {
-        public MarkerToolBox()
+        public TextMarkerToolBoxView()
         {
             InitializeComponent();
+
+            TextMarker marker = new TextMarker(new List<LogEntry>(), "Toto", "Hello World");
+            TextMarkerViewModel viewModel = new TextMarkerViewModel(marker);
+            TextMarkerViewControl.DataContext = viewModel;
         }
     }
 }

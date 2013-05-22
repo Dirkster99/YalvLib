@@ -39,12 +39,12 @@
     /// Raised when a public property of this object is set.
     /// </summary>
     [field: NonSerialized]
-    public virtual event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     /// <summary>
     /// Indica se è abilitata la notifica del cambiamento di proprietà
     /// </summary>
-    public virtual bool IsPropertyChangedEventEnabled { get; set; }
+    public bool IsPropertyChangedEventEnabled { get; set; }
 
     /// <summary>
     /// Returns an instance of PropertyChangedEventArgs for 
@@ -78,7 +78,7 @@
     /// <param name="propertyName">
     /// The property which was changed.
     /// </param>
-    public virtual void RaisePropertyChanged(string propertyName)
+    public void RaisePropertyChanged(string propertyName)
     {
       // Se non è abilitata la notifica del cambiamento di proprietà allora non faccio niente
       if (!this.IsPropertyChangedEventEnabled)

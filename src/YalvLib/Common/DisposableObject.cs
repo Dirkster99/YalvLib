@@ -1,4 +1,6 @@
-﻿namespace YalvLib.Common
+﻿using System.Windows;
+
+namespace YalvLib.Common
 {
   using System;
 
@@ -6,7 +8,7 @@
   /// "Implementing a Dispose method"
   /// http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx
   /// </summary>
-  public class DisposableObject : IDisposable
+  public class DisposableObject : DependencyObject, IDisposable
   {
     #region fields
     private bool mDisposed;

@@ -1258,6 +1258,24 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to delete a marker linked with others log entries, do you wish to continue ?.
+        /// </summary>
+        public static string MarkerRow_DeleteConfirmation {
+            get {
+                return ResourceManager.GetString("MarkerRow_DeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning !.
+        /// </summary>
+        public static string MarkerRow_DeleteConfirmation_Caption {
+            get {
+                return ResourceManager.GetString("MarkerRow_DeleteConfirmation_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to YALV! - Save Folder Path.
         /// </summary>
         public static string SaveFolderPath_Title {

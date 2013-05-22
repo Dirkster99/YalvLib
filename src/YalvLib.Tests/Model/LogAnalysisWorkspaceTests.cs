@@ -4,7 +4,7 @@ using YalvLib.Model;
 namespace YalvLib.Tests.Model
 {
     [TestFixture]
-    public class LogAnalysisSessionTests
+    public class LogAnalysisWorkspaceTests
     {
         [Test]
         public void AddSourceRepository()
@@ -38,5 +38,16 @@ namespace YalvLib.Tests.Model
             }
             Assert.AreEqual(4, session.LogEntries.Count);
         }
+
+
+        [Test]
+        public void CreateNewLogAnalysisTest()
+        {
+            var logAws = new LogAnalysisWorkspace();
+            var logA = new LogAnalysis();
+            logAws.Analysis = logA;
+            Assert.AreEqual(logAws.Analysis, logA);
+        } 
+
     }
 }

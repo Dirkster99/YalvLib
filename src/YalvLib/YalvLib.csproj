@@ -142,6 +142,7 @@
     <Compile Include="ViewModel\DisplayLogVM.cs" />
     <Compile Include="ViewModel\LogFileLoader.cs" />
     <Compile Include="ViewModel\LogFileVM.cs" />
+    <Compile Include="ViewModel\TextMarkerViewModel.cs" />
     <Compile Include="ViewModel\YalvViewModel.cs" />
     <Compile Include="View\BusyIndicatorBehavior\BusyIndicatorBehavior.cs" />
     <Compile Include="View\BusyIndicatorBehavior\CircularProgressBar.xaml.cs">

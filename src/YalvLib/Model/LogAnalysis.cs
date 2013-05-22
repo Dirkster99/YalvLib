@@ -96,5 +96,10 @@ namespace YalvLib.Model
         {
             Markers.Remove(marker);
         }
+
+        public List<TextMarker> GetTextMarkersForEntry(LogEntry entry1)
+        {
+            return TextMarkers.Where(textMarker => textMarker.LogEntries.Contains(entry1)).ToList();
+        }
     }
 }

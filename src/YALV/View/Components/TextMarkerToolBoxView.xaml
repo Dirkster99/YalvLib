@@ -5,14 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:YALV.View.Components"
              xmlns:Strings="clr-namespace:YalvLib.Strings;assembly=YalvLib"
-             x:Class="YALV.View.Components.MarkerToolBox" 
+             x:Class="YALV.View.Components.TextMarkerToolBoxView" 
              mc:Ignorable="d" Height="400" Width="350">
     <Grid>
         <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto"
                                VerticalScrollBarVisibility="Auto">
             <StackPanel HorizontalAlignment="Left" Height="234" VerticalAlignment="Top">
-                <Label Content="{x:Static Strings:Resources.MainWindow_MarkerBox_Title_Text}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"/>
-                <local:MarkerRow HorizontalAlignment="Left" VerticalAlignment="Top" Width="350"/>
+                <Label 
+                    Content="{x:Static Strings:Resources.MainWindow_MarkerBox_Title_Text}" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    FontSize="20"/>
+                <local:TextMarkerView 
+                    x:Name="TextMarkerViewControl"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Width="350"/>
             </StackPanel>
 
         </ScrollViewer>

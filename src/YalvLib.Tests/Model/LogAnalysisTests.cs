@@ -7,7 +7,7 @@ using YalvLib.Model;
 namespace YalvLib.Tests.Model
 {
     [TestFixture]
-    public class LogAnalysisDecoratorTests
+    public class LogAnalysisTests
     {
         [Test]
         public void CreateInstance()
@@ -72,6 +72,18 @@ namespace YalvLib.Tests.Model
             TextMarker marker = analysis.AddTextMarker(new List<LogEntry> {entry1, entry2}, "ME", "My message");
             analysis.DeleteTextMarker(marker);
             Assert.AreEqual(0, analysis.TextMarkers.Count);
+        }
+
+        [Test]
+        public void GetTextMarkersForEntry()
+        {
+            var analysis = new LogAnalysis();
+            var entry1 = new LogEntry();
+            var entry2 = new LogEntry();
+            analysis.AddTextMarker(new List<LogEntry> { entry1 }, "ME", "My message");
+            analysis.AddTextMarker(new List<LogEntry> { entry1, entry2 }, "ME2", "My message2");
+            List<TextMarker> tMarkers = analysis.GetTextMarkersForEntry(entry1);
+            Assert.AreEqual(tMarkers.Count, 2);
         }
     }
 }
