@@ -19,7 +19,7 @@ namespace YALV.View.Components
         {
             get { return DataContext as TextMarkerViewModel; }
         }
-        
+
         public string AuthorInputValue
         {
             get { return this.AuthorTextBox.Text; }

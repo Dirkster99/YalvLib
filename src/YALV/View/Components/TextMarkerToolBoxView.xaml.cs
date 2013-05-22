@@ -25,7 +25,7 @@ namespace YALV.View.Components
         {
             InitializeComponent();
 
-            TextMarker marker = new TextMarker(new List<LogEntry>(), "Toto", "Hello World");
+            TextMarker marker = new TextMarker(new List<LogEntry>(), "", "");
             TextMarkerViewModel viewModel = new TextMarkerViewModel(marker);
             TextMarkerViewControl.DataContext = viewModel;
         }

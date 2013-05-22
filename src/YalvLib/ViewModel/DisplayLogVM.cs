@@ -56,7 +56,7 @@ namespace YalvLib.ViewModel
 
         private ColumnsVM mDataGridColumns = null;
         private LogFileVM mLogFile = null;
-        private LogFileLoader fileFoader = null;
+        private LogFileLoader fileLoader = null;
 
         private ObservableCollection<LogEntry> mItems;
         private LogEntry mSelectedLogItem;
@@ -864,17 +864,17 @@ namespace YalvLib.ViewModel
                 // Remember callback delegate for update functions to be used later
                 this.loadResultCallback = callbackOnFinished;
 
-                if (this.fileFoader == null)
+                if (this.fileLoader == null)
                 {
-                    this.fileFoader = new LogFileLoader();
-                    fileFoader.ProviderType = providerType;
-                    this.fileFoader.loadResultEvent +=
+                    this.fileLoader = new LogFileLoader();
+                    fileLoader.ProviderType = providerType;
+                    this.fileLoader.loadResultEvent +=
                         new EventHandler<LogFileLoader.ResultEvent>(this.FileFoaderResultEvent);
 
                     {
                         this.LogFile.IsLoading = true;
                         this.LogFile.FilePaths = paths;
-                        this.fileFoader.LoadFile(paths, true);
+                        this.fileLoader.LoadFile(paths, true);
                     }
 
                     return true;
@@ -1178,7 +1178,7 @@ namespace YalvLib.ViewModel
                 {
                     try
                     {
-                        this.fileFoader.loadResultEvent -= this.FileFoaderResultEvent;
+                        this.fileLoader.loadResultEvent -= this.FileFoaderResultEvent;
                     }
                     catch
                     {
@@ -1238,7 +1238,7 @@ namespace YalvLib.ViewModel
                 }
                 finally
                 {
-                    this.fileFoader = null;
+                    this.fileLoader = null;
 
                     if (this.loadResultCallback != null)
                     {

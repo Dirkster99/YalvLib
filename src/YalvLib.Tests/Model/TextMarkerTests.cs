@@ -62,7 +62,6 @@ namespace YalvLib.Tests.Model
             Assert.AreEqual(tm.Author, "Toto");
             Assert.AreEqual(tm.Message, "On va sur la planete des doudounes quoi!");
             Assert.AreEqual(tm.DateLastModification, dt);
-            Assert.AreEqual(tm.AddEntry(CreateEntry()).Count, list.Count);
         }
     }
 }

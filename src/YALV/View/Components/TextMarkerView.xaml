@@ -13,13 +13,17 @@
     </UserControl.Resources>
     <DockPanel LastChildFill="True" Margin="0">
         <StackPanel Width="70" DockPanel.Dock="Right">
-            <Button Margin="10,35,10,10" Command="{Binding ExecuteCommand}">
+            <Button
+                Name="ConfirmButton"
+                Margin="10,35,10,10"
+                Command="{Binding Path=CommandChangeTextMarker}">
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/confirm.png" Width="16" Height="16" />
                 </StackPanel>
             </Button>
             <Button 
-                Name="DeleteSimpleButton" 
+                Name="DeleteSimpleButton"
+                Command="{Binding Path=CommandCancelTextMarker}"
                 Visibility="{Binding Path=CanExecuteCancel, Converter={StaticResource BoolToVisibilityConverter}}"
                 Margin="10,0,10,0">
                 <StackPanel>
@@ -28,7 +32,8 @@
             </Button>
             <Button Name="DeleteMultipleButton" 
                     Margin="10,-22,10,0" 
-                    Click="DeleteMultipleButton_Click" 
+                    Click="DeleteMultipleButton_Click"
+                    Command="{Binding Path=CommandCancelTextMarker}"
                     Visibility="{Binding Path=CanExecuteCancel, Converter={StaticResource BoolToOppositeVisibilityConverter}}">
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />
@@ -39,7 +44,7 @@
             <Label Content="{x:Static Strings:Resources.MainWindow_MarkerRow_Title_Text}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="100"/>
             <TextBox Name="AuthorTextBox" HorizontalAlignment="Left" Height="23" Margin="105,2,0,0" TextWrapping="Wrap" Text="{Binding Path=Author, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
         </Grid>
-        <TextBox Name="MessageTextBox" Margin="5,0,0,5" Height="65" TextWrapping="Wrap" Text="{Binding Path=Message}" VerticalAlignment="Top" />
+        <TextBox Name="MessageTextBox" Margin="5,0,0,5" Height="65" TextWrapping="Wrap" Text="{Binding Path=Message, Mode=TwoWay}" VerticalAlignment="Top" />
     </DockPanel>
 
 </UserControl>

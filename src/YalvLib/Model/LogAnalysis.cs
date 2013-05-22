@@ -83,10 +83,31 @@ namespace YalvLib.Model
         {
             foreach (TextMarker marker in TextMarkers)
             {   
-                if(marker.RemoveEntry(entry) && !IsMultiMarker(marker))
+                if(marker.LogEntries.Remove(entry) && !IsMultiMarker(marker))
                     DeleteTextMarker(marker);
             }
         }
+
+        /// <summary>
+        /// Remove the given entry from the marker binding
+        /// If the marker doesnt contains any entries after the removal
+        /// the marker will be deleted
+        /// </summary>
+        /// <param name="entries">Entries to remove</param>
+        public void RemoveTextMarker(List<LogEntry> entries)
+        {
+            foreach (TextMarker marker in TextMarkers)
+            {
+                foreach (LogEntry logEntry in entries)
+                {
+                    marker.LogEntries.Remove(logEntry);
+                }
+                if(!IsMultiMarker(marker))
+                    DeleteTextMarker(marker);
+            }
+        }
+
+
 
         /// <summary>
         /// Delete the given TextMarker

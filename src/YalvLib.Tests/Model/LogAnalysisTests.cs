@@ -27,8 +27,8 @@ namespace YalvLib.Tests.Model
             var entry2 = new LogEntry();
             TextMarker marker = analysis.AddTextMarker(new List<LogEntry> {entry1, entry2}, "ME", "My message");
             Assert.IsTrue(analysis.IsMultiMarker(marker));
-            marker.RemoveEntry(entry1);
-            marker.RemoveEntry(entry2);
+            marker.LogEntries.Remove(entry1);
+            marker.LogEntries.Remove(entry2);
             Assert.IsFalse(analysis.IsMultiMarker(marker));
         }
 
