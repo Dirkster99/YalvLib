@@ -16,7 +16,7 @@
             <Button
                 Name="ConfirmButton"
                 Margin="10,35,10,10"
-                Command="{Binding Path=CommandChangeTextMarker}">
+                Command="{Binding Path=CommandChangeTextMarker}" Click="ConfirmButton_Click">
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/confirm.png" Width="16" Height="16" />
                 </StackPanel>
@@ -42,9 +42,25 @@
         </StackPanel>
         <Grid Height="30" VerticalAlignment="Top" DockPanel.Dock="Top">
             <Label Content="{x:Static Strings:Resources.MainWindow_MarkerRow_Title_Text}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="100"/>
-            <TextBox Name="AuthorTextBox" HorizontalAlignment="Left" Height="23" Margin="105,2,0,0" TextWrapping="Wrap" Text="{Binding Path=Author, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+            <TextBox 
+                Name="AuthorTextBox" 
+                HorizontalAlignment="Left" 
+                Height="23" 
+                Margin="105,2,0,0" 
+                TextWrapping="Wrap" 
+                TextChanged="TextBox_TextChanged"
+                Text="{Binding Path=Author, Mode=TwoWay}" 
+                VerticalAlignment="Top" 
+                Width="120"/>
         </Grid>
-        <TextBox Name="MessageTextBox" Margin="5,0,0,5" Height="65" TextWrapping="Wrap" Text="{Binding Path=Message, Mode=TwoWay}" VerticalAlignment="Top" />
+        <TextBox 
+            Name="MessageTextBox" 
+            Margin="5,0,0,5" 
+            Height="65" 
+            TextWrapping="Wrap" 
+            Text="{Binding Path=Message, Mode=TwoWay}"
+            TextChanged="TextBox_TextChanged"
+            VerticalAlignment="Top" />
     </DockPanel>
 
 </UserControl>

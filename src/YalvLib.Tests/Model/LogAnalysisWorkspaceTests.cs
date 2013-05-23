@@ -6,47 +6,51 @@ namespace YalvLib.Tests.Model
     [TestFixture]
     public class LogAnalysisWorkspaceTests
     {
+
+        private LogAnalysisWorkspace _session;
+
+        [SetUp]
+        public void CreateEnvironment()
+        {
+            _session = new LogAnalysisWorkspace();
+        }
+
         [Test]
         public void AddSourceRepository()
         {
-            var session = new LogAnalysisWorkspace();
-            session.AddSourceRepository(new LogEntryFileRepository());
-            Assert.AreEqual(1, session.SourceRepositories.Count);
+            _session.AddSourceRepository(new LogEntryFileRepository());
+            Assert.AreEqual(1, _session.SourceRepositories.Count);
         }
 
         [Test]
         public void LogEntriesFrom1Repository()
         {
-            var session = new LogAnalysisWorkspace();
             var repository = new LogEntryFileRepository();
             repository.AddLogEntry(new LogEntry());
             repository.AddLogEntry(new LogEntry());
-            session.AddSourceRepository(repository);
-            Assert.AreEqual(2, session.LogEntries.Count);
+            _session.AddSourceRepository(repository);
+            Assert.AreEqual(2, _session.LogEntries.Count);
         }
 
         [Test]
         public void LogEntriesFrom2Repositories()
         {
-            var session = new LogAnalysisWorkspace();
             for (int i = 0; i < 2; i++)
             {
                 var repository = new LogEntryFileRepository();
                 repository.AddLogEntry(new LogEntry());
                 repository.AddLogEntry(new LogEntry());
-                session.AddSourceRepository(repository);
+                _session.AddSourceRepository(repository);
             }
-            Assert.AreEqual(4, session.LogEntries.Count);
+            Assert.AreEqual(4, _session.LogEntries.Count);
         }
-
 
         [Test]
         public void CreateNewLogAnalysisTest()
         {
-            var logAws = new LogAnalysisWorkspace();
             var logA = new LogAnalysis();
-            logAws.Analysis = logA;
-            Assert.AreEqual(logAws.Analysis, logA);
+            _session.Analysis = logA;
+            Assert.AreEqual(_session.Analysis, logA);
         } 
 
     }

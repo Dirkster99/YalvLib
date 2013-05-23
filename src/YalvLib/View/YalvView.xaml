@@ -1,151 +1,136 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:local="clr-namespace:YalvLib.View" xmlns:conv="clr-namespace:YalvLib.Converter"
-          xmlns:Properties="clr-namespace:YalvLib.Strings"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:YalvLib.View"
+                    xmlns:conv="clr-namespace:YalvLib.Converter" xmlns:Properties="clr-namespace:YalvLib.Strings"
+                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/YalvLib;component/Themes/Brushes.xaml" />
+        <ResourceDictionary Source="/YalvLib;component/Themes/GridStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
-          xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
-          >
-  <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="/YalvLib;component/Themes/Brushes.xaml" />
-    <ResourceDictionary Source="/YalvLib;component/Themes/GridStyle.xaml" />
-  </ResourceDictionary.MergedDictionaries>
+    <!-- ROUND TEXTBOX -->
+    <Style x:Key="RoundWatermarkTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Height" Value="21" />
+        <Setter Property="AllowDrop" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
+        <Setter Property="FontStyle" Value="Italic" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="Padding" Value="5,3,3,3" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="1,0,1,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid>
+                        <Border x:Name="BorderBase" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="1.4,1.4,1,1"
+                                CornerRadius="3" />
 
-  <!-- ROUND TEXTBOX -->
-  <Style x:Key="RoundWatermarkTextBox" TargetType="{x:Type TextBox}">
-    <Setter Property="Height" Value="21" />
-    <Setter Property="AllowDrop" Value="True" />
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-    <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
-    <Setter Property="FontStyle" Value="Italic" />
-    <Setter Property="FontWeight" Value="Normal" />
-    <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
-    <Setter Property="AcceptsReturn" Value="True" />
-    <Setter Property="Padding" Value="5,3,3,3" />
-    <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="Margin" Value="1,0,1,0" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type TextBox}">
-          <Grid>
-            <Border x:Name="BorderBase"
-                    Background="WhiteSmoke"
-                    BorderBrush="Gray"
-                    BorderThickness="1.4,1.4,1,1"
-                    CornerRadius="3" />
+                        <Label x:Name="TextPrompt" Content="{TemplateBinding Tag}" Padding="5,3,3,3" Focusable="False"
+                               FontStyle="Oblique" Foreground="Gray" Visibility="Collapsed" />
 
-            <Label x:Name="TextPrompt"
-                   Content="{TemplateBinding Tag}"
-                   Padding="5,3,3,3"
-                   Focusable="False"
-                   FontStyle="Oblique"
-                   Foreground="Gray"
-                   Visibility="Collapsed" />
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="0" Foreground="{DynamicResource OutsideFontColor}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="False" />
+                                <Condition Property="Text" Value="" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Visibility" TargetName="TextPrompt" Value="Visible" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="BorderBase" Value="LightGreen" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="DimGray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-            <ScrollViewer x:Name="PART_ContentHost" Margin="0" Foreground="{DynamicResource OutsideFontColor}" />
-          </Grid>
-          <ControlTemplate.Triggers>
-            <MultiTrigger>
-              <MultiTrigger.Conditions>
-                <Condition Property="IsFocused" Value="False" />
-                <Condition Property="Text" Value="" />
-              </MultiTrigger.Conditions>
-              <MultiTrigger.Setters>
-                <Setter Property="Visibility" TargetName="TextPrompt" Value="Visible" />
-              </MultiTrigger.Setters>
-            </MultiTrigger>
-            <Trigger Property="IsFocused" Value="True">
-              <Setter Property="BorderBrush" TargetName="BorderBase" Value="LightGreen" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-              <Setter Property="Foreground" Value="DimGray" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
+    <!-- File is associated in the Themes/Generic.xaml file -->
+    <Style TargetType="{x:Type local:YalvView}">
+        <Setter Property="CenterCellStyle" Value="{StaticResource CenterDataGridCellStyle}" />
+        <Setter Property="WaterMarkTextBox" Value="{StaticResource RoundWatermarkTextBox}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:YalvView}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
 
-  <!-- File is associated in the Themes/Generic.xaml file -->
-  <Style TargetType="{x:Type local:YalvView}">
-    <Setter Property="CenterCellStyle" Value="{StaticResource CenterDataGridCellStyle}" />
-    <Setter Property="WaterMarkTextBox" Value="{StaticResource RoundWatermarkTextBox}" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type local:YalvView}">
-          <Border Background="{TemplateBinding Background}"
-							BorderBrush="{TemplateBinding BorderBrush}"
-							BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Margin="3,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-            <Grid Margin="3,0">
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-              </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
+                            <!-- txtSearchPanel -->
+                            <Border Grid.Row="0" Grid.Column="0">
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                                              local:ScrollSynchronizer.ScrollGroup="dgSync">
+                                    <StackPanel Margin="3,0,25,0" Background="Transparent" Name="PART_SearchPanel"
+                                                Orientation="Horizontal" />
+                                </ScrollViewer>
+                            </Border>
 
-              <!-- txtSearchPanel -->
-              <Border Grid.Row="0" Grid.Column="0">
-                <ScrollViewer HorizontalScrollBarVisibility="Hidden"
-                        VerticalScrollBarVisibility="Disabled"
-                        local:ScrollSynchronizer.ScrollGroup="dgSync">
-                  <StackPanel Margin="3,0,25,0"
-                        Background="Transparent"
-                        Name="PART_SearchPanel"
-                        Orientation="Horizontal" />
-                </ScrollViewer>
-              </Border>
+                            <!-- dgItems -->
+                            <DataGrid Name="PART_DataGrid"
+                                      Grid.Row="1"
+                                      Grid.Column="0"
+                                      Style="{StaticResource DefaultDataGridStyle}"
+                                      CellStyle="{StaticResource DefaultDataGridCellStyle}"
+                                      ColumnHeaderStyle="{StaticResource DefaultDataGridHeaderStyle}"
+                                      RowStyle="{StaticResource LogItemDataGridRowStyle}"
+                                      SelectionMode="Extended"
+                                      Margin="3,1,0,0"
+                                      IsSynchronizedWithCurrentItem="True"
+                                      SelectedItem="{Binding Path=LogItems.SelectedLogItem}"
+                                      ItemsSource="{Binding Path=LogItems.LogView}"
+                                      local:SelectedItem.IsBroughtIntoViewWhenSelected="True"
+                                      >
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="{x:Static Properties:Resources.MainWindow_GridContextMenu_CopyToClipboard}"
+                                                  Command="ApplicationCommands.Copy" />
+                                        <Separator />
+                                        <MenuItem ItemsSource="{Binding Path=DataGridColumns.DataGridColumns}" Header="Columns"
+                                                  DataContext="{Binding LogItems}">
+                                            <MenuItem.ItemContainerStyle>
+                                                <Style TargetType="{x:Type MenuItem}">
+                                                    <Setter Property="IsChecked" Value="{Binding IsColumnVisible}" />
+                                                    <Setter Property="IsCheckable" Value="True" />
+                                                    <Setter Property="Header" Value="{Binding Header}" />
+                                                </Style>
+                                            </MenuItem.ItemContainerStyle>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
 
-              <!-- dgItems -->
-              <DataGrid  Grid.Row="1" Grid.Column="0"
-                         Style="{StaticResource DefaultDataGridStyle}"
-                         CellStyle="{StaticResource DefaultDataGridCellStyle}"
-                         ColumnHeaderStyle="{StaticResource DefaultDataGridHeaderStyle}"
-                         RowStyle="{StaticResource LogItemDataGridRowStyle}"
-
-                         Margin="3,1,0,0"
-                         IsSynchronizedWithCurrentItem="True"
-                         SelectedItem="{Binding Path=LogItems.SelectedLogItem}"
-                         ItemsSource="{Binding Path=LogItems.LogView}"
-                         local:SelectedItem.IsBroughtIntoViewWhenSelected="True"
-                         Name="PART_DataGrid"
-                  >
-                <DataGrid.ContextMenu>
-                  <ContextMenu>
-                    <MenuItem Header="{x:Static Properties:Resources.MainWindow_GridContextMenu_CopyToClipboard}"
-                              Command="ApplicationCommands.Copy" />
-                    <Separator />
-                    <MenuItem ItemsSource="{Binding Path=DataGridColumns.DataGridColumns}"
-                              Header="Columns"
-                              DataContext="{Binding LogItems}">
-                        <MenuItem.ItemContainerStyle>
-                          <Style TargetType="{x:Type MenuItem}">
-                            <Setter Property="IsChecked" Value="{Binding IsColumnVisible}" />
-                            <Setter Property="IsCheckable" Value="True" />
-                            <Setter Property="Header" Value="{Binding Header}" />
-                          </Style>
-                        </MenuItem.ItemContainerStyle>
-                      </MenuItem>
-                    </ContextMenu>
-                  </DataGrid.ContextMenu>
-
-                <DataGrid.Resources>
-                  <Style TargetType="ScrollViewer">
-                    <Setter Property="local:ScrollSynchronizer.ScrollGroup" Value="dgSync" />
-                  </Style>
-                  <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#19000000" />
-                </DataGrid.Resources>
-              </DataGrid>
-            </Grid>
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
+                                <DataGrid.Resources>
+                                    <Style TargetType="ScrollViewer">
+                                        <Setter Property="local:ScrollSynchronizer.ScrollGroup" Value="dgSync" />
+                                    </Style>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#19000000" />
+                                </DataGrid.Resources>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

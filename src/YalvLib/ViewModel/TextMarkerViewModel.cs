@@ -44,12 +44,14 @@ namespace YalvLib.ViewModel
 
         private void EvaluateCanExecuteConditions()
         {
-            if(CanExecuteCancel != CommandCancelTextMarker.CanExecute(null))
-            { CommandCancelTextMarker.OnCanExecuteChanged(); }
+            // Command*TextMarker.OnCanExecuteChanged should be called in the CommandRelay class;
+
+            /*if(CanExecuteCancel != CommandCancelTextMarker.CanExecute(null))
+            { CommandCancelTextMarker.OnCanExecuteChanged(); }*/
             CanExecuteCancel = CommandCancelTextMarker.CanExecute(null);
 
-            if (CanExecuteChange != CommandChangeTextMarker.CanExecute(null))
-            { CommandChangeTextMarker.OnCanExecuteChanged(); }
+            /*if (CanExecuteChange != CommandChangeTextMarker.CanExecute(null))
+            { CommandChangeTextMarker.OnCanExecuteChanged(); }*/
             CanExecuteChange = CommandChangeTextMarker.CanExecute(null);
         }
 

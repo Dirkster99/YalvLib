@@ -1,9 +1,9 @@
-﻿namespace YalvLib.Common
-{
-    using System;
-    using System.Diagnostics;
-    using YalvLib.Common.Interfaces;
+﻿using System;
+using System.Diagnostics;
+using YalvLib.Common.Interfaces;
 
+namespace YalvLib.Common
+{
     /// <summary>
     /// Class to support command binding between view and viewmodels
     /// </summary>
@@ -21,6 +21,10 @@
         /// </summary>
         protected readonly Predicate<object> CanCommandExecute;
 
+        /// <summary>
+        /// This boolean allow us to know if the state canExecute 
+        /// has changed so we can rise the OnCanChangeExecute event
+        /// </summary>
         private bool _lastCanExecute;
 
         #endregion fields
@@ -34,9 +38,8 @@
         /// <param name="canExecute"></param>
         public CommandRelay(Func<object, object> execute, Predicate<object> canExecute)
         {
-            this.ExecuteCommand = execute;
-            this.CanCommandExecute = canExecute;
-            _lastCanExecute = CanExecute(null);
+            ExecuteCommand = execute;
+            CanCommandExecute = canExecute;
         }
 
         #endregion constructor
@@ -51,10 +54,15 @@
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
-            return this.CanCommandExecute == null ? true : this.CanCommandExecute(parameter);
+            bool canExec = (CanCommandExecute == null || CanCommandExecute(parameter));
+            if (canExec != _lastCanExecute)
+            {
+                _lastCanExecute = canExec;
+                OnCanExecuteChanged();
+            }
+            return canExec;
         }
 
         /// <summary>
@@ -64,7 +72,7 @@
         [DebuggerStepThrough]
         public void Execute(object parameter)
         {
-            this.ExecuteCommand(parameter);
+            ExecuteCommand(parameter);
         }
 
         /// <summary>

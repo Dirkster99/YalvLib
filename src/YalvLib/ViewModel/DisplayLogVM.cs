@@ -60,6 +60,7 @@ namespace YalvLib.ViewModel
 
         private ObservableCollection<LogEntry> mItems;
         private LogEntry mSelectedLogItem;
+        // list logentries
 
         private string mGoToLogItemId;
 
@@ -91,6 +92,7 @@ namespace YalvLib.ViewModel
         private int mItemsFilterCount;
 
         private EvaluateLoadResult loadResultCallback = null;
+        public event EventHandler SelectedItemChanged;
 
         #endregion fields
 
@@ -109,12 +111,16 @@ namespace YalvLib.ViewModel
             this.Items = new ObservableCollection<LogEntry>();
             this.RebuildLogView(this.Items);
 
+            
+
             // Default constructor contains column definitions
             // The callback is invocked when a column filter string item is changed
             // so we know that we should update the viewmodel filter
             this.mDataGridColumns = new ColumnsVM(this.ColumnsVmUpdateColumnFilter);
 
             this.mLogFile = new LogFileVM();
+
+            
         }
 
         #endregion Constructor
@@ -180,6 +186,7 @@ namespace YalvLib.ViewModel
             {
                 this.mSelectedLogItem = value;
                 this.RaisePropertyChanged(PROP_SelectedLogItem);
+                OnSelectedItemChanged(EventArgs.Empty);
 
                 this.mGoToLogItemId = this.mSelectedLogItem != null ? this.mSelectedLogItem.Id.ToString() : string.Empty;
                 this.RaisePropertyChanged(DisplayLogVM.PROP_GoToLogItemId);
@@ -216,6 +223,12 @@ namespace YalvLib.ViewModel
                 this.RaisePropertyChanged(PROP_GoToLogItemId);
             }
         }
+        protected void OnSelectedItemChanged(EventArgs e)
+        {
+            EventHandler handler = SelectedItemChanged;
+            if (handler != null)
+                handler(this, e);
+        }
 
         #endregion LogProperties
 
@@ -237,7 +250,7 @@ namespace YalvLib.ViewModel
                     this.RaisePropertyChanged("IsFiltered");
                     this.RefreshView();
 
-                    this.CommandClearFilters.OnCanExecuteChanged();
+                    this.CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -364,7 +377,7 @@ namespace YalvLib.ViewModel
                         this.RefreshView();
                     }
 
-                    this.CommandClearFilters.OnCanExecuteChanged();
+                    this.CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -392,7 +405,7 @@ namespace YalvLib.ViewModel
                         this.RefreshCheckBoxBinding();
                         this.RefreshView();
 
-                        this.CommandClearFilters.OnCanExecuteChanged();
+                        this.CommandClearFilters.CanExecute(null);
                     }
                 }
             }
@@ -421,7 +434,7 @@ namespace YalvLib.ViewModel
                         this.RefreshCheckBoxBinding();
                         this.RefreshView();
 
-                        this.CommandClearFilters.OnCanExecuteChanged();
+                        this.CommandClearFilters.CanExecute(null);
                     }
                 }
             }
@@ -452,7 +465,7 @@ namespace YalvLib.ViewModel
 
                     this.RefreshView();
 
-                    this.CommandClearFilters.OnCanExecuteChanged();
+                    this.CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -481,7 +494,7 @@ namespace YalvLib.ViewModel
                         this.RefreshView();
                     }
 
-                    this.CommandClearFilters.OnCanExecuteChanged();
+                    this.CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -510,7 +523,7 @@ namespace YalvLib.ViewModel
                         this.RefreshView();
                     }
 
-                    this.CommandClearFilters.OnCanExecuteChanged();
+                    this.CommandClearFilters.CanExecute(null);
                 }
             }
         }

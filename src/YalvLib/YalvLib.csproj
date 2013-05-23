@@ -140,6 +140,7 @@
     <Compile Include="ViewModel\ColumnsVM.cs" />
     <Compile Include="ViewModel\Cultures.cs" />
     <Compile Include="ViewModel\DisplayLogVM.cs" />
+    <Compile Include="ViewModel\DisplayTextMarkersViewModel.cs" />
     <Compile Include="ViewModel\LogFileLoader.cs" />
     <Compile Include="ViewModel\LogFileVM.cs" />
     <Compile Include="ViewModel\TextMarkerViewModel.cs" />
