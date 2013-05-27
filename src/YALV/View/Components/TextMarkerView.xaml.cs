@@ -44,7 +44,10 @@ namespace YALV.View.Components
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (((TextMarkerViewModel)DataContext).CommandChangeTextMarker.CanExecute(null))
+            {
+                ((TextMarkerViewModel)DataContext).CommandChangeTextMarker.Execute(null);
+            }
         }
     }
 }

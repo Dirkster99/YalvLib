@@ -6,12 +6,12 @@
              xmlns:Strings="clr-namespace:YalvLib.Strings;assembly=YalvLib"
              xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
              xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d"
-	Height="100" Width="480">
+	Height="100" Width="350">
     <UserControl.Resources>
         <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    <DockPanel LastChildFill="True" Margin="0">
+    <DockPanel Width="350" LastChildFill="True" Margin="0">
         <StackPanel Width="70" DockPanel.Dock="Right">
             <Button
                 Name="ConfirmButton"

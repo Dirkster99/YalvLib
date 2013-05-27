@@ -44,6 +44,11 @@ namespace YalvLib.Common
 
         #endregion constructor
 
+
+        public event EventHandler Executed;
+
+
+
         /// <summary>
         /// This event is fired when the state of whether a command can execute or not changes.
         /// </summary>
@@ -73,6 +78,7 @@ namespace YalvLib.Common
         public void Execute(object parameter)
         {
             ExecuteCommand(parameter);
+            onExecuted();
         }
 
         /// <summary>
@@ -81,6 +87,13 @@ namespace YalvLib.Common
         public void OnCanExecuteChanged()
         {
             EventHandler handler = CanExecuteChanged;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        public void onExecuted()
+        {
+            EventHandler handler = Executed;
             if (handler != null)
                 handler(this, EventArgs.Empty);
         }

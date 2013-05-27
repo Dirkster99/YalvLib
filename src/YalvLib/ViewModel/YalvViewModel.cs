@@ -18,7 +18,7 @@ namespace YalvLib.ViewModel
         private const string PROP_FilePath = "FilePaths";
 
         private DisplayLogVM mLogItems = null;
-        private DisplayTextMarkersViewModel _tmViewModels;
+        private DisplayTextMarkersViewModel _tmsViewModel = null;
 
         #endregion fields
 
@@ -77,12 +77,13 @@ namespace YalvLib.ViewModel
         public YalvViewModel()
         {
             this.mLogItems = new DisplayLogVM();
-            _tmViewModels = new DisplayTextMarkersViewModel();
+            _tmsViewModel = new DisplayTextMarkersViewModel();
 
             this.CommandRefresh = new CommandRelay(this.CommandRefreshExecute, this.CommandRequiresDataCanExecute);
             this.CommandDelete = new CommandRelay(this.LogItems.CommandDeleteExecute,
                                                   this.LogItems.CommandDeleteCanExecute);
             this.FilterYalvView = new CommandRelay(this.CommandFilterYalvView, this.CommandRequiresDataCanExecute);
+            CommandUpdateTextMarkers = new CommandRelay(_tmsViewModel.CommandUpdateTextMarkersExecute, _tmsViewModel.CommandUpdateTextMarkersCanExecute);
         }
 
         #endregion constructor
@@ -123,6 +124,14 @@ namespace YalvLib.ViewModel
             get { return this.mLogItems; }
         }
 
+        public DisplayTextMarkersViewModel DisplayTmVm
+        {
+            get
+            {
+                return _tmsViewModel;
+            }
+        }
+
         /// <summary>
         /// Get whether there are data items in the collection or not
         /// (there may be no items to display if filter is applied but thats a different issue)
@@ -149,6 +158,8 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ICommandAncestor CommandDelete { get; protected set; }
 
+        public ICommandAncestor CommandUpdateTextMarkers { get; protected set; }
+
         #endregion Command
 
         #endregion properties
@@ -173,7 +184,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadSqliteDatabase(string path)
         {
-            this.mLogItems.LoadFile(new List<string>() {path}, EntriesProviderType.Sqlite, this.LoadFinishedEvent);
+            this.mLogItems.LoadFile(new List<string>() { path }, EntriesProviderType.Sqlite, this.LoadFinishedEvent);
         }
 
 
@@ -183,7 +194,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadLogAnalysisSession(string path)
         {
-            this.mLogItems.LoadFile(new List<string>() {path}, EntriesProviderType.Yalv, this.LoadFinishedEvent);
+            this.mLogItems.LoadFile(new List<string>() { path }, EntriesProviderType.Yalv, this.LoadFinishedEvent);
         }
 
 
@@ -203,6 +214,7 @@ namespace YalvLib.ViewModel
         {
             return this.HasData;
         }
+
 
         /// <summary>
         /// Default command method for applying column filters.

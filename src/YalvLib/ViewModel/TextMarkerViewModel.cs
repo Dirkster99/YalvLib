@@ -178,9 +178,7 @@ namespace YalvLib.ViewModel
         {               
             _marker.Author = _author;
             _marker.Message = _message;
-            if(!YalvRegistry.Instance.ActualWorkspace.Analysis.TextMarkers.Contains(Marker))
-                YalvRegistry.Instance.ActualWorkspace.Analysis.Markers.Add(Marker);
-            return _marker;
+            return null;
         }
 
         

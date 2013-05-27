@@ -48,8 +48,6 @@ namespace YalvLib.Tests.ViewModel
             {
                 _displayTextMarkers.PropertyChanged -= delegateViewModelsTextMarker;
             }
-           
-
         }
     }
 }

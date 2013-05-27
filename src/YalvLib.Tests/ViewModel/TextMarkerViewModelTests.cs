@@ -65,7 +65,6 @@ namespace YalvLib.Tests.ViewModel
             PropertyChangedEventHandler delegateAuthor = (senderAuthor, e) => Assert.AreEqual("Author", e.PropertyName);
             viewModel.PropertyChanged += delegateAuthor;
             viewModel.Author = "plop";
-
         }
 
         [Test]
@@ -78,8 +77,6 @@ namespace YalvLib.Tests.ViewModel
             viewModel.PropertyChanged += delegateMessage;
             viewModel.Message = "Et maintenant on va fourrer la dinde quoi !";
         }
-
-
     }
 
 }
