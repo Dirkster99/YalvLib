@@ -17,15 +17,17 @@ namespace YalvLib.ViewModel
         private TextMarker _marker;
         private string _author;
         private string _message;
+        private DisplayTextMarkersViewModel _displayInstance;
 
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="tm">TextMarker linked to the viewModel</param>
-        public TextMarkerViewModel(TextMarker tm)
+        public TextMarkerViewModel(TextMarker tm, DisplayTextMarkersViewModel instance)
         {
-            _marker = tm; 
+            _marker = tm;
+            _displayInstance = instance;
 
             CommandChangeTextMarker = new CommandRelay(ExecuteChangeTextMarker, CanExecuteChangeTextmarker);
             CommandCancelTextMarker = new CommandRelay(ExecuteCancelTextMarker, CanExecuteCancelTextMarker);
@@ -44,14 +46,7 @@ namespace YalvLib.ViewModel
 
         private void EvaluateCanExecuteConditions()
         {
-            // Command*TextMarker.OnCanExecuteChanged should be called in the CommandRelay class;
-
-            /*if(CanExecuteCancel != CommandCancelTextMarker.CanExecute(null))
-            { CommandCancelTextMarker.OnCanExecuteChanged(); }*/
             CanExecuteCancel = CommandCancelTextMarker.CanExecute(null);
-
-            /*if (CanExecuteChange != CommandChangeTextMarker.CanExecute(null))
-            { CommandChangeTextMarker.OnCanExecuteChanged(); }*/
             CanExecuteChange = CommandChangeTextMarker.CanExecute(null);
         }
 
@@ -138,12 +133,20 @@ namespace YalvLib.ViewModel
             }
         }
 
+        public bool isMultipleTextMarker
+        {
+            get { if(_marker.LogEntryCount() > 1)
+                return YalvRegistry.Instance.ActualWorkspace.Analysis.IsMultiMarker(_marker);
+                return false;
+            }
+        }
+
 
         public CommandRelay CommandCancelTextMarker { get; private set; }
 
         private bool CanExecuteCancelTextMarker(object obj)
         {
-            return _marker.LogEntryCount() <= 1;
+            return true;
         }
 
         /// <summary>
@@ -174,13 +177,12 @@ namespace YalvLib.ViewModel
                    && _message != null;
         }
 
+
         public object ExecuteChangeTextMarker(object o)
         {               
             _marker.Author = _author;
             _marker.Message = _message;
             return null;
         }
-
-        
     }
 }

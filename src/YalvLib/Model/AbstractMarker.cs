@@ -11,7 +11,7 @@ namespace YalvLib.Model
     {
         #region fields
 
-        private readonly List<LogEntry> _linkedEntries;
+        private List<LogEntry> _linkedEntries;
         private readonly DateTime _tCreation;
 
         #endregion fields
@@ -43,6 +43,7 @@ namespace YalvLib.Model
         public List<LogEntry> LogEntries
         {
             get { return _linkedEntries; }
+            set { _linkedEntries = value; }
         }
 
 

@@ -14,27 +14,27 @@
     <DockPanel Width="350" LastChildFill="True" Margin="0">
         <StackPanel Width="70" DockPanel.Dock="Right">
             <Button
-                Name="ConfirmButton"
-                Margin="10,35,10,10"
-                Command="{Binding Path=CommandChangeTextMarker}" Click="ConfirmButton_Click">
+                x:Name="ConfirmButton"
+                Margin="10,25,10,10"
+                Command="{Binding CommandChangeTextMarker}" Click="ConfirmButton_Click">
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/confirm.png" Width="16" Height="16" />
                 </StackPanel>
             </Button>
             <Button 
-                Name="DeleteSimpleButton"
-                Command="{Binding Path=CommandCancelTextMarker}"
-                Visibility="{Binding Path=CanExecuteCancel, Converter={StaticResource BoolToVisibilityConverter}}"
-                Margin="10,0,10,0">
+        		x:Name="DeleteSimpleButton"
+        		Command="{Binding CommandCancelTextMarker}"
+        		Visibility="{Binding isMultipleTextMarker, Converter={StaticResource BoolToOppositeVisibilityConverter}}"
+        		Margin="10,0,10,0">
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />
                 </StackPanel>
             </Button>
-            <Button Name="DeleteMultipleButton" 
-                    Margin="10,-22,10,0" 
-                    Click="DeleteMultipleButton_Click"
-                    Command="{Binding Path=CommandCancelTextMarker}"
-                    Visibility="{Binding Path=CanExecuteCancel, Converter={StaticResource BoolToOppositeVisibilityConverter}}">
+            <Button x:Name="DeleteMultipleButton" 
+        		Margin="10,0,10,0" 
+        		Click="DeleteMultipleButton_Click"
+        		Command="{Binding CommandCancelTextMarker}"
+        		Visibility="{Binding isMultipleTextMarker, Converter={StaticResource BoolToVisibilityConverter}}">
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />
                 </StackPanel>

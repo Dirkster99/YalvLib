@@ -74,11 +74,10 @@ namespace YalvLib.Common
         /// Execute the command.
         /// </summary>
         /// <param name="parameter"></param>
-        [DebuggerStepThrough]
         public void Execute(object parameter)
         {
             ExecuteCommand(parameter);
-            onExecuted();
+            OnExecuted();
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace YalvLib.Common
                 handler(this, EventArgs.Empty);
         }
 
-        public void onExecuted()
+        private void OnExecuted()
         {
             EventHandler handler = Executed;
             if (handler != null)

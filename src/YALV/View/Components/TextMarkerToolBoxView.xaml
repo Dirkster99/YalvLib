@@ -21,9 +21,12 @@
                 FontSize="20"
             DockPanel.Dock="Top"/>
         <local:TextMarkerView
+                x:Name="TextMarkerAdd"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top"
-            DockPanel.Dock="Top"/>
+                DataContext="{Binding Path=TextMarkerToAdd}"
+                DockPanel.Dock="Top"
+        />
         <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto"
                                VerticalScrollBarVisibility="Auto">
 

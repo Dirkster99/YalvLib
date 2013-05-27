@@ -63,6 +63,13 @@ namespace YalvLib.Model
             return marker;
         }
 
+        public TextMarker AddTextMarker(List<LogEntry> list, TextMarker tm)
+        {
+            tm.LogEntries = list;
+            Markers.Add(tm);
+            return tm;
+        }
+
         /// <summary>
         /// Check is the numbers of entries binded to the given Marker
         /// </summary>

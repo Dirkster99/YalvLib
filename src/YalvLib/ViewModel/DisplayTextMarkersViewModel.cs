@@ -14,21 +14,37 @@ namespace YalvLib.ViewModel
     {
 
         private readonly ObservableCollection<TextMarkerViewModel> _textMarkerVmList;
+        private TextMarkerViewModel _textMarkerAdd;
         private List<LogEntry> _selectedEntries;
 
         public DisplayTextMarkersViewModel()
         {
+            _textMarkerAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty), this);
             _textMarkerVmList = new ObservableCollection<TextMarkerViewModel>();
+            _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
             CommandUpdateTextMarkers = new CommandRelay(CommandUpdateTextMarkersExecute, CommandUpdateTextMarkersCanExecute);
         }
 
+
         public void GenerateViewModels(List<TextMarker> tm)
         {
+            _textMarkerVmList.Clear();
+            GetNewTextMarkerToAdd();
             foreach (TextMarker textMarker in tm)
             {
-                _textMarkerVmList.Add(new TextMarkerViewModel(textMarker));
+                _textMarkerVmList.Add(new TextMarkerViewModel(textMarker, this));
             }
-            //RaisePropertyChanged("TextMarkerViewModels");
+            foreach (var textMarkerViewModel in _textMarkerVmList)
+            {
+                textMarkerViewModel.CommandCancelTextMarker.Executed += ExecuteCancel;
+            }
+        }
+
+
+        public TextMarkerViewModel TextMarkerToAdd
+        {
+            get { return _textMarkerAdd; }
+            private set { _textMarkerAdd = value; RaisePropertyChanged("TextMarkerToAdd"); }
         }
 
         public ObservableCollection<TextMarkerViewModel> TextMarkerViewModels
@@ -59,10 +75,20 @@ namespace YalvLib.ViewModel
             _selectedEntries = new List<LogEntry>((IEnumerable<LogEntry>)arg);
             foreach (LogEntry e in ((IEnumerable<LogEntry>)arg))
             {
-                tm.AddRange(YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(e));
+               foreach (TextMarker tmE in YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(e).Where(tmE => !tm.Contains(tmE)))
+               {
+                   tm.Add(tmE);
+               }
             }
             GenerateViewModels(tm);
             return null;
+        }
+
+        private void GetNewTextMarkerToAdd()
+        {
+            _textMarkerAdd.CommandChangeTextMarker.Executed -= ExecuteChange;
+            TextMarkerToAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty), this);
+            _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
         }
 
 
@@ -70,5 +96,20 @@ namespace YalvLib.ViewModel
         {
             return ((IEnumerable<LogEntry>)obj).Any();
         }
+
+        private void ExecuteChange(object sender, EventArgs e)
+        {
+            _textMarkerVmList.Add(TextMarkerToAdd);
+            YalvRegistry.Instance.ActualWorkspace.Analysis.AddTextMarker(_selectedEntries, TextMarkerToAdd.Marker);
+            TextMarkerToAdd.CommandCancelTextMarker.Executed += ExecuteCancel;
+            GetNewTextMarkerToAdd();
+        }
+
+
+        private void ExecuteCancel(object sender, EventArgs e)
+        {
+            CommandUpdateTextMarkersExecute(_selectedEntries);
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using YalvLib.Model;
 
 namespace YalvLib.View
@@ -24,22 +25,22 @@ namespace YalvLib.View
         /// </summary>
         public static readonly DependencyProperty ColumnsProperty =
             DependencyProperty.Register("Columns",
-                                        typeof (ColumnsVM),
-                                        typeof (YalvView),
+                                        typeof(ColumnsVM),
+                                        typeof(YalvView),
                                         new UIPropertyMetadata(null, YalvView.OnDataGridChanged));
 
         /// <summary>
         /// Dependency property to bind grid cell default style to the view
         /// </summary>
         public static readonly DependencyProperty CenterCellStyleProperty =
-            DependencyProperty.Register("CenterCellStyle", typeof (Style), typeof (YalvView),
+            DependencyProperty.Register("CenterCellStyle", typeof(Style), typeof(YalvView),
                                         new UIPropertyMetadata(null));
 
         /// <summary>
         /// Dependency property to bind WaterMark textbox style to the view
         /// </summary>
         public static readonly DependencyProperty WaterMarkTextBoxProperty =
-            DependencyProperty.Register("WaterMarkTextBox", typeof (Style), typeof (YalvView),
+            DependencyProperty.Register("WaterMarkTextBox", typeof(Style), typeof(YalvView),
                                         new UIPropertyMetadata(null));
 
         #endregion fields
@@ -51,7 +52,7 @@ namespace YalvLib.View
         /// </summary>
         static YalvView()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof (YalvView), new FrameworkPropertyMetadata(typeof (YalvView)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(YalvView), new FrameworkPropertyMetadata(typeof(YalvView)));
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace YalvLib.View
         /// </summary>
         public ColumnsVM Columns
         {
-            get { return (ColumnsVM) GetValue(ColumnsProperty); }
+            get { return (ColumnsVM)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
@@ -80,7 +81,7 @@ namespace YalvLib.View
         /// </summary>
         public Style CenterCellStyle
         {
-            get { return (Style) GetValue(CenterCellStyleProperty); }
+            get { return (Style)GetValue(CenterCellStyleProperty); }
             set { SetValue(CenterCellStyleProperty, value); }
         }
 
@@ -89,19 +90,8 @@ namespace YalvLib.View
         /// </summary>
         public Style WaterMarkTextBox
         {
-            get { return (Style) GetValue(WaterMarkTextBoxProperty); }
+            get { return (Style)GetValue(WaterMarkTextBoxProperty); }
             set { SetValue(WaterMarkTextBoxProperty, value); }
-        }
-
-        public List<LogEntry> SelectedRows
-        {
-            get
-            {
-                var dataGrid = this.GetTemplateChild("PART_DataGrid") as DataGrid;
-                if (dataGrid != null)
-                    return dataGrid.SelectedItems.Cast<LogEntry>().ToList();
-                return null;
-            }
         }
 
         #endregion properties
@@ -177,8 +167,29 @@ namespace YalvLib.View
         private void YalvView_Loaded(object sender, RoutedEventArgs e)
         {
             this.RebuildGrid();
-
+            DataGrid.SelectionChanged += CallUpdateTextMarkers;
             this.Loaded -= this.YalvView_Loaded;
+        }
+
+        private DataGrid DataGrid
+        {
+            get
+            {
+                DataGrid dataGrid = this.GetTemplateChild("PART_DataGrid") as DataGrid;
+                return dataGrid;
+            }
+        }
+
+        private YalvViewModel YalvDataContext
+        {
+            get { return (YalvViewModel)this.DataContext; }
+        }
+
+        private void CallUpdateTextMarkers(object sender, SelectionChangedEventArgs e)
+        {
+            IEnumerable<LogEntry> list = DataGrid.SelectedItems.Cast<LogEntry>();
+            if (YalvDataContext.CommandUpdateTextMarkers.CanExecute(list))
+                YalvDataContext.CommandUpdateTextMarkers.Execute(list);
         }
 
         /// <summary>
