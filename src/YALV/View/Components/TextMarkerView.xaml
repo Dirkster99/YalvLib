@@ -54,7 +54,7 @@
                 Width="120"/>
         </Grid>
         <TextBox 
-            Name="MessageTextBox" 
+            Name="MessageTextBox"
             Margin="5,0,0,5" 
             Height="65" 
             TextWrapping="Wrap" 

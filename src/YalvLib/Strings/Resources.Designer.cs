@@ -910,6 +910,15 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display only common text markers.
+        /// </summary>
+        public static string MainWindow_Markerbox_Checkbox_Text {
+            get {
+                return ResourceManager.GetString("MainWindow_Markerbox_Checkbox_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Markers :.
         /// </summary>
         public static string MainWindow_MarkerBox_Title_Text {

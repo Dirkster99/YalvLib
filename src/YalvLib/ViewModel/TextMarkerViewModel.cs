@@ -17,17 +17,15 @@ namespace YalvLib.ViewModel
         private TextMarker _marker;
         private string _author;
         private string _message;
-        private DisplayTextMarkersViewModel _displayInstance;
 
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="tm">TextMarker linked to the viewModel</param>
-        public TextMarkerViewModel(TextMarker tm, DisplayTextMarkersViewModel instance)
+        public TextMarkerViewModel(TextMarker tm)
         {
             _marker = tm;
-            _displayInstance = instance;
 
             CommandChangeTextMarker = new CommandRelay(ExecuteChangeTextMarker, CanExecuteChangeTextmarker);
             CommandCancelTextMarker = new CommandRelay(ExecuteCancelTextMarker, CanExecuteCancelTextMarker);
@@ -133,11 +131,14 @@ namespace YalvLib.ViewModel
             }
         }
 
+        /// <summary>
+        /// Determine if the the marker is linked to several log entries
+        /// </summary>
         public bool isMultipleTextMarker
         {
-            get { if(_marker.LogEntryCount() > 1)
-                return YalvRegistry.Instance.ActualWorkspace.Analysis.IsMultiMarker(_marker);
-                return false;
+            get
+            {
+                return _marker.LogEntryCount() > 1 && YalvRegistry.Instance.ActualWorkspace.Analysis.IsMultiMarker(_marker);
             }
         }
 
@@ -146,7 +147,7 @@ namespace YalvLib.ViewModel
 
         private bool CanExecuteCancelTextMarker(object obj)
         {
-            return true;
+            return Author != string.Empty && Message != string.Empty;
         }
 
         /// <summary>

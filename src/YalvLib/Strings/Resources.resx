@@ -550,4 +550,7 @@ It is a WPF Application based on .NET Framework 4.0 and written with C# language
   <data name="MarkerRow_DeleteConfirmation_Caption" xml:space="preserve">
     <value>Warning !</value>
   </data>
+  <data name="MainWindow_Markerbox_Checkbox_Text" xml:space="preserve">
+    <value>Display only common text markers</value>
+  </data>
 </root>

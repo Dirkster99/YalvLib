@@ -63,11 +63,17 @@ namespace YalvLib.Model
             return marker;
         }
 
-        public TextMarker AddTextMarker(List<LogEntry> list, TextMarker tm)
+        /// <summary>
+        /// Add a textmarker linked to the given logentry list
+        /// </summary>
+        /// <param name="list">List of logEntry</param>
+        /// <param name="marker">TextMarker</param>
+        /// <returns>Markers</returns>
+        public TextMarker AddTextMarker(List<LogEntry> list, TextMarker marker)
         {
-            tm.LogEntries = list;
-            Markers.Add(tm);
-            return tm;
+            marker.LogEntries = list;
+            Markers.Add(marker);
+            return marker;
         }
 
         /// <summary>
@@ -125,9 +131,60 @@ namespace YalvLib.Model
             Markers.Remove(marker);
         }
 
-        public List<TextMarker> GetTextMarkersForEntry(LogEntry entry1)
+        /// <summary>
+        /// Return the list of TextMarkers linked to the given LogEntry
+        /// </summary>
+        /// <param name="entry">Log Entry</param>
+        /// <returns>List of linked TextMarkers</returns>
+        public List<TextMarker> GetTextMarkersForEntry(LogEntry entry)
         {
-            return TextMarkers.Where(textMarker => textMarker.LogEntries.Contains(entry1)).ToList();
+            return TextMarkers.Where(textMarker => textMarker.LogEntries.Contains(entry)).ToList();
+        }
+
+        /// <summary>
+        /// Return the list of TextMarkers linked to the given list of logEntry
+        /// </summary>
+        /// <param name="logEntries">List of log entry</param>
+        /// <returns>List of linked TextMarkers</returns>
+        public List<TextMarker> GetTextMarkersForEntries(List<LogEntry> logEntries)
+        {
+            List<TextMarker> markers = new List<TextMarker>();
+            foreach(LogEntry entry in logEntries)
+            {
+                markers.AddRange(GetTextMarkersForEntry(entry).Where(x=> !markers.Contains(x)));
+            }
+            return markers;
+        }
+
+
+        /// <summary>
+        /// Determine if a textmarker is linked to the given log entry
+        /// </summary>
+        /// <param name="entry">LogEntry to check</param>
+        /// <returns>true or false</returns>
+        public bool ExistTextMarkerForLogEntry(LogEntry entry)
+        {
+            return GetTextMarkersForEntry(entry).Any();
+        }
+
+        /// <summary>
+        /// Determine if a textmarker is linked to the given list of log entry
+        /// </summary>
+        /// <param name="logEntries">List of logEntry to check</param>
+        /// <returns>true or false</returns>
+        public bool ExistTextMarkerForLogEntries(List<LogEntry> logEntries)
+        {
+            return GetTextMarkersForEntries(logEntries).Any();
+        }
+
+        public void SetColorMarker(List<LogEntry> list, Color color)
+        {
+            GetColorMarker(color).LogEntries.AddRange(list);
+        }
+
+        public ColorMarker GetColorMarker(Color color)
+        {
+            return ColorMarkers.First(colorMarker => colorMarker.HighlightColor.Equals(color));
         }
     }
 }

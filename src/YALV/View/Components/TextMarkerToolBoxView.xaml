@@ -14,12 +14,21 @@
 
     <DockPanel
         LastChildFill="True">
+        <StackPanel
+            DockPanel.Dock="Top"
+            Orientation="Horizontal">
         <Label 
                 Content="{x:Static Strings:Resources.MainWindow_MarkerBox_Title_Text}" 
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
                 FontSize="20"
-            DockPanel.Dock="Top"/>
+            />
+            <CheckBox Margin="45, 12, 0, 0"
+                      VerticalAlignment="Top" 
+                      Content="{x:Static Strings:Resources.MainWindow_Markerbox_Checkbox_Text}"
+                      IsChecked="{Binding Path=DisplayOnlyCommonMarkers}"
+            />
+        </StackPanel>
         <local:TextMarkerView
                 x:Name="TextMarkerAdd"
                 HorizontalAlignment="Left" 

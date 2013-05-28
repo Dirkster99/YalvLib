@@ -53,6 +53,7 @@ namespace YalvLib.View
         static YalvView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(YalvView), new FrameworkPropertyMetadata(typeof(YalvView)));
+
         }
 
         /// <summary>
@@ -84,6 +85,7 @@ namespace YalvLib.View
             get { return (Style)GetValue(CenterCellStyleProperty); }
             set { SetValue(CenterCellStyleProperty, value); }
         }
+
 
         /// <summary>
         /// WatermarkTextBox style dependency property

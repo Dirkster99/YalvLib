@@ -42,6 +42,8 @@ namespace YALV.View.Components
             if (binding != null) binding.UpdateSource();
         }
 
+
+
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             if (((TextMarkerViewModel)DataContext).CommandChangeTextMarker.CanExecute(null))

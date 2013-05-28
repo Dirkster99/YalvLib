@@ -124,12 +124,26 @@ namespace YalvLib.ViewModel
             get { return this.mLogItems; }
         }
 
+
+        /// <summary>
+        /// Get the Display Text Marker instance
+        /// </summary>
         public DisplayTextMarkersViewModel DisplayTmVm
         {
             get
             {
                 return _tmsViewModel;
             }
+        }
+
+        /// <summary>
+        /// Return the list of instancied colorMarkers
+        /// </summary>
+        public List<ColorMarker> ColorMarkers
+        {
+            get { if(YalvRegistry.Instance.ActualWorkspace != null)
+                return YalvRegistry.Instance.ActualWorkspace.Analysis.ColorMarkers;
+            return new List<ColorMarker>();}
         }
 
         /// <summary>
