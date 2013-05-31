@@ -20,7 +20,7 @@ namespace YalvLib.Tests.ViewModel
         {
             _displayTextMarkers = new DisplayTextMarkersViewModel();
             _entry = new LogEntry();
-            YalvRegistry.Instance.SetActualLogAnalysisSession(new LogAnalysisWorkspace());
+            YalvRegistry.Instance.SetActualLogAnalysisWorkspace(new LogAnalysisWorkspace());
             
         }
 

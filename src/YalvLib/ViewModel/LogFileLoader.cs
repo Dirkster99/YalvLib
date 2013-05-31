@@ -98,7 +98,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="paths"></param>
         /// <returns></returns>
-        internal LogAnalysisWorkspace CreateLogAnalysisSession(List<string> paths)
+        internal LogAnalysisWorkspace CreateLogAnalysisWorkspace(List<string> paths)
         {
             LogAnalysisWorkspace workspace = new LogAnalysisWorkspace();
             try
@@ -140,7 +140,7 @@ namespace YalvLib.ViewModel
                 case EntriesProviderType.Xml:
                     return new LogEntryFileRepository(path);
             }
-            throw new NotImplementedException();
+            return null;
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="paths"></param>
         /// <param name="async"></param>
-        internal void LoadFile(List<string> paths, bool async)
+        internal void LoadFile(List<string> paths, bool async, bool newSession)
         {
             this.SaveThreadContext(async);
 
@@ -157,128 +157,150 @@ namespace YalvLib.ViewModel
             CancellationToken cancelToken = cancelTokenSource.Token;
 
             Task taskToProcess = null;
-            taskToProcess = Task.Factory.StartNew<ObservableCollection<string>>((stateObj) =>
-                                                                                    {
-                                                                                        this.mLogFile = new LogFileVM();
-                                                                                        this.mAbortedWithErrors =
-                                                                                            this.mAbortedWithCancel =
-                                                                                            false;
-                                                                                        this.mObjColl =
-                                                                                            new Dictionary
-                                                                                                <string, object>();
+            taskToProcess = Task.Factory.StartNew
+                <ObservableCollection<string>>
+                ((stateObj) =>
+                     {
+                         if(newSession)
+                            this.mLogFile = new LogFileVM();
+                         this.mAbortedWithErrors =
+                             this.mAbortedWithCancel =
+                             false;
+                         this.mObjColl =
+                             new Dictionary
+                                 <string, object>();
 
-                                                                                        // This is not run on the UI thread.
-                                                                                        ObservableCollection<string>
-                                                                                            Results =
-                                                                                                new ObservableCollection
-                                                                                                    <string>();
+// This is not run on the UI thread.
+                         ObservableCollection<string>
+                             Results =
+                                 new ObservableCollection
+                                     <string>();
 
-                                                                                        try
-                                                                                        {
-                                                                                            cancelToken.
-                                                                                                ThrowIfCancellationRequested
-                                                                                                ();
+                         try
+                         {
+                             cancelToken.
+                                 ThrowIfCancellationRequested
+                                 ();
 
-                                                                                            foreach (
-                                                                                                string path in paths)
-                                                                                            {
-                                                                                                if (
-                                                                                                    System.IO.File.
-                                                                                                        Exists(path) ==
-                                                                                                    false)
-                                                                                                {
-                                                                                                    MessageBox.Show(
-                                                                                                        string.Format(
-                                                                                                            "Cannot access file '{0}'.",
-                                                                                                            path));
-                                                                                                    return Results;
-                                                                                                }
-                                                                                            }
+                             foreach (
+                                 string path in paths)
+                             {
+                                 if (
+                                     System.IO.File.
+                                         Exists(path) ==
+                                     false)
+                                 {
+                                     MessageBox.Show(
+                                         string.Format(
+                                             "Cannot access file '{0}'.",
+                                             path));
+                                     return Results;
+                                 }
+                             }
 
+                             if (newSession){
+                                 this.mLogFile.FilePaths = paths;
+                                 LogAnalysisWorkspace
+                                 workspace =
+                                     CreateLogAnalysisWorkspace
+                                         (paths);
+                             YalvRegistry.Instance.
+                                 SetActualLogAnalysisWorkspace
+                                 (workspace);
+                             }
+                             else
+                             {
+                                 this.mLogFile.FilePaths.AddRange(paths);
+                                 if (YalvRegistry.Instance.ActualWorkspace == null){
+                                     YalvRegistry.Instance.
+                                         SetActualLogAnalysisWorkspace
+                                         (CreateLogAnalysisWorkspace(this.mLogFile.FilePaths));
+                                }else
+                                 {
+                                     LogEntryRepository repo = new LogEntryRepository();
+                                     repo.AddLogEntries(CreateLogAnalysisWorkspace(paths).LogEntries);
+                                     RepositoryMerger merger = new RepositoryMerger();
+                                     merger.AddSourceRepository(repo);
+                                     merger.AddSourceRepositories(YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());                             
+                                     YalvRegistry.Instance.SetActualLogAnalysisWorkspace(new LogAnalysisWorkspace());
+                                     YalvRegistry.Instance.ActualWorkspace.AddSourceRepository(merger.Merge());
+                                 }
 
-                                                                                            this.mLogFile.FilePaths =
-                                                                                                paths;
+                         }
+                             
+                             
+                             this.mObjColl.Add(
+                                 LogFileLoader.
+                                     KeyLogItems,
+                                 YalvRegistry.Instance.ActualWorkspace.LogEntries);
+                         }
+                         catch (
+                             OperationCanceledException
+                                 exp)
+                         {
+                             this.mAbortedWithCancel =
+                                 true;
 
-                                                                                            LogAnalysisWorkspace
-                                                                                                workspace =
-                                                                                                    CreateLogAnalysisSession
-                                                                                                        (paths);
-                                                                                            YalvRegistry.Instance.
-                                                                                                SetActualLogAnalysisSession
-                                                                                                (workspace);
+                             string sStatus = exp.Message;
+                             // output: "User canceled..." ...
+                             Results.Add(sStatus);
 
-                                                                                            this.mObjColl.Add(
-                                                                                                LogFileLoader.
-                                                                                                    KeyLogItems,
-                                                                                                workspace.LogEntries);
-                                                                                        }
-                                                                                        catch (
-                                                                                            OperationCanceledException
-                                                                                                exp)
-                                                                                        {
-                                                                                            this.mAbortedWithCancel =
-                                                                                                true;
+                             this.mLogFile =
+                                 new LogFileVM();
+                         }
+                         catch (Exception Exp)
+                         {
+                             this.mInnerException = Exp;
+                             this.mAbortedWithErrors =
+                                 true;
 
-                                                                                            string sStatus = exp.Message;
-                                                                                                // output: "User canceled..." ...
-                                                                                            Results.Add(sStatus);
+                             this.mLogFile =
+                                 new LogFileVM();
 
-                                                                                            this.mLogFile =
-                                                                                                new LogFileVM();
-                                                                                        }
-                                                                                        catch (Exception Exp)
-                                                                                        {
-                                                                                            this.mInnerException = Exp;
-                                                                                            this.mAbortedWithErrors =
-                                                                                                true;
+                             Results.Add(Exp.ToString());
+                         }
+                         finally
+                         {
+                             this.mLogFile.IsLoading =
+                                 false;
+                             // Make sure that state engine has correct state
+                         }
 
-                                                                                            this.mLogFile =
-                                                                                                new LogFileVM();
-
-                                                                                            Results.Add(Exp.ToString());
-                                                                                        }
-                                                                                        finally
-                                                                                        {
-                                                                                            this.mLogFile.IsLoading =
-                                                                                                false;
-                                                                                                // Make sure that state engine has correct state
-                                                                                        }
-
-                                                                                        return Results;
-                                                                                            // End of async task with summary list of result strings
-                                                                                    },
-                                                                                cancelToken).ContinueWith(ant =>
-                                                                                                              {
-                                                                                                                  try
-                                                                                                                  {
-                                                                                                                      this
-                                                                                                                          .
-                                                                                                                          ReportBatchResultEvent
-                                                                                                                          (async);
-                                                                                                                  }
-                                                                                                                  catch
-                                                                                                                      (
-                                                                                                                      AggregateException
-                                                                                                                          aggExp
-                                                                                                                      )
-                                                                                                                  {
-                                                                                                                      this
-                                                                                                                          .
-                                                                                                                          mAbortedWithErrors
-                                                                                                                          =
-                                                                                                                          true;
-                                                                                                                      string
-                                                                                                                          errorMessage
-                                                                                                                              =
-                                                                                                                              PrintException
-                                                                                                                                  (taskToProcess,
-                                                                                                                                   aggExp,
-                                                                                                                                   "LogFileLoader");
-                                                                                                                  }
-                                                                                                                  ////finally
-                                                                                                                  ////{
-                                                                                                                  ////}
-                                                                                                              });
+                         return Results;
+                         // End of async task with summary list of result strings
+                     },
+                 cancelToken).ContinueWith(ant =>
+                                               {
+                                                   try
+                                                   {
+                                                       this
+                                                           .
+                                                           ReportBatchResultEvent
+                                                           (async);
+                                                   }
+                                                   catch
+                                                       (
+                                                       AggregateException
+                                                           aggExp
+                                                       )
+                                                   {
+                                                       this
+                                                           .
+                                                           mAbortedWithErrors
+                                                           =
+                                                           true;
+                                                       string
+                                                           errorMessage
+                                                               =
+                                                               PrintException
+                                                                   (taskToProcess,
+                                                                    aggExp,
+                                                                    "LogFileLoader");
+                                                   }
+                                                   ////finally
+                                                   ////{
+                                                   ////}
+                                               });
 
             if (async == false) // Execute 'synchronously' via wait/block method
                 taskToProcess.Wait();

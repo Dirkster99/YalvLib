@@ -812,7 +812,7 @@ namespace YalvLib.ViewModel
         {
             if (this.LogFile.IsFileLoaded == true)
             {
-                this.LoadFile(this.LogFile.FilePaths, EntriesProviderType.Xml, callbackOnFinishedparameter);
+                this.LoadFile(this.LogFile.FilePaths, EntriesProviderType.Xml, callbackOnFinishedparameter, true);
             }
         }
 
@@ -867,7 +867,7 @@ namespace YalvLib.ViewModel
         /// <param name="callbackOnFinished"></param>
         /// <returns></returns>
         internal bool LoadFile(List<string> paths, EntriesProviderType providerType,
-                               EvaluateLoadResult callbackOnFinished)
+                               EvaluateLoadResult callbackOnFinished, bool newSession)
         {
             lock (this.lockObject)
             {
@@ -887,7 +887,8 @@ namespace YalvLib.ViewModel
                     {
                         this.LogFile.IsLoading = true;
                         this.LogFile.FilePaths = paths;
-                        this.fileLoader.LoadFile(paths, true);
+                        this.mItems.Clear();
+                        this.fileLoader.LoadFile(paths, true, newSession);
                     }
 
                     return true;

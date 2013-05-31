@@ -184,11 +184,11 @@ namespace YalvLib.ViewModel
         /// Load a log4nez log file to display its content through this ViewModel.
         /// </summary>
         /// <param name="paths">file path</param>
-        public void LoadFiles(string[] paths)
+        public void LoadFiles(string[] paths, bool newSession)
         {
             List<string> pathsList = new List<string>();
             pathsList.AddRange(paths);
-            this.mLogItems.LoadFile(pathsList, EntriesProviderType.Xml, this.LoadFinishedEvent);
+            this.mLogItems.LoadFile(pathsList, EntriesProviderType.Xml, this.LoadFinishedEvent, newSession);
         }
 
 
@@ -198,7 +198,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadSqliteDatabase(string path)
         {
-            this.mLogItems.LoadFile(new List<string>() { path }, EntriesProviderType.Sqlite, this.LoadFinishedEvent);
+            this.mLogItems.LoadFile(new List<string>() { path }, EntriesProviderType.Sqlite, this.LoadFinishedEvent, true);
         }
 
 
@@ -208,7 +208,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadLogAnalysisSession(string path)
         {
-            this.mLogItems.LoadFile(new List<string>() { path }, EntriesProviderType.Yalv, this.LoadFinishedEvent);
+            this.mLogItems.LoadFile(new List<string>() { path }, EntriesProviderType.Yalv, this.LoadFinishedEvent, true);
         }
 
 

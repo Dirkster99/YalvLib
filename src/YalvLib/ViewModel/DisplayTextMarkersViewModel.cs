@@ -59,7 +59,7 @@ namespace YalvLib.ViewModel
         public TextMarkerViewModel TextMarkerToAdd
         {
             get { return _textMarkerAdd; }
-            private set { _textMarkerAdd = value; RaisePropertyChanged("TextMarkerToAdd"); }
+            private set { _textMarkerAdd = value; NotifyPropertyChanged(() => TextMarkerToAdd);}
         }
 
 

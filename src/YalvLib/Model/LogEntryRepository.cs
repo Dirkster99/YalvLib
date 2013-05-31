@@ -9,7 +9,7 @@ using YalvLib.Providers;
 namespace YalvLib.Model
 {
 
-    public class LogEntryRepository
+    public class LogEntryRepository : object
     {
 
         private List<LogEntry> _logEntries = new List<LogEntry>();
@@ -18,7 +18,7 @@ namespace YalvLib.Model
         {
             get { return _logEntries; }
         }
-
+         
         public Guid Uid { get; set; }
 
         public void AddLogEntry(LogEntry entry)
@@ -55,6 +55,23 @@ namespace YalvLib.Model
             if (_lastLogEntry != null)
                 comparisonDateTime = _lastLogEntry.TimeStamp;
             entry.Delta = GlobalHelper.GetTimeDelta(comparisonDateTime, entry.TimeStamp);
+        }
+
+        public override bool Equals(object obj)
+        {
+            var item = obj as LogEntryRepository;
+            if(item == null)
+            {
+                return false;
+            }
+            if (this.LogEntries.Count != item.LogEntries.Count)
+                return false;
+            return !this.LogEntries.Where((t, i) => !t.Equals(item.LogEntries[i])).Any();
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 

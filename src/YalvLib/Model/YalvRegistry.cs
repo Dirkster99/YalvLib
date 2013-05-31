@@ -16,7 +16,7 @@ namespace YalvLib.Model
         // This class actually manage only one workspace at a time (cf getter)
         // but still have a list of workspace that can be returned to be read
 
-        private List<LogAnalysisWorkspace> _sessions = new List<LogAnalysisWorkspace>(); 
+        private List<LogAnalysisWorkspace> _workspaces = new List<LogAnalysisWorkspace>(); 
 
         private static YalvRegistry _singleton;
 
@@ -34,10 +34,10 @@ namespace YalvLib.Model
         /// Clears and replace the actual workspace 
         /// </summary>
         /// <param name="workspace"></param>
-        public void SetActualLogAnalysisSession(LogAnalysisWorkspace workspace)
+        public void SetActualLogAnalysisWorkspace(LogAnalysisWorkspace workspace)
         {
-            _sessions.Clear();
-            _sessions.Add(workspace);
+            _workspaces.Clear();
+            _workspaces.Add(workspace);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace YalvLib.Model
         {
             get
             {
-                return new ReadOnlyCollection<LogAnalysisWorkspace>(_sessions);
+                return new ReadOnlyCollection<LogAnalysisWorkspace>(_workspaces);
             }
         }
     }

@@ -14,7 +14,7 @@ namespace YalvLib.Tests.ViewModel
         [Test]
         public void SetAuthorInViewModel()
         {
-            YalvRegistry.Instance.SetActualLogAnalysisSession(new LogAnalysisWorkspace());
+            YalvRegistry.Instance.SetActualLogAnalysisWorkspace(new LogAnalysisWorkspace());
             TextMarker textMarker = new TextMarker(new List<LogEntry>(), "Toto", "Hello World");
             TextMarkerViewModel viewModel = new TextMarkerViewModel(textMarker);
             viewModel.Author = "Titi";

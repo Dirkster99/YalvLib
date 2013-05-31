@@ -37,6 +37,14 @@ namespace YalvLib.Tests.Integration.Model
             // Tests on the dataGrid display are still to be written to ensure the "good looking" of the app.
         }
 
+        [Test]
+        public void EqualsTest()
+        {
+            LogEntryFileRepository repo = new LogEntryFileRepository("Model/sample.xml");
+            LogEntryFileRepository repo2 = new LogEntryFileRepository("Model/sample.xml");
+            Assert.IsTrue(repo.Equals(repo2));
+        }
+
     }
 
 }

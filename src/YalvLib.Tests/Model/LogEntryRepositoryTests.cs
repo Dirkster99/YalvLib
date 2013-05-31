@@ -30,5 +30,16 @@ namespace YalvLib.Tests.Model
             LogEntry entry = null;
             Assert.Throws<ArgumentNullException>(delegate { repository.AddLogEntry(entry); });
         }
+
+        [Test]
+        public void EqualsTest()
+        {
+            var repository1 = new LogEntryRepository();
+            var repository2 = new LogEntryRepository();
+            var entry = new LogEntry();
+            repository1.AddLogEntry(entry);
+            repository2.AddLogEntry(entry);
+            Assert.IsTrue(repository1.Equals(repository2));
+        }
     }
 }

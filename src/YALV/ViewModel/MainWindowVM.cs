@@ -177,7 +177,7 @@ namespace YALV.ViewModel
         {
             try
             {
-                this.mYalvLogViewModel.LoadFiles(new string[]{filePath});
+                this.mYalvLogViewModel.LoadFiles(new string[]{filePath}, true);
             }
             finally
             {
@@ -214,6 +214,8 @@ namespace YALV.ViewModel
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
             bool addFile = parameter != null && parameter.Equals("ADD");
+            if (parameter == null)
+                parameter = "";
 
             dlg.Filter = YalvViewModel.FileExtensionDialogFilter;
             dlg.DefaultExt = "*.log4j";
@@ -223,7 +225,7 @@ namespace YALV.ViewModel
 
             if (dlg.ShowDialog().GetValueOrDefault() == true)
             {
-                this.mYalvLogViewModel.LoadFiles(dlg.FileNames);
+                this.mYalvLogViewModel.LoadFiles(dlg.FileNames, !parameter.Equals("JOIN"));
          
 
                 this.RecentFileList.InsertFile(dlg.FileName);

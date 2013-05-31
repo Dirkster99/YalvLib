@@ -22,6 +22,11 @@ namespace YalvLib.Model
             _sourceRepositories.Add(sourceRepository);
         }
 
+        public void AddSourceRepositories(List<LogEntryRepository> sourceRepositories)
+        {
+            _sourceRepositories.AddRange(sourceRepositories);
+        }
+
         public LogEntryRepository Merge()
         {
             IEnumerable<LogEntry> logEntries = GetLogEntries();

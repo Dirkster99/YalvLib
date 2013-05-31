@@ -184,7 +184,7 @@
     {
       try
       {
-          this.mYalvLogViewModel.LoadFiles(new string[] { filePath });
+          this.mYalvLogViewModel.LoadFiles(new string[] { filePath }, true);
       }
       finally
       {
@@ -388,7 +388,7 @@
     {
       try
       {
-          this.mYalvLogViewModel.LoadFiles(new string[] { sfileName });
+          this.mYalvLogViewModel.LoadFiles(new string[] { sfileName }, true);
 
         this.mLastFileLoad = sfileName;
 

@@ -130,5 +130,25 @@ namespace YalvLib.Model
         public Guid Uid { get; set; }
 
         #endregion properties
+
+        public override bool Equals(object obj)
+        {
+            var e = obj as LogEntry;
+            if (e == null)
+                return false;
+            return e.App == this.App
+                   && e.Class == this.Class
+                   && e.Delta == this.Delta
+                   && e.File == this.File
+                   && e.HostName == this.HostName
+                   && e.Line == this.Line
+                   && e.TimeStamp == this.TimeStamp
+                   && e.Logger == this.Logger
+                   && e.MachineName == this.MachineName;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

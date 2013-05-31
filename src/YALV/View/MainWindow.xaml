@@ -72,7 +72,7 @@
 
                             <StackPanel Orientation="Vertical">
                                 <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_OpenFile_ToolTip}"
-                                        Command="{Binding Path=CommandOpenFile}" CommandParameter="Open" BorderBrush="Transparent" Background="Transparent"
+                                        Command="{Binding Path=CommandOpenFile}" CommandParameter="JOIN" BorderBrush="Transparent" Background="Transparent"
                                         HorizontalAlignment="Center">
                                     <StackPanel>
                                         <Image Source="/YALV;component/Resources/Icons/open_file.png" Width="32" Height="32" />

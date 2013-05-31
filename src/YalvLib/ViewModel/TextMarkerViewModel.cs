@@ -72,7 +72,7 @@ namespace YalvLib.ViewModel
                 if (_author != value)
                 {
                     _author = value;
-                    RaisePropertyChanged("Author");
+                    NotifyPropertyChanged(() => Author);
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace YalvLib.ViewModel
                 if (_message != value)
                 {
                     _message = value;
-                    RaisePropertyChanged("Message");
+                    this.NotifyPropertyChanged(() => this.Message);
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace YalvLib.ViewModel
                 if (_canExecuteCancel != value)
                 {
                     _canExecuteCancel = value;
-                    RaisePropertyChanged("CanExecuteCancel");
+                    NotifyPropertyChanged(() => CanExecuteCancel);
                 }                
             }
         }
@@ -126,7 +126,7 @@ namespace YalvLib.ViewModel
                 if (_canExecuteChange != value)
                 {
                     _canExecuteChange = value;
-                    RaisePropertyChanged("CanExecuteChange");
+                    NotifyPropertyChanged(() => CanExecuteChange);
                 }
             }
         }
@@ -157,12 +157,19 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         public object ExecuteCancelTextMarker(object obj)
         {
-            Author = string.Empty;
-            Message = string.Empty;
             if(_marker.LogEntryCount() >= 1)
             {
+                if(_marker.LogEntryCount() > 1)
+                    if (MessageBox.Show(Strings.Resources.MarkerRow_DeleteConfirmation,
+                                                              Strings.Resources.
+                                                                  MarkerRow_DeleteConfirmation_Caption,
+                                                              MessageBoxButton.YesNo,
+                                                              MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+                        return null;
                 YalvRegistry.Instance.ActualWorkspace.Analysis.DeleteTextMarker(_marker);
             }
+            Author = string.Empty;
+            Message = string.Empty;
             return null;
         }
 

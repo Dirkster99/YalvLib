@@ -31,9 +31,8 @@
                 </StackPanel>
             </Button>
             <Button x:Name="DeleteMultipleButton" 
-        		Margin="10,0,10,0" 
-        		Click="DeleteMultipleButton_Click"
-        		Command="{Binding CommandCancelTextMarker}"
+        		Margin="10,0,10,0"
+                Command="{Binding CommandCancelTextMarker}"
         		Visibility="{Binding isMultipleTextMarker, Converter={StaticResource BoolToVisibilityConverter}}">
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />

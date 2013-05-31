@@ -24,6 +24,19 @@ namespace YalvLib.Model
         }
 
         public String Path { get; set; }
+
+        public override bool Equals(object repo)
+        {
+            var rep = repo as LogEntryFileRepository;
+            if (rep == null)
+                return false;
+            return this.Path.Equals(rep.Path) && base.Equals(repo);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
 }
