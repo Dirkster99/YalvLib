@@ -24,16 +24,7 @@
             <Button 
         		x:Name="DeleteSimpleButton"
         		Command="{Binding CommandCancelTextMarker}"
-        		Visibility="{Binding isMultipleTextMarker, Converter={StaticResource BoolToOppositeVisibilityConverter}}"
         		Margin="10,0,10,0">
-                <StackPanel>
-                    <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />
-                </StackPanel>
-            </Button>
-            <Button x:Name="DeleteMultipleButton" 
-        		Margin="10,0,10,0"
-                Command="{Binding CommandCancelTextMarker}"
-        		Visibility="{Binding isMultipleTextMarker, Converter={StaticResource BoolToVisibilityConverter}}">
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />
                 </StackPanel>

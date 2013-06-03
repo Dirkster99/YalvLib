@@ -15,25 +15,9 @@ namespace YALV.View.Components
             InitializeComponent();
         }
 
-        private TextMarkerViewModel ViewModel
-        {
-            get { return DataContext as TextMarkerViewModel; }
-        }
-
         public string AuthorInputValue
         {
             get { return this.AuthorTextBox.Text; }
-        }
-
-        private void DeleteMultipleButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show(YalvLib.Strings.Resources.MarkerRow_DeleteConfirmation,
-                            YalvLib.Strings.Resources.MarkerRow_DeleteConfirmation_Caption, MessageBoxButton.YesNo,
-                            MessageBoxImage.Warning, MessageBoxResult.No);
-            if(result == MessageBoxResult.Yes)
-            {
-                ((TextMarkerViewModel)this.DataContext).CommandCancelTextMarker.Execute(null);
-            }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

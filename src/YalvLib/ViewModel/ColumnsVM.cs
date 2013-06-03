@@ -201,19 +201,19 @@
       {
         this.mDataGridColumns = new List<ColumnItem>()
         {
-          new ColumnItem("Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
-          new ColumnItem("TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
-          new ColumnItem("LevelIndex",  32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
-          new ColumnItem("Message",     32, 400) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MessageColumn_Header },
-          new ColumnItem("Logger",      32, 100) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
-          new ColumnItem("MachineName", 32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },
-          new ColumnItem("HostName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header },
-          new ColumnItem("UserName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header },
-          new ColumnItem("App",         32, 50) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_AppColumn_Header },
-          new ColumnItem("Thread",      32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header },
-          new ColumnItem("Class",       32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ClassColumn_Header },
-          new ColumnItem("Method",      32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MethodColumn_Header },
-          new ColumnItem("Delta",       32, 50, CellAlignment.CENTER, null, "Δ") { IsColumnVisible = false },
+          new ColumnItem("Entry.Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
+          new ColumnItem("Entry.TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
+          new ColumnItem("Entry.LevelIndex",  32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
+          new ColumnItem("Entry.Message",     32, 400) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MessageColumn_Header },
+          new ColumnItem("Entry.Logger",      32, 100) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
+          new ColumnItem("Entry.MachineName", 32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },
+          new ColumnItem("Entry.HostName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header },
+          new ColumnItem("Entry.UserName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header },
+          new ColumnItem("Entry.App",         32, 50) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_AppColumn_Header },
+          new ColumnItem("Entry.Thread",      32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header },
+          new ColumnItem("Entry.Class",       32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ClassColumn_Header },
+          new ColumnItem("Entry.Method",      32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MethodColumn_Header },
+          new ColumnItem("Entry.Delta",       32, 50, CellAlignment.CENTER, null, "Δ") { IsColumnVisible = false },
           ////new ColumnItem("Path", 32)
         };
 

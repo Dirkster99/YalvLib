@@ -14,7 +14,7 @@
                 <Grid Background="#FFE5E5E5">
                 <TextBox Grid.Row="1" BorderBrush="Silver"
                    DataContext="{Binding YalvLogViewModel.LogItems}"
-                   Text="{Binding Path=SelectedLogItem.Message, Mode=OneWay}"
+                   Text="{Binding Path=SelectedLogItem.Entry.Message, Mode=OneWay}"
                    AcceptsReturn="True"
                    ScrollViewer.CanContentScroll="True"
                    ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -33,7 +33,7 @@
                 <Grid Background="#FFE5E5E5">
                 <TextBox Grid.Row="1" BorderBrush="Silver"
                    DataContext="{Binding YalvLogViewModel.LogItems}"
-                   Text="{Binding Path=SelectedLogItem.Throwable, Mode=OneWay}"
+                   Text="{Binding Path=SelectedLogItem.Entry.Throwable, Mode=OneWay}"
                    AcceptsReturn="True"
                    ScrollViewer.CanContentScroll="True"
                    ScrollViewer.VerticalScrollBarVisibility="Auto"

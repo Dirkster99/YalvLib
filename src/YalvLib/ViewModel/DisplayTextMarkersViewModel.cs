@@ -19,7 +19,7 @@ namespace YalvLib.ViewModel
 
         private readonly ObservableCollection<TextMarkerViewModel> _textMarkerVmList;
         private TextMarkerViewModel _textMarkerAdd;
-        private List<LogEntry> _selectedEntries;
+        private List<LogEntryRowViewModel> _selectedEntries;
         private bool _displayOnlyCommonMarkers;
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace YalvLib.ViewModel
         /// Getter / Setter for the list of entries
         /// selected by the user
         /// </summary>
-        public List<LogEntry> SelectedEntries
+        public List<LogEntryRowViewModel> SelectedEntries
         {
             get { return _selectedEntries; }
             private set { _selectedEntries = value; }
@@ -108,15 +108,15 @@ namespace YalvLib.ViewModel
         /// <returns>null</returns>
         internal object CommandUpdateTextMarkersExecute(object arg)
         {
-            _selectedEntries = new List<LogEntry>((IEnumerable<LogEntry>)arg);
+            _selectedEntries = new List<LogEntryRowViewModel>((IEnumerable<LogEntryRowViewModel>)arg);
 
             IEnumerable<TextMarker> markers =
-                YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntries(_selectedEntries);
+                YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntries(_selectedEntries.Select(x => x.Entry));
 
             List<TextMarker> markersCommon = markers.Where(
                 x =>
                 _selectedEntries.All(
-                    e => YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(e).Contains(x))).ToList();
+                    e => YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(e.Entry).Contains(x))).ToList();
 
             GenerateViewModels(DisplayOnlyCommonMarkers ? markersCommon : markers.ToList());
             return null;
@@ -136,13 +136,13 @@ namespace YalvLib.ViewModel
 
         internal bool CommandUpdateTextMarkersCanExecute(object obj)
         {
-            return ((IEnumerable<LogEntry>)obj).Any();
+            return ((IEnumerable<LogEntryRowViewModel>)obj).Any();
         }
 
         private void ExecuteChange(object sender, EventArgs e)
         {
             _textMarkerVmList.Add(TextMarkerToAdd);
-            YalvRegistry.Instance.ActualWorkspace.Analysis.AddTextMarker(_selectedEntries, TextMarkerToAdd.Marker);
+            YalvRegistry.Instance.ActualWorkspace.Analysis.AddTextMarker(_selectedEntries.Select(x => x.Entry), TextMarkerToAdd.Marker);
             TextMarkerToAdd.CommandCancelTextMarker.Executed += ExecuteCancel;
             GetNewTextMarkerToAdd();
         }

@@ -58,8 +58,10 @@ namespace YalvLib.ViewModel
         private LogFileVM mLogFile = null;
         private LogFileLoader fileLoader = null;
 
-        private ObservableCollection<LogEntry> mItems;
-        private LogEntry mSelectedLogItem;
+        //private ObservableCollection<LogEntry> mItems;
+       // private LogEntry mSelectedLogItem;
+        private ObservableCollection<LogEntryRowViewModel> mItems;
+        private LogEntryRowViewModel mSelectedLogItem;
         // list logentries
 
         private string mGoToLogItemId;
@@ -108,7 +110,7 @@ namespace YalvLib.ViewModel
 
             this.SelectAll = true;
             this.IsFiltered = false;
-            this.Items = new ObservableCollection<LogEntry>();
+            this.Items = new ObservableCollection<LogEntryRowViewModel>();
             this.RebuildLogView(this.Items);
 
             
@@ -178,7 +180,7 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// SelectedLogItem Property
         /// </summary>
-        public LogEntry SelectedLogItem
+        public LogEntryRowViewModel SelectedLogItem
         {
             get { return this.mSelectedLogItem; }
 
@@ -188,7 +190,7 @@ namespace YalvLib.ViewModel
                 this.RaisePropertyChanged(PROP_SelectedLogItem);
                 OnSelectedItemChanged(EventArgs.Empty);
 
-                this.mGoToLogItemId = this.mSelectedLogItem != null ? this.mSelectedLogItem.Id.ToString() : string.Empty;
+                this.mGoToLogItemId = this.mSelectedLogItem != null ? this.mSelectedLogItem.LogEntryId.ToString() : string.Empty;
                 this.RaisePropertyChanged(DisplayLogVM.PROP_GoToLogItemId);
             }
         }
@@ -206,13 +208,13 @@ namespace YalvLib.ViewModel
 
                 int idGoTo = 0;
                 int.TryParse(value, out idGoTo);
-                UInt32 currentId = this.SelectedLogItem != null ? this.SelectedLogItem.Id : 0;
+                UInt32 currentId = this.SelectedLogItem != null ? this.SelectedLogItem.LogEntryId : 0;
 
                 if (idGoTo > 0 && idGoTo != currentId)
                 {
                     var selectItem = (from it in this.Items
-                                      where it.Id == idGoTo
-                                      select it).FirstOrDefault<LogEntry>();
+                                      where it.LogEntryId == idGoTo
+                                      select it).FirstOrDefault<LogEntryRowViewModel>();
 
                     if (selectItem != null)
                         this.SelectedLogItem = selectItem;
@@ -690,7 +692,7 @@ namespace YalvLib.ViewModel
         /// LogItems property which is the main list of logitems
         /// (this property is bound to a view via CollectionView property)
         /// </summary>
-        protected ObservableCollection<LogEntry> Items
+        protected ObservableCollection<LogEntryRowViewModel> Items
         {
             get { return this.mItems; }
 
@@ -774,23 +776,23 @@ namespace YalvLib.ViewModel
         internal void UpdateCounters()
         {
             this.ItemsDebugCount = (from it in this.Items
-                                    where it.LevelIndex.Equals(LevelIndex.DEBUG)
+                                    where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
                                     select it).Count();
 
             this.ItemsInfoCount = (from it in this.Items
-                                   where it.LevelIndex.Equals(LevelIndex.DEBUG)
+                                   where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
                                    select it).Count();
 
             this.ItemsWarnCount = (from it in this.Items
-                                   where it.LevelIndex.Equals(LevelIndex.WARN)
+                                   where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
                                    select it).Count();
 
             this.ItemsErrorCount = (from it in this.Items
-                                    where it.LevelIndex.Equals(LevelIndex.ERROR)
+                                    where it.Entry.LevelIndex.Equals(LevelIndex.ERROR)
                                     select it).Count();
 
             this.ItemsFatalCount = (from it in this.Items
-                                    where it.LevelIndex.Equals(LevelIndex.FATAL)
+                                    where it.Entry.LevelIndex.Equals(LevelIndex.FATAL)
                                     select it).Count();
 
             ////this.RefreshView();
@@ -921,7 +923,7 @@ namespace YalvLib.ViewModel
 
         private void RefreshView()
         {
-            LogEntry l = this.SelectedLogItem;
+            LogEntryRowViewModel l = this.SelectedLogItem;
             this.SelectedLogItem = null;
 
             if (this.LogView != null)
@@ -1105,13 +1107,13 @@ namespace YalvLib.ViewModel
         /// for a DataGrid in an MVVM fashion.
         /// </summary>
         /// <param name="items"></param>
-        private void RebuildLogView(ObservableCollection<LogEntry> items)
+        private void RebuildLogView(ObservableCollection<LogEntryRowViewModel> items)
         {
             if (this.Items != null)
                 foreach (var item in items)
                     this.Items.Add(item);
             else
-                this.Items = new ObservableCollection<LogEntry>();
+                this.Items = new ObservableCollection<LogEntryRowViewModel>();
             this.LogView = (CollectionView) CollectionViewSource.GetDefaultView(this.Items);
             this.LogView.Filter = this.OnFilterLogItems;
             this.RefreshView();
@@ -1222,12 +1224,22 @@ namespace YalvLib.ViewModel
                     {
                         object o;
                         e.ResultObjects.TryGetValue(LogFileLoader.KeyLogItems, out o);
-
                         IList<LogEntry> list = o as IList<LogEntry>;
+                         IList<LogEntryRowViewModel> listLogEntryVM = new List<LogEntryRowViewModel>();
+                        foreach (var item in list)
+                        {
+                            LogEntryRowViewModel viewModel = new LogEntryRowViewModel(item);
+                            viewModel.TextMarkerQuantity =
+                                YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(item).Count;
+                            if ((item.Id % 2) == 0)
+                                viewModel.ColorMarkerQuantity = 1;
+                                //YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(item).Count;
+                            listLogEntryVM.Add(viewModel);
+                        }
 
                         // (Re-)load file and display content in view
-                        if (list != null)
-                            this.RebuildLogView(new ObservableCollection<LogEntry>(list));
+                        if (listLogEntryVM != null)
+                            this.RebuildLogView(new ObservableCollection<LogEntryRowViewModel>(listLogEntryVM));
                         else
                             this.RemoveAllItems();
 
@@ -1240,7 +1252,7 @@ namespace YalvLib.ViewModel
                         {
                             var lastItem = (from it in this.Items
                                             where this.LevelCheckFilter(it)
-                                            select it).LastOrDefault<LogEntry>();
+                                            select it).LastOrDefault<LogEntryRowViewModel>();
 
                             // Select the last item to scroll viewer down to last entry
                             this.SelectedLogItem = lastItem ?? this.Items[this.Items.Count - 1];

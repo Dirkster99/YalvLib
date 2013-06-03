@@ -189,52 +189,52 @@
           </Grid.ColumnDefinitions>
 
           <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-          <TextBlock Text="{Binding Path=Class, Mode=OneWay}"                                Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3" />
+                    <TextBlock Text="{Binding Path=Entry.Class, Mode=OneWay}"                                Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3" />
 
           <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Method_Text}"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-          <TextBlock Text="{Binding Path=Method, Mode=OneWay}"                                 Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.Method, Mode=OneWay}"                                 Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
           <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-          <TextBlock Text="{Binding Path=File, Mode=OneWay}"                                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.File, Mode=OneWay}"                                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
           <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-          <TextBlock Text="{Binding Path=Line, Mode=OneWay}"                                Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.Line, Mode=OneWay}"                                Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
           <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Thread_Text}" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-          <TextBlock Text="{Binding Path=Thread, Mode=OneWay}"                                Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.Thread, Mode=OneWay}"                                Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
           <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeStamp_Text}" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-          <TextBlock Text="{Binding Path=TimeStamp, Mode=OneWay}"                                Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.TimeStamp, Mode=OneWay}"                                Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
           <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeDiff_Text}" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-          <TextBlock Text="{Binding Path=Delta, Mode=OneWay}"                                   Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.Delta, Mode=OneWay}"                                   Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
         </Grid>
       </Setter.Value>
     </Setter>
     <Style.Triggers>
 
       <!-- Debug -->
-      <DataTrigger Binding="{Binding Path=LevelIndex, Mode=OneWay}" Value="1">
+      <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="1">
         <Setter Property="Background" Value="{StaticResource DebugLevelColor}" />
       </DataTrigger>
 
       <!-- Info -->
-      <DataTrigger Binding="{Binding Path=LevelIndex, Mode=OneWay}" Value="2">
+            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="2">
         <Setter Property="Background" Value="{StaticResource InfoLevelColor}" />
       </DataTrigger>
 
       <!-- Warn -->
-      <DataTrigger Binding="{Binding Path=LevelIndex, Mode=OneWay}" Value="3">
+            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="3">
         <Setter Property="Background" Value="{StaticResource WarnLevelColor}" />
       </DataTrigger>
 
       <!-- Error -->
-      <DataTrigger Binding="{Binding Path=LevelIndex, Mode=OneWay}" Value="4">
+            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="4">
         <Setter Property="Background" Value="{StaticResource ErrorLevelColor}" />
       </DataTrigger>
 
       <!-- Fatal -->
-      <DataTrigger Binding="{Binding Path=LevelIndex, Mode=OneWay}" Value="5">
+            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="5">
         <Setter Property="Background" Value="{StaticResource FatalLevelColor}" />
       </DataTrigger>
 

@@ -102,6 +102,30 @@
                                       ItemsSource="{Binding Path=LogItems.LogView}"
                                       local:SelectedItem.IsBroughtIntoViewWhenSelected="True"
                                       >
+                                <DataGrid.Resources>
+                                    
+                                    <DataTemplate x:Key="TextMarkerDataTemplate">
+                                        <TextBlock>T</TextBlock>
+                                    </DataTemplate>
+                                    
+                                    <DataTemplate x:Key="ColorMarkerDataTemplate">
+                                        <TextBlock>C</TextBlock>
+                                    </DataTemplate>
+
+                                    <DataTemplate x:Key="TextAndColorMarkerDataTemplate">
+                                        <TextBlock>CT</TextBlock>
+                                    </DataTemplate>
+                                    
+                                    <DataTemplate x:Key="NoMarkerDataTemplate">
+                                        <TextBlock></TextBlock>
+                                    </DataTemplate>
+
+                                    <Style TargetType="ScrollViewer">
+                                        <Setter Property="local:ScrollSynchronizer.ScrollGroup" Value="dgSync" />
+                                    </Style>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#19000000" />
+                                    
+                                </DataGrid.Resources>
                                 <DataGrid.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="{x:Static Properties:Resources.MainWindow_GridContextMenu_CopyToClipboard}"
@@ -130,13 +154,6 @@
                                         </MenuItem>
                                     </ContextMenu>
                                 </DataGrid.ContextMenu>
-
-                                <DataGrid.Resources>
-                                    <Style TargetType="ScrollViewer">
-                                        <Setter Property="local:ScrollSynchronizer.ScrollGroup" Value="dgSync" />
-                                    </Style>
-                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#19000000" />
-                                </DataGrid.Resources>
                             </DataGrid>
                         </Grid>
                     </Border>

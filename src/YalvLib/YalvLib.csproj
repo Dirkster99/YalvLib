@@ -141,6 +141,7 @@
     <Compile Include="ViewModel\Cultures.cs" />
     <Compile Include="ViewModel\DisplayLogVM.cs" />
     <Compile Include="ViewModel\DisplayTextMarkersViewModel.cs" />
+    <Compile Include="ViewModel\LogEntryRowViewModel.cs" />
     <Compile Include="ViewModel\LogFileLoader.cs" />
     <Compile Include="ViewModel\LogFileVM.cs" />
     <Compile Include="ViewModel\TextMarkerViewModel.cs" />
@@ -151,6 +152,7 @@
     </Compile>
     <Compile Include="View\BusyIndicatorBehavior\FrameRateHelper.cs" />
     <Compile Include="View\GridManager.cs" />
+    <Compile Include="View\MarkerTemplateSelector.cs" />
     <Compile Include="View\ScrollSynchronizer.cs" />
     <Compile Include="View\SelectedItem.cs" />
     <Compile Include="View\YalvView.xaml.cs">

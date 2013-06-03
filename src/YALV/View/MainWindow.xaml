@@ -167,14 +167,14 @@
                         <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Row="0" Grid.Column="1"
                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeDirection="Columns" />
                         <common:TextMarkerToolBoxView
-                            DataContext="{Binding Path=YalvLogViewModel.DisplayTmVm}"
+                            DataContext="{Binding YalvLogViewModel}"
                             HorizontalAlignment="Left" 
                             VerticalAlignment="Top" 
                             Grid.Row="0" 
                             Grid.Column="2"
                             Height="Auto" 
                             Width="Auto" 
-                            IsEnabled="{Binding YalvLogViewModel.HasData}" />
+                            IsEnabled="{Binding HasData}" />
                     </Grid>
                     <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Row="0" Grid.Column="1"
                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeDirection="Columns" />
@@ -209,25 +209,25 @@
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
-                               Text="{Binding Path=SelectedLogItem.Class, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
+                               Text="{Binding Path=SelectedLogItem.Entry.Class, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
                 </StackPanel>
                 <StackPanel Style="{StaticResource PanelBaseStyle}">
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Method_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
-                               Text="{Binding Path=SelectedLogItem.Method, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
+                               Text="{Binding Path=SelectedLogItem.Entry.Method, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
                 </StackPanel>
                 <StackPanel Style="{StaticResource PanelBaseStyle}">
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
-                               Text="{Binding Path=SelectedLogItem.File, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
+                               Text="{Binding Path=SelectedLogItem.Entry.File, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
                 </StackPanel>
                 <StackPanel Style="{StaticResource PanelBaseStyle}">
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
-                               Text="{Binding Path=SelectedLogItem.Line, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
+                               Text="{Binding Path=SelectedLogItem.Entry.Line, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>

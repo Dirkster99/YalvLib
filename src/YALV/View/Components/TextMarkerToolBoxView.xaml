@@ -26,14 +26,14 @@
             <CheckBox Margin="45, 12, 0, 0"
                       VerticalAlignment="Top" 
                       Content="{x:Static Strings:Resources.MainWindow_Markerbox_Checkbox_Text}"
-                      IsChecked="{Binding Path=DisplayOnlyCommonMarkers}"
+                      IsChecked="{Binding Path=DisplayTmVm.DisplayOnlyCommonMarkers}"
             />
         </StackPanel>
         <local:TextMarkerView
                 x:Name="TextMarkerAdd"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top"
-                DataContext="{Binding Path=TextMarkerToAdd}"
+                DataContext="{Binding Path=DisplayTmVm.TextMarkerToAdd}"
                 DockPanel.Dock="Top"
         />
         <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto"
@@ -42,7 +42,7 @@
             <ItemsControl Name="TextMarkersToDisplay"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top"
-                ItemsSource="{Binding Path=TextMarkerViewModels}"
+                ItemsSource="{Binding Path=DisplayTmVm.TextMarkerViewModels}"
                             >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

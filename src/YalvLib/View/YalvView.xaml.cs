@@ -189,7 +189,7 @@ namespace YalvLib.View
 
         private void CallUpdateTextMarkers(object sender, SelectionChangedEventArgs e)
         {
-            IEnumerable<LogEntry> list = DataGrid.SelectedItems.Cast<LogEntry>();
+            IEnumerable<LogEntryRowViewModel> list = DataGrid.SelectedItems.Cast<LogEntryRowViewModel>();
             if (YalvDataContext.CommandUpdateTextMarkers.CanExecute(list))
                 YalvDataContext.CommandUpdateTextMarkers.Execute(list);
         }
@@ -206,6 +206,8 @@ namespace YalvLib.View
             // Check the resource style for this class if any of these items is null
             DataGrid partDataGrid = this.GetTemplateChild("PART_DataGrid") as DataGrid;
             Panel partSearchPanel = this.GetTemplateChild("PART_SearchPanel") as Panel;
+
+
 
             if (colVM != null && partDataGrid != null)
             {

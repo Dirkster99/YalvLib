@@ -69,9 +69,9 @@ namespace YalvLib.Model
         /// <param name="list">List of logEntry</param>
         /// <param name="marker">TextMarker</param>
         /// <returns>Markers</returns>
-        public TextMarker AddTextMarker(List<LogEntry> list, TextMarker marker)
+        public TextMarker AddTextMarker(IEnumerable<LogEntry> list, TextMarker marker)
         {
-            marker.LogEntries = list;
+            marker.LogEntries = list.ToList();
             Markers.Add(marker);
             return marker;
         }
@@ -146,7 +146,7 @@ namespace YalvLib.Model
         /// </summary>
         /// <param name="logEntries">List of log entry</param>
         /// <returns>List of linked TextMarkers</returns>
-        public List<TextMarker> GetTextMarkersForEntries(List<LogEntry> logEntries)
+        public List<TextMarker> GetTextMarkersForEntries(IEnumerable<LogEntry> logEntries)
         {
             List<TextMarker> markers = new List<TextMarker>();
             foreach(LogEntry entry in logEntries)
