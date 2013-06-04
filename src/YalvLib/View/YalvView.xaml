@@ -131,17 +131,6 @@
                                         <MenuItem Header="{x:Static Properties:Resources.MainWindow_GridContextMenu_CopyToClipboard}"
                                                   Command="ApplicationCommands.Copy" />
                                         <Separator />
-                                        <MenuItem Name="ColorMarkers"
-                                                  Header="Apply Color"
-                                                  ItemsSource="{Binding Path=ColorMarkers}"
-                                                  >
-                                            <MenuItem.ItemContainerStyle>
-                                                <Style TargetType="{x:Type MenuItem}">
-                                                    <Setter Property="Header" Value="{Binding HighlightColor}"></Setter>
-                                                </Style>    
-                                            </MenuItem.ItemContainerStyle>                                       
-                                        </MenuItem>
-                                        <Separator />
                                         <MenuItem ItemsSource="{Binding Path=DataGridColumns.DataGridColumns}" Header="Columns"
                                                   DataContext="{Binding LogEntryRows}">
                                             <MenuItem.ItemContainerStyle>

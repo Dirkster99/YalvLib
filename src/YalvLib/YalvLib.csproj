@@ -144,7 +144,7 @@
     <Compile Include="ViewModel\ManageTextMarkersViewModel.cs" />
     <Compile Include="ViewModel\LogEntryRowViewModel.cs" />
     <Compile Include="ViewModel\LogFileLoader.cs" />
-    <Compile Include="ViewModel\LogFileVM.cs" />
+    <Compile Include="ViewModel\LogFileViewModel.cs" />
     <Compile Include="ViewModel\TextMarkerEventArgs.cs" />
     <Compile Include="ViewModel\TextMarkerViewModel.cs" />
     <Compile Include="ViewModel\YalvViewModel.cs" />

@@ -10,7 +10,7 @@ namespace YalvLib.ViewModel
   /// <summary>
   /// Class to manage data for a logfile
   /// </summary>
-  public class LogFileVM : BindableObject
+  public class LogFileViewModel : BindableObject
   {
     #region fields
     private const string PROP_IsLoading = "IsLoading";
@@ -25,9 +25,9 @@ namespace YalvLib.ViewModel
 
     #region Constructors
     /// <Summary>
-    /// Standard constructor of the <seealso cref="LogFileVM"/> class
+    /// Standard constructor of the <seealso cref="LogFileViewModel"/> class
     /// </Summary>
-    public LogFileVM()
+    public LogFileViewModel()
     {
       this.mFilePaths = new List<string>();
 

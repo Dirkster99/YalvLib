@@ -25,7 +25,7 @@ namespace YalvLib.ViewModel
 
         public const string KeyLogItems = "LogItems";
 
-        private LogFileVM mLogFile;
+        private LogFileViewModel mLogFile;
 
         private bool mAbortedWithErrors;
         private bool mAbortedWithCancel;
@@ -58,7 +58,7 @@ namespace YalvLib.ViewModel
 
         public LogFileLoader()
         {
-            this.mLogFile = new LogFileVM();
+            this.mLogFile = new LogFileViewModel();
 
             this.mAbortedWithErrors = this.mAbortedWithCancel = false;
             this.mInnerException = null;
@@ -162,7 +162,7 @@ namespace YalvLib.ViewModel
                 ((stateObj) =>
                      {
                          if(newSession)
-                            this.mLogFile = new LogFileVM();
+                            this.mLogFile = new LogFileViewModel();
                          this.mAbortedWithErrors =
                              this.mAbortedWithCancel =
                              false;
@@ -246,7 +246,7 @@ namespace YalvLib.ViewModel
                              Results.Add(sStatus);
 
                              this.mLogFile =
-                                 new LogFileVM();
+                                 new LogFileViewModel();
                          }
                          catch (Exception Exp)
                          {
@@ -255,7 +255,7 @@ namespace YalvLib.ViewModel
                                  true;
 
                              this.mLogFile =
-                                 new LogFileVM();
+                                 new LogFileViewModel();
 
                              Results.Add(Exp.ToString());
                          }

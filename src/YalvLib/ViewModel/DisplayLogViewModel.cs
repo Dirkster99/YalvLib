@@ -55,7 +55,7 @@ namespace YalvLib.ViewModel
         private object lockObject = new object();
 
         private ColumnsVM mDataGridColumns = null;
-        private LogFileVM mLogFile = null;
+        private LogFileViewModel mLogFile = null;
         private LogFileLoader fileLoader = null;
 
         private ObservableCollection<LogEntryRowViewModel> _RowViewModels;
@@ -121,7 +121,7 @@ namespace YalvLib.ViewModel
             // so we know that we should update the viewmodel filter
             this.mDataGridColumns = new ColumnsVM(this.ColumnsVmUpdateColumnFilter);
 
-            this.mLogFile = new LogFileVM();
+            this.mLogFile = new LogFileViewModel();
 
 
             
@@ -170,7 +170,7 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Get a list of files and/or directories that can act as a data source.
         /// </summary>
-        public LogFileVM LogFile
+        public LogFileViewModel LogFile
         {
             get { return this.mLogFile; }
 
@@ -904,7 +904,10 @@ namespace YalvLib.ViewModel
 
                     {
                         this.LogFile.IsLoading = true;
-                        this.LogFile.FilePaths = paths;
+                        if(!newSession)
+                            LogFile.FilePaths.AddRange(paths);
+                        else
+                            LogFile.FilePaths = paths;
                         this._RowViewModels.Clear();
                         this.fileLoader.LoadFile(paths, true, newSession);
                     }

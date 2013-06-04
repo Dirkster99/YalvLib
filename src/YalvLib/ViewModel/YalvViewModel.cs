@@ -141,16 +141,6 @@ namespace YalvLib.ViewModel
         }
 
         /// <summary>
-        /// Return the list of instancied colorMarkers
-        /// </summary>
-        public List<ColorMarker> ColorMarkers
-        {
-            get { if(YalvRegistry.Instance.ActualWorkspace != null)
-                return YalvRegistry.Instance.ActualWorkspace.Analysis.ColorMarkers;
-            return new List<ColorMarker>();}
-        }
-
-        /// <summary>
         /// Get whether there are data items in the collection or not
         /// (there may be no items to display if filter is applied but thats a different issue)
         /// </summary>
