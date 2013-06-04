@@ -216,9 +216,9 @@
             // Restore Data Grid columns
             if (s.DataGridColumns != null)
             {
-              if (this.mYalvLogViewModel.LogItems != null)
+              if (this.mYalvLogViewModel.LogEntryRows != null)
               {
-                this.mYalvLogViewModel.LogItems.SetColumnsLayout(s.DataGridColumns);
+                this.mYalvLogViewModel.LogEntryRows.SetColumnsLayout(s.DataGridColumns);
               }
             }
 
@@ -249,7 +249,7 @@
     {
       try
       {
-        Session set = new Session(this.mYalvLogViewModel.LogItems.DataGridColumns.DataGridColumns,
+        Session set = new Session(this.mYalvLogViewModel.LogEntryRows.DataGridColumns.DataGridColumns,
                                   this.mRecentFiles, mainWindowSz);
 
         set.LastFileLoad = this.mLastFileLoad;

@@ -15,7 +15,7 @@
       if (null == value)
         return Visibility.Collapsed;
 
-      if (string.IsNullOrEmpty((string)value))
+      if (string.IsNullOrEmpty(value.ToString()))
         return Visibility.Collapsed;
       else
         return Visibility.Visible;

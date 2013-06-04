@@ -45,7 +45,7 @@ namespace YALV.ViewModel
 
             if (MainWindowVM.CreateAppDataDir() == true)
             {
-                this.mYalvLogViewModel.LogItems.LoadColumnsLayout(this.mLayoutFileName);
+                this.mYalvLogViewModel.LogEntryRows.LoadColumnsLayout(this.mLayoutFileName);
             }
 
             this.RecentFileList = recentFileList;
@@ -194,7 +194,7 @@ namespace YALV.ViewModel
         {
             try
             {
-                this.mYalvLogViewModel.LogItems.SaveColumnsLayout(this.mLayoutFileName);
+                this.mYalvLogViewModel.LogEntryRows.SaveColumnsLayout(this.mLayoutFileName);
             }
             catch (Exception exp)
             {

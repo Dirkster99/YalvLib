@@ -139,11 +139,13 @@
     </Compile>
     <Compile Include="ViewModel\ColumnsVM.cs" />
     <Compile Include="ViewModel\Cultures.cs" />
-    <Compile Include="ViewModel\DisplayLogVM.cs" />
-    <Compile Include="ViewModel\DisplayTextMarkersViewModel.cs" />
+    <Compile Include="ViewModel\DisplayLogViewModel.cs" />
+    <Compile Include="ViewModel\IManageTextMarkersViewModel.cs" />
+    <Compile Include="ViewModel\ManageTextMarkersViewModel.cs" />
     <Compile Include="ViewModel\LogEntryRowViewModel.cs" />
     <Compile Include="ViewModel\LogFileLoader.cs" />
     <Compile Include="ViewModel\LogFileVM.cs" />
+    <Compile Include="ViewModel\TextMarkerEventArgs.cs" />
     <Compile Include="ViewModel\TextMarkerViewModel.cs" />
     <Compile Include="ViewModel\YalvViewModel.cs" />
     <Compile Include="View\BusyIndicatorBehavior\BusyIndicatorBehavior.cs" />

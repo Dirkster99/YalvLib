@@ -58,7 +58,8 @@
     <Compile Include="Model\RepositoryMergerTests.cs" />
     <Compile Include="Model\TextMarkerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\DisplayTextMarkersViewModelTests.cs" />
+    <Compile Include="ViewModel\ManageTextMarkersViewModelTests.cs" />
+    <Compile Include="ViewModel\GeneralVMTests.cs" />
     <Compile Include="ViewModel\TextMarkerViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,11 +15,6 @@ namespace YALV.View.Components
             InitializeComponent();
         }
 
-        public string AuthorInputValue
-        {
-            get { return this.AuthorTextBox.Text; }
-        }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var binding = ((TextBox)sender).GetBindingExpression(TextBox.TextProperty);

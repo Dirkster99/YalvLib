@@ -101,24 +101,6 @@ namespace YalvLib.Model
             }
         }
 
-        /// <summary>
-        /// Remove the given entry from the marker binding
-        /// If the marker doesnt contains any entries after the removal
-        /// the marker will be deleted
-        /// </summary>
-        /// <param name="entries">Entries to remove</param>
-        public void RemoveTextMarker(List<LogEntry> entries)
-        {
-            foreach (TextMarker marker in TextMarkers)
-            {
-                foreach (LogEntry logEntry in entries)
-                {
-                    marker.LogEntries.Remove(logEntry);
-                }
-                if(!IsMultiMarker(marker))
-                    DeleteTextMarker(marker);
-            }
-        }
 
 
 

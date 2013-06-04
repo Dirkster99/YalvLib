@@ -98,26 +98,26 @@
                                       SelectionMode="Extended"
                                       Margin="3,1,0,0"
                                       IsSynchronizedWithCurrentItem="True"
-                                      SelectedItem="{Binding Path=LogItems.SelectedLogItem}"
-                                      ItemsSource="{Binding Path=LogItems.LogView}"
+                                      SelectedItem="{Binding Path=LogEntryRows.SelectedLogItem}"
+                                      ItemsSource="{Binding Path=LogEntryRows.LogView}"
                                       local:SelectedItem.IsBroughtIntoViewWhenSelected="True"
                                       >
                                 <DataGrid.Resources>
                                     
                                     <DataTemplate x:Key="TextMarkerDataTemplate">
-                                        <TextBlock>T</TextBlock>
+                                        <TextBlock TextAlignment="Center">T</TextBlock>
                                     </DataTemplate>
                                     
                                     <DataTemplate x:Key="ColorMarkerDataTemplate">
-                                        <TextBlock>C</TextBlock>
+                                        <TextBlock TextAlignment="Center">C</TextBlock>
                                     </DataTemplate>
 
                                     <DataTemplate x:Key="TextAndColorMarkerDataTemplate">
-                                        <TextBlock>CT</TextBlock>
+                                        <TextBlock TextAlignment="Center">CT</TextBlock>
                                     </DataTemplate>
                                     
                                     <DataTemplate x:Key="NoMarkerDataTemplate">
-                                        <TextBlock></TextBlock>
+                                        <TextBlock TextAlignment="Center"></TextBlock>
                                     </DataTemplate>
 
                                     <Style TargetType="ScrollViewer">
@@ -143,7 +143,7 @@
                                         </MenuItem>
                                         <Separator />
                                         <MenuItem ItemsSource="{Binding Path=DataGridColumns.DataGridColumns}" Header="Columns"
-                                                  DataContext="{Binding LogItems}">
+                                                  DataContext="{Binding LogEntryRows}">
                                             <MenuItem.ItemContainerStyle>
                                                 <Style TargetType="{x:Type MenuItem}">
                                                     <Setter Property="IsChecked" Value="{Binding IsColumnVisible}" />

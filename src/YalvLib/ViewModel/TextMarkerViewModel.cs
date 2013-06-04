@@ -166,11 +166,21 @@ namespace YalvLib.ViewModel
                                                               MessageBoxButton.YesNo,
                                                               MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                         return null;
-                YalvRegistry.Instance.ActualWorkspace.Analysis.DeleteTextMarker(_marker);
+                OnExecutedCancelTextMarker(new TextMarkerEventArgs(_marker));
             }
             Author = string.Empty;
             Message = string.Empty;
             return null;
+        }
+
+        public event EventHandler<TextMarkerEventArgs> TextMarkerDeleted;
+
+        private void OnExecutedCancelTextMarker(TextMarkerEventArgs textMarkerEventArgs)
+        {
+            if (TextMarkerDeleted != null)
+            {
+                TextMarkerDeleted(this, textMarkerEventArgs);
+            }
         }
 
 

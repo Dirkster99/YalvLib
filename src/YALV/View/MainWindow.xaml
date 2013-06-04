@@ -16,11 +16,11 @@
 
     <Window.InputBindings>
         <KeyBinding Command="{Binding Path=YalvLogViewModel.CommandRefresh}" Key="F5" />
-        <KeyBinding Command="{Binding Path=YalvLogViewModel.LogItems.CommandClearFilters}" Key="D" Modifiers="Control" />
+        <KeyBinding Command="{Binding Path=YalvLogViewModel.LogEntryRows.CommandClearFilters}" Key="D" Modifiers="Control" />
         <KeyBinding Command="{Binding Path=YalvLogViewModel.CommandDelete}" Key="DEL" />
     </Window.InputBindings>
 
-    <Grid BusyIndicatorBehavior:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogItems.LogFile.IsLoading}">
+    <Grid BusyIndicatorBehavior:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogEntryRows.LogFile.IsLoading}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -87,7 +87,7 @@
                                 </Button>
 
                                 <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_ClearFilters_Tooltip}"
-                                        Command="{Binding Path=YalvLogViewModel.LogItems.CommandClearFilters}" Background="Transparent"
+                                        Command="{Binding Path=YalvLogViewModel.LogEntryRows.CommandClearFilters}" Background="Transparent"
                                         BorderBrush="Transparent" HorizontalAlignment="Center">
                                     <StackPanel>
                                         <Image Source="/YALV;component/Resources/Icons/ClearFilter/ClearFilters_32.png" Width="32"
@@ -96,7 +96,7 @@
                                 </Button>
 
                                 <ToggleButton DataContext="{Binding YalvLogViewModel}" Command="{Binding FilterYalvView}"
-                                              IsChecked="{Binding LogItems.IsFiltered, Mode=OneWay}" Margin="3" VerticalAlignment="Center"
+                                              IsChecked="{Binding LogEntryRows.IsFiltered, Mode=OneWay}" Margin="3" VerticalAlignment="Center"
                                               ToolTip="Activate the filter and type a criteria to filter the display" ToolTipService.ShowOnDisabled="True"
                                               Grid.Column="1" HorizontalAlignment="Center">
                                     <ToggleButton.Style>
@@ -136,7 +136,7 @@
                 </Grid>
 
                 <view:YalvView Grid.Row="0" Grid.Column="3" DataContext="{Binding YalvLogViewModel}"
-                               Columns="{Binding LogItems.DataGridColumns}" />
+                               Columns="{Binding LogEntryRows.DataGridColumns}" />
                 <!-- CenterCellStyle="{StaticResource CenterDataGridCellStyle}" -->
 
                 <!-- horizontal splitter -->
@@ -162,7 +162,8 @@
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <common:PropertiesView Grid.Row="0" Grid.Column="0" DataContext="{Binding YalvLogViewModel}"
+                        <common:PropertiesView 
+                            Grid.Row="0" Grid.Column="0" DataContext="{Binding YalvLogViewModel}"
                                                IsEnabled="{Binding HasData}" Margin="0,10,0,0" MinWidth="200"/>
                         <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Row="0" Grid.Column="1"
                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeDirection="Columns" />
@@ -209,25 +210,25 @@
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
-                               Text="{Binding Path=SelectedLogItem.Entry.Class, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
+                               Text="{Binding Path=SelectedLogItem.Entry.Class, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogEntryRows}"></TextBlock>
                 </StackPanel>
                 <StackPanel Style="{StaticResource PanelBaseStyle}">
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Method_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
-                               Text="{Binding Path=SelectedLogItem.Entry.Method, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
+                               Text="{Binding Path=SelectedLogItem.Entry.Method, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogEntryRows}"></TextBlock>
                 </StackPanel>
                 <StackPanel Style="{StaticResource PanelBaseStyle}">
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
-                               Text="{Binding Path=SelectedLogItem.Entry.File, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
+                               Text="{Binding Path=SelectedLogItem.Entry.File, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogEntryRows}"></TextBlock>
                 </StackPanel>
                 <StackPanel Style="{StaticResource PanelBaseStyle}">
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
-                               Text="{Binding Path=SelectedLogItem.Entry.Line, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"></TextBlock>
+                               Text="{Binding Path=SelectedLogItem.Entry.Line, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogEntryRows}"></TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>

@@ -30,7 +30,7 @@
                  Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Message_Text}" Grid.Row="0" />
 
       <TextBox Grid.Row="1" BorderBrush="Silver"
-               DataContext="{Binding YalvLogViewModel.LogItems}"
+               DataContext="{Binding YalvLogViewModel.LogEntryRows}"
                Text="{Binding Path=SelectedLogItem.Message, Mode=OneWay}"
                AcceptsReturn="True"
                ScrollViewer.CanContentScroll="True"
@@ -61,7 +61,7 @@
                  Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Throwable_Text}" Grid.Row="0" />
 
       <TextBox Grid.Row="1" BorderBrush="Silver"
-               Text="{Binding Path=SelectedLogItem.Throwable, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogItems}"
+               Text="{Binding Path=SelectedLogItem.Throwable, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogEntryRows}"
                Margin="3"
                IsReadOnly="True"
                AcceptsReturn="True"

@@ -18,7 +18,7 @@ namespace YalvLib.ViewModel
 
         public LogEntryRowViewModel(LogEntry item)
         {
-            _entry = item;
+            Entry = item;
         }
 
         public int TextMarkerQuantity
@@ -44,6 +44,12 @@ namespace YalvLib.ViewModel
         public LogEntry Entry
         {
             get { return _entry; }
+            private set { _entry = value; }
+        }
+
+        internal void UpdateTextMarkerQuantity()
+        {
+            TextMarkerQuantity = YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(Entry).Count;
         }
     }
 }

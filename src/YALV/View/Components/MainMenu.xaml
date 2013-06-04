@@ -57,7 +57,7 @@
         </MenuItem>
         <MenuItem
             Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_ClearFilters_Header}"
-            Command="{Binding Path=YalvLogViewModel.LogItems.CommandClearFilters}"
+            Command="{Binding Path=YalvLogViewModel.LogEntryRows.CommandClearFilters}"
             InputGestureText="Ctrl+D">
         </MenuItem>
         <MenuItem
@@ -66,7 +66,7 @@
             InputGestureText="DEL">
         </MenuItem>
 
-        <MenuItem ItemsSource="{Binding Path=LogItems.DataGridColumns.DataGridColumns}"
+        <MenuItem ItemsSource="{Binding Path=LogEntryRows.DataGridColumns.DataGridColumns}"
                 Header="Columns"
                 DataContext="{Binding YalvLogViewModel}">
             <MenuItem.ItemContainerStyle>

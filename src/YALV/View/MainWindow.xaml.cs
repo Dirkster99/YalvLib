@@ -1,4 +1,9 @@
-﻿namespace YALV.View
+﻿using System;
+using YALV.ViewModel;
+using YalvLib.Model;
+using YalvLib.ViewModel;
+
+namespace YALV.View
 {
   #region About
   /*

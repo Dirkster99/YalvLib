@@ -14,7 +14,7 @@ namespace YalvLib.ViewModel
     /// <summary>
     /// This class contains every TextMarkerViewModels linked to the selected entries
     /// </summary>
-    public class DisplayTextMarkersViewModel : BindableObject
+    public class ManageTextMarkersViewModel : BindableObject, IManageTextMarkersViewModel
     {
 
         private readonly ObservableCollection<TextMarkerViewModel> _textMarkerVmList;
@@ -25,11 +25,12 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Constructor
         /// </summary>
-        public DisplayTextMarkersViewModel()
+        public ManageTextMarkersViewModel()
         {
             _textMarkerAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty));
             _textMarkerVmList = new ObservableCollection<TextMarkerViewModel>();
             _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
+            _textMarkerAdd.TextMarkerDeleted += ExecuteCancel;
             CommandUpdateTextMarkers = new CommandRelay(CommandUpdateTextMarkersExecute, CommandUpdateTextMarkersCanExecute);
         }
 
@@ -40,6 +41,10 @@ namespace YalvLib.ViewModel
         /// <param name="tm">TextMarker list</param>
         public void GenerateViewModels(List<TextMarker> tm)
         {
+            foreach (var textMarkerViewModel in _textMarkerVmList)
+            {
+                textMarkerViewModel.TextMarkerDeleted -= ExecuteCancel;
+            }
             _textMarkerVmList.Clear();
             GetNewTextMarkerToAdd();
             foreach (TextMarker textMarker in tm)
@@ -48,7 +53,7 @@ namespace YalvLib.ViewModel
             }
             foreach (var textMarkerViewModel in _textMarkerVmList)
             {
-                textMarkerViewModel.CommandCancelTextMarker.Executed += ExecuteCancel;
+                textMarkerViewModel.TextMarkerDeleted += ExecuteCancel;
             }
         }
 
@@ -81,7 +86,7 @@ namespace YalvLib.ViewModel
         public List<LogEntryRowViewModel> SelectedEntries
         {
             get { return _selectedEntries; }
-            private set { _selectedEntries = value; }
+            set { _selectedEntries = value; }
         }
 
         /// <summary>
@@ -128,9 +133,11 @@ namespace YalvLib.ViewModel
         /// </summary>
         private void GetNewTextMarkerToAdd()
         {
+            _textMarkerAdd.TextMarkerDeleted -= ExecuteCancel;
             _textMarkerAdd.CommandChangeTextMarker.Executed -= ExecuteChange;
             TextMarkerToAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty));
             _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
+            _textMarkerAdd.TextMarkerDeleted += ExecuteCancel;
         }
 
 
@@ -139,18 +146,36 @@ namespace YalvLib.ViewModel
             return ((IEnumerable<LogEntryRowViewModel>)obj).Any();
         }
 
-        private void ExecuteChange(object sender, EventArgs e)
+        public void ExecuteChange(object sender, EventArgs e)
         {
             _textMarkerVmList.Add(TextMarkerToAdd);
             YalvRegistry.Instance.ActualWorkspace.Analysis.AddTextMarker(_selectedEntries.Select(x => x.Entry), TextMarkerToAdd.Marker);
-            TextMarkerToAdd.CommandCancelTextMarker.Executed += ExecuteCancel;
+            foreach(LogEntryRowViewModel entry in _selectedEntries)
+            {
+                entry.UpdateTextMarkerQuantity();
+            }
+            MarkerAdded(this, null);
             GetNewTextMarkerToAdd();
         }
 
-        private void ExecuteCancel(object sender, EventArgs e)
+        public void ExecuteCancel(object obj, EventArgs eventArgs)
         {
-            CommandUpdateTextMarkersExecute(_selectedEntries);
+            TextMarkerEventArgs args = eventArgs as TextMarkerEventArgs;
+            YalvRegistry.Instance.ActualWorkspace.Analysis.DeleteTextMarker(args.TextMarker);
+            OnMarkerDeleted(this, (TextMarkerEventArgs)eventArgs);
+            CommandUpdateTextMarkersExecute(_selectedEntries);        
         }
 
+
+        public event EventHandler MarkerDeleted;
+        public event EventHandler MarkerAdded;
+
+        public void OnMarkerDeleted(object sender, TextMarkerEventArgs e)
+        {
+            if(MarkerDeleted != null)
+            {
+                MarkerDeleted(this, e);
+            }
+        }
     }
 }

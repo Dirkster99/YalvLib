@@ -17,7 +17,7 @@
     <converters:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter" />
     <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
   </UserControl.Resources>
-  <Grid DataContext="">
+  <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
@@ -90,11 +90,11 @@
           </Grid.ColumnDefinitions>
 
           <TextBox HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                   Text="{Binding Path=LogItems.GoToLogItemId, UpdateSourceTrigger=PropertyChanged}"
+                   Text="{Binding Path=LogEntryRows.GoToLogItemId, UpdateSourceTrigger=PropertyChanged}"
                    Width="75"
                    Grid.Column="0" />
 
-          <Label Content="{Binding Path=LogItems.SelectedLogItem.Entry.Level, Mode=OneWay}"
+                    <Label Content="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay}"
                  ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_Level_Text}"
                  Grid.Column="1"
                  VerticalAlignment="Center" HorizontalAlignment="Left" />
@@ -102,23 +102,24 @@
           <Border Height="11" Grid.Column="2"
                   Margin="2,0,0,0"
                   Width="11"
-                  Background="{Binding Path=LogItems.SelectedLogItem.Entry.LevelIndex, Mode=OneWay, Converter={StaticResource LevelToSolidColorConverter}}"
+                  Background="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay, Converter={StaticResource LevelToSolidColorConverter}}"
                   BorderBrush="{StaticResource BorderColor}"
                   BorderThickness="1"
                   CornerRadius="6"
                   VerticalAlignment="Center"
                   HorizontalAlignment="Left"
-                  Visibility="{Binding Path=LogItems.SelectedLogItem.Entry.Level, Mode=OneWay, Converter={StaticResource StringEmptyToVisibilityConverter}, FallbackValue=Collapsed}" />
+                  Visibility="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay, Converter={StaticResource StringEmptyToVisibilityConverter}, FallbackValue=Collapsed}" />
         </Grid>
 
         <Label Grid.Column="0" Grid.Row="1"
                Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Logger_Text}"
                VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-        <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.Logger, Mode=OneWay}" Style="{StaticResource TextBoxLabelStyle}"
-                 Grid.Column="2" Grid.Row="1" />
+                <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Logger, Mode=OneWay}" Style="{StaticResource TextBoxLabelStyle}"
+                 Grid.Column="2" Grid.Row="1"/>
 
-        <Label Content="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeStamp_Text}"
+
+                <Label Content="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeStamp_Text}"
                VerticalAlignment="Center" HorizontalAlignment="Right"
                Grid.Column="0" Grid.Row="2" />
         <TextBox  Style="{StaticResource TextBoxLabelStyle}"
@@ -127,7 +128,7 @@
             <Binding Mode="OneWay"
                      StringFormat="{x:Static Properties:Resources.MainWindow_FullDateTimeFormatWithMilliseconds}"
                      ConverterCulture="{x:Static cult:ResolveCultures.ResolvedCulture}"
-                     Path="LogItems.SelectedLogItem.Entry.TimeStamp" />
+                     Path="LogEntryRows.SelectedLogItem.Entry.TimeStamp" />
             </TextBox.Text>
         </TextBox>
 
@@ -137,7 +138,7 @@
                ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeDiff_Text}"
                VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-        <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.Delta, Mode=OneWay}"
+        <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Delta, Mode=OneWay}"
                  ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeDiff_Text}"
                  Style="{StaticResource TextBoxLabelStyle}"
                  Grid.Column="2" Grid.Row="3" />
@@ -146,7 +147,7 @@
 	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_MachineName_Text}"
 	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-        <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.MachineName, Mode=OneWay}"
+        <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.MachineName, Mode=OneWay}"
 	         Style="{StaticResource TextBoxLabelStyle}"
 	         Grid.Column="2" Grid.Row="4" />
 
@@ -155,7 +156,7 @@
 	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_HostName_Text}"
 	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-        <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.HostName, Mode=OneWay}"
+        <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.HostName, Mode=OneWay}"
 	         Style="{StaticResource TextBoxLabelStyle}"
 	         Grid.Column="2" Grid.Row="5" />
 
@@ -164,7 +165,7 @@
 	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_UserName_Text}"
 	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-        <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.UserName, Mode=OneWay}"
+        <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.UserName, Mode=OneWay}"
 	         Style="{StaticResource TextBoxLabelStyle}"
 	         Grid.Column="2" Grid.Row="6" />
 
@@ -172,7 +173,7 @@
 	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Application_Text}"
 	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-        <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.App, Mode=OneWay}"
+        <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.App, Mode=OneWay}"
 	         Style="{StaticResource TextBoxLabelStyle}"
 	         Grid.Column="2" Grid.Row="7" />
 
@@ -180,7 +181,7 @@
 	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Thread_Text}"
 	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-        <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.Thread, Mode=OneWay}"
+        <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Thread, Mode=OneWay}"
 	         Style="{StaticResource TextBoxLabelStyle}"
 	         Grid.Column="2" Grid.Row="8" />
           
@@ -188,7 +189,7 @@
 	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}"
 	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-                <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.File, Mode=OneWay}"
+                <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.File, Mode=OneWay}"
 	         Style="{StaticResource TextBoxLabelStyle}"
 	         Grid.Column="2" Grid.Row="9" />
 
@@ -196,7 +197,7 @@
 	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}"
 	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-                <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.Class, Mode=OneWay}"
+                <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Class, Mode=OneWay}"
 	         Style="{StaticResource TextBoxLabelStyle}"
 	         Grid.Column="2" Grid.Row="10" />
           
@@ -204,7 +205,7 @@
 	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}"
 	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-                <TextBox Text="{Binding Path=LogItems.SelectedLogItem.Entry.Line, Mode=OneWay}"
+                <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Line, Mode=OneWay}"
 	         Style="{StaticResource TextBoxLabelStyle}"
 	         Grid.Column="2" Grid.Row="11" />
             </Grid>

@@ -19,7 +19,7 @@ namespace YalvLib.ViewModel
     /// ViewModel class to organize all items relevant to a loaded logfile display
     /// (columns displayed, file name etc).
     /// </summary>
-    public class DisplayLogVM : BindableObject
+    public class DisplayLogViewModel : BindableObject
     {
         #region fields
 
@@ -58,11 +58,10 @@ namespace YalvLib.ViewModel
         private LogFileVM mLogFile = null;
         private LogFileLoader fileLoader = null;
 
-        //private ObservableCollection<LogEntry> mItems;
-       // private LogEntry mSelectedLogItem;
-        private ObservableCollection<LogEntryRowViewModel> mItems;
+        private ObservableCollection<LogEntryRowViewModel> _RowViewModels;
         private LogEntryRowViewModel mSelectedLogItem;
-        // list logentries
+
+        private Dictionary<AbstractMarker, List<LogEntryRowViewModel>> _cacheDictionnaryMarkersLogEntriesRowViewModel; 
 
         private string mGoToLogItemId;
 
@@ -96,6 +95,7 @@ namespace YalvLib.ViewModel
         private EvaluateLoadResult loadResultCallback = null;
         public event EventHandler SelectedItemChanged;
 
+
         #endregion fields
 
         #region Constructor
@@ -103,7 +103,7 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Class constructor
         /// </summary>
-        public DisplayLogVM()
+        public DisplayLogViewModel(IManageTextMarkersViewModel interfaceTextMarkerViewModel)
         {
             this.CommandClearFilters = new CommandRelay(this.CommandClearFiltersExecute,
                                                         this.CommandClearFilterCanExecute);
@@ -113,8 +113,9 @@ namespace YalvLib.ViewModel
             this.Items = new ObservableCollection<LogEntryRowViewModel>();
             this.RebuildLogView(this.Items);
 
+            interfaceTextMarkerViewModel.MarkerDeleted += (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs)args);
+            interfaceTextMarkerViewModel.MarkerAdded += (sender, args) => RefreshView();
             
-
             // Default constructor contains column definitions
             // The callback is invocked when a column filter string item is changed
             // so we know that we should update the viewmodel filter
@@ -122,7 +123,21 @@ namespace YalvLib.ViewModel
 
             this.mLogFile = new LogFileVM();
 
+
             
+        }
+
+        public void OnMarkerDeleteExecuted(object obj, TextMarkerEventArgs e)
+        {
+            TextMarker marker = e.TextMarker;
+            foreach(var row in _RowViewModels)
+            {
+                if(marker.LogEntries.Contains(row.Entry))
+                {
+                    row.UpdateTextMarkerQuantity();
+                }
+            }
+            RefreshView();
         }
 
         #endregion Constructor
@@ -190,8 +205,9 @@ namespace YalvLib.ViewModel
                 this.RaisePropertyChanged(PROP_SelectedLogItem);
                 OnSelectedItemChanged(EventArgs.Empty);
 
-                this.mGoToLogItemId = this.mSelectedLogItem != null ? this.mSelectedLogItem.LogEntryId.ToString() : string.Empty;
-                this.RaisePropertyChanged(DisplayLogVM.PROP_GoToLogItemId);
+
+                this.GoToLogItemId = this.mSelectedLogItem != null ? this.mSelectedLogItem.LogEntryId.ToString() : string.Empty;
+                this.RaisePropertyChanged(DisplayLogViewModel.PROP_GoToLogItemId);
             }
         }
 
@@ -685,18 +701,18 @@ namespace YalvLib.ViewModel
         /// </summary>
         internal bool HasData
         {
-            get { return (this.mItems != null && (this.mItems.Count != 0)); }
+            get { return (this._RowViewModels != null && (this._RowViewModels.Count != 0)); }
         }
 
         /// <summary>
         /// LogItems property which is the main list of logitems
         /// (this property is bound to a view via CollectionView property)
         /// </summary>
-        protected ObservableCollection<LogEntryRowViewModel> Items
+        public ObservableCollection<LogEntryRowViewModel> Items
         {
-            get { return this.mItems; }
+            get { return this._RowViewModels; }
 
-            set { this.mItems = value; }
+            set { this._RowViewModels = value; }
         }
 
         #endregion Properties
@@ -889,7 +905,7 @@ namespace YalvLib.ViewModel
                     {
                         this.LogFile.IsLoading = true;
                         this.LogFile.FilePaths = paths;
-                        this.mItems.Clear();
+                        this._RowViewModels.Clear();
                         this.fileLoader.LoadFile(paths, true, newSession);
                     }
 
@@ -921,7 +937,7 @@ namespace YalvLib.ViewModel
             return val;
         }
 
-        private void RefreshView()
+        public void RefreshView()
         {
             LogEntryRowViewModel l = this.SelectedLogItem;
             this.SelectedLogItem = null;
@@ -929,7 +945,7 @@ namespace YalvLib.ViewModel
             if (this.LogView != null)
             {
                 this.LogView.Refresh();
-                this.RaisePropertyChanged(DisplayLogVM.PROP_LogView);
+                this.RaisePropertyChanged(DisplayLogViewModel.PROP_LogView);
 
                 // Attempt to restore selected item if there was one before
                 // and if it is not part of the filtered set of items
@@ -1017,11 +1033,11 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         private bool LevelCheckFilter(object item)
         {
-            LogEntry logItem = item as LogEntry;
+            LogEntryRowViewModel logItemVM = item as LogEntryRowViewModel;
 
-            if (logItem != null)
+            if (logItemVM != null)
             {
-                switch (logItem.LevelIndex)
+                switch (logItemVM.Entry.LevelIndex)
                 {
                     case LevelIndex.DEBUG:
                         return this.ShowLevelDebug;
@@ -1050,21 +1066,21 @@ namespace YalvLib.ViewModel
         /// <returns>Returns true if item is not filtered and false otherwise</returns>
         private bool OnFilterLogItems(object item)
         {
-            LogEntry logitem = item as LogEntry;
+            LogEntryRowViewModel logitemVM = item as LogEntryRowViewModel;
 
-            if (logitem == null)
+            if (logitemVM == null)
                 return true; // Item is not filtered
 
             // Evaluate text filters if we are in filter mode, otherwise, display EVERY item!
             if (this.IsFiltered == true)
             {
-                if (MatchTextFilterColumn(this.mDataGridColumns, logitem) == false)
+                if (MatchTextFilterColumn(this.mDataGridColumns, logitemVM.Entry) == false)
                     return false;
             }
 
             if (this.SelectAll == false)
             {
-                switch (logitem.LevelIndex)
+                switch (logitemVM.Entry.LevelIndex)
                 {
                     case LevelIndex.DEBUG:
                         if (this.mShowLevelDebug == true)
@@ -1233,7 +1249,6 @@ namespace YalvLib.ViewModel
                                 YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(item).Count;
                             if ((item.Id % 2) == 0)
                                 viewModel.ColorMarkerQuantity = 1;
-                                //YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(item).Count;
                             listLogEntryVM.Add(viewModel);
                         }
 

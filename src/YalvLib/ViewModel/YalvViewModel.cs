@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using YalvLib.Domain;
 using YalvLib.Model;
 using YalvLib.Providers;
@@ -17,8 +19,8 @@ namespace YalvLib.ViewModel
 
         private const string PROP_FilePath = "FilePaths";
 
-        private DisplayLogVM mLogItems = null;
-        private DisplayTextMarkersViewModel _tmsViewModel = null;
+        private DisplayLogViewModel _logEntryRows = null;
+        private ManageTextMarkersViewModel _manageTextMarkersViewModel = null;
 
         #endregion fields
 
@@ -76,14 +78,16 @@ namespace YalvLib.ViewModel
         /// </summary>
         public YalvViewModel()
         {
-            this.mLogItems = new DisplayLogVM();
-            _tmsViewModel = new DisplayTextMarkersViewModel();
+            _manageTextMarkersViewModel = new ManageTextMarkersViewModel();
+            this._logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
+            
 
             this.CommandRefresh = new CommandRelay(this.CommandRefreshExecute, this.CommandRequiresDataCanExecute);
-            this.CommandDelete = new CommandRelay(this.LogItems.CommandDeleteExecute,
-                                                  this.LogItems.CommandDeleteCanExecute);
+            this.CommandDelete = new CommandRelay(this.LogEntryRows.CommandDeleteExecute,
+                                                  this.LogEntryRows.CommandDeleteCanExecute);
             this.FilterYalvView = new CommandRelay(this.CommandFilterYalvView, this.CommandRequiresDataCanExecute);
-            CommandUpdateTextMarkers = new CommandRelay(_tmsViewModel.CommandUpdateTextMarkersExecute, _tmsViewModel.CommandUpdateTextMarkersCanExecute);
+            CommandUpdateTextMarkers = new CommandRelay(_manageTextMarkersViewModel.CommandUpdateTextMarkersExecute, _manageTextMarkersViewModel.CommandUpdateTextMarkersCanExecute);
+
         }
 
         #endregion constructor
@@ -99,14 +103,14 @@ namespace YalvLib.ViewModel
         {
             get
             {
-                if (this.LogItems != null)
+                if (this.LogEntryRows != null)
                 {
-                    if (this.LogItems.LogFile != null)
+                    if (this.LogEntryRows.LogFile != null)
                     {
-                        var filePaths = new string[this.LogItems.LogFile.FilePaths.Count];
-                        for (int i = 0; i < this.LogItems.LogFile.FilePaths.Count; i++)
+                        var filePaths = new string[this.LogEntryRows.LogFile.FilePaths.Count];
+                        for (int i = 0; i < this.LogEntryRows.LogFile.FilePaths.Count; i++)
                         {
-                            filePaths[i] = this.LogItems.LogFile.FilePaths[i];
+                            filePaths[i] = this.LogEntryRows.LogFile.FilePaths[i];
                         }
                         return filePaths;
                     }
@@ -119,20 +123,20 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Get a list of filter columns and data items (for display in a DataGridView)
         /// </summary>
-        public DisplayLogVM LogItems
+        public DisplayLogViewModel LogEntryRows
         {
-            get { return this.mLogItems; }
+            get { return this._logEntryRows; }
         }
 
 
         /// <summary>
         /// Get the Display Text Marker instance
         /// </summary>
-        public DisplayTextMarkersViewModel DisplayTmVm
+        public ManageTextMarkersViewModel ManageTextMarkersViewModel
         {
             get
             {
-                return _tmsViewModel;
+                return _manageTextMarkersViewModel;
             }
         }
 
@@ -152,7 +156,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool HasData
         {
-            get { return (this.LogItems != null && this.LogItems.HasData); }
+            get { return (this.LogEntryRows != null && this.LogEntryRows.HasData); }
         }
 
         #region Command
@@ -174,6 +178,8 @@ namespace YalvLib.ViewModel
 
         public ICommandAncestor CommandUpdateTextMarkers { get; protected set; }
 
+        public ICommandAncestor CommandChangeTextMarkers { get; protected set; }
+
         #endregion Command
 
         #endregion properties
@@ -188,7 +194,7 @@ namespace YalvLib.ViewModel
         {
             List<string> pathsList = new List<string>();
             pathsList.AddRange(paths);
-            this.mLogItems.LoadFile(pathsList, EntriesProviderType.Xml, this.LoadFinishedEvent, newSession);
+            this._logEntryRows.LoadFile(pathsList, EntriesProviderType.Xml, this.LoadFinishedEvent, newSession);
         }
 
 
@@ -198,7 +204,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadSqliteDatabase(string path)
         {
-            this.mLogItems.LoadFile(new List<string>() { path }, EntriesProviderType.Sqlite, this.LoadFinishedEvent, true);
+            this._logEntryRows.LoadFile(new List<string>() { path }, EntriesProviderType.Sqlite, this.LoadFinishedEvent, true);
         }
 
 
@@ -208,7 +214,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadLogAnalysisSession(string path)
         {
-            this.mLogItems.LoadFile(new List<string>() { path }, EntriesProviderType.Yalv, this.LoadFinishedEvent, true);
+            this._logEntryRows.LoadFile(new List<string>() { path }, EntriesProviderType.Yalv, this.LoadFinishedEvent, true);
         }
 
 
@@ -219,7 +225,7 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         internal virtual object CommandRefreshExecute(object parameter)
         {
-            this.LogItems.CommandRefreshExecute(this.LoadFinishedEvent);
+            this.LogEntryRows.CommandRefreshExecute(this.LoadFinishedEvent);
 
             return null;
         }
@@ -237,9 +243,9 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         protected virtual object CommandFilterYalvView(object parameter)
         {
-            if (this.mLogItems != null)
+            if (this._logEntryRows != null)
             {
-                this.mLogItems.ApplyFilter();
+                this._logEntryRows.ApplyFilter();
             }
 
             return null;

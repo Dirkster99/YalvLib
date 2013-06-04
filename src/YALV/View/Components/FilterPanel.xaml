@@ -38,14 +38,14 @@
         </Grid.ColumnDefinitions>
 
         <!-- ALL -->
-      <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogItems.SelectAll}"
+      <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectAll}"
                    VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0" Margin="3">
         <TextBlock Style="{StaticResource tbRbStyle}" Text="ALL" />
       </RadioButton>
         <TextBlock Style="{StaticResource tbCountStyle}" Grid.Column="2" Grid.Row="0" Margin="3" VerticalAlignment="Center" HorizontalAlignment="Left">
           <TextBlock.Text>
             <MultiBinding StringFormat="{}{0,10}">
-              <Binding Mode="OneWay" Path="YalvLogViewModel.LogItems.LogView.Count" FallbackValue="0"/>
+              <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.LogView.Count" FallbackValue="0"/>
             </MultiBinding>
           </TextBlock.Text>
         </TextBlock>
@@ -53,10 +53,10 @@
         <!-- DEBUG -->
         <Border Background="{StaticResource DebugLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" Padding="3" />
 
-        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogItems.ShowLevelDebug}" Name="chkShowDebug" ToolTip="DEBUG"
+        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelDebug}" Name="chkShowDebug" ToolTip="DEBUG"
                              Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,3,3,3" />
       
-        <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogItems.SelectDebug}"
+        <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectDebug}"
                      HorizontalAlignment="Stretch"  Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="3">
         <TextBlock Style="{StaticResource tbRbStyle}" Text="DEBUG" Margin="0,3,0,0"/>
         </RadioButton>
@@ -64,7 +64,7 @@
         <TextBlock Style="{StaticResource tbCountStyle}" Grid.Column="2" Margin="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left">
           <TextBlock.Text>
               <MultiBinding StringFormat="{}{0,10}">
-                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogItems.ItemsDebugCount" FallbackValue="0" />
+                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.ItemsDebugCount" FallbackValue="0" />
               </MultiBinding>
           </TextBlock.Text>
         </TextBlock>
@@ -72,19 +72,19 @@
         <!-- INFO -->
         <Border Background="{StaticResource InfoLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Padding="3" />
 
-        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogItems.ShowLevelInfo}"
+        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelInfo}"
                   Name="chkShowInfo" ToolTip="INFO"
                   Grid.Column="0" Grid.Row="2"
                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,3,3,3"/>
 
-        <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogItems.SelectInfo}"
+        <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectInfo}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2" Margin="3">
           <TextBlock Style="{StaticResource tbRbStyle}" Text="INFO" />
         </RadioButton>
         <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="2" Margin="3">
                   <TextBlock.Text>
                     <MultiBinding StringFormat="{}{0,10}">
-                      <Binding Mode="OneWay" Path="YalvLogViewModel.LogItems.ItemsInfoCount" FallbackValue="0" />
+                      <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.ItemsInfoCount" FallbackValue="0" />
                     </MultiBinding>
                   </TextBlock.Text>
         </TextBlock>
@@ -92,19 +92,19 @@
         <!-- WARN -->
         <Border Background="{StaticResource WarnLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" Padding="3" />
 
-        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogItems.ShowLevelWarn}"
+        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelWarn}"
                   Name="chkShowWarn" ToolTip="WARN"
                   Grid.Column="0" Grid.Row="3"
                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
 
-      <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogItems.SelectWarn}"
+      <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectWarn}"
                    VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3"  Margin="3">
         <TextBlock Style="{StaticResource tbRbStyle}" Text="WARN" />
       </RadioButton>
         <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="3" Margin="3">
           <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0,10}">
-                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogItems.ItemsWarnCount" FallbackValue="0" />
+                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.ItemsWarnCount" FallbackValue="0" />
               </MultiBinding>
           </TextBlock.Text>
         </TextBlock>
@@ -112,19 +112,19 @@
         <!-- ERROR -->
         <Border Background="{StaticResource ErrorLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Padding="3" />
 
-        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogItems.ShowLevelError}"
+        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelError}"
                   Name="chkShowError" ToolTip="ERROR"
                   Grid.Column="0" Grid.Row="4"
                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3"/>
 
-        <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogItems.SelectError}"
+        <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectError}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="4" Margin="3">
           <TextBlock Style="{StaticResource tbRbStyle}" Text="ERROR" />
         </RadioButton>
       <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="4" Margin="3">
           <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0,10}">
-                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogItems.ItemsErrorCount" FallbackValue="0" />
+                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.ItemsErrorCount" FallbackValue="0" />
               </MultiBinding>
           </TextBlock.Text>
         </TextBlock>
@@ -132,11 +132,11 @@
         <!-- FATAL -->
         <Border Background="{StaticResource FatalLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Padding="3" />
 
-        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogItems.ShowLevelFatal}"
+        <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelFatal}"
                   Name="chkShowFatal" ToolTip="FATAL"
                   Grid.Column="0" Grid.Row="5"
                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3"/>
-        <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogItems.SelectFatal}"
+        <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectFatal}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="5" Margin="3">
           <TextBlock Style="{StaticResource tbRbStyle}" Text="FATAL" Foreground="#FF80FF" />
         </RadioButton>
@@ -144,7 +144,7 @@
         <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="5" Margin="3">
           <TextBlock.Text>
               <MultiBinding StringFormat="{}{0,10}">
-                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogItems.ItemsFatalCount" FallbackValue="0" />
+                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.ItemsFatalCount" FallbackValue="0" />
               </MultiBinding>
           </TextBlock.Text>
         </TextBlock>
@@ -156,7 +156,7 @@
       <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="6" Margin="3">
           <TextBlock.Text>
               <MultiBinding StringFormat="{}{0,10}">
-                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogItems.LogView.Count" FallbackValue="0" />
+                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.LogView.Count" FallbackValue="0" />
               </MultiBinding>
           </TextBlock.Text>
       </TextBlock>
