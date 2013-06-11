@@ -3,54 +3,74 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Strings="clr-namespace:YalvLib.Strings;assembly=YalvLib"
-             xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
-             xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d"
-	Height="100" Width="350">
+      xmlns:Strings="clr-namespace:YalvLib.Strings;assembly=YalvLib"
+      xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
+      xmlns:System="clr-namespace:System;assembly=mscorlib"
+      
+      mc:Ignorable="d"
+      d:DesignHeight="300" d:DesignWidth="700"             
+>
     <UserControl.Resources>
-        <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+      <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
+      <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    <DockPanel Width="350" LastChildFill="True" Margin="0">
-        <StackPanel Width="70" DockPanel.Dock="Right">
-            <Button
-                x:Name="ConfirmButton"
-                Margin="10,25,10,10"
-                Command="{Binding CommandChangeTextMarker}" Click="ConfirmButton_Click">
-                <StackPanel>
-                    <Image Source="/YALV;component/Resources/Icons/confirm.png" Width="16" Height="16" />
-                </StackPanel>
-            </Button>
-            <Button 
-        		x:Name="DeleteSimpleButton"
-        		Command="{Binding CommandCancelTextMarker}"
-        		Margin="10,0,10,0">
-                <StackPanel>
-                    <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />
-                </StackPanel>
-            </Button>
-        </StackPanel>
-        <Grid Height="30" VerticalAlignment="Top" DockPanel.Dock="Top">
-            <Label Content="{x:Static Strings:Resources.MainWindow_MarkerRow_Title_Text}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="100"/>
-            <TextBox 
-                Name="AuthorTextBox" 
-                HorizontalAlignment="Left" 
-                Height="23" 
-                Margin="105,2,0,0" 
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+
+    <Grid Grid.Column="0" Grid.Row="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Label Content="{x:Static Strings:Resources.MainWindow_MarkerRow_Title_Text}" Grid.Row="0" />
+      <TextBox 
+                Name="AuthorTextBox"
+                Grid.Row="1" 
                 TextWrapping="Wrap" 
                 TextChanged="TextBox_TextChanged"
                 Text="{Binding Path=Author, Mode=TwoWay}" 
-                VerticalAlignment="Top" 
-                Width="120"/>
-        </Grid>
-        <TextBox 
+                VerticalAlignment="Top"                
+                Margin="3"
+                />
+    </Grid>
+
+    <!-- Buttons -->
+    <Grid Grid.Column="1" Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+        <Button x:Name="ConfirmButton"
+                Margin="3" Grid.Row="0"
+                Command="{Binding CommandChangeTextMarker}" Click="ConfirmButton_Click" Height="23" Width="65">
+          <Image Source="/YALV;component/Resources/Icons/confirm.png" Width="16" Height="16" />
+      </Button>
+      <Button x:Name="DeleteSimpleButton"
+        		  Command="{Binding CommandCancelTextMarker}"
+        		  Margin="3" Grid.Row="1">
+          <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />
+      </Button>
+    </Grid>
+
+    <!-- Main TextBox Entry -->
+    <TextBox 
             Name="MessageTextBox"
-            Margin="5,0,0,5" 
-            Height="65" 
+            Margin="3" 
+            MinHeight="65" 
             TextWrapping="Wrap" 
             Text="{Binding Path=Message, Mode=TwoWay}"
             TextChanged="TextBox_TextChanged"
-            VerticalAlignment="Top" />
-    </DockPanel>
+            Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" />
+  </Grid>
 
 </UserControl>

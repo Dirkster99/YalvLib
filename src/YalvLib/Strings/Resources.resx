@@ -542,7 +542,7 @@ It is a WPF Application based on .NET Framework 4.0 and written with C# language
     <value>Delete</value>
   </data>
   <data name="MainWindow_MarkerRow_Title_Text" xml:space="preserve">
-    <value>Marker - Author :</value>
+    <value>Author :</value>
   </data>
   <data name="MarkerRow_DeleteConfirmation" xml:space="preserve">
     <value>You are about to delete a marker linked with others log entries, do you wish to continue ?</value>

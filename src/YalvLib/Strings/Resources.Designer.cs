@@ -946,7 +946,7 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Marker - Author :.
+        ///   Looks up a localized string similar to Author :.
         /// </summary>
         public static string MainWindow_MarkerRow_Title_Text {
             get {

@@ -43,17 +43,18 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="165" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Splitter between ToggleButton and DataGrid View -->
-                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                               Style="{StaticResource DefaultGridSplitterStyle}" />
 
-                <Grid Grid.Column="0" Grid.Row="0">
+                <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
@@ -70,7 +71,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
                                 <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_OpenFile_ToolTip}"
                                         Command="{Binding Path=CommandOpenFile}" CommandParameter="JOIN" BorderBrush="Transparent" Background="Transparent"
                                         HorizontalAlignment="Center">
@@ -132,6 +133,9 @@
                                             IsEnabled="{Binding YalvLogViewModel.HasData}" />
                     </Grid>
 
+                  <common:PropertiesView 
+                                    Grid.Row="1" Grid.Column="0" DataContext="{Binding YalvLogViewModel}"
+                                    IsEnabled="{Binding HasData}" Margin="0,20,0,0" MinWidth="200"/>
 
                 </Grid>
 
@@ -140,51 +144,29 @@
                 <!-- CenterCellStyle="{StaticResource CenterDataGridCellStyle}" -->
 
                 <!-- horizontal splitter -->
-                <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Row="1" Grid.Column="0"
-                              Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeDirection="Rows" />
-                <Grid Grid.ColumnSpan="4" Grid.Row="2">
+                <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Row="1" Grid.Column="1"
+                              Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeDirection="Rows" />
+                
+                <Grid Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="3">
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="370"></ColumnDefinition>
                         <ColumnDefinition Width="5"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="5"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
 
-                        <common:PropertiesView 
-                            Grid.Row="0" Grid.Column="0" DataContext="{Binding YalvLogViewModel}"
-                                               IsEnabled="{Binding HasData}" Margin="0,10,0,0" MinWidth="200"/>
-                        <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Row="0" Grid.Column="1"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeDirection="Columns" />
-                        <common:TextMarkerToolBoxView
-                            DataContext="{Binding YalvLogViewModel}"
-                            HorizontalAlignment="Left" 
-                            VerticalAlignment="Top" 
-                            Grid.Row="0" 
-                            Grid.Column="2"
-                            Height="Auto" 
-                            Width="Auto" 
-                            IsEnabled="{Binding HasData}" />
-                    </Grid>
+                    <common:TextMarkerToolBoxView
+                        HorizontalAlignment="Stretch"
+                        DataContext="{Binding YalvLogViewModel}"
+                        IsEnabled="{Binding HasData}" />
+
                     <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Row="0" Grid.Column="1"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeDirection="Columns" />
-                    <common:MessageTabView Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="350"  Width="Auto" IsEnabled="{Binding YalvLogViewModel.HasData}" />
+                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
+                    
+                    <common:MessageTabView Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                           MinWidth="350"  IsEnabled="{Binding YalvLogViewModel.HasData}" />
 
                 </Grid>
-
-                <!-- <common:MessageView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
-                            IsEnabled="{Binding YalvLogViewModel.HasData}"/> -->
             </Grid>
 
             <!-- StatusBar-->

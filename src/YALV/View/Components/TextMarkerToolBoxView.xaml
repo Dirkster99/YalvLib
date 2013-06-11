@@ -7,49 +7,59 @@
              xmlns:Strings="clr-namespace:YalvLib.Strings;assembly=YalvLib"
              xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
              x:Class="YALV.View.Components.TextMarkerToolBoxView" 
-             mc:Ignorable="d" Height="400" Width="350">
-    <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    </UserControl.Resources>
+                                
+              mc:Ignorable="d"
+              d:DesignHeight="300" d:DesignWidth="500"             
+>
+  <UserControl.Resources>
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+  </UserControl.Resources>
 
-    <DockPanel
-        LastChildFill="True">
-        <StackPanel
-            DockPanel.Dock="Top"
-            Orientation="Horizontal">
-        <Label 
-                Content="{x:Static Strings:Resources.MainWindow_MarkerBox_Title_Text}" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top" 
-                FontSize="20"
-            />
-            <CheckBox Margin="45, 12, 0, 0"
-                      VerticalAlignment="Top" 
-                      Content="{x:Static Strings:Resources.MainWindow_Markerbox_Checkbox_Text}"
-                      IsChecked="{Binding Path=ManageTextMarkersViewModel.DisplayOnlyCommonMarkers}"
-            />
-        </StackPanel>
-        <local:TextMarkerView
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Label Grid.Column="0" Grid.Row="0"
+           Content="{x:Static Strings:Resources.MainWindow_MarkerBox_Title_Text}" 
+           HorizontalAlignment="Left" 
+           VerticalAlignment="Top" 
+           FontSize="20"
+          />
+
+    <CheckBox Margin="3" Grid.Column="1" Grid.Row="0"
+              VerticalAlignment="Center" HorizontalAlignment="Right"
+              Content="{x:Static Strings:Resources.MainWindow_Markerbox_Checkbox_Text}"
+              IsChecked="{Binding Path=ManageTextMarkersViewModel.DisplayOnlyCommonMarkers}"
+          />
+
+    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+      <local:TextMarkerView
                 x:Name="TextMarkerAdd"
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top"
                 DataContext="{Binding Path=ManageTextMarkersViewModel.TextMarkerToAdd}"
-                DockPanel.Dock="Top"
         />
-        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto"
+      <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto"
                                VerticalScrollBarVisibility="Auto">
 
-            <ItemsControl Name="TextMarkersToDisplay"
+        <ItemsControl Name="TextMarkersToDisplay"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top"
                 ItemsSource="{Binding Path=ManageTextMarkersViewModel.TextMarkerViewModels}"
                             >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:TextMarkerView/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-    </DockPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <local:TextMarkerView/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+
+  </Grid>
 </UserControl>
