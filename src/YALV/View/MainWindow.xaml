@@ -20,7 +20,7 @@
         <KeyBinding Command="{Binding Path=YalvLogViewModel.CommandDelete}" Key="DEL" />
     </Window.InputBindings>
 
-    <Grid BusyIndicatorBehavior:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogEntryRows.LogFile.IsLoading}">
+    <Grid BusyIndicatorBehavior:BusyIndicatorBehavior.BusyState="{Binding Path=YalvLogViewModel.ManageRepositoriesViewModel.IsLoading}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -61,6 +61,7 @@
 
                     <Grid Grid.Row="0" HorizontalAlignment="Left" Margin="3">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -128,9 +129,17 @@
                         </Grid>
 
                         <!-- Additional Filter Grid -->
-                        <common:FilterPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="3"
+                        <common:FilterPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="3"
                                             IsEnabled="{Binding YalvLogViewModel.HasData}" />
+
+                        <common:RepositoriesListView DataContext="{Binding YalvLogViewModel}" 
+                                                     HorizontalAlignment="Left" 
+                                                     Height="Auto" 
+                                                     Grid.Row="3" 
+                                                     VerticalAlignment="Top"
+                                                     Width="Auto"/>
                     </Grid>
+                    
 
 
                 </Grid>

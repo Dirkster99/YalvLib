@@ -1167,6 +1167,15 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GuId.
+        /// </summary>
+        public static string MainWindowVM_InitDataGrid_IdMergeColumn_Header {
+            get {
+                return ResourceManager.GetString("MainWindowVM_InitDataGrid_IdMergeColumn_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Level.
         /// </summary>
         public static string MainWindowVM_InitDataGrid_LevelColumn_Header {

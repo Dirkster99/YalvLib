@@ -12,15 +12,19 @@ namespace YalvLib.Model
         #region fields
 
         private List<LogEntry> _linkedEntries;
-        private readonly DateTime _tCreation;
+        private DateTime _tCreation;
 
         #endregion fields
 
         protected AbstractMarker(List<LogEntry> entries)
         {
             _linkedEntries = entries;
-            _tCreation = new DateTime();
-            DateLastModification = _tCreation;
+            _tCreation = DateTime.Now;
+            DateLastModification = DateTime.Now;
+        }
+
+        protected AbstractMarker()
+        {
         }
 
         /// <summary>
@@ -29,6 +33,7 @@ namespace YalvLib.Model
         public DateTime DateCreation
         {
             get { return _tCreation; }
+            private set { _tCreation = value; }
         }
 
         /// <summary>
@@ -40,10 +45,10 @@ namespace YalvLib.Model
         /// <summary>
         /// Return logEntries linked with this marker
         /// </summary>
-        public List<LogEntry> LogEntries
+        public IList<LogEntry> LogEntries
         {
             get { return _linkedEntries; }
-            set { _linkedEntries = value; }
+            set { _linkedEntries = value.ToList(); }
         }
 
 
@@ -55,5 +60,10 @@ namespace YalvLib.Model
         {
             return _linkedEntries.Count;
         }
+
+        /// <summary>
+        /// Get/Set the Uid
+        /// </summary>
+        public Guid Uid { get; protected set; }
     }
 }

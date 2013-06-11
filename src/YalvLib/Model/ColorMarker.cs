@@ -29,6 +29,10 @@ namespace YalvLib.Model
         {
         }
 
+        public ColorMarker()
+        {
+        }
+
         /// <summary>
         /// Get color
         /// </summary>

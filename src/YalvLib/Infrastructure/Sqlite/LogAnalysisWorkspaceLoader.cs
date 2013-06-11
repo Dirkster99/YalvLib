@@ -15,12 +15,12 @@ using YalvLib.Model;
 namespace YalvLib.Infrastructure.Sqlite
 {
 
-    public class LogAnalysisSessionLoader
+    public class LogAnalysisWorkspaceLoader
     {
 
         private String _path;
 
-        public LogAnalysisSessionLoader(String path)
+        public LogAnalysisWorkspaceLoader(String path)
         {
             _path = path;
         }
@@ -31,10 +31,14 @@ namespace YalvLib.Infrastructure.Sqlite
                                         .Database(SQLiteConfiguration.Standard.UsingFile(_path))
                                       .Mappings(m =>
                                       {
-                                          m.FluentMappings.Add<LogAnalysisSessionMapping>();
+                                          m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();
+                                          m.FluentMappings.Add<LogAnalysisMapping>();
                                           m.FluentMappings.Add<LogEntryFileRepositoryMapping>();
                                           m.FluentMappings.Add<LogEntryRepositoryMapping>();
                                           m.FluentMappings.Add<LogEntryMapping>();
+                                          m.FluentMappings.Add<TextMarkerMapping>();
+                                         
+                                          
                                       })
                                       .ExposeConfiguration(BuildSchema)
                                       .BuildSessionFactory();

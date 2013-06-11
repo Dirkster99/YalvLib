@@ -10,14 +10,13 @@ namespace YalvLib.Model
     /// </summary>
     public class LogAnalysisWorkspace
     {
-        private readonly List<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
+        private IList<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
         /*
          * We will be able to implement multiple LogAnalysis, but for the moment
-         * we will working on one only.
-        private readonly List<LogAnalysis> _analysis = new List<LogAnalysis>(); 
-         */
-
-        private LogAnalysis _analysis = new LogAnalysis();
+         * we will working on one only.*/
+        private IList<LogAnalysis> _analyses = new List<LogAnalysis>(); 
+        private LogAnalysis _currentAnalysis;
+         
 
         /// <summary>
         /// Adds a sourceRepository to the source repositories of the actual LogAnalysisWorkspace
@@ -28,6 +27,15 @@ namespace YalvLib.Model
             _sourceRepositories.Add(sourceRepository);
         }
 
+        public void AddSourceRepositories(List<LogEntryRepository> sourceRepositories)
+        {
+            foreach (var logEntryRepository in sourceRepositories)
+            {
+                _sourceRepositories.Add(logEntryRepository);
+            }
+        }
+
+
 
         /// <summary>
         /// Get the source reporitories list
@@ -35,6 +43,7 @@ namespace YalvLib.Model
         public IList<LogEntryRepository> SourceRepositories
         {
             get { return _sourceRepositories; }
+            set { _sourceRepositories = value; }
         }
 
 
@@ -57,12 +66,14 @@ namespace YalvLib.Model
         /// <summary>
         /// Get the source reporitories list
         /// </summary>
-        public LogAnalysis Analysis
-        {
-            get { return _analysis; }
-            set { _analysis = value; }
-        }
+        public IList<LogAnalysis> Analyses
+        { get { return _analyses; } private set { _analyses = value; } }
 
+        public LogAnalysis currentAnalysis
+        {
+            get { return _currentAnalysis; }
+            set { _currentAnalysis = value; if (!_analyses.Contains(value))_analyses.Add(value); }
+        }
 
         /// <summary>
         /// Get/Set the Uid

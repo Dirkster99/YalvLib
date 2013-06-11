@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
@@ -14,12 +15,12 @@ using YalvLib.Model;
 namespace YalvLib.Infrastructure.Sqlite
 {
 
-    public class LogAnalysisSessionExporter
+    public class LogAnalysisWorkspaceExporter
     {
 
         private String _path;
 
-        public LogAnalysisSessionExporter(String path)
+        public LogAnalysisWorkspaceExporter(String path)
         {
             _path = path;            
         }
@@ -30,9 +31,11 @@ namespace YalvLib.Infrastructure.Sqlite
                                         .Database(SQLiteConfiguration.Standard.UsingFile(_path))
                                       .Mappings(m =>
                                       {
-                                          m.FluentMappings.Add<LogAnalysisSessionMapping>();
+                                          m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();
+                                          m.FluentMappings.Add<LogAnalysisMapping>();
                                           m.FluentMappings.Add<LogEntryFileRepositoryMapping>();
                                           m.FluentMappings.Add<LogEntryRepositoryMapping>();
+                                          m.FluentMappings.Add<TextMarkerMapping>();
                                           m.FluentMappings.Add<LogEntryMapping>();
                                       })
                                       .ExposeConfiguration(BuildSchema)
@@ -46,6 +49,8 @@ namespace YalvLib.Infrastructure.Sqlite
                     transaction.Commit();
                 }
             }
+            sessionFactory.Close();
+            MessageBox.Show("Export Done.");
         }
 
         private void BuildSchema(Configuration config)

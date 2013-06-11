@@ -49,7 +49,7 @@ namespace YalvLib.ViewModel
 
         internal void UpdateTextMarkerQuantity()
         {
-            TextMarkerQuantity = YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(Entry).Count;
+            TextMarkerQuantity = YalvRegistry.Instance.ActualWorkspace.currentAnalysis.GetTextMarkersForEntry(Entry).Count;
         }
     }
 }

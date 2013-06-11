@@ -553,4 +553,7 @@ It is a WPF Application based on .NET Framework 4.0 and written with C# language
   <data name="MainWindow_Markerbox_Checkbox_Text" xml:space="preserve">
     <value>Display only common text markers</value>
   </data>
+  <data name="MainWindowVM_InitDataGrid_IdMergeColumn_Header" xml:space="preserve">
+    <value>GuId</value>
+  </data>
 </root>

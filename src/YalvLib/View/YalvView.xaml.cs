@@ -217,7 +217,7 @@ namespace YalvLib.View
                                           partSearchPanel);
 
                 ////Not necessary since the ViewModel creates the CollectionView and looks after the filtering
-                ////this.AssignSource(new Binding("Items") { Source = this, Mode = BindingMode.OneWay });
+                ////this.AssignSource(new Binding("LogEntryRowViewModels") { Source = this, Mode = BindingMode.OneWay });
             }
         }
 

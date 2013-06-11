@@ -1,4 +1,5 @@
-﻿using YalvLib.Infrastructure.Sqlite;
+﻿using System.Collections.Generic;
+using YalvLib.Infrastructure.Sqlite;
 using YalvLib.Model;
 
 namespace YALV.ViewModel
@@ -24,6 +25,7 @@ namespace YALV.ViewModel
         private readonly string mLayoutFileName;
 
         private readonly YalvViewModel mYalvLogViewModel = null;
+        private LogAnalysisWorkspace _workspace = null;
         private RecentFileList mRecentFileList;
 
         /// <summary>
@@ -41,7 +43,11 @@ namespace YALV.ViewModel
 
             this.mCallingWin = win;
 
+            _workspace = new LogAnalysisWorkspace();
+            YalvRegistry.Instance.SetActualLogAnalysisWorkspace(_workspace);
+
             this.mYalvLogViewModel = new YalvViewModel();
+
 
             if (MainWindowVM.CreateAppDataDir() == true)
             {
@@ -104,7 +110,7 @@ namespace YALV.ViewModel
         {
             get
             {
-                string sFile = (this.YalvLogViewModel.FilePaths.Length == 0? string.Empty :
+                string sFile = (this.YalvLogViewModel.FilePaths.Count == 0? string.Empty :
                                                                                         " - " + this.mYalvLogViewModel.FilePaths[0]);
 
                 return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
@@ -177,7 +183,7 @@ namespace YALV.ViewModel
         {
             try
             {
-                this.mYalvLogViewModel.LoadFiles(new string[]{filePath}, true);
+                this.mYalvLogViewModel.LoadFiles(new List<string>(){filePath});
             }
             finally
             {
@@ -225,7 +231,7 @@ namespace YALV.ViewModel
 
             if (dlg.ShowDialog().GetValueOrDefault() == true)
             {
-                this.mYalvLogViewModel.LoadFiles(dlg.FileNames, !parameter.Equals("JOIN"));
+                this.mYalvLogViewModel.LoadFiles(new List<string>(dlg.FileNames));
          
 
                 this.RecentFileList.InsertFile(dlg.FileName);
@@ -252,10 +258,12 @@ namespace YALV.ViewModel
         protected virtual object CommandExportExecute(object parameter)
         {
             LogAnalysisWorkspace workspace = YalvRegistry.Instance.ActualWorkspace;
-            if (workspace != null)
+            if (workspace != null && this.YalvLogViewModel.HasData)
             {
-                new LogAnalysisSessionExporter("LogAnalysisSession.yalv").Export(workspace);
-            }
+                new LogAnalysisWorkspaceExporter("LogAnalysisSession.yalv").Export(workspace);
+            }else
+                MessageBox.Show("No Data to be exported !");
+            
             return null;
         }
 

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 using YalvLib.Domain;
 using YalvLib.Model;
 using YalvLib.Providers;
@@ -17,10 +20,12 @@ namespace YalvLib.ViewModel
     {
         #region fields
 
-        private const string PROP_FilePath = "FilePaths";
-
         private DisplayLogViewModel _logEntryRows = null;
         private ManageTextMarkersViewModel _manageTextMarkersViewModel = null;
+        private ManageRepositoryViewModel _manageRepoViewModel = null;
+ 
+
+        private LogAnalysis _logAnalysis = null;
 
         #endregion fields
 
@@ -79,6 +84,12 @@ namespace YalvLib.ViewModel
         public YalvViewModel()
         {
             _manageTextMarkersViewModel = new ManageTextMarkersViewModel();
+            _manageRepoViewModel = new ManageRepositoryViewModel();
+            _manageRepoViewModel.ActiveChanged += ManageRepoViewModelOnPropertyChanged;
+
+            _logAnalysis = new LogAnalysis();
+            YalvRegistry.Instance.ActualWorkspace.currentAnalysis = _logAnalysis;
+
             this._logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
             
 
@@ -90,6 +101,11 @@ namespace YalvLib.ViewModel
 
         }
 
+        private void ManageRepoViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            LoadFinishedEvent(true);
+        }
+
         #endregion constructor
 
         #region properties
@@ -99,24 +115,16 @@ namespace YalvLib.ViewModel
         /// the currently viewed log4net file or
         /// empty string if there is no file being viewed at present.
         /// </summary>
-        public string[] FilePaths
+        public List<string> FilePaths
         {
             get
             {
-                if (this.LogEntryRows != null)
+                var filePaths = new List<string>();
+                if (ManageRepositoriesViewModel != null)
                 {
-                    if (this.LogEntryRows.LogFile != null)
-                    {
-                        var filePaths = new string[this.LogEntryRows.LogFile.FilePaths.Count];
-                        for (int i = 0; i < this.LogEntryRows.LogFile.FilePaths.Count; i++)
-                        {
-                            filePaths[i] = this.LogEntryRows.LogFile.FilePaths[i];
-                        }
-                        return filePaths;
-                    }
+                    filePaths.AddRange(ManageRepositoriesViewModel.Repositories.Select(repo => repo.Repository.Path));
                 }
-
-                return new string[0];
+                return filePaths;
             }
         }
 
@@ -126,6 +134,11 @@ namespace YalvLib.ViewModel
         public DisplayLogViewModel LogEntryRows
         {
             get { return this._logEntryRows; }
+        }
+
+        public ManageRepositoryViewModel ManageRepositoriesViewModel
+        {
+            get { return _manageRepoViewModel; }
         }
 
 
@@ -176,15 +189,16 @@ namespace YalvLib.ViewModel
 
         #region methods
 
+
+
         /// <summary>
         /// Load a log4nez log file to display its content through this ViewModel.
         /// </summary>
         /// <param name="paths">file path</param>
-        public void LoadFiles(string[] paths, bool newSession)
+        public void LoadFiles(List<string> paths)
         {
-            List<string> pathsList = new List<string>();
-            pathsList.AddRange(paths);
-            this._logEntryRows.LoadFile(pathsList, EntriesProviderType.Xml, this.LoadFinishedEvent, newSession);
+            ManageRepositoriesViewModel.LoadFiles(paths, EntriesProviderType.Xml);
+            LoadFinishedEvent(true);
         }
 
 
@@ -194,7 +208,8 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadSqliteDatabase(string path)
         {
-            this._logEntryRows.LoadFile(new List<string>() { path }, EntriesProviderType.Sqlite, this.LoadFinishedEvent, true);
+            ManageRepositoriesViewModel.LoadFiles(new List<string>() { path }, EntriesProviderType.Sqlite);
+            LoadFinishedEvent(true);
         }
 
 
@@ -204,7 +219,8 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadLogAnalysisSession(string path)
         {
-            this._logEntryRows.LoadFile(new List<string>() { path }, EntriesProviderType.Yalv, this.LoadFinishedEvent, true);
+            ManageRepositoriesViewModel.LoadFiles(new List<string>() { path }, EntriesProviderType.Yalv);
+            LoadFinishedEvent(true);
         }
 
 
@@ -249,6 +265,7 @@ namespace YalvLib.ViewModel
         /// <param name="loadWasSuccessful"></param>
         private void LoadFinishedEvent(bool loadWasSuccessful)
         {
+            this.LogEntryRows.SetEntries(ManageRepositoriesViewModel.Repositories.ToList());
             this.RefreshCommandsCanExecute();
         }
 

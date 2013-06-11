@@ -28,6 +28,10 @@ namespace YalvLib.Model
             _message = message;
         }
 
+        public TextMarker()
+        {
+        }
+
 
         /// <summary>
         /// Get or Set the author. Update Date of last modification on get
@@ -54,5 +58,6 @@ namespace YalvLib.Model
                 DateLastModification = new DateTime();
             }
         }
+
     }
 }

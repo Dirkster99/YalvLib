@@ -1,20 +1,18 @@
-﻿using YalvLib.Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Data;
+using System.Windows.Input;
+using YalvLib.Common;
+using YalvLib.Common.Interfaces;
 using YalvLib.Model;
-using YalvLib.Providers;
+using YalvLib.Strings;
 
 namespace YalvLib.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Input;
-    using YalvLib.Common;
-    using YalvLib.Common.Interfaces;
-
     /// <summary>
     /// ViewModel class to organize all items relevant to a loaded logfile display
     /// (columns displayed, file name etc).
@@ -26,7 +24,7 @@ namespace YalvLib.ViewModel
         private const string PROP_FileDir = "FileDir";
         private const string PROP_LogView = "LogView";
         private const string PROP_HasData = "HasData";
-        private const string PROP_Items = "Items";
+        private const string PROP_Items = "LogEntryRowViewModels";
         private const string PROP_SelectedLogItem = "SelectedLogItem";
         private const string PROP_GoToLogItemId = "GoToLogItemId";
         private const string PROP_ShowLevelDebug = "ShowLevelDebug";
@@ -52,49 +50,42 @@ namespace YalvLib.ViewModel
         private const string PROP_ItemsFatalFilterCount = "ItemsFatalFilterCount";
         private const string PROP_ItemsFilterCount = "ItemsFilterCount";
 
-        private object lockObject = new object();
 
-        private ColumnsVM mDataGridColumns = null;
-        private LogFileViewModel mLogFile = null;
-        private LogFileLoader fileLoader = null;
+        private readonly ColumnsVM mDataGridColumns;
 
         private ObservableCollection<LogEntryRowViewModel> _RowViewModels;
-        private LogEntryRowViewModel mSelectedLogItem;
-
-        private Dictionary<AbstractMarker, List<LogEntryRowViewModel>> _cacheDictionnaryMarkersLogEntriesRowViewModel; 
+        private EvaluateLoadResult loadResultCallback = null;
 
         private string mGoToLogItemId;
 
-        private bool mIsFiltered = false;
-        private bool mShowLevelDebug;
-        private bool mShowLevelInfo;
-        private bool mShowLevelWarn;
-        private bool mShowLevelError;
-        private bool mShowLevelFatal;
-
-        private bool mSelectAll;
-        private bool mSelectDebug;
-        private bool mSelectInfo;
-        private bool mSelectWarn;
-        private bool mSelectError;
-        private bool mSelectFatal;
+        private bool mIsFiltered;
 
         private int mItemsDebugCount;
-        private int mItemsInfoCount;
-        private int mItemsWarnCount;
-        private int mItemsErrorCount;
-        private int mItemsFatalCount;
 
         private int mItemsDebugFilterCount;
-        private int mItemsInfoFilterCount;
-        private int mItemsWarnFilterCount;
+        private int mItemsErrorCount;
         private int mItemsErrorFilterCount;
+        private int mItemsFatalCount;
         private int mItemsFatalFilterCount;
         private int mItemsFilterCount;
+        private int mItemsInfoCount;
+        private int mItemsInfoFilterCount;
+        private int mItemsWarnCount;
+        private int mItemsWarnFilterCount;
+        private bool mSelectAll;
+        private bool mSelectDebug;
+        private bool mSelectError;
+        private bool mSelectFatal;
+        private bool mSelectInfo;
+        private bool mSelectWarn;
+        private LogEntryRowViewModel mSelectedLogItem;
+        private bool mShowLevelDebug;
+        private bool mShowLevelError;
+        private bool mShowLevelFatal;
+        private bool mShowLevelInfo;
+        private bool mShowLevelWarn;
 
-        private EvaluateLoadResult loadResultCallback = null;
         public event EventHandler SelectedItemChanged;
-
 
         #endregion fields
 
@@ -105,34 +96,30 @@ namespace YalvLib.ViewModel
         /// </summary>
         public DisplayLogViewModel(IManageTextMarkersViewModel interfaceTextMarkerViewModel)
         {
-            this.CommandClearFilters = new CommandRelay(this.CommandClearFiltersExecute,
-                                                        this.CommandClearFilterCanExecute);
+            CommandClearFilters = new CommandRelay(CommandClearFiltersExecute,
+                                                   CommandClearFilterCanExecute);
 
-            this.SelectAll = true;
-            this.IsFiltered = false;
-            this.Items = new ObservableCollection<LogEntryRowViewModel>();
-            this.RebuildLogView(this.Items);
+            SelectAll = true;
+            IsFiltered = false;
+            LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
+            RebuildLogView(LogEntryRowViewModels);
 
-            interfaceTextMarkerViewModel.MarkerDeleted += (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs)args);
+            interfaceTextMarkerViewModel.MarkerDeleted +=
+                (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs) args);
             interfaceTextMarkerViewModel.MarkerAdded += (sender, args) => RefreshView();
-            
+
             // Default constructor contains column definitions
             // The callback is invocked when a column filter string item is changed
             // so we know that we should update the viewmodel filter
-            this.mDataGridColumns = new ColumnsVM(this.ColumnsVmUpdateColumnFilter);
-
-            this.mLogFile = new LogFileViewModel();
-
-
-            
+            mDataGridColumns = new ColumnsVM(ColumnsVmUpdateColumnFilter);
         }
 
         public void OnMarkerDeleteExecuted(object obj, TextMarkerEventArgs e)
         {
             TextMarker marker = e.TextMarker;
-            foreach(var row in _RowViewModels)
+            foreach (LogEntryRowViewModel row in _RowViewModels)
             {
-                if(marker.LogEntries.Contains(row.Entry))
+                if (marker.LogEntries.Contains(row.Entry))
                 {
                     row.UpdateTextMarkerQuantity();
                 }
@@ -164,24 +151,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ColumnsVM DataGridColumns
         {
-            get { return this.mDataGridColumns; }
-        }
-
-        /// <summary>
-        /// Get a list of files and/or directories that can act as a data source.
-        /// </summary>
-        public LogFileViewModel LogFile
-        {
-            get { return this.mLogFile; }
-
-            set
-            {
-                if (this.mLogFile != value)
-                {
-                    this.mLogFile = value;
-                    this.RaisePropertyChanged(PROP_FileDir);
-                }
-            }
+            get { return mDataGridColumns; }
         }
 
         /// <summary>
@@ -190,6 +160,26 @@ namespace YalvLib.ViewModel
         /// </summary>
         public CollectionView LogView { get; private set; }
 
+        /// <summary>
+        /// Get fewer there are data items in the collection or not
+        /// (there may be no items to display if filter is applied but thats a different issue)
+        /// </summary>
+        internal bool HasData
+        {
+            get { return (_RowViewModels != null && (_RowViewModels.Count != 0)); }
+        }
+
+        /// <summary>
+        /// LogItems property which is the main list of logitems
+        /// (this property is bound to a view via CollectionView property)
+        /// </summary>
+        public ObservableCollection<LogEntryRowViewModel> LogEntryRowViewModels
+        {
+            get { return _RowViewModels; }
+
+            set { _RowViewModels = value; }
+        }
+
         #region LogProperties
 
         /// <summary>
@@ -197,17 +187,17 @@ namespace YalvLib.ViewModel
         /// </summary>
         public LogEntryRowViewModel SelectedLogItem
         {
-            get { return this.mSelectedLogItem; }
+            get { return mSelectedLogItem; }
 
             set
             {
-                this.mSelectedLogItem = value;
-                this.RaisePropertyChanged(PROP_SelectedLogItem);
+                mSelectedLogItem = value;
+                RaisePropertyChanged(PROP_SelectedLogItem);
                 OnSelectedItemChanged(EventArgs.Empty);
 
 
-                this.GoToLogItemId = this.mSelectedLogItem != null ? this.mSelectedLogItem.LogEntryId.ToString() : string.Empty;
-                this.RaisePropertyChanged(DisplayLogViewModel.PROP_GoToLogItemId);
+                GoToLogItemId = mSelectedLogItem != null ? mSelectedLogItem.LogEntryId.ToString() : string.Empty;
+                RaisePropertyChanged(PROP_GoToLogItemId);
             }
         }
 
@@ -216,31 +206,32 @@ namespace YalvLib.ViewModel
         /// </summary>
         public string GoToLogItemId
         {
-            get { return this.mGoToLogItemId; }
+            get { return mGoToLogItemId; }
 
             set
             {
-                this.mGoToLogItemId = value;
+                mGoToLogItemId = value;
 
                 int idGoTo = 0;
                 int.TryParse(value, out idGoTo);
-                UInt32 currentId = this.SelectedLogItem != null ? this.SelectedLogItem.LogEntryId : 0;
+                UInt32 currentId = SelectedLogItem != null ? SelectedLogItem.LogEntryId : 0;
 
                 if (idGoTo > 0 && idGoTo != currentId)
                 {
-                    var selectItem = (from it in this.Items
+                    var selectItem = (from it in LogEntryRowViewModels
                                       where it.LogEntryId == idGoTo
                                       select it).FirstOrDefault<LogEntryRowViewModel>();
 
                     if (selectItem != null)
-                        this.SelectedLogItem = selectItem;
+                        SelectedLogItem = selectItem;
                 }
                 else
-                    this.mGoToLogItemId = currentId != 0 ? currentId.ToString() : string.Empty;
+                    mGoToLogItemId = currentId != 0 ? currentId.ToString() : string.Empty;
 
-                this.RaisePropertyChanged(PROP_GoToLogItemId);
+                RaisePropertyChanged(PROP_GoToLogItemId);
             }
         }
+
         protected void OnSelectedItemChanged(EventArgs e)
         {
             EventHandler handler = SelectedItemChanged;
@@ -258,17 +249,17 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool IsFiltered
         {
-            get { return this.mIsFiltered; }
+            get { return mIsFiltered; }
 
             set
             {
-                if (this.mIsFiltered != value)
+                if (mIsFiltered != value)
                 {
-                    this.mIsFiltered = value;
-                    this.RaisePropertyChanged("IsFiltered");
-                    this.RefreshView();
+                    mIsFiltered = value;
+                    RaisePropertyChanged("IsFiltered");
+                    RefreshView();
 
-                    this.CommandClearFilters.CanExecute(null);
+                    CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -278,16 +269,16 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelDebug
         {
-            get { return this.mShowLevelDebug; }
+            get { return mShowLevelDebug; }
 
             set
             {
-                if (value != this.mShowLevelDebug)
+                if (value != mShowLevelDebug)
                 {
-                    this.mShowLevelDebug = value;
-                    this.RaisePropertyChanged(PROP_ShowLevelDebug);
-                    this.ResetLevelSelection();
-                    this.RefreshView();
+                    mShowLevelDebug = value;
+                    RaisePropertyChanged(PROP_ShowLevelDebug);
+                    ResetLevelSelection();
+                    RefreshView();
                 }
             }
         }
@@ -297,16 +288,16 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelInfo
         {
-            get { return this.mShowLevelInfo; }
+            get { return mShowLevelInfo; }
 
             set
             {
-                if (value != this.mShowLevelInfo)
+                if (value != mShowLevelInfo)
                 {
-                    this.mShowLevelInfo = value;
-                    this.RaisePropertyChanged(PROP_ShowLevelInfo);
-                    this.ResetLevelSelection();
-                    this.RefreshView();
+                    mShowLevelInfo = value;
+                    RaisePropertyChanged(PROP_ShowLevelInfo);
+                    ResetLevelSelection();
+                    RefreshView();
                 }
             }
         }
@@ -316,16 +307,16 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelWarn
         {
-            get { return this.mShowLevelWarn; }
+            get { return mShowLevelWarn; }
 
             set
             {
-                if (value != this.mShowLevelWarn)
+                if (value != mShowLevelWarn)
                 {
-                    this.mShowLevelWarn = value;
-                    this.RaisePropertyChanged(PROP_ShowLevelWarn);
-                    this.ResetLevelSelection();
-                    this.RefreshView();
+                    mShowLevelWarn = value;
+                    RaisePropertyChanged(PROP_ShowLevelWarn);
+                    ResetLevelSelection();
+                    RefreshView();
                 }
             }
         }
@@ -335,16 +326,16 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelError
         {
-            get { return this.mShowLevelError; }
+            get { return mShowLevelError; }
 
             set
             {
-                if (value != this.mShowLevelError)
+                if (value != mShowLevelError)
                 {
-                    this.mShowLevelError = value;
-                    this.RaisePropertyChanged(PROP_ShowLevelError);
-                    this.ResetLevelSelection();
-                    this.RefreshView();
+                    mShowLevelError = value;
+                    RaisePropertyChanged(PROP_ShowLevelError);
+                    ResetLevelSelection();
+                    RefreshView();
                 }
             }
         }
@@ -354,16 +345,16 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool ShowLevelFatal
         {
-            get { return this.mShowLevelFatal; }
+            get { return mShowLevelFatal; }
 
             set
             {
-                if (value != this.mShowLevelFatal)
+                if (value != mShowLevelFatal)
                 {
-                    this.mShowLevelFatal = value;
-                    this.RaisePropertyChanged(PROP_ShowLevelFatal);
-                    this.ResetLevelSelection();
-                    this.RefreshView();
+                    mShowLevelFatal = value;
+                    RaisePropertyChanged(PROP_ShowLevelFatal);
+                    ResetLevelSelection();
+                    RefreshView();
                 }
             }
         }
@@ -377,25 +368,25 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectAll
         {
-            get { return this.mSelectAll; }
+            get { return mSelectAll; }
 
             set
             {
-                if (value != this.mSelectAll)
+                if (value != mSelectAll)
                 {
-                    this.mSelectAll = value;
-                    this.RaisePropertyChanged(PROP_SelectAll);
+                    mSelectAll = value;
+                    RaisePropertyChanged(PROP_SelectAll);
 
-                    if (this.mSelectAll)
+                    if (mSelectAll)
                     {
-                        this.mShowLevelDebug =
-                            this.mShowLevelInfo =
-                            this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = true;
-                        this.RefreshCheckBoxBinding();
-                        this.RefreshView();
+                        mShowLevelDebug =
+                            mShowLevelInfo =
+                            mShowLevelWarn = mShowLevelError = mShowLevelFatal = true;
+                        RefreshCheckBoxBinding();
+                        RefreshView();
                     }
 
-                    this.CommandClearFilters.CanExecute(null);
+                    CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -405,25 +396,25 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectDebug
         {
-            get { return this.mSelectDebug; }
+            get { return mSelectDebug; }
 
             set
             {
-                if (value != this.mSelectDebug)
+                if (value != mSelectDebug)
                 {
-                    this.mSelectDebug = value;
-                    this.RaisePropertyChanged(PROP_SelectDebug);
+                    mSelectDebug = value;
+                    RaisePropertyChanged(PROP_SelectDebug);
 
-                    if (this.mSelectDebug)
+                    if (mSelectDebug)
                     {
-                        this.mSelectAll =
-                            this.mShowLevelInfo =
-                            this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = false;
-                        this.mShowLevelDebug = true;
-                        this.RefreshCheckBoxBinding();
-                        this.RefreshView();
+                        mSelectAll =
+                            mShowLevelInfo =
+                            mShowLevelWarn = mShowLevelError = mShowLevelFatal = false;
+                        mShowLevelDebug = true;
+                        RefreshCheckBoxBinding();
+                        RefreshView();
 
-                        this.CommandClearFilters.CanExecute(null);
+                        CommandClearFilters.CanExecute(null);
                     }
                 }
             }
@@ -434,25 +425,25 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectInfo
         {
-            get { return this.mSelectInfo; }
+            get { return mSelectInfo; }
 
             set
             {
-                if (value != this.mSelectInfo)
+                if (value != mSelectInfo)
                 {
-                    this.mSelectInfo = value;
-                    this.RaisePropertyChanged(PROP_SelectInfo);
+                    mSelectInfo = value;
+                    RaisePropertyChanged(PROP_SelectInfo);
 
-                    if (this.mSelectInfo)
+                    if (mSelectInfo)
                     {
-                        this.mSelectAll =
-                            this.mShowLevelDebug =
-                            this.mShowLevelWarn = this.mShowLevelError = this.mShowLevelFatal = false;
-                        this.mShowLevelInfo = true;
-                        this.RefreshCheckBoxBinding();
-                        this.RefreshView();
+                        mSelectAll =
+                            mShowLevelDebug =
+                            mShowLevelWarn = mShowLevelError = mShowLevelFatal = false;
+                        mShowLevelInfo = true;
+                        RefreshCheckBoxBinding();
+                        RefreshView();
 
-                        this.CommandClearFilters.CanExecute(null);
+                        CommandClearFilters.CanExecute(null);
                     }
                 }
             }
@@ -463,27 +454,27 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectWarn
         {
-            get { return this.mSelectWarn; }
+            get { return mSelectWarn; }
 
             set
             {
-                if (value != this.mSelectWarn)
+                if (value != mSelectWarn)
                 {
-                    this.mSelectWarn = value;
-                    this.RaisePropertyChanged(PROP_SelectWarn);
+                    mSelectWarn = value;
+                    RaisePropertyChanged(PROP_SelectWarn);
 
-                    if (this.mSelectWarn)
+                    if (mSelectWarn)
                     {
-                        this.mSelectAll =
-                            this.mShowLevelDebug =
-                            this.mShowLevelInfo = this.mShowLevelError = this.mShowLevelFatal = false;
-                        this.mShowLevelWarn = true;
-                        this.RefreshCheckBoxBinding();
+                        mSelectAll =
+                            mShowLevelDebug =
+                            mShowLevelInfo = mShowLevelError = mShowLevelFatal = false;
+                        mShowLevelWarn = true;
+                        RefreshCheckBoxBinding();
                     }
 
-                    this.RefreshView();
+                    RefreshView();
 
-                    this.CommandClearFilters.CanExecute(null);
+                    CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -493,26 +484,26 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectError
         {
-            get { return this.mSelectError; }
+            get { return mSelectError; }
 
             set
             {
-                if (value != this.mSelectError)
+                if (value != mSelectError)
                 {
-                    this.mSelectError = value;
-                    this.RaisePropertyChanged(PROP_SelectError);
+                    mSelectError = value;
+                    RaisePropertyChanged(PROP_SelectError);
 
-                    if (this.mSelectError)
+                    if (mSelectError)
                     {
-                        this.mSelectAll =
-                            this.mShowLevelDebug =
-                            this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelFatal = false;
-                        this.mShowLevelError = true;
-                        this.RefreshCheckBoxBinding();
-                        this.RefreshView();
+                        mSelectAll =
+                            mShowLevelDebug =
+                            mShowLevelInfo = mShowLevelWarn = mShowLevelFatal = false;
+                        mShowLevelError = true;
+                        RefreshCheckBoxBinding();
+                        RefreshView();
                     }
 
-                    this.CommandClearFilters.CanExecute(null);
+                    CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -522,26 +513,26 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool SelectFatal
         {
-            get { return this.mSelectFatal; }
+            get { return mSelectFatal; }
 
             set
             {
-                if (value != this.mSelectFatal)
+                if (value != mSelectFatal)
                 {
-                    this.mSelectFatal = value;
-                    this.RaisePropertyChanged(PROP_SelectFatal);
+                    mSelectFatal = value;
+                    RaisePropertyChanged(PROP_SelectFatal);
 
-                    if (this.mSelectFatal)
+                    if (mSelectFatal)
                     {
-                        this.mSelectAll =
-                            this.mShowLevelDebug =
-                            this.mShowLevelInfo = this.mShowLevelWarn = this.mShowLevelError = false;
-                        this.mShowLevelFatal = true;
-                        this.RefreshCheckBoxBinding();
-                        this.RefreshView();
+                        mSelectAll =
+                            mShowLevelDebug =
+                            mShowLevelInfo = mShowLevelWarn = mShowLevelError = false;
+                        mShowLevelFatal = true;
+                        RefreshCheckBoxBinding();
+                        RefreshView();
                     }
 
-                    this.CommandClearFilters.CanExecute(null);
+                    CommandClearFilters.CanExecute(null);
                 }
             }
         }
@@ -555,10 +546,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsDebugCount
         {
-            get { return this.mItemsDebugCount; }
+            get { return mItemsDebugCount; }
             set
             {
-                this.mItemsDebugCount = value;
+                mItemsDebugCount = value;
                 RaisePropertyChanged(PROP_ItemsDebugCount);
             }
         }
@@ -568,10 +559,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsInfoCount
         {
-            get { return this.mItemsInfoCount; }
+            get { return mItemsInfoCount; }
             set
             {
-                this.mItemsInfoCount = value;
+                mItemsInfoCount = value;
                 RaisePropertyChanged(PROP_ItemsInfoCount);
             }
         }
@@ -581,10 +572,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsWarnCount
         {
-            get { return this.mItemsWarnCount; }
+            get { return mItemsWarnCount; }
             set
             {
-                this.mItemsWarnCount = value;
+                mItemsWarnCount = value;
                 RaisePropertyChanged(PROP_ItemsWarnCount);
             }
         }
@@ -594,10 +585,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsErrorCount
         {
-            get { return this.mItemsErrorCount; }
+            get { return mItemsErrorCount; }
             set
             {
-                this.mItemsErrorCount = value;
+                mItemsErrorCount = value;
                 RaisePropertyChanged(PROP_ItemsErrorCount);
             }
         }
@@ -607,10 +598,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsFatalCount
         {
-            get { return this.mItemsFatalCount; }
+            get { return mItemsFatalCount; }
             set
             {
-                this.mItemsFatalCount = value;
+                mItemsFatalCount = value;
                 RaisePropertyChanged(PROP_ItemsFatalCount);
             }
         }
@@ -620,10 +611,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsDebugFilterCount
         {
-            get { return this.mItemsDebugFilterCount; }
+            get { return mItemsDebugFilterCount; }
             set
             {
-                this.mItemsDebugFilterCount = value;
+                mItemsDebugFilterCount = value;
                 RaisePropertyChanged(PROP_ItemsDebugFilterCount);
             }
         }
@@ -633,10 +624,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsInfoFilterCount
         {
-            get { return this.mItemsInfoFilterCount; }
+            get { return mItemsInfoFilterCount; }
             set
             {
-                this.mItemsInfoFilterCount = value;
+                mItemsInfoFilterCount = value;
                 RaisePropertyChanged(PROP_ItemsInfoFilterCount);
             }
         }
@@ -646,10 +637,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsWarnFilterCount
         {
-            get { return this.mItemsWarnFilterCount; }
+            get { return mItemsWarnFilterCount; }
             set
             {
-                this.mItemsWarnFilterCount = value;
+                mItemsWarnFilterCount = value;
                 RaisePropertyChanged(PROP_ItemsWarnFilterCount);
             }
         }
@@ -659,10 +650,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsErrorFilterCount
         {
-            get { return this.mItemsErrorFilterCount; }
+            get { return mItemsErrorFilterCount; }
             set
             {
-                this.mItemsErrorFilterCount = value;
+                mItemsErrorFilterCount = value;
                 RaisePropertyChanged(PROP_ItemsErrorFilterCount);
             }
         }
@@ -672,10 +663,10 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsFatalFilterCount
         {
-            get { return this.mItemsFatalFilterCount; }
+            get { return mItemsFatalFilterCount; }
             set
             {
-                this.mItemsFatalFilterCount = value;
+                mItemsFatalFilterCount = value;
                 RaisePropertyChanged(PROP_ItemsFatalFilterCount);
             }
         }
@@ -685,35 +676,15 @@ namespace YalvLib.ViewModel
         /// </summary>
         public int ItemsFilterCount
         {
-            get { return this.mItemsFilterCount; }
+            get { return mItemsFilterCount; }
             set
             {
-                this.mItemsFilterCount = value;
+                mItemsFilterCount = value;
                 RaisePropertyChanged(PROP_ItemsFilterCount);
             }
         }
 
         #endregion
-
-        /// <summary>
-        /// Get fewer there are data items in the collection or not
-        /// (there may be no items to display if filter is applied but thats a different issue)
-        /// </summary>
-        internal bool HasData
-        {
-            get { return (this._RowViewModels != null && (this._RowViewModels.Count != 0)); }
-        }
-
-        /// <summary>
-        /// LogItems property which is the main list of logitems
-        /// (this property is bound to a view via CollectionView property)
-        /// </summary>
-        public ObservableCollection<LogEntryRowViewModel> Items
-        {
-            get { return this._RowViewModels; }
-
-            set { this._RowViewModels = value; }
-        }
 
         #endregion Properties
 
@@ -742,14 +713,14 @@ namespace YalvLib.ViewModel
                             string valToCompare = string.Empty;
                             if (val is DateTime)
                                 valToCompare = ((DateTime) val).ToString(GlobalHelper.DisplayDateTimeFormat,
-                                                                         System.Globalization.CultureInfo.GetCultureInfo
-                                                                             (YalvLib.Strings.Resources.CultureName));
+                                                                         CultureInfo.GetCultureInfo
+                                                                             (Resources.CultureName));
                             else
                                 valToCompare = val.ToString();
 
                             if (
-                                valToCompare.ToString().IndexOf(colItem.ColumnFilterValue,
-                                                                StringComparison.OrdinalIgnoreCase) < 0)
+                                valToCompare.IndexOf(colItem.ColumnFilterValue,
+                                                     StringComparison.OrdinalIgnoreCase) < 0)
                                 return false;
                         }
                     }
@@ -766,8 +737,8 @@ namespace YalvLib.ViewModel
         /// <param name="columnCollection"></param>
         public void SetColumnsLayout(List<ColumnItem> columnCollection)
         {
-            this.mDataGridColumns.SetColumnsLayout(columnCollection,
-                                                   this.ColumnsVmUpdateColumnFilter);
+            mDataGridColumns.SetColumnsLayout(columnCollection,
+                                              ColumnsVmUpdateColumnFilter);
         }
 
         /// <summary>
@@ -776,8 +747,8 @@ namespace YalvLib.ViewModel
         /// <param name="pathFileName"></param>
         public void LoadColumnsLayout(string pathFileName)
         {
-            this.mDataGridColumns.LoadColumnsLayout(pathFileName,
-                                                    this.ColumnsVmUpdateColumnFilter);
+            mDataGridColumns.LoadColumnsLayout(pathFileName,
+                                               ColumnsVmUpdateColumnFilter);
         }
 
         /// <summary>
@@ -786,32 +757,32 @@ namespace YalvLib.ViewModel
         /// <param name="pathFileName"></param>
         public void SaveColumnsLayout(string pathFileName)
         {
-            this.mDataGridColumns.SaveColumnsLayout(pathFileName);
+            mDataGridColumns.SaveColumnsLayout(pathFileName);
         }
 
         internal void UpdateCounters()
         {
-            this.ItemsDebugCount = (from it in this.Items
-                                    where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
-                                    select it).Count();
+            ItemsDebugCount = (from it in LogEntryRowViewModels
+                               where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
+                               select it).Count();
 
-            this.ItemsInfoCount = (from it in this.Items
-                                   where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
-                                   select it).Count();
+            ItemsInfoCount = (from it in LogEntryRowViewModels
+                              where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
+                              select it).Count();
 
-            this.ItemsWarnCount = (from it in this.Items
-                                   where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
-                                   select it).Count();
+            ItemsWarnCount = (from it in LogEntryRowViewModels
+                              where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
+                              select it).Count();
 
-            this.ItemsErrorCount = (from it in this.Items
-                                    where it.Entry.LevelIndex.Equals(LevelIndex.ERROR)
-                                    select it).Count();
+            ItemsErrorCount = (from it in LogEntryRowViewModels
+                               where it.Entry.LevelIndex.Equals(LevelIndex.ERROR)
+                               select it).Count();
 
-            this.ItemsFatalCount = (from it in this.Items
-                                    where it.Entry.LevelIndex.Equals(LevelIndex.FATAL)
-                                    select it).Count();
+            ItemsFatalCount = (from it in LogEntryRowViewModels
+                               where it.Entry.LevelIndex.Equals(LevelIndex.FATAL)
+                               select it).Count();
 
-            ////this.RefreshView();
+            RefreshView();
         }
 
         /// <summary>
@@ -819,7 +790,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         internal void ApplyFilter()
         {
-            this.IsFiltered = !this.IsFiltered;
+            IsFiltered = !IsFiltered;
         }
 
         /// <summary>
@@ -828,94 +799,6 @@ namespace YalvLib.ViewModel
         /// <param name="callbackOnFinishedparameter"></param>
         internal virtual void CommandRefreshExecute(EvaluateLoadResult callbackOnFinishedparameter)
         {
-            if (this.LogFile.IsFileLoaded == true)
-            {
-                this.LoadFile(this.LogFile.FilePaths, EntriesProviderType.Xml, callbackOnFinishedparameter, true);
-            }
-        }
-
-        #region commandDelete
-
-        internal virtual object CommandDeleteExecute(object parameter)
-        {
-            this.mLogFile.CommandDeleteExecute();
-
-            return null;
-        }
-
-        internal virtual bool CommandDeleteCanExecute(object parameter)
-        {
-            return this.mLogFile.CommandDeleteCanExecute();
-        }
-
-        #endregion commandDelete
-
-        #region commandClear
-
-        internal virtual object CommandClearFiltersExecute(object parameter)
-        {
-            this.IsFiltered = false; // Reset column text filter
-            this.SelectAll = true; // Reset level classification filter
-
-            ////if (this.DataGridColumns != null)
-            ////  this.DataGridColumns.ResetSearchTextBox();
-
-            this.RefreshView();
-
-            return null;
-        }
-
-        internal virtual bool CommandClearFilterCanExecute(object parameter)
-        {
-            if (this.HasData == true)
-            {
-                return (this.IsFiltered == true | this.SelectAll == false);
-            }
-
-            return false;
-        }
-
-        #endregion commandClear
-
-        /// <summary>
-        /// This function is calles to initiate a load file process.
-        /// </summary>
-        /// <param name="paths"></param>
-        /// <param name="providerType"> </param>
-        /// <param name="callbackOnFinished"></param>
-        /// <returns></returns>
-        internal bool LoadFile(List<string> paths, EntriesProviderType providerType,
-                               EvaluateLoadResult callbackOnFinished, bool newSession)
-        {
-            lock (this.lockObject)
-            {
-                if (this.loadResultCallback != null)
-                    return false;
-
-                // Remember callback delegate for update functions to be used later
-                this.loadResultCallback = callbackOnFinished;
-
-                if (this.fileLoader == null)
-                {
-                    this.fileLoader = new LogFileLoader();
-                    fileLoader.ProviderType = providerType;
-                    this.fileLoader.loadResultEvent +=
-                        new EventHandler<LogFileLoader.ResultEvent>(this.FileFoaderResultEvent);
-
-                    {
-                        this.LogFile.IsLoading = true;
-                        if(!newSession)
-                            LogFile.FilePaths.AddRange(paths);
-                        else
-                            LogFile.FilePaths = paths;
-                        this._RowViewModels.Clear();
-                        this.fileLoader.LoadFile(paths, true, newSession);
-                    }
-
-                    return true;
-                }
-            }
-            return false;
         }
 
         /// <summary>
@@ -930,7 +813,7 @@ namespace YalvLib.ViewModel
             object val = null;
             try
             {
-                val = item.GetType().GetProperty(prop).GetValue(item, null);
+                val = item.GetType(). GetProperty(prop).GetValue(item, null);
             }
             catch
             {
@@ -942,21 +825,21 @@ namespace YalvLib.ViewModel
 
         public void RefreshView()
         {
-            LogEntryRowViewModel l = this.SelectedLogItem;
-            this.SelectedLogItem = null;
+            LogEntryRowViewModel l = SelectedLogItem;
+            SelectedLogItem = null;
 
-            if (this.LogView != null)
+            if (LogView != null)
             {
-                this.LogView.Refresh();
-                this.RaisePropertyChanged(DisplayLogViewModel.PROP_LogView);
+                LogView.Refresh();
+                RaisePropertyChanged(PROP_LogView);
 
                 // Attempt to restore selected item if there was one before
                 // and if it is not part of the filtered set of items
                 // (ScrollItemBehaviour may scroll it into view when filter is applied)
                 if (l != null)
                 {
-                    if (this.OnFilterLogItems(l) == true)
-                        this.SelectedLogItem = l;
+                    if (OnFilterLogItems(l))
+                        SelectedLogItem = l;
                 }
             }
 
@@ -980,12 +863,12 @@ namespace YalvLib.ViewModel
         /// </summary>
         private void ResetLevelSelection()
         {
-            this.SelectAll = false;
-            this.SelectDebug = false;
-            this.SelectInfo = false;
-            this.SelectWarn = false;
-            this.SelectError = false;
-            this.SelectFatal = false;
+            SelectAll = false;
+            SelectDebug = false;
+            SelectInfo = false;
+            SelectWarn = false;
+            SelectError = false;
+            SelectFatal = false;
         }
 
         private void UpdateFilteredCounters(ICollectionView filteredList)
@@ -995,37 +878,37 @@ namespace YalvLib.ViewModel
                 IEnumerable<LogEntry> fltList = filteredList.Cast<LogEntry>();
                 if (fltList != null)
                 {
-                    this.ItemsFilterCount = fltList.Count();
+                    ItemsFilterCount = fltList.Count();
 
-                    this.ItemsDebugFilterCount = (from it in fltList
-                                                  where it.LevelIndex.Equals(LevelIndex.DEBUG)
-                                                  select it).Count();
+                    ItemsDebugFilterCount = (from it in fltList
+                                             where it.LevelIndex.Equals(LevelIndex.DEBUG)
+                                             select it).Count();
 
-                    this.ItemsInfoFilterCount = (from it in fltList
-                                                 where it.LevelIndex.Equals(LevelIndex.INFO)
-                                                 select it).Count();
+                    ItemsInfoFilterCount = (from it in fltList
+                                            where it.LevelIndex.Equals(LevelIndex.INFO)
+                                            select it).Count();
 
-                    this.ItemsWarnFilterCount = (from it in fltList
-                                                 where it.LevelIndex.Equals(LevelIndex.WARN)
-                                                 select it).Count();
+                    ItemsWarnFilterCount = (from it in fltList
+                                            where it.LevelIndex.Equals(LevelIndex.WARN)
+                                            select it).Count();
 
-                    this.ItemsErrorFilterCount = (from it in fltList
-                                                  where it.LevelIndex.Equals(LevelIndex.ERROR)
-                                                  select it).Count();
+                    ItemsErrorFilterCount = (from it in fltList
+                                             where it.LevelIndex.Equals(LevelIndex.ERROR)
+                                             select it).Count();
 
-                    this.ItemsFatalFilterCount = (from it in fltList
-                                                  where it.LevelIndex.Equals(LevelIndex.FATAL)
-                                                  select it).Count();
+                    ItemsFatalFilterCount = (from it in fltList
+                                             where it.LevelIndex.Equals(LevelIndex.FATAL)
+                                             select it).Count();
                 }
             }
             else
             {
-                this.ItemsFilterCount = 0;
-                this.ItemsDebugFilterCount = 0;
-                this.ItemsInfoFilterCount = 0;
-                this.ItemsWarnFilterCount = 0;
-                this.ItemsErrorFilterCount = 0;
-                this.ItemsFatalFilterCount = 0;
+                ItemsFilterCount = 0;
+                ItemsDebugFilterCount = 0;
+                ItemsInfoFilterCount = 0;
+                ItemsWarnFilterCount = 0;
+                ItemsErrorFilterCount = 0;
+                ItemsFatalFilterCount = 0;
             }
         }
 
@@ -1036,26 +919,26 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         private bool LevelCheckFilter(object item)
         {
-            LogEntryRowViewModel logItemVM = item as LogEntryRowViewModel;
+            var logItemVM = item as LogEntryRowViewModel;
 
             if (logItemVM != null)
             {
                 switch (logItemVM.Entry.LevelIndex)
                 {
                     case LevelIndex.DEBUG:
-                        return this.ShowLevelDebug;
+                        return ShowLevelDebug;
 
                     case LevelIndex.INFO:
-                        return this.ShowLevelInfo;
+                        return ShowLevelInfo;
 
                     case LevelIndex.WARN:
-                        return this.ShowLevelWarn;
+                        return ShowLevelWarn;
 
                     case LevelIndex.ERROR:
-                        return this.ShowLevelError;
+                        return ShowLevelError;
 
                     case LevelIndex.FATAL:
-                        return this.ShowLevelFatal;
+                        return ShowLevelFatal;
                 }
             }
 
@@ -1069,48 +952,48 @@ namespace YalvLib.ViewModel
         /// <returns>Returns true if item is not filtered and false otherwise</returns>
         private bool OnFilterLogItems(object item)
         {
-            LogEntryRowViewModel logitemVM = item as LogEntryRowViewModel;
+            var logitemVM = item as LogEntryRowViewModel;
 
             if (logitemVM == null)
                 return true; // Item is not filtered
 
             // Evaluate text filters if we are in filter mode, otherwise, display EVERY item!
-            if (this.IsFiltered == true)
+            if (IsFiltered)
             {
-                if (MatchTextFilterColumn(this.mDataGridColumns, logitemVM.Entry) == false)
+                if (MatchTextFilterColumn(mDataGridColumns, logitemVM.Entry) == false)
                     return false;
             }
 
-            if (this.SelectAll == false)
+            if (SelectAll == false)
             {
                 switch (logitemVM.Entry.LevelIndex)
                 {
                     case LevelIndex.DEBUG:
-                        if (this.mShowLevelDebug == true)
+                        if (mShowLevelDebug)
                             return true;
                         else
                             return false;
 
                     case LevelIndex.INFO:
-                        if (this.mShowLevelInfo == true)
+                        if (mShowLevelInfo)
                             return true;
                         else
                             return false;
 
                     case LevelIndex.WARN:
-                        if (this.mShowLevelWarn == true)
+                        if (mShowLevelWarn)
                             return true;
                         else
                             return false;
 
                     case LevelIndex.ERROR:
-                        if (this.mShowLevelError == true)
+                        if (mShowLevelError)
                             return true;
                         else
                             return false;
 
                     case LevelIndex.FATAL:
-                        if (this.mShowLevelFatal == true)
+                        if (mShowLevelFatal)
                             return true;
                         else
                             return false;
@@ -1128,19 +1011,19 @@ namespace YalvLib.ViewModel
         /// <param name="items"></param>
         private void RebuildLogView(ObservableCollection<LogEntryRowViewModel> items)
         {
-            if (this.Items != null)
-                foreach (var item in items)
-                    this.Items.Add(item);
+            if (LogEntryRowViewModels != null)
+                foreach (LogEntryRowViewModel item in items)
+                    LogEntryRowViewModels.Add(item);
             else
-                this.Items = new ObservableCollection<LogEntryRowViewModel>();
-            this.LogView = (CollectionView) CollectionViewSource.GetDefaultView(this.Items);
-            this.LogView.Filter = this.OnFilterLogItems;
-            this.RefreshView();
+                LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
+            LogView = (CollectionView) CollectionViewSource.GetDefaultView(LogEntryRowViewModels);
+            LogView.Filter = OnFilterLogItems;
+            RefreshView();
         }
 
         private void RemoveAllItems()
         {
-            this.Items.Clear();
+            LogEntryRowViewModels.Clear();
         }
 
         /// <summary>
@@ -1148,7 +1031,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ColumnsVmUpdateColumnFilter(object sender, System.EventArgs e)
+        private void ColumnsVmUpdateColumnFilter(object sender, EventArgs e)
         {
             //// Justification: It might be better to let the user decide when a filter is on or off
             //// since typing can be a slow down experience if the filter is updated on every keyboard press
@@ -1156,9 +1039,9 @@ namespace YalvLib.ViewModel
             //// if (this.IsFiltered == false)
             ////   this.IsFiltered = true;      // filter toggle will refresh collection view
             ////else
-            if (this.IsFiltered == true)
+            if (IsFiltered)
             {
-                this.RefreshView(); // otherwise, just refresh if filter is already in place
+                RefreshView(); // otherwise, just refresh if filter is already in place
             }
         }
 
@@ -1198,101 +1081,65 @@ namespace YalvLib.ViewModel
             return messageBoxText;
         }
 
-        /// <summary>
-        /// This function is called as soon as the load log file parser finishes.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FileFoaderResultEvent(object sender, LogFileLoader.ResultEvent e)
+        #region commandDelete
+
+        internal virtual object CommandDeleteExecute(object parameter)
         {
-            lock (this.lockObject)
+            return null;
+        }
+
+        internal virtual bool CommandDeleteCanExecute(object parameter)
+        {
+            return false;
+        }
+
+        #endregion commandDelete
+
+        #region commandClear
+
+        internal virtual object CommandClearFiltersExecute(object parameter)
+        {
+            IsFiltered = false; // Reset column text filter
+            SelectAll = true; // Reset level classification filter
+
+            ////if (this.DataGridColumns != null)
+            ////  this.DataGridColumns.ResetSearchTextBox();
+
+            RefreshView();
+
+            return null;
+        }
+
+        internal virtual bool CommandClearFilterCanExecute(object parameter)
+        {
+            if (HasData)
             {
-                bool result = (!e.Cancel) || (!e.Error);
+                return (IsFiltered | SelectAll == false);
+            }
 
-                try
+            return false;
+        }
+
+        #endregion commandClear
+
+        #endregion Methodes
+
+        public void SetEntries(List<RepositoryViewModel> repositories)
+        {
+            RemoveAllItems();
+
+            foreach (var repo in repositories)
+            {
+                if (repo.Active)
                 {
-                    try
+                    foreach (LogEntry entry in repo.Repository.LogEntries)
                     {
-                        this.fileLoader.loadResultEvent -= this.FileFoaderResultEvent;
-                    }
-                    catch
-                    {
-                    }
-
-                    if (e.Cancel == true || e.Error == true)
-                    {
-                        string errorMess = e.Message;
-
-                        // Extend error message if there is more data available (exception message is usually more relevant than generic message)
-                        if (e.InnerException != null)
-                            errorMess = string.Format("{0}\n\n({1})", GetExceptionTreeAsString(e.InnerException),
-                                                      errorMess);
-
-                        MessageBox.Show(
-                            string.Format(YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Text,
-                                          errorMess),
-                            YalvLib.Strings.Resources.MainWindowVM_bkLoaderCompleted_UnreadableFile_Title,
-                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-                        this.LogFile.IsLoading = false;
-
-                        return;
-                    }
-
-                    if (!e.Cancel && e.ResultObjects != null)
-                    {
-                        object o;
-                        e.ResultObjects.TryGetValue(LogFileLoader.KeyLogItems, out o);
-                        IList<LogEntry> list = o as IList<LogEntry>;
-                         IList<LogEntryRowViewModel> listLogEntryVM = new List<LogEntryRowViewModel>();
-                        foreach (var item in list)
-                        {
-                            LogEntryRowViewModel viewModel = new LogEntryRowViewModel(item);
-                            viewModel.TextMarkerQuantity =
-                                YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(item).Count;
-                            if ((item.Id % 2) == 0)
-                                viewModel.ColorMarkerQuantity = 1;
-                            listLogEntryVM.Add(viewModel);
-                        }
-
-                        // (Re-)load file and display content in view
-                        if (listLogEntryVM != null)
-                            this.RebuildLogView(new ObservableCollection<LogEntryRowViewModel>(listLogEntryVM));
-                        else
-                            this.RemoveAllItems();
-
-                        // Always update views
-                        this.SelectedLogItem = null;
-                        this.UpdateCounters();
-                        this.RefreshView();
-
-                        if (this.Items.Count > 0) // select the last item in the list to scroll down the view
-                        {
-                            var lastItem = (from it in this.Items
-                                            where this.LevelCheckFilter(it)
-                                            select it).LastOrDefault<LogEntryRowViewModel>();
-
-                            // Select the last item to scroll viewer down to last entry
-                            this.SelectedLogItem = lastItem ?? this.Items[this.Items.Count - 1];
-                        }
-                    }
-
-                    this.LogFile.IsFileLoaded = true;
-                    this.LogFile.IsLoading = false;
-                }
-                finally
-                {
-                    this.fileLoader = null;
-
-                    if (this.loadResultCallback != null)
-                    {
-                        this.loadResultCallback(result);
-                        this.loadResultCallback = null;
+                        LogEntryRowViewModels.Add(new LogEntryRowViewModel(entry));
                     }
                 }
             }
+            UpdateCounters();
+            SelectedLogItem = LogEntryRowViewModels.Last();
         }
-
-        #endregion Methodes
     }
 }

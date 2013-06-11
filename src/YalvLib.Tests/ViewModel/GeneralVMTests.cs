@@ -23,17 +23,17 @@ namespace YalvLib.Tests.ViewModel
             //YalvViewModel yalvVM = YalvViewModelFactory.CreateVM(
             //                                                new List<LogEntry> { e1, e2 },
             //                                                new List<TextMarker> { t1, t2 });
-            //Assert.AreEqual(2, yalvVM.LogEntryRows.Items.Count);
+            //Assert.AreEqual(2, yalvVM.LogEntryRows.LogEntryRowViewModels.Count);
             //Assert.AreEqual(2, yalvVM.ManageTextMarkersViewModel.TextMarkerViewModels);
 
-            //Assert.AreEqual(2, yalvVM.LogEntryRows.Items[0].TextMarkerQuantity);
-            //Assert.AreEqual(1, yalvVM.LogEntryRows.Items[1].TextMarkerQuantity);
+            //Assert.AreEqual(2, yalvVM.LogEntryRows.LogEntryRowViewModels[0].TextMarkerQuantity);
+            //Assert.AreEqual(1, yalvVM.LogEntryRows.LogEntryRowViewModels[1].TextMarkerQuantity);
 
             // delete t1
             //yalvVM.ManageTextMarkersViewModel.TextMarkerViewModels[0].CommandCancelTextMarker.CanExecute(null);
 
-            //Assert.AreEqual(1, yalvVM.LogEntryRows.Items[0].TextMarkerQuantity);
-            //Assert.AreEqual(0, yalvVM.LogEntryRows.Items[1].TextMarkerQuantity);
+            //Assert.AreEqual(1, yalvVM.LogEntryRows.LogEntryRowViewModels[0].TextMarkerQuantity);
+            //Assert.AreEqual(0, yalvVM.LogEntryRows.LogEntryRowViewModels[1].TextMarkerQuantity);
         }
 
     }

@@ -1,4 +1,6 @@
-﻿namespace ModernYalv.ViewModel
+﻿using System.Collections.Generic;
+
+namespace ModernYalv.ViewModel
 {
   using System;
   using System.Reflection;
@@ -80,7 +82,7 @@
     {
         get
         {
-            string sFile = (this.YalvLogViewModel.FilePaths.Length == 0 ? string.Empty :
+            string sFile = (this.YalvLogViewModel.FilePaths.Count == 0 ? string.Empty :
                                                                                     " - " + this.mYalvLogViewModel.FilePaths[0]);
 
             return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
@@ -184,7 +186,7 @@
     {
       try
       {
-          this.mYalvLogViewModel.LoadFiles(new string[] { filePath }, true);
+          this.mYalvLogViewModel.LoadFiles(new List<string> { filePath });
       }
       finally
       {
@@ -388,7 +390,7 @@
     {
       try
       {
-          this.mYalvLogViewModel.LoadFiles(new string[] { sfileName }, true);
+          this.mYalvLogViewModel.LoadFiles(new List<string> { sfileName });
 
         this.mLastFileLoad = sfileName;
 

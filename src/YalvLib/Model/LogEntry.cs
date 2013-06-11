@@ -129,6 +129,8 @@ namespace YalvLib.Model
         /// </summary>
         public Guid Uid { get; set; }
 
+        public uint GuId { get; set; }
+
         #endregion properties
 
         public override bool Equals(object obj)

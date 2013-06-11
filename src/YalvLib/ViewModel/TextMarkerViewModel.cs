@@ -25,7 +25,7 @@ namespace YalvLib.ViewModel
         /// <param name="tm">TextMarker linked to the viewModel</param>
         public TextMarkerViewModel(TextMarker tm)
         {
-            _marker = tm;
+            Marker = tm;
 
             CommandChangeTextMarker = new CommandRelay(ExecuteChangeTextMarker, CanExecuteChangeTextmarker);
             CommandCancelTextMarker = new CommandRelay(ExecuteCancelTextMarker, CanExecuteCancelTextMarker);
@@ -54,6 +54,7 @@ namespace YalvLib.ViewModel
         public TextMarker Marker
         {
             get { return _marker; }
+            set { _marker = value; }
         }
 
 
@@ -138,7 +139,7 @@ namespace YalvLib.ViewModel
         {
             get
             {
-                return _marker.LogEntryCount() > 1 && YalvRegistry.Instance.ActualWorkspace.Analysis.IsMultiMarker(_marker);
+                return _marker.LogEntryCount() > 1 && YalvRegistry.Instance.ActualWorkspace.currentAnalysis.IsMultiMarker(_marker);
             }
         }
 
@@ -200,6 +201,7 @@ namespace YalvLib.ViewModel
         {               
             _marker.Author = _author;
             _marker.Message = _message;
+            _marker.DateLastModification = DateTime.Now;
             return null;
         }
     }

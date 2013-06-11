@@ -11,14 +11,16 @@ namespace YalvLib.Model
 
     public class LogEntryRepository : object
     {
-
+        public string Path;
+        public bool Active;
         private List<LogEntry> _logEntries = new List<LogEntry>();
 
         public IList<LogEntry> LogEntries
         {
             get { return _logEntries; }
         }
-         
+
+
         public Guid Uid { get; set; }
 
         public void AddLogEntry(LogEntry entry)
@@ -44,9 +46,14 @@ namespace YalvLib.Model
         private void AssignId(LogEntry entry)
         {
             if (_lastLogEntry != null)
+            {
                 entry.Id = _lastLogEntry.Id + 1;
-            else
+               
+            }
+            else{
                 entry.Id = 1;
+            }
+            entry.GuId = YalvRegistry.Instance.generateGuid();
         }
 
         private void AssignDelta(LogEntry entry)

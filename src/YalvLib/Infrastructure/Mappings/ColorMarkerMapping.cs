@@ -7,19 +7,16 @@ using YalvLib.Model;
 
 namespace YalvLib.Infrastructure.Mappings
 {
-
-    public class LogAnalysisSessionMapping : ClassMap<LogAnalysisWorkspace>
+    class ColorMarkerMapping : ClassMap<ColorMarker>
     {
-
-        public LogAnalysisSessionMapping()
+        public ColorMarkerMapping()
         {
             Not.LazyLoad();
             Id(x => x.Uid).GeneratedBy.Guid();
-            HasMany(x => x.SourceRepositories)
-                .Cascade.All()
-                .Not.LazyLoad();
+            HasMany(x => x.LogEntries).Cascade.All();
+            Map(x => x.HighlightColor);
+            Map(x => x.DateCreation);
+            Map(x => x.DateLastModification);
         }
-
     }
-
 }
