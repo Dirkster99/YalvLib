@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace YalvLib.Model
         /// <summary>-
         /// Get / Set Markers list
         /// </summary>
-        public List<AbstractMarker> Markers
+        public IList<AbstractMarker> Markers
         {
             get; private set;
         }
@@ -36,17 +37,19 @@ namespace YalvLib.Model
         /// <summary>
         /// Return the list of TextMarkers
         /// </summary>
-        public List<TextMarker> TextMarkers
+        public IList<TextMarker> TextMarkers
         {
             get { return Markers.Where(x => x is TextMarker).Cast<TextMarker>().ToList(); }
+            private set { }
         }
 
         /// <summary>
         /// Return the list of ColorMarkers
         /// </summary>
-        public List<ColorMarker> ColorMarkers
+        public IList<ColorMarker> ColorMarkers
         {
             get { return Markers.Where(x => x is ColorMarker).Cast<ColorMarker>().ToList(); }
+            private set {  }
         }
 
         /// <summary>
@@ -161,12 +164,19 @@ namespace YalvLib.Model
 
         public void SetColorMarker(List<LogEntry> list, Color color)
         {
-            GetColorMarker(color).LogEntries.AddRange(list);
+            foreach(var entry in list)
+                GetColorMarker(color).LogEntries.Add(entry);
         }
 
         public ColorMarker GetColorMarker(Color color)
         {
             return ColorMarkers.First(colorMarker => colorMarker.HighlightColor.Equals(color));
         }
+
+
+        /// <summary>
+        /// Get/Set the Uid
+        /// </summary>
+        public Guid Uid { get; protected set; }
     }
 }

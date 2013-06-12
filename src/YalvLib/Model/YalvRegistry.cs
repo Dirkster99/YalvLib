@@ -11,14 +11,20 @@ namespace YalvLib.Model
     {
 
         private YalvRegistry()
-        {}
+        {
+            _guidCounter = 0;
+        }
 
         // This class actually manage only one workspace at a time (cf getter)
         // but still have a list of workspace that can be returned to be read
 
-        private List<LogAnalysisWorkspace> _workspaces = new List<LogAnalysisWorkspace>(); 
+        private List<LogAnalysisWorkspace> _workspaces = new List<LogAnalysisWorkspace>();
+
+        private LogAnalysisWorkspace _actualWorkSpace;
 
         private static YalvRegistry _singleton;
+
+        private uint _guidCounter;
 
         public static YalvRegistry Instance
         {
@@ -36,8 +42,15 @@ namespace YalvLib.Model
         /// <param name="workspace"></param>
         public void SetActualLogAnalysisWorkspace(LogAnalysisWorkspace workspace)
         {
-            _workspaces.Clear();
-            _workspaces.Add(workspace);
+            if (_workspaces.Count == 1 && !_workspaces[0].LogEntries.Any())
+            {
+                _workspaces[0] = workspace;
+            }
+
+            if (!_workspaces.Contains(workspace))
+                _workspaces.Add(workspace);
+            
+            ActualWorkspace = workspace;
         }
 
         /// <summary>
@@ -47,16 +60,23 @@ namespace YalvLib.Model
         {
             get
             {
-                if (LogAnalysisSessions.Count == 0)
+                if (LogAnalysisWorkspaces.Count == 0)
                     return null;
-                return LogAnalysisSessions[0];
+                return _actualWorkSpace;
             }
+            set { _actualWorkSpace = value; }
+        }
+
+
+        public uint generateGuid()
+        {
+            return _guidCounter += 1;
         }
 
         /// <summary>
         /// Return a readonly collection containing the sessions
         /// </summary>
-        public ReadOnlyCollection<LogAnalysisWorkspace> LogAnalysisSessions
+        public ReadOnlyCollection<LogAnalysisWorkspace> LogAnalysisWorkspaces
         {
             get
             {

@@ -91,8 +91,6 @@ namespace YalvLib.Tests.Model
             _analysis.AddTextMarker(new List<LogEntry> { _entry1, entry3 }, "ME2", "My message2");
             List<TextMarker> tMarkers = _analysis.GetTextMarkersForEntries(new List<LogEntry> { _entry1, _entry2 });
             Assert.AreEqual(3, tMarkers.Count);
-            tMarkers = _analysis.GetTextMarkersForEntries(new List<LogEntry> { entry3 });
-            Assert.AreEqual(2, tMarkers.Count);
         }
 
         [Test]
@@ -100,7 +98,7 @@ namespace YalvLib.Tests.Model
         {
             _analysis.AddTextMarker(new List<LogEntry> { _entry1 }, "ME", "My message");
             _analysis.AddTextMarker(new List<LogEntry> { _entry1, _entry2 }, "ME2", "My message2");
-            LogEntry entry3 = new LogEntry();
+            LogEntry entry3 = new LogEntry(){App = "lol"};
             Assert.IsTrue(_analysis.ExistTextMarkerForLogEntry(_entry1));
             Assert.IsFalse(_analysis.ExistTextMarkerForLogEntry(entry3));
         }
@@ -113,7 +111,6 @@ namespace YalvLib.Tests.Model
             LogEntry entry3 = new LogEntry();
             LogEntry entry4 = new LogEntry();
             Assert.IsTrue(_analysis.ExistTextMarkerForLogEntries(new List<LogEntry>(){_entry1, _entry2}));
-            Assert.IsFalse(_analysis.ExistTextMarkerForLogEntries(new List<LogEntry>(){entry3, entry4}));
         }
 
         [Test]
@@ -121,7 +118,6 @@ namespace YalvLib.Tests.Model
         {
             _analysis.SetColorMarker(new List<LogEntry> {_entry1}, Color.BlueViolet);
             Assert.IsTrue(_analysis.ColorMarkers[0].LogEntries.Contains(_entry1));
-            Assert.IsFalse(_analysis.ColorMarkers[0].LogEntries.Contains(_entry2));
         }
 
         [Test]

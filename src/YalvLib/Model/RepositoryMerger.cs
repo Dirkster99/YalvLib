@@ -42,12 +42,12 @@ namespace YalvLib.Model
         private IEnumerable<LogEntry> GetLogEntries()
         {
             var session = new LogAnalysisWorkspace();
+            List<LogEntry> entries = new List<LogEntry>();
             foreach (LogEntryRepository repository in _sourceRepositories)
             {
-                session.AddSourceRepository(repository);
+                entries.AddRange(repository.LogEntries);
             }
-            IEnumerable<LogEntry> logEntries = session.LogEntries;
-            return logEntries;
+            return entries;
         }
     }
 }

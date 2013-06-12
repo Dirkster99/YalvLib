@@ -12,6 +12,7 @@ namespace YalvLib.Model
     {
         public LogEntrySqliteRepository(string path)
         {
+            Path = path;
             AbstractEntriesProviderBase provider = EntriesProviderFactory.GetProvider(EntriesProviderType.Sqlite);
             AddLogEntries(provider.GetEntries(path));
         }

@@ -74,7 +74,7 @@ namespace YalvLib.View
       DataGrid lv = e.OriginalSource as DataGrid;
       if (lv != null)
       {
-        ////lv.SelectedItem = lv.Items.GetItemAt(lv.Items.Count - 1);
+        ////lv.SelectedItem = lv.LogEntryRowViewModels.GetItemAt(lv.LogEntryRowViewModels.Count - 1);
         if (lv.SelectedItem != null)
         {
           lv.ScrollIntoView(lv.SelectedItem);

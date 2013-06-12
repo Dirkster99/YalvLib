@@ -13,23 +13,25 @@ namespace YalvLib.Tests.Model
         private string _message;
 
         [SetUp]
-        private void CreateEntry()
+        public void CreateEntry()
         {
-            _logEntry = new LogEntry();
-            _logEntry.App = "App";
-            _logEntry.Class = "Class";
-            _logEntry.File = "File";
-            _logEntry.HostName = "Host";
-            _logEntry.LevelIndex = LevelIndex.ERROR;
-            _logEntry.Line = 71;
-            _logEntry.Logger = "Logger";
-            _logEntry.MachineName = "Machine";
-            _logEntry.Message = "Message";
-            _logEntry.Method = "Method";
-            _logEntry.Thread = "Thread";
-            _logEntry.Throwable = "Throw";
-            _logEntry.TimeStamp = DateTime.MaxValue;
-            _logEntry.UserName = "User";
+            _logEntry = new LogEntry
+                            {
+                                App = "App",
+                                Class = "Class",
+                                File = "File",
+                                HostName = "Host",
+                                LevelIndex = LevelIndex.ERROR,
+                                Line = 71,
+                                Logger = "Logger",
+                                MachineName = "Machine",
+                                Message = "Message",
+                                Method = "Method",
+                                Thread = "Thread",
+                                Throwable = "Throw",
+                                TimeStamp = DateTime.MaxValue,
+                                UserName = "User"
+                            };
 
             _author = "Gwen";
             _message = "Hoo ben gaspard dis pas tout quand meme";

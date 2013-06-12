@@ -1,4 +1,7 @@
-﻿namespace ModernYalv.ViewModel
+﻿using System.Collections.Generic;
+using YalvLib.Model;
+
+namespace ModernYalv.ViewModel
 {
   using System;
   using System.Reflection;
@@ -18,6 +21,7 @@
     public const string PropTitle = "Title";
 
     private readonly YalvViewModel mYalvLogViewModel = null;
+    private LogAnalysisWorkspace _workspace = null;
 
     private readonly string mLayoutFileName;
 
@@ -47,7 +51,10 @@
 
       this.mCallingWin = win;
 
-      this.mYalvLogViewModel = new YalvViewModel();
+      
+      _workspace = new LogAnalysisWorkspace();
+      YalvRegistry.Instance.SetActualLogAnalysisWorkspace(_workspace);
+        this.mYalvLogViewModel = new YalvViewModel();
       this.mRecentFiles = null;
 
       this.CommandExit = new CommandRelay(this.commandExitExecute, p => true);
@@ -80,7 +87,7 @@
     {
         get
         {
-            string sFile = (this.YalvLogViewModel.FilePaths.Length == 0 ? string.Empty :
+            string sFile = (this.YalvLogViewModel.FilePaths.Count == 0 ? string.Empty :
                                                                                     " - " + this.mYalvLogViewModel.FilePaths[0]);
 
             return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
@@ -184,7 +191,7 @@
     {
       try
       {
-          this.mYalvLogViewModel.LoadFiles(new string[] { filePath }, true);
+          this.mYalvLogViewModel.LoadFiles(new List<string> { filePath });
       }
       finally
       {
@@ -388,7 +395,7 @@
     {
       try
       {
-          this.mYalvLogViewModel.LoadFiles(new string[] { sfileName }, true);
+          this.mYalvLogViewModel.LoadFiles(new List<string> { sfileName });
 
         this.mLastFileLoad = sfileName;
 

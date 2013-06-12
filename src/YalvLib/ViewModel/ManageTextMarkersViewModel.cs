@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using FluentNHibernate.Conventions;
 using YalvLib.Common;
 using YalvLib.Common.Interfaces;
 using YalvLib.Model;
@@ -16,11 +13,9 @@ namespace YalvLib.ViewModel
     /// </summary>
     public class ManageTextMarkersViewModel : BindableObject, IManageTextMarkersViewModel
     {
-
         private readonly ObservableCollection<TextMarkerViewModel> _textMarkerVmList;
-        private TextMarkerViewModel _textMarkerAdd;
         private List<LogEntryRowViewModel> _selectedEntries;
-        private bool _displayOnlyCommonMarkers;
+        private TextMarkerViewModel _textMarkerAdd;
 
         /// <summary>
         /// Constructor
@@ -31,30 +26,8 @@ namespace YalvLib.ViewModel
             _textMarkerVmList = new ObservableCollection<TextMarkerViewModel>();
             _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
             _textMarkerAdd.TextMarkerDeleted += ExecuteCancel;
-            CommandUpdateTextMarkers = new CommandRelay(CommandUpdateTextMarkersExecute, CommandUpdateTextMarkersCanExecute);
-        }
-
-        /// <summary>
-        /// Generate a list of TextMarkerViewModel 
-        /// from the TextMarker list given
-        /// </summary>
-        /// <param name="tm">TextMarker list</param>
-        public void GenerateViewModels(List<TextMarker> tm)
-        {
-            foreach (var textMarkerViewModel in _textMarkerVmList)
-            {
-                textMarkerViewModel.TextMarkerDeleted -= ExecuteCancel;
-            }
-            _textMarkerVmList.Clear();
-            GetNewTextMarkerToAdd();
-            foreach (TextMarker textMarker in tm)
-            {
-                _textMarkerVmList.Add(new TextMarkerViewModel(textMarker));
-            }
-            foreach (var textMarkerViewModel in _textMarkerVmList)
-            {
-                textMarkerViewModel.TextMarkerDeleted += ExecuteCancel;
-            }
+            CommandUpdateTextMarkers = new CommandRelay(CommandUpdateTextMarkersExecute,
+                                                        CommandUpdateTextMarkersCanExecute);
         }
 
         /// <summary>
@@ -64,7 +37,11 @@ namespace YalvLib.ViewModel
         public TextMarkerViewModel TextMarkerToAdd
         {
             get { return _textMarkerAdd; }
-            private set { _textMarkerAdd = value; NotifyPropertyChanged(() => TextMarkerToAdd);}
+            private set
+            {
+                _textMarkerAdd = value;
+                NotifyPropertyChanged(() => TextMarkerToAdd);
+            }
         }
 
 
@@ -73,10 +50,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ObservableCollection<TextMarkerViewModel> TextMarkerViewModels
         {
-            get
-            {
-                return _textMarkerVmList;
-            }
+            get { return _textMarkerVmList; }
         }
 
         /// <summary>
@@ -94,16 +68,51 @@ namespace YalvLib.ViewModel
         /// to know if we have to display every markers for the selected
         /// entries or only the common ones
         /// </summary>
-        public bool DisplayOnlyCommonMarkers
+        public bool DisplayOnlyCommonMarkers { get; private set; }
+
+        /// <summary>
+        /// This command is used to Update the TextMarkers
+        /// </summary>
+        public ICommandAncestor CommandUpdateTextMarkers { get; protected set; }
+
+        #region IManageTextMarkersViewModel Members
+
+        /// <summary>
+        /// Handler used when a textMarker is deleted
+        /// </summary>
+        public event EventHandler MarkerDeleted;
+
+        /// <summary>
+        /// Handler used when a TextMarker is added
+        /// </summary>
+        public event EventHandler MarkerAdded;
+
+        #endregion
+
+        /// <summary>
+        /// Generate a list of TextMarkerViewModel 
+        /// from the TextMarker list given
+        /// </summary>
+        /// <param name="textMarkerList">TextMarker list</param>
+        public void GenerateViewModels(List<TextMarker> textMarkerList)
         {
-            get { return _displayOnlyCommonMarkers; }
-            private set { _displayOnlyCommonMarkers = value;
-                if(_selectedEntries != null)
-                    CommandUpdateTextMarkersExecute(_selectedEntries);
+            foreach (TextMarkerViewModel textMarkerViewModel in TextMarkerViewModels)
+            {
+                textMarkerViewModel.TextMarkerDeleted -= ExecuteCancel;
+            }
+
+            TextMarkerViewModels.Clear();
+            GetNewTextMarkerToAdd();
+
+            foreach (TextMarker textMarker in textMarkerList)
+            {
+                TextMarkerViewModels.Add(new TextMarkerViewModel(textMarker));
+            }
+            foreach (TextMarkerViewModel textMarkerViewModel in TextMarkerViewModels)
+            {
+                textMarkerViewModel.TextMarkerDeleted += ExecuteCancel;
             }
         }
-
-        public ICommandAncestor CommandUpdateTextMarkers { get; protected set; }
 
         /// <summary>
         /// Update the list of TextMarkerViewModel
@@ -113,15 +122,18 @@ namespace YalvLib.ViewModel
         /// <returns>null</returns>
         internal object CommandUpdateTextMarkersExecute(object arg)
         {
-            _selectedEntries = new List<LogEntryRowViewModel>((IEnumerable<LogEntryRowViewModel>)arg);
+            _selectedEntries = new List<LogEntryRowViewModel>((IEnumerable<LogEntryRowViewModel>) arg);
 
             IEnumerable<TextMarker> markers =
-                YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntries(_selectedEntries.Select(x => x.Entry));
+                YalvRegistry.Instance.ActualWorkspace.currentAnalysis.GetTextMarkersForEntries(
+                    _selectedEntries.Select(x => x.Entry));
 
             List<TextMarker> markersCommon = markers.Where(
                 x =>
                 _selectedEntries.All(
-                    e => YalvRegistry.Instance.ActualWorkspace.Analysis.GetTextMarkersForEntry(e.Entry).Contains(x))).ToList();
+                    e =>
+                    YalvRegistry.Instance.ActualWorkspace.currentAnalysis.GetTextMarkersForEntry(e.Entry).Contains(x))).
+                ToList();
 
             GenerateViewModels(DisplayOnlyCommonMarkers ? markersCommon : markers.ToList());
             return null;
@@ -133,24 +145,30 @@ namespace YalvLib.ViewModel
         /// </summary>
         private void GetNewTextMarkerToAdd()
         {
-            _textMarkerAdd.TextMarkerDeleted -= ExecuteCancel;
-            _textMarkerAdd.CommandChangeTextMarker.Executed -= ExecuteChange;
+            TextMarkerToAdd.TextMarkerDeleted -= ExecuteCancel;
+            TextMarkerToAdd.CommandChangeTextMarker.Executed -= ExecuteChange;
             TextMarkerToAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty));
-            _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
-            _textMarkerAdd.TextMarkerDeleted += ExecuteCancel;
+            TextMarkerToAdd.CommandChangeTextMarker.Executed += ExecuteChange;
+            TextMarkerToAdd.TextMarkerDeleted += ExecuteCancel;
         }
 
 
         internal bool CommandUpdateTextMarkersCanExecute(object obj)
         {
-            return ((IEnumerable<LogEntryRowViewModel>)obj).Any();
+            return ((IEnumerable<LogEntryRowViewModel>) obj).Any();
         }
 
+        /// <summary>
+        /// Execute the changes on the textmarkers, updating the textmarker quantity of the linked log entries
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event args</param>
         public void ExecuteChange(object sender, EventArgs e)
         {
-            _textMarkerVmList.Add(TextMarkerToAdd);
-            YalvRegistry.Instance.ActualWorkspace.Analysis.AddTextMarker(_selectedEntries.Select(x => x.Entry), TextMarkerToAdd.Marker);
-            foreach(LogEntryRowViewModel entry in _selectedEntries)
+            TextMarkerViewModels.Add(TextMarkerToAdd);
+            YalvRegistry.Instance.ActualWorkspace.currentAnalysis.AddTextMarker(_selectedEntries.Select(x => x.Entry),
+                                                                                TextMarkerToAdd.Marker);
+            foreach (LogEntryRowViewModel entry in _selectedEntries)
             {
                 entry.UpdateTextMarkerQuantity();
             }
@@ -158,21 +176,28 @@ namespace YalvLib.ViewModel
             GetNewTextMarkerToAdd();
         }
 
+        /// <summary>
+        /// Execute the delete on the textMarker
+        /// </summary>
+        /// <param name="obj">object</param>
+        /// <param name="eventArgs">args</param>
         public void ExecuteCancel(object obj, EventArgs eventArgs)
         {
-            TextMarkerEventArgs args = eventArgs as TextMarkerEventArgs;
-            YalvRegistry.Instance.ActualWorkspace.Analysis.DeleteTextMarker(args.TextMarker);
-            OnMarkerDeleted(this, (TextMarkerEventArgs)eventArgs);
-            CommandUpdateTextMarkersExecute(_selectedEntries);        
+            var args = eventArgs as TextMarkerEventArgs;
+            YalvRegistry.Instance.ActualWorkspace.currentAnalysis.DeleteTextMarker(args.TextMarker);
+            OnMarkerDeleted(this, (TextMarkerEventArgs) eventArgs);
+            CommandUpdateTextMarkersExecute(_selectedEntries);
         }
 
 
-        public event EventHandler MarkerDeleted;
-        public event EventHandler MarkerAdded;
-
+        /// <summary>
+        /// Rise the event MarkerDeleted when a marker is deleted 
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">Textmarker deleted</param>
         public void OnMarkerDeleted(object sender, TextMarkerEventArgs e)
         {
-            if(MarkerDeleted != null)
+            if (MarkerDeleted != null)
             {
                 MarkerDeleted(this, e);
             }

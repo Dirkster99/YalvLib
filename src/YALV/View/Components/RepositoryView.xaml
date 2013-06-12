@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="YALV.View.Components.RepositoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="230">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock 
+                MinWidth="150"
+                Width="Auto"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="10 5 5 5"
+                 Text="{Binding Path=PathDisplay}"/>
+            <CheckBox 
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"       
+                IsChecked="{Binding Path=Active, Mode=TwoWay}"
+                Margin="3"/>
+            <Button Width="18" Height="15"
+        		    x:Name="DeleteButton"
+        		    Command="{Binding CommandRemoveRepository}" >
+                <StackPanel>
+                    <Image Source="/YALV;component/Resources/Icons/delete.png" Width="10" Height="10" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

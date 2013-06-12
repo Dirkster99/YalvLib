@@ -201,6 +201,7 @@
       {
         this.mDataGridColumns = new List<ColumnItem>()
         {
+          new ColumnItem("Entry.GuId",   32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdMergeColumn_Header },
           new ColumnItem("Entry.Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
           new ColumnItem("Entry.TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
           new ColumnItem("Entry.LevelIndex",  32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },

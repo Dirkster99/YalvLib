@@ -49,8 +49,8 @@ namespace YalvLib.Tests.Model
         public void CreateNewLogAnalysisTest()
         {
             var logA = new LogAnalysis();
-            _session.Analysis = logA;
-            Assert.AreEqual(_session.Analysis, logA);
+            _session.currentAnalysis = logA;
+            Assert.AreEqual(_session.Analyses[0], logA);
         } 
 
     }

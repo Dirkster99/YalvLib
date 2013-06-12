@@ -1,1 +1,14 @@
-<log4j:event logger="YALV.Samples.LogService" timestamp="1367501168787" level="INFO" thread="9"><log4j:message>This is an information message</log4j:message><log4j:properties><log4j:data name="SampleDate" value="20130502" /><log4j:data name="log4japp" value="YALV.Samples.vshost.exe" /><log4j:data name="log4net:UserName" value="tongbong-PC\Gwenaël" /><log4j:data name="log4jmachinename" value="tongbong-PC" /><log4j:data name="log4net:HostName" value="tongbong-PC" /></log4j:properties><log4j:locationInfo class="YALV.Samples.MainWindow" method="method2" file="c:\Workspace\Yavlib\src\YALV.Samples\MainWindow.xaml.cs" line="66" /></log4j:event>
+<log4j:event logger="YALV.Samples.LogService" timestamp="1367501168787" level="INFO" thread="9">
+  <log4j:message>
+    This is an information message
+  </log4j:message>
+  <log4j:properties>
+    <log4j:data name="SampleDate" value="20130502" />
+    <log4j:data name="log4japp" value="YALV.Samples.vshost.exe" />
+    <log4j:data name="log4net:UserName" value="tongbong-PC\Gwenaël" />
+    <log4j:data name="log4jmachinename" value="tongbong-PC" />
+    <log4j:data name="log4net:HostName" value="tongbong-PC" />
+  </log4j:properties>
+  <log4j:locationInfo class="YALV.Samples.MainWindow" method="method2"
+                      file="c:\Workspace\Yavlib\src\YALV.Samples\MainWindow.xaml.cs" line="66" />
+</log4j:event>

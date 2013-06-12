@@ -25,7 +25,7 @@ namespace YalvLib.ViewModel
         /// <param name="tm">TextMarker linked to the viewModel</param>
         public TextMarkerViewModel(TextMarker tm)
         {
-            _marker = tm;
+            Marker = tm;
 
             CommandChangeTextMarker = new CommandRelay(ExecuteChangeTextMarker, CanExecuteChangeTextmarker);
             CommandCancelTextMarker = new CommandRelay(ExecuteCancelTextMarker, CanExecuteCancelTextMarker);
@@ -54,6 +54,7 @@ namespace YalvLib.ViewModel
         public TextMarker Marker
         {
             get { return _marker; }
+            set { _marker = value; }
         }
 
 
@@ -134,11 +135,11 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Determine if the the marker is linked to several log entries
         /// </summary>
-        public bool isMultipleTextMarker
+        public bool IsMultipleTextMarker
         {
             get
             {
-                return _marker.LogEntryCount() > 1 && YalvRegistry.Instance.ActualWorkspace.Analysis.IsMultiMarker(_marker);
+                return _marker.LogEntryCount() > 1 && YalvRegistry.Instance.ActualWorkspace.currentAnalysis.IsMultiMarker(_marker);
             }
         }
 
@@ -195,11 +196,16 @@ namespace YalvLib.ViewModel
                    && _message != null;
         }
 
-
+        /// <summary>
+        /// Apply the modifications to the marker linked to this instance of textmarkerviewModel
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
         public object ExecuteChangeTextMarker(object o)
         {               
             _marker.Author = _author;
             _marker.Message = _message;
+            _marker.DateLastModification = DateTime.Now;
             return null;
         }
     }
