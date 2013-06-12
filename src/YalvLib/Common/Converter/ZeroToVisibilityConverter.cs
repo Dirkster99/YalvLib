@@ -11,6 +11,7 @@
   /// XAML mark up extension to convert a 0 or null value into a visibility value.
   /// </summary>
   [MarkupExtensionReturnType(typeof(IValueConverter))]
+  [ValueConversion(typeof(int), typeof(System.Windows.Visibility))]
   public class ZeroToVisibilityConverter : MarkupExtension, IValueConverter
   {
     private static ZeroToVisibilityConverter converter;

@@ -5,6 +5,7 @@ namespace ModernYalv.ViewModel
 {
   using System;
   using System.Reflection;
+  using System.Linq;
   using System.Windows;
   using System.Windows.Shell;
 
@@ -14,6 +15,8 @@ namespace ModernYalv.ViewModel
   using YalvLib.Common;
   using YalvLib.Common.Interfaces;
   using YalvLib.ViewModel;
+  using YALV.View.Pages.Content;
+  using System.Windows.Media;
 
   internal class MainWindowVM : BindableObject
   {
@@ -46,6 +49,13 @@ namespace ModernYalv.ViewModel
     #region constructor
     public MainWindowVM(IWinSimple win)
     {
+      this.ModernAppSettigns = new SettingsAppearanceViewModel();
+      this.ModernAppSettigns.SelectedTheme = this.ModernAppSettigns.Themes.SingleOrDefault
+                         (s => s.Source.OriginalString == "/ModernYalv;component/Assets/ModernUI.Love.xaml");
+
+      this.ModernAppSettigns.SelectedFontSize = "large";
+      this.ModernAppSettigns.SelectedAccentColor = Color.FromRgb(0xa2, 0x00, 0x25);
+
       this.mLayoutFileName = System.IO.Path.Combine(MainWindowVM.AppDataDirectoryPath,
                                                     Assembly.GetEntryAssembly().GetName().Name + ".session");
 
@@ -92,6 +102,17 @@ namespace ModernYalv.ViewModel
 
             return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
         }
+    }
+
+    /// <summary>
+    /// Get path and file name of the last file that was laod into the application
+    /// </summary>
+    public string LastFileLoad
+    {
+      get
+      {
+        return (this.mLastFileLoad == null ? string.Empty : this.mLastFileLoad);
+      }
     }
 
     #region Commands
@@ -159,6 +180,11 @@ namespace ModernYalv.ViewModel
           }
         }
       }
+    }
+
+    public SettingsAppearanceViewModel ModernAppSettigns
+    {
+      get; protected set;
     }
     #endregion
 
@@ -241,6 +267,12 @@ namespace ModernYalv.ViewModel
             }
 
             this.mLastFileExtensionFilterIndex = s.DefaultFileExtensionIndex;
+
+            this.ModernAppSettigns.SelectedTheme = this.ModernAppSettigns.Themes.SingleOrDefault
+                               (i => i.Source.OriginalString == s.ModernAppSettings_SelectedTheme);
+
+            this.ModernAppSettigns.SelectedFontSize = s.ModernAppSettigns_SelectedFontSize;
+            this.ModernAppSettigns.SelectedAccentColor = s.ModernAppSettigns_ApplicationAccentColor;
           }
         }
         catch (Exception)
@@ -262,6 +294,12 @@ namespace ModernYalv.ViewModel
         set.LastFileLoad = this.mLastFileLoad;
 
         set.DefaultFileExtensionIndex = this.mLastFileExtensionFilterIndex;
+
+
+        // Copy ModernUI settings for persistence and restore upon user session re-boot
+        set.ModernAppSettings_SelectedTheme = this.ModernAppSettigns.SelectedTheme.Source.OriginalString;
+        set.ModernAppSettigns_SelectedFontSize = this.ModernAppSettigns.SelectedFontSize;
+        set.ModernAppSettigns_ApplicationAccentColor = this.ModernAppSettigns.SelectedAccentColor;
 
         set.SaveSession(this.mLayoutFileName);
       }

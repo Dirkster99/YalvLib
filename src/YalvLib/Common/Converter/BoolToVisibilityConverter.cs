@@ -9,6 +9,7 @@
   /// true -> Visibility.Visible
   /// false or null -> Visibility.Collapsed
   /// </summary>
+  [ValueConversion(typeof(bool), typeof(Visibility))]
   public class BoolToVisibilityConverter
       : IValueConverter
   {

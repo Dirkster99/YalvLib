@@ -1,8 +1,14 @@
 ﻿namespace ModernYalv.Settings
 {
   using System;
+  using System.Reflection;
+  using System.Linq;
+  using System.Windows;
+  using System.Windows.Shell;
+  using System;
   using System.Collections.Generic;
   using System.IO;
+  using System.Linq;
   using System.Windows;
   using System.Xml;
   using System.Xml.Serialization;
@@ -10,7 +16,12 @@
   using MRU.ViewModel;
   using YalvLib.Domain;
   using YalvLib.ViewModel;
+  using System.Windows.Media;
+  using FirstFloor.ModernUI.Presentation;
 
+  /// <summary>
+  /// Serialize and DeSerialize user settings on application exit and start.
+  /// </summary>
   [Serializable]
   [XmlRoot(ElementName = "Session", IsNullable = false)]
   public class Session
@@ -72,6 +83,27 @@
     /// </summary>
     [XmlElement(ElementName = "DefaultFileExtensionIndex")]
     public int DefaultFileExtensionIndex { get; set; }
+
+    #region ModernUISettings
+    /// <summary>
+    /// URI string poining to the theming resource
+    /// e.g. "/ModernYalv;component/Assets/ModernUI.Love.xaml"
+    /// </summary>
+    [XmlElement(ElementName = "ApplicationTheme")]
+    public string ModernAppSettings_SelectedTheme{ get; set; }
+
+    /// <summary>
+    /// Fontsize to use for standard display parts (e.g. "large")
+    /// </summary>
+    [XmlElement(ElementName = "ApplicationFontSize")]
+    public string ModernAppSettigns_SelectedFontSize{ get; set; }
+
+    /// <summary>
+    /// Accent Color of Modern UI application
+    /// </summary>
+    [XmlElement(ElementName = "ApplicationAccentColor")]
+    public Color ModernAppSettigns_ApplicationAccentColor{ get; set; }
+    #endregion ModernUISettings
     #endregion properties
 
     #region methods
@@ -83,20 +115,19 @@
     {
       if (this.DataGridColumns == null)
         this.DataGridColumns = new List<ColumnItem>();
-      else
+
+      // Copy actual width values from datagrid into Session width field for persistence
+      for (int i = 0; i < this.DataGridColumns.Count; i++)
       {
-        // Copy actual width values into width field for persistence
-        for (int i = 0; i < this.DataGridColumns.Count; i++)
-        {
-          if (this.DataGridColumns[i].ActualWidth != null)
-            this.DataGridColumns[i].Width = this.DataGridColumns[i].ActualWidth.Width;
-        }
+        if (this.DataGridColumns[i].ActualWidth != null)
+          this.DataGridColumns[i].Width = this.DataGridColumns[i].ActualWidth.Width;
       }
 
       if (this.MRU == null)
         this.MRU = new MRUListVM();
 
-      SaveSession(pathFileName, this);
+      Session.SetDefaultModernApplicationSettings(this);
+      Session.SaveSession(pathFileName, this);
     }
 
     #region Load Save  Session Data
@@ -137,6 +168,8 @@
         // Init parent/child structure (not nice but works for now)
         if (loadedObj.MRU != null)
           loadedObj.MRU.InitOnDeserialization();
+
+        Session.SetDefaultModernApplicationSettings(loadedObj);
       }
 
       return loadedObj;
@@ -171,6 +204,41 @@
                         MessageBoxButton.OK, MessageBoxImage.Error);
 
         return false;
+      }
+    }
+
+    /// <summary>
+    /// apply default settings to those settings that are not set (for whatever reason).
+    /// </summary>
+    /// <param name="Themes"></param>
+    private static void SetDefaultModernApplicationSettings(Session session)
+    {
+      // Copy default ModernUI settings if there non available
+      try
+      {
+        if (session.ModernAppSettings_SelectedTheme == null)
+          session.ModernAppSettings_SelectedTheme = "/ModernYalv;component/Assets/ModernUI.Love.xaml";
+      }
+      catch
+      {
+      }
+
+      try
+      {
+        if (string.IsNullOrEmpty(session.ModernAppSettigns_SelectedFontSize) == true)
+          session.ModernAppSettigns_SelectedFontSize = "large";
+      }
+      catch
+      {
+      }
+
+      try
+      {
+        if (session.ModernAppSettigns_ApplicationAccentColor == null)
+          session.ModernAppSettigns_ApplicationAccentColor = Color.FromRgb(0xa2, 0x00, 0x25);
+      }
+      catch
+      {
       }
     }
     #endregion Load Save Session Data

@@ -10,6 +10,7 @@
   /// false -> Visibility.Visible
   /// true or null -> Visibility.Collapsed
   /// </summary>
+  [ValueConversion(typeof(bool), typeof(Visibility))]
   public class BoolToOppositeVisibilityConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

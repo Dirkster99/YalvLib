@@ -3,6 +3,7 @@
   using System;
   using System.Windows.Data;
 
+  [ValueConversion(typeof(object), typeof(double))]
   internal class AdjustValueConverter : IValueConverter
   {
     #region IValueConverter Members

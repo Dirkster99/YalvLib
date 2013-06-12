@@ -11,6 +11,7 @@
   /// XAML mark up extension to convert a zero count value into a boolean value.
   /// </summary>
   [MarkupExtensionReturnType(typeof(IValueConverter))]
+  [ValueConversion(typeof(int), typeof(bool))]
   public class ZeroToBoolConverter : MarkupExtension, IValueConverter
   {
     private static ZeroToBoolConverter converter;

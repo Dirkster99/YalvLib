@@ -73,6 +73,7 @@
     <Compile Include="Common\BindableObject.cs" />
     <Compile Include="Common\CommandRelay.cs" />
     <Compile Include="Common\Converter\AdjustValueConverter.cs" />
+    <Compile Include="Common\Converter\LevelIndexTypeToStringConverter.cs" />
     <Compile Include="Common\DisposableObject.cs" />
     <Compile Include="Common\Exceptions\NotValidValueException.cs" />
     <Compile Include="Common\GlobalHelper.cs" />

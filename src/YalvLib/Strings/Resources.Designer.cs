@@ -712,6 +712,60 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debug.
+        /// </summary>
+        public static string LevelIndex_Debug {
+            get {
+                return ResourceManager.GetString("LevelIndex_Debug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LevelIndex_Error {
+            get {
+                return ResourceManager.GetString("LevelIndex_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatal Error.
+        /// </summary>
+        public static string LevelIndex_FatalErorr {
+            get {
+                return ResourceManager.GetString("LevelIndex_FatalErorr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string LevelIndex_Info {
+            get {
+                return ResourceManager.GetString("LevelIndex_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string LevelIndex_None {
+            get {
+                return ResourceManager.GetString("LevelIndex_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string LevelIndex_Warning {
+            get {
+                return ResourceManager.GetString("LevelIndex_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Refresh.
         /// </summary>
         public static string MainWindow_AutoRefresh_Checkbox_Text {

@@ -30,11 +30,10 @@
                 FontSize="13"
                 FontWeight="Bold"
                 TextAlignment="Center">
-                    <Hyperlink
-                    Foreground="Teal"
-                    NavigateUri="http://yalv.codeplex.com"
-                    RequestNavigate="Hyperlink_RequestNavigate"
-                    TargetName="_blank">
+                    <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
+                               NavigateUri="http://yalv.codeplex.com"
+                               RequestNavigate="Hyperlink_RequestNavigate"
+                               TargetName="_blank">
                         YALV! Project on CodePlex
                     </Hyperlink>
             </TextBlock>
@@ -44,8 +43,7 @@
                 Margin="0,8,0,0"
                 FontWeight="DemiBold"
                 TextAlignment="Center">
-                    <Hyperlink
-                    Foreground="Teal"
+                    <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                     NavigateUri="http://www.linkedin.com/in/lucapetrini"
                     RequestNavigate="Hyperlink_RequestNavigate"
                     TargetName="_blank">
@@ -97,9 +95,9 @@
                             </Style>
                         </StackPanel.Resources>
 
-                        <TextBlock>
+            <TextBlock>
                             Providers to Retrieve Log Data - 
-                            <Hyperlink
+                            <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                                 NavigateUri="http://www.codeplex.com/site/users/view/D_Guidi">
                                 D_Guidi
                             </Hyperlink>
@@ -107,7 +105,7 @@
 
                         <TextBlock>
                             Localization Support + Russian Translation - 
-                            <Hyperlink
+                            <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                                 NavigateUri="http://www.codeplex.com/site/users/view/dmitriy_konovalov">
                                 dmitriy_konovalov
                             </Hyperlink>
@@ -115,42 +113,42 @@
 
                         <TextBlock>
                             Japanese Translation - 
-                            <Hyperlink
+                            <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                                 NavigateUri="http://www.codeplex.com/site/users/view/yasuhiroHARA">
                                 yasuhiroHARA
                             </Hyperlink>
                         </TextBlock>
 
                         <TextBlock>
-                            <Hyperlink
+                            <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                                 NavigateUri="http://www.webdesignerdepot.com">
                                 Primo Icon Set by Webdesigner Depot
                             </Hyperlink>
                         </TextBlock>
 
                         <TextBlock>
-                            <Hyperlink
+                            <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                                 NavigateUri="http://gallery.expression.microsoft.com/en-us/BusyIndicator">
                                 Busy Indicator
                             </Hyperlink>
                         </TextBlock>
 
                         <TextBlock>
-                            <Hyperlink
+                            <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                                 NavigateUri="http://www.codeproject.com/Articles/37366/Styling-A-ScrollViewer-Scrollbar-In-WPF">
                                 ScrollViewer Scrollbar Style
                             </Hyperlink>
                         </TextBlock>
 
                         <TextBlock>
-                            <Hyperlink
+                            <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                                 NavigateUri="http://www.codeproject.com/Articles/39244/Scroll-Synchronization">
                                 Scroll Synchronization
                             </Hyperlink>
                         </TextBlock>
 
                         <TextBlock>
-                            <Hyperlink
+                            <Hyperlink Foreground="{DynamicResource HyperlinkForeground}"
                                 NavigateUri="http://www.codeproject.com/KB/WPF/WPF_NHibernate_Validator.aspx">
                                 INotifyPropertyChange Implementation
                             </Hyperlink>

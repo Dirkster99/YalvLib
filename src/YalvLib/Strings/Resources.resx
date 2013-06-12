@@ -532,6 +532,24 @@ It is a WPF Application based on .NET Framework 4.0 and written with C# language
   <data name="Common_Components_MainMenu_FileMenu_OpenLogAnalysisSession_Header" xml:space="preserve">
     <value>Open Log Analysis Session...</value>
   </data>
+  <data name="LevelIndex_Debug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="LevelIndex_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="LevelIndex_FatalErorr" xml:space="preserve">
+    <value>Fatal Error</value>
+  </data>
+  <data name="LevelIndex_Info" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="LevelIndex_None" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LevelIndex_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="MainWindow_MarkerBox_Title_Text" xml:space="preserve">
     <value>Markers :</value>
   </data>

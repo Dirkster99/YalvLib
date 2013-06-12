@@ -162,52 +162,52 @@
 
 
         <Label Grid.Column="0" Grid.Row="6"
-	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_UserName_Text}"
-	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	             Content="{x:Static Properties:Resources.MainWindow_DetailsBox_UserName_Text}"
+	             VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
         <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.UserName, Mode=OneWay}"
-	         Style="{StaticResource TextBoxLabelStyle}"
-	         Grid.Column="2" Grid.Row="6" />
+	               Style="{StaticResource TextBoxLabelStyle}"
+	               Grid.Column="2" Grid.Row="6" />
 
         <Label Grid.Column="0" Grid.Row="7"
-	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Application_Text}"
-	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	             Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Application_Text}"
+	             VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
         <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.App, Mode=OneWay}"
-	         Style="{StaticResource TextBoxLabelStyle}"
-	         Grid.Column="2" Grid.Row="7" />
+	               Style="{StaticResource TextBoxLabelStyle}"
+	               Grid.Column="2" Grid.Row="7" />
 
         <Label Grid.Column="0" Grid.Row="8"
-	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Thread_Text}"
-	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	             Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Thread_Text}"
+	             VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
         <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Thread, Mode=OneWay}"
-	         Style="{StaticResource TextBoxLabelStyle}"
-	         Grid.Column="2" Grid.Row="8" />
+	               Style="{StaticResource TextBoxLabelStyle}"
+	               Grid.Column="2" Grid.Row="8" />
           
                 <Label Grid.Column="0" Grid.Row="9"
-	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}"
-	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	                     Content="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}"
+	                     VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.File, Mode=OneWay}"
-	         Style="{StaticResource TextBoxLabelStyle}"
-	         Grid.Column="2" Grid.Row="9" />
+	                       Style="{StaticResource TextBoxLabelStyle}"
+	                       Grid.Column="2" Grid.Row="9" />
 
                 <Label Grid.Column="0" Grid.Row="10"
-	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}"
-	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	                     Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}"
+	                     VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Class, Mode=OneWay}"
-	         Style="{StaticResource TextBoxLabelStyle}"
-	         Grid.Column="2" Grid.Row="10" />
+	                       Style="{StaticResource TextBoxLabelStyle}"
+	                       Grid.Column="2" Grid.Row="10" />
           
                 <Label Grid.Column="0" Grid.Row="11"
-	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}"
-	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	                     Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}"
+	                     VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Line, Mode=OneWay}"
-	         Style="{StaticResource TextBoxLabelStyle}"
-	         Grid.Column="2" Grid.Row="11" />
+	                       Style="{StaticResource TextBoxLabelStyle}"
+	                       Grid.Column="2" Grid.Row="11" />
             </Grid>
     </ScrollViewer>
   </Grid>
