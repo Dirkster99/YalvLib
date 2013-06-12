@@ -20,7 +20,7 @@
         <KeyBinding Command="{Binding Path=YalvLogViewModel.CommandDelete}" Key="DEL" />
     </Window.InputBindings>
 
-    <Grid BusyIndicatorBehavior:BusyIndicatorBehavior.BusyState="{Binding Path=YalvLogViewModel.ManageRepositoriesViewModel.IsLoading}">
+    <Grid BusyIndicatorBehavior:BusyIndicatorBehavior.BusyState="{Binding YalvLogViewModel.LogEntryRows.LogFile.IsLoading}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -57,12 +57,12 @@
                 <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" HorizontalAlignment="Left" Margin="3">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -72,13 +72,9 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-<<<<<<< HEAD
                             <StackPanel Orientation="Horizontal">
-=======
-                            <StackPanel Orientation="Horizontal" >
->>>>>>> features
                                 <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_OpenFile_ToolTip}"
-                                        Command="{Binding Path=CommandOpenFile}" BorderBrush="Transparent" Background="Transparent"
+                                        Command="{Binding Path=CommandOpenFile}" CommandParameter="JOIN" BorderBrush="Transparent" Background="Transparent"
                                         HorizontalAlignment="Center">
                                     <StackPanel>
                                         <Image Source="/YALV;component/Resources/Icons/open_file.png" Width="32" Height="32" />
@@ -89,7 +85,7 @@
                                         HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" BorderBrush="Transparent"
                                         Background="Transparent">
                                     <Image Width="32" Height="32" Source="/Resources/Icons/Refresh/Refresh_32.png"
-                                            Margin="3" />
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" />
                                 </Button>
 
                                 <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_ClearFilters_Tooltip}"
@@ -134,20 +130,13 @@
                         </Grid>
 
                         <!-- Additional Filter Grid -->
-                        <common:FilterPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="3"
+                        <common:FilterPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="3"
                                             IsEnabled="{Binding YalvLogViewModel.HasData}" />
-
-                        <common:RepositoriesListView DataContext="{Binding YalvLogViewModel}" 
-                                                     HorizontalAlignment="Left" 
-                                                     Height="Auto" 
-                                                     Grid.Row="3" 
-                                                     VerticalAlignment="Top"
-                                                     Width="Auto"/>
                     </Grid>
-                    
-
+                  <common:RepositoriesListView
+                      Grid.Row="1" Grid.Column="0" DataContext="{Binding YalvLogViewModel}" Height="Auto"/>
                   <common:PropertiesView 
-                                    Grid.Row="1" Grid.Column="0" DataContext="{Binding YalvLogViewModel}"
+                                    Grid.Row="2" Grid.Column="0" DataContext="{Binding YalvLogViewModel}"
                                     IsEnabled="{Binding HasData}" Margin="0,20,0,0" MinWidth="200"/>
 
                 </Grid>
