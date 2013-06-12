@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using YalvLib.Common;
 using YalvLib.Infrastructure.Sqlite;
 using YalvLib.Model;
 using YalvLib.Providers;
@@ -10,24 +14,19 @@ using YalvLib.Strings;
 
 namespace YalvLib.ViewModel
 {
-    using System;
-    using System.IO;
-    using System.Windows;
-    using YalvLib.Common;
-
     /// <summary>
-    /// Class to manage data for a logfile
+    /// Class to manage data for every logfile loaded
     /// </summary>
     public class ManageRepositoryViewModel : BindableObject
     {
         #region fields
 
-        private bool mIsLoading;
+        private bool _isLoading;
 
         #endregion fields
 
         private ObservableCollection<RepositoryViewModel> _repositories;
-        private bool mIsFileLoaded;
+        private bool _isFileLoaded;
 
         #region Constructors
 
@@ -36,9 +35,9 @@ namespace YalvLib.ViewModel
         /// </Summary>
         public ManageRepositoryViewModel()
         {
-            this._repositories = new ObservableCollection<RepositoryViewModel>();
-            this.mIsFileLoaded = false;
-            this.mIsLoading = false;
+            _repositories = new ObservableCollection<RepositoryViewModel>();
+            _isFileLoaded = false;
+            _isLoading = false;
         }
 
         #endregion Constructors
@@ -50,13 +49,13 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool IsLoading
         {
-            get { return this.mIsLoading; }
+            get { return _isLoading; }
 
             set
             {
-                if (this.mIsLoading != value)
+                if (_isLoading != value)
                 {
-                    this.mIsLoading = value;
+                    _isLoading = value;
                     NotifyPropertyChanged(() => IsLoading);
                 }
             }
@@ -67,19 +66,21 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool IsFileLoaded
         {
-            get { return this.mIsFileLoaded; }
+            get { return _isFileLoaded; }
 
             internal set
             {
-                if (this.mIsFileLoaded != value)
+                if (_isFileLoaded != value)
                 {
-                    this.mIsFileLoaded = value;
+                    _isFileLoaded = value;
                     NotifyPropertyChanged(() => IsFileLoaded);
                 }
             }
         }
 
-
+        /// <summary>
+        /// Get / Set the provider type. Used to be able to read different files
+        /// </summary>
         public EntriesProviderType ProviderType { get; set; }
 
 
@@ -88,24 +89,25 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ObservableCollection<RepositoryViewModel> Repositories
         {
-            get { return (this._repositories ?? new ObservableCollection<RepositoryViewModel>()); }
+            get { return (_repositories ?? new ObservableCollection<RepositoryViewModel>()); }
 
             internal set
             {
-                if (this._repositories != value)
+                if (_repositories != value)
                 {
-                    this._repositories = value;
+                    _repositories = value;
                     NotifyPropertyChanged(() => Repositories);
                 }
             }
         }
 
-
+        /// <summary>
+        /// Getter that tells if the list of repositories contains any logentryrepository
+        /// </summary>
         public bool HasData
         {
-            get{ return Repositories.Any();}
+            get { return Repositories.Any(); }
         }
-
 
         #endregion Properties
 
@@ -119,13 +121,21 @@ namespace YalvLib.ViewModel
         {
             if (listFileRepos != null)
             {
-                foreach (var logEntryRepository in listFileRepos)
+                foreach (LogEntryRepository logEntryRepository in listFileRepos)
                 {
                     Repositories.Add(new RepositoryViewModel(logEntryRepository));
                     Repositories.Last().ActiveChanged += OnActiveChanged;
+                    Repositories.Last().RepositoryDeleted += OnRepositoryDeleted;
                 }
                 NotifyPropertyChanged(() => Repositories);
             }
+        }
+
+        private void OnRepositoryDeleted(object sender, EventArgs e)
+        {
+            var repo = sender as RepositoryViewModel;
+            Repositories.Remove(repo);
+            ActiveChanged(this, null);
         }
 
         private void OnActiveChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -133,8 +143,15 @@ namespace YalvLib.ViewModel
             NotifyActiveChanged(propertyChangedEventArgs.PropertyName);
         }
 
+        /// <summary>
+        /// This handler is used to tell the LogVIewModel when a repository active property has changed
+        /// </summary>
         public event PropertyChangedEventHandler ActiveChanged;
 
+        /// <summary>
+        /// This function notify the LogViewModel that the active state of one repository has changed
+        /// </summary>
+        /// <param name="propertyName">name of the property (Active)</param>
         public void NotifyActiveChanged(string propertyName)
         {
             if (ActiveChanged != null)
@@ -157,25 +174,13 @@ namespace YalvLib.ViewModel
                 ProviderType = providerType;
                 if (ProviderType.Equals(EntriesProviderType.Yalv))
                 {
-                    var loadedWorkspace = new LogAnalysisWorkspaceLoader(paths.ElementAt(0)).Load();
-                    var listRepo = CheckRepositoriesValidity(loadedWorkspace);
+                    LogAnalysisWorkspace loadedWorkspace = new LogAnalysisWorkspaceLoader(paths.ElementAt(0)).Load();
 
-                    if(listRepo.Any())
-                    {
-                        var repoListString = new StringBuilder();
-                        foreach (var repo in listRepo) repoListString.AppendLine(repo.Path);
-                        MessageBox.Show("These repositories are already loaded : " + repoListString);
-                        if(listRepo.Count == YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Count)
-                        {
-                            MessageBox.Show("Nothing to be loaded");
-                            return;
-                        }
-                    }
-
-                    loadedWorkspace.SourceRepositories = loadedWorkspace.SourceRepositories.Except(listRepo).ToList();
                     YalvRegistry.Instance.SetActualLogAnalysisWorkspace(loadedWorkspace);
+
                     YalvRegistry.Instance.ActualWorkspace.currentAnalysis =
                         YalvRegistry.Instance.ActualWorkspace.Analyses.First();
+                    _repositories.Clear();
                     AddRepositories(YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());
                 }
                 else
@@ -187,13 +192,16 @@ namespace YalvLib.ViewModel
                     {
                         if (!File.Exists(path))
                         {
-                            MessageBox.Show(string.Format("Cannot access file '{0}'.", path));
+                            MessageBox.Show(Resources.GlobalHelper_CantAccessFile_Error_Text, path);
                             return;
                         }
                         // If this is the first file or the file hasnt be loaded yet, we can add it to the repo
                         if ((Repositories.Any() && !reposPath.Contains(path)) || !Repositories.Any())
                         {
                             listRepo.Add(CreateLogFileEntryRepository(path));
+                        }else
+                        {
+                            MessageBox.Show(Resources.GlobalHelper_RepositoryAlreadyExists_Error_Text);
                         }
                     }
                     UpdateWorkspace(listRepo);
@@ -211,8 +219,8 @@ namespace YalvLib.ViewModel
 
         private List<LogEntryRepository> CheckRepositoriesValidity(LogAnalysisWorkspace loadedWorkspace)
         {
-            List<LogEntryRepository> invalidRepos = new List<LogEntryRepository>();
-            foreach(var loadedRepo in loadedWorkspace.SourceRepositories)
+            var invalidRepos = new List<LogEntryRepository>();
+            foreach (LogEntryRepository loadedRepo in loadedWorkspace.SourceRepositories)
             {
                 if (YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Contains(loadedRepo))
                     invalidRepos.Add(loadedRepo);
@@ -223,7 +231,7 @@ namespace YalvLib.ViewModel
         private void UpdateWorkspace(List<LogEntryRepository> repositories)
         {
             AddRepositories(repositories);
-            foreach (var logEntryRepository in repositories)
+            foreach (LogEntryRepository logEntryRepository in repositories)
             {
                 YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Add(logEntryRepository);
             }
@@ -245,44 +253,41 @@ namespace YalvLib.ViewModel
 
         internal virtual void CommandDeleteExecute()
         {
-            if (this.Repositories.Count == 0 && this.IsFileLoaded == true)
+            if (Repositories.Count == 0 && IsFileLoaded)
             {
                 if (MessageBox.Show(
-                    YalvLib.Strings.Resources.MainWindowVM_commandDeleteExecute_DeleteCheckedFiles_ConfirmText,
-                    YalvLib.Strings.Resources.MainWindowVM_commandDeleteExecute_DeleteCheckedFiles_ConfirmTitle,
+                    Resources.MainWindowVM_commandDeleteExecute_DeleteCheckedFiles_ConfirmText,
+                    Resources.MainWindowVM_commandDeleteExecute_DeleteCheckedFiles_ConfirmTitle,
                     MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
                     return;
 
                 // Delete all selected file
-                if (this.DeleteFiles(Repositories) == true)
+                if (DeleteFiles(Repositories))
                 {
-                    this.Repositories = new ObservableCollection<RepositoryViewModel>();
-                    this.IsFileLoaded = false;
+                    Repositories = new ObservableCollection<RepositoryViewModel>();
+                    IsFileLoaded = false;
                 }
             }
-
-            return;
         }
 
         internal virtual bool CommandDeleteCanExecute()
         {
-            return (this.Repositories.Count == 0 && this.IsFileLoaded == true);
+            return (Repositories.Count == 0 && IsFileLoaded);
         }
 
         /// <summary>
         /// Physically delete a file in the file system.
         /// </summary>
-        /// <param name="paths"></param>
+        /// <param name="repos">repos to delete</param>
         /// <returns></returns>
         private bool DeleteFiles(ObservableCollection<RepositoryViewModel> repos)
         {
             try
             {
-                foreach (var repo in repos)
+                foreach (RepositoryViewModel repo in repos)
                 {
-                    FileInfo fileInfo = new FileInfo(repo.Repository.Path);
-                    if (fileInfo != null)
-                        fileInfo.Delete();
+                    var fileInfo = new FileInfo(repo.Repository.Path);
+                    fileInfo.Delete();
                 }
 
 
@@ -291,8 +296,8 @@ namespace YalvLib.ViewModel
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    string.Format(YalvLib.Strings.Resources.MainWindowVM_deleteFile_ErrorMessage_Text, repos, ex.Message),
-                    YalvLib.Strings.Resources.MainWindowVM_deleteFile_ErrorMessage_Title, MessageBoxButton.OK,
+                    string.Format(Resources.MainWindowVM_deleteFile_ErrorMessage_Text, repos, ex.Message),
+                    Resources.MainWindowVM_deleteFile_ErrorMessage_Title, MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 return false;
             }

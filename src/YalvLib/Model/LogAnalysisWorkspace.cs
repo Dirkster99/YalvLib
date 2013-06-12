@@ -80,5 +80,18 @@ namespace YalvLib.Model
         /// </summary>
         public Guid Uid { get; protected set; }
 
+
+        public override bool Equals(object obj)
+        {
+            var e = obj as LogAnalysisWorkspace;
+            if (e == null)
+                return false;
+            return e.Uid == this.Uid;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }

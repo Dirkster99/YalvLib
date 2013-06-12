@@ -43,7 +43,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="165" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -71,9 +71,9 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" >
                                 <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_OpenFile_ToolTip}"
-                                        Command="{Binding Path=CommandOpenFile}" CommandParameter="JOIN" BorderBrush="Transparent" Background="Transparent"
+                                        Command="{Binding Path=CommandOpenFile}" BorderBrush="Transparent" Background="Transparent"
                                         HorizontalAlignment="Center">
                                     <StackPanel>
                                         <Image Source="/YALV;component/Resources/Icons/open_file.png" Width="32" Height="32" />
@@ -84,7 +84,7 @@
                                         HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" BorderBrush="Transparent"
                                         Background="Transparent">
                                     <Image Width="32" Height="32" Source="/Resources/Icons/Refresh/Refresh_32.png"
-                                           HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" />
+                                            Margin="3" />
                                 </Button>
 
                                 <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_ClearFilters_Tooltip}"

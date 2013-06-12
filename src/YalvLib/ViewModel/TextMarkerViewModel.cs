@@ -135,7 +135,7 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Determine if the the marker is linked to several log entries
         /// </summary>
-        public bool isMultipleTextMarker
+        public bool IsMultipleTextMarker
         {
             get
             {
@@ -196,7 +196,11 @@ namespace YalvLib.ViewModel
                    && _message != null;
         }
 
-
+        /// <summary>
+        /// Apply the modifications to the marker linked to this instance of textmarkerviewModel
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
         public object ExecuteChangeTextMarker(object o)
         {               
             _marker.Author = _author;

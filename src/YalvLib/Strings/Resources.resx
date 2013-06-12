@@ -556,4 +556,13 @@ It is a WPF Application based on .NET Framework 4.0 and written with C# language
   <data name="MainWindowVM_InitDataGrid_IdMergeColumn_Header" xml:space="preserve">
     <value>GuId</value>
   </data>
+  <data name="GlobalHelper_CantAccessFile_Error_Text" xml:space="preserve">
+    <value>Can't access the given file : {0} !</value>
+  </data>
+  <data name="GlobalHelper_ExportDone_Text" xml:space="preserve">
+    <value>The export is done.</value>
+  </data>
+  <data name="GlobalHelper_RepositoryAlreadyExists_Error_Text" xml:space="preserve">
+    <value>This Repository is already loaded in the current workspace</value>
+  </data>
 </root>

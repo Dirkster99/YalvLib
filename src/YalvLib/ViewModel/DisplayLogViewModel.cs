@@ -823,6 +823,9 @@ namespace YalvLib.ViewModel
             return val;
         }
 
+        /// <summary>
+        /// Keep the Actual selected logitems then refresh the view and reset the selected log item
+        /// </summary>
         public void RefreshView()
         {
             LogEntryRowViewModel l = SelectedLogItem;
@@ -1124,6 +1127,10 @@ namespace YalvLib.ViewModel
 
         #endregion Methodes
 
+        /// <summary>
+        /// Reload the LogEntryRowViewModels then update counters and update the selectedlogitem
+        /// </summary>
+        /// <param name="repositories">Repositories containing the entries</param>
         public void SetEntries(List<RepositoryViewModel> repositories)
         {
             RemoveAllItems();
@@ -1139,7 +1146,7 @@ namespace YalvLib.ViewModel
                 }
             }
             UpdateCounters();
-            SelectedLogItem = LogEntryRowViewModels.Last();
+            SelectedLogItem = LogEntryRowViewModels.Any() ? LogEntryRowViewModels.Last() : null;
         }
     }
 }

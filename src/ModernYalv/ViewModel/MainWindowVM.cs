@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using YalvLib.Model;
 
 namespace ModernYalv.ViewModel
 {
@@ -20,6 +21,7 @@ namespace ModernYalv.ViewModel
     public const string PropTitle = "Title";
 
     private readonly YalvViewModel mYalvLogViewModel = null;
+    private LogAnalysisWorkspace _workspace = null;
 
     private readonly string mLayoutFileName;
 
@@ -49,7 +51,10 @@ namespace ModernYalv.ViewModel
 
       this.mCallingWin = win;
 
-      this.mYalvLogViewModel = new YalvViewModel();
+      
+      _workspace = new LogAnalysisWorkspace();
+      YalvRegistry.Instance.SetActualLogAnalysisWorkspace(_workspace);
+        this.mYalvLogViewModel = new YalvViewModel();
       this.mRecentFiles = null;
 
       this.CommandExit = new CommandRelay(this.commandExitExecute, p => true);

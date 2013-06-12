@@ -595,11 +595,29 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t access the given file : {0} !.
+        /// </summary>
+        public static string GlobalHelper_CantAccessFile_Error_Text {
+            get {
+                return ResourceManager.GetString("GlobalHelper_CantAccessFile_Error_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MMM d, HH:mm:ss.fff.
         /// </summary>
         public static string GlobalHelper_DISPLAY_DATETIME_FORMAT {
             get {
                 return ResourceManager.GetString("GlobalHelper_DISPLAY_DATETIME_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The export is done..
+        /// </summary>
+        public static string GlobalHelper_ExportDone_Text {
+            get {
+                return ResourceManager.GetString("GlobalHelper_ExportDone_Text", resourceCulture);
             }
         }
         
@@ -660,6 +678,15 @@ namespace YalvLib.Strings {
         public static string GlobalHelper_ParseLogFile_Error_Title {
             get {
                 return ResourceManager.GetString("GlobalHelper_ParseLogFile_Error_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This Repository is already loaded in the current workspace.
+        /// </summary>
+        public static string GlobalHelper_RepositoryAlreadyExists_Error_Text {
+            get {
+                return ResourceManager.GetString("GlobalHelper_RepositoryAlreadyExists_Error_Text", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Win32;
 using YalvLib.Infrastructure.Sqlite;
 using YalvLib.Model;
 
@@ -260,7 +261,15 @@ namespace YALV.ViewModel
             LogAnalysisWorkspace workspace = YalvRegistry.Instance.ActualWorkspace;
             if (workspace != null && this.YalvLogViewModel.HasData)
             {
-                new LogAnalysisWorkspaceExporter("LogAnalysisSession.yalv").Export(workspace);
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Yalv file | *.yalv";
+                saveFileDialog.Title = "Save a workspace";
+                saveFileDialog.ShowDialog();
+                if(saveFileDialog.FileName != string.Empty)
+                {
+                    new LogAnalysisWorkspaceExporter(saveFileDialog.FileName).Export(workspace);
+                }
+               
             }else
                 MessageBox.Show("No Data to be exported !");
             
