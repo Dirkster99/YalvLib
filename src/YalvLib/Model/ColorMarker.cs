@@ -29,6 +29,9 @@ namespace YalvLib.Model
         {
         }
 
+        /// <summary>
+        /// Empty constructor for the fluentnhibernate mapping
+        /// </summary>
         public ColorMarker()
         {
         }

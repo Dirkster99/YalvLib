@@ -11,9 +11,6 @@ namespace YalvLib.Model
     public class LogAnalysisWorkspace
     {
         private IList<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
-        /*
-         * We will be able to implement multiple LogAnalysis, but for the moment
-         * we will working on one only.*/
         private IList<LogAnalysis> _analyses = new List<LogAnalysis>(); 
         private LogAnalysis _currentAnalysis;
          
@@ -27,6 +24,11 @@ namespace YalvLib.Model
             _sourceRepositories.Add(sourceRepository);
         }
 
+
+        /// <summary>
+        /// Add a list of repositories
+        /// </summary>
+        /// <param name="sourceRepositories">Repositories to add</param>
         public void AddSourceRepositories(List<LogEntryRepository> sourceRepositories)
         {
             foreach (var logEntryRepository in sourceRepositories)
@@ -69,7 +71,10 @@ namespace YalvLib.Model
         public IList<LogAnalysis> Analyses
         { get { return _analyses; } private set { _analyses = value; } }
 
-        public LogAnalysis currentAnalysis
+        /// <summary>
+        /// Getter / Setter of the current analysis
+        /// </summary>
+        public LogAnalysis CurrentAnalysis
         {
             get { return _currentAnalysis; }
             set { _currentAnalysis = value; if (!_analyses.Contains(value))_analyses.Add(value); }
@@ -86,7 +91,7 @@ namespace YalvLib.Model
             var e = obj as LogAnalysisWorkspace;
             if (e == null)
                 return false;
-            return e.Uid == this.Uid;
+            return e.Uid == Uid;
         }
         public override int GetHashCode()
         {

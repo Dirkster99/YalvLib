@@ -25,6 +25,7 @@ namespace YalvLib.ViewModel
             Repository = repository;
             Active = true;
             CommandRemoveRepository = new CommandRelay(ExecuteRemoveRepository, CanExecuteRemoveRepository);
+            CommandActiveRepository = new CommandRelay(ExecuteChangeActiveRepository, canExecuteChangeActiveRepository);
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace YalvLib.ViewModel
         public bool Active
         {
             get { return _isActive; }
-            set
+            private set
             {
                 if (_isActive != value)
                 {
@@ -105,6 +106,19 @@ namespace YalvLib.ViewModel
                     RepositoryDeleted(this, null);
                 }
             }
+            return null;
+        }
+
+
+        public CommandRelay CommandActiveRepository { get; private set; }
+        private bool canExecuteChangeActiveRepository(object obj)
+        {
+            return _repository != null;
+        }
+
+        private object ExecuteChangeActiveRepository(object arg)
+        {
+            Active = !Active;
             return null;
         }
 

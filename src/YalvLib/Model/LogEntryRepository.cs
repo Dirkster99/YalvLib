@@ -1,28 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using YalvLib.Common;
-using YalvLib.Providers;
 
 namespace YalvLib.Model
 {
-
+    /// <summary>
+    /// This class represent a repository of log entries
+    /// </summary>
     public class LogEntryRepository : object
     {
-        public string Path;
-        public bool Active;
-        private List<LogEntry> _logEntries = new List<LogEntry>();
+        private readonly List<LogEntry> _logEntries = new List<LogEntry>();
 
+        /// <summary>
+        /// Boolean telling if the log entries of this repo have to be displayed
+        /// </summary>
+        public bool Active;
+
+        /// <summary>
+        /// Path of the repository
+        /// </summary>
+        public string Path;
+
+        private LogEntry _lastLogEntry;
+
+        /// <summary>
+        /// Getter of the list of log entries contained in the file
+        /// </summary>
         public IList<LogEntry> LogEntries
         {
             get { return _logEntries; }
         }
 
-
+        /// <summary>
+        /// The uniaue identifier of this instance (used for sql mapping)
+        /// </summary>
         public Guid Uid { get; set; }
 
+        /// <summary>
+        /// Add a log entry to the repository
+        /// </summary>
+        /// <param name="entry"></param>
         public void AddLogEntry(LogEntry entry)
         {
             if (entry == null)
@@ -33,32 +51,34 @@ namespace YalvLib.Model
             _lastLogEntry = entry;
         }
 
+        /// <summary>
+        /// Add a list a log entries to the repository
+        /// </summary>
+        /// <param name="logEntries"></param>
         public void AddLogEntries(IEnumerable<LogEntry> logEntries)
         {
-            foreach (var entry in logEntries)
+            foreach (LogEntry entry in logEntries)
             {
                 AddLogEntry(entry);
-            }            
+            }
         }
-
-        private LogEntry _lastLogEntry;
 
         private void AssignId(LogEntry entry)
         {
             if (_lastLogEntry != null)
             {
                 entry.Id = _lastLogEntry.Id + 1;
-               
             }
-            else{
+            else
+            {
                 entry.Id = 1;
             }
-            entry.GuId = YalvRegistry.Instance.generateGuid();
+            entry.GuId = YalvRegistry.Instance.GenerateGuid();
         }
 
         private void AssignDelta(LogEntry entry)
         {
-            DateTime comparisonDateTime = entry.TimeStamp;            
+            DateTime comparisonDateTime = entry.TimeStamp;
             if (_lastLogEntry != null)
                 comparisonDateTime = _lastLogEntry.TimeStamp;
             entry.Delta = GlobalHelper.GetTimeDelta(comparisonDateTime, entry.TimeStamp);
@@ -67,13 +87,13 @@ namespace YalvLib.Model
         public override bool Equals(object obj)
         {
             var item = obj as LogEntryRepository;
-            if(item == null)
+            if (item == null)
             {
                 return false;
             }
-            if (this.LogEntries.Count != item.LogEntries.Count)
+            if (LogEntries.Count != item.LogEntries.Count)
                 return false;
-            return !this.LogEntries.Where((t, i) => !t.Equals(item.LogEntries[i])).Any();
+            return !LogEntries.Where((t, i) => !t.Equals(item.LogEntries[i])).Any();
         }
 
         public override int GetHashCode()
@@ -81,5 +101,4 @@ namespace YalvLib.Model
             return base.GetHashCode();
         }
     }
-
 }

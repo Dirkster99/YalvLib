@@ -16,8 +16,9 @@
                  Text="{Binding Path=PathDisplay}"/>
             <CheckBox 
                 HorizontalAlignment="Right"
-                VerticalAlignment="Center"       
-                IsChecked="{Binding Path=Active, Mode=TwoWay}"
+                VerticalAlignment="Center"
+                Command="{Binding CommandActiveRepository}"
+                IsChecked="{Binding Path=Active, Mode=OneWay}"
                 Margin="3"/>
             <Button Width="18" Height="15"
         		    x:Name="DeleteButton"

@@ -1,6 +1,4 @@
-
 using System;
-using System.Collections.Generic;
 
 namespace YalvLib.Model
 {
@@ -11,10 +9,18 @@ namespace YalvLib.Model
     [Serializable]
     public class LogEntry
     {
-
+        /// <summary>
+        /// Empty constructor for the Fluent Nhibernate mapping
+        /// </summary>
         public LogEntry()
-        {}
+        {
+        }
 
+
+        /// <summary>
+        /// Constructor of a log entry
+        /// </summary>
+        /// <param name="entry">Entry to map</param>
         public LogEntry(LogEntry entry)
         {
             App = entry.App;
@@ -34,6 +40,7 @@ namespace YalvLib.Model
         }
 
         #region properties
+
         /// <summary>
         /// Get/set Id of the log item relatively to its repository.
         /// </summary>
@@ -129,6 +136,9 @@ namespace YalvLib.Model
         /// </summary>
         public Guid Uid { get; set; }
 
+        /// <summary>
+        /// a unique identifier in the workspace
+        /// </summary>
         public uint GuId { get; set; }
 
         #endregion properties
@@ -138,16 +148,17 @@ namespace YalvLib.Model
             var e = obj as LogEntry;
             if (e == null)
                 return false;
-            return e.App == this.App
-                   && e.Class == this.Class
-                   && e.Delta == this.Delta
-                   && e.File == this.File
-                   && e.HostName == this.HostName
-                   && e.Line == this.Line
-                   && e.TimeStamp == this.TimeStamp
-                   && e.Logger == this.Logger
-                   && e.MachineName == this.MachineName;
+            return e.App == App
+                   && e.Class == Class
+                   && e.Delta == Delta
+                   && e.File == File
+                   && e.HostName == HostName
+                   && e.Line == Line
+                   && e.TimeStamp == TimeStamp
+                   && e.Logger == Logger
+                   && e.MachineName == MachineName;
         }
+
         public override int GetHashCode()
         {
             return base.GetHashCode();

@@ -30,7 +30,7 @@
             /// <param name="txtSearchPanel"></param>
             /// <param name="colVM"></param>
             /// <param name="watermarkTextbox"></param>
-            internal static void BuildDataGrid(DataGrid dataGrid, ColumnsVM colVM,
+            internal static void BuildDataGrid(DataGrid dataGrid, ColumnsViewModel colVM,
                                                Style centerCellStyle, Style watermarkTextbox,
                                                KeyEventHandler keyUpEvent,
                                                Panel txtSearchPanel)

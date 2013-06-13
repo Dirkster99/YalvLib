@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YalvLib.Domain;
-using YalvLib.Providers;
+﻿using YalvLib.Providers;
 
 namespace YalvLib.Model
 {
-
+    /// <summary>
+    /// This class represent a repository based on a sql file
+    /// </summary>
     public class LogEntrySqliteRepository : LogEntryRepository
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="path">path of the sql file</param>
         public LogEntrySqliteRepository(string path)
         {
             Path = path;
@@ -17,5 +18,4 @@ namespace YalvLib.Model
             AddLogEntries(provider.GetEntries(path));
         }
     }
-
 }

@@ -42,7 +42,7 @@ namespace YalvLib.Model
             set
             {
                 _author = value;
-                DateLastModification = new DateTime();
+                DateLastModification = DateTime.Now;
             }
         }
 
@@ -55,7 +55,7 @@ namespace YalvLib.Model
             set
             {
                 _message = value;
-                DateLastModification = new DateTime();
+                DateLastModification = DateTime.Now;
             }
         }
 

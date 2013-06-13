@@ -51,7 +51,7 @@ namespace YalvLib.ViewModel
         private const string PROP_ItemsFilterCount = "ItemsFilterCount";
 
 
-        private readonly ColumnsVM mDataGridColumns;
+        private readonly ColumnsViewModel mDataGridColumns;
 
         private ObservableCollection<LogEntryRowViewModel> _RowViewModels;
         private EvaluateLoadResult loadResultCallback = null;
@@ -111,9 +111,15 @@ namespace YalvLib.ViewModel
             // Default constructor contains column definitions
             // The callback is invocked when a column filter string item is changed
             // so we know that we should update the viewmodel filter
-            mDataGridColumns = new ColumnsVM(ColumnsVmUpdateColumnFilter);
+            mDataGridColumns = new ColumnsViewModel(ColumnsVmUpdateColumnFilter);
         }
 
+
+        /// <summary>
+        /// When a marker has been deletedm we update the textmarker quantity of the linked log entries
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
         public void OnMarkerDeleteExecuted(object obj, TextMarkerEventArgs e)
         {
             TextMarker marker = e.TextMarker;
@@ -149,7 +155,7 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Get a list of columns to be displayed in a DataGrid view display
         /// </summary>
-        public ColumnsVM DataGridColumns
+        public ColumnsViewModel DataGridColumns
         {
             get { return mDataGridColumns; }
         }
@@ -196,7 +202,7 @@ namespace YalvLib.ViewModel
                 OnSelectedItemChanged(EventArgs.Empty);
 
 
-                GoToLogItemId = mSelectedLogItem != null ? mSelectedLogItem.LogEntryId.ToString() : string.Empty;
+                GoToLogItemId = mSelectedLogItem != null ? mSelectedLogItem.LogEntryId.ToString(CultureInfo.InvariantCulture) : string.Empty;
                 RaisePropertyChanged(PROP_GoToLogItemId);
             }
         }
@@ -212,7 +218,7 @@ namespace YalvLib.ViewModel
             {
                 mGoToLogItemId = value;
 
-                int idGoTo = 0;
+                int idGoTo;
                 int.TryParse(value, out idGoTo);
                 UInt32 currentId = SelectedLogItem != null ? SelectedLogItem.LogEntryId : 0;
 
@@ -226,7 +232,7 @@ namespace YalvLib.ViewModel
                         SelectedLogItem = selectItem;
                 }
                 else
-                    mGoToLogItemId = currentId != 0 ? currentId.ToString() : string.Empty;
+                    mGoToLogItemId = currentId != 0 ? currentId.ToString(CultureInfo.InvariantCulture) : string.Empty;
 
                 RaisePropertyChanged(PROP_GoToLogItemId);
             }
@@ -697,7 +703,7 @@ namespace YalvLib.ViewModel
         /// <param name="col"></param>
         /// <param name="logitem"></param>
         /// <returns></returns>
-        public static bool MatchTextFilterColumn(ColumnsVM col, LogEntry logitem)
+        public static bool MatchTextFilterColumn(ColumnsViewModel col, LogEntry logitem)
         {
             if (col != null)
             {
@@ -710,7 +716,7 @@ namespace YalvLib.ViewModel
 
                         if (val != null)
                         {
-                            string valToCompare = string.Empty;
+                            string valToCompare;
                             if (val is DateTime)
                                 valToCompare = ((DateTime) val).ToString(GlobalHelper.DisplayDateTimeFormat,
                                                                          CultureInfo.GetCultureInfo
@@ -810,7 +816,7 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         protected static object GetItemValue(object item, string prop)
         {
-            object val = null;
+            object val;
             try
             {
                 val = item.GetType(). GetProperty(prop).GetValue(item, null);
@@ -922,11 +928,11 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         private bool LevelCheckFilter(object item)
         {
-            var logItemVM = item as LogEntryRowViewModel;
+            var logItemVm = item as LogEntryRowViewModel;
 
-            if (logItemVM != null)
+            if (logItemVm != null)
             {
-                switch (logItemVM.Entry.LevelIndex)
+                switch (logItemVm.Entry.LevelIndex)
                 {
                     case LevelIndex.DEBUG:
                         return ShowLevelDebug;
@@ -955,51 +961,36 @@ namespace YalvLib.ViewModel
         /// <returns>Returns true if item is not filtered and false otherwise</returns>
         private bool OnFilterLogItems(object item)
         {
-            var logitemVM = item as LogEntryRowViewModel;
+            var logitemVm = item as LogEntryRowViewModel;
 
-            if (logitemVM == null)
+            if (logitemVm == null)
                 return true; // Item is not filtered
 
             // Evaluate text filters if we are in filter mode, otherwise, display EVERY item!
             if (IsFiltered)
             {
-                if (MatchTextFilterColumn(mDataGridColumns, logitemVM.Entry) == false)
+                if (MatchTextFilterColumn(mDataGridColumns, logitemVm.Entry) == false)
                     return false;
             }
 
             if (SelectAll == false)
             {
-                switch (logitemVM.Entry.LevelIndex)
+                switch (logitemVm.Entry.LevelIndex)
                 {
                     case LevelIndex.DEBUG:
-                        if (mShowLevelDebug)
-                            return true;
-                        else
-                            return false;
+                        return mShowLevelDebug;
 
                     case LevelIndex.INFO:
-                        if (mShowLevelInfo)
-                            return true;
-                        else
-                            return false;
+                        return mShowLevelInfo;
 
                     case LevelIndex.WARN:
-                        if (mShowLevelWarn)
-                            return true;
-                        else
-                            return false;
+                        return mShowLevelWarn;
 
                     case LevelIndex.ERROR:
-                        if (mShowLevelError)
-                            return true;
-                        else
-                            return false;
+                        return mShowLevelError;
 
                     case LevelIndex.FATAL:
-                        if (mShowLevelFatal)
-                            return true;
-                        else
-                            return false;
+                        return mShowLevelFatal;
                 }
             }
 
@@ -1079,6 +1070,7 @@ namespace YalvLib.ViewModel
             }
             catch
             {
+                
             }
 
             return messageBoxText;

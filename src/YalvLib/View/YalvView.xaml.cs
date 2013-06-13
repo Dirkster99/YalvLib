@@ -25,7 +25,7 @@ namespace YalvLib.View
         /// </summary>
         public static readonly DependencyProperty ColumnsProperty =
             DependencyProperty.Register("Columns",
-                                        typeof(ColumnsVM),
+                                        typeof(ColumnsViewModel),
                                         typeof(YalvView),
                                         new UIPropertyMetadata(null, YalvView.OnDataGridChanged));
 
@@ -71,9 +71,9 @@ namespace YalvLib.View
         /// <summary>
         /// Class constructor
         /// </summary>
-        public ColumnsVM Columns
+        public ColumnsViewModel Columns
         {
-            get { return (ColumnsVM)GetValue(ColumnsProperty); }
+            get { return (ColumnsViewModel)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
@@ -121,7 +121,7 @@ namespace YalvLib.View
             if (tb == null)
                 return;
 
-            ColumnsVM colVM = this.Columns;
+            ColumnsViewModel colVM = this.Columns;
 
             if (colVM == null)
                 return;
@@ -199,7 +199,7 @@ namespace YalvLib.View
         /// </summary>
         private void RebuildGrid()
         {
-            ColumnsVM colVM = this.Columns;
+            ColumnsViewModel colVM = this.Columns;
             Style centerCellStyle = this.CenterCellStyle;
             Style watermarkTextbox = this.WaterMarkTextBox;
 

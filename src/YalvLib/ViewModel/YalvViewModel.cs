@@ -88,7 +88,7 @@ namespace YalvLib.ViewModel
             _manageRepoViewModel.ActiveChanged += ManageRepoViewModelOnPropertyChanged;
 
             _logAnalysis = new LogAnalysis();
-            YalvRegistry.Instance.ActualWorkspace.currentAnalysis = _logAnalysis;
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis = _logAnalysis;
 
             this._logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
             

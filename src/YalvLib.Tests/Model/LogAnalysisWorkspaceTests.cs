@@ -49,7 +49,7 @@ namespace YalvLib.Tests.Model
         public void CreateNewLogAnalysisTest()
         {
             var logA = new LogAnalysis();
-            _session.currentAnalysis = logA;
+            _session.CurrentAnalysis = logA;
             Assert.AreEqual(_session.Analyses[0], logA);
         } 
 

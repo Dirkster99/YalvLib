@@ -13,29 +13,29 @@
   /// These items are the actual column layouts (number and columns and their names) and contents
   /// of the filter search boxes.
   /// </summary>
-  public class ColumnsVM : BindableObject
+  public class ColumnsViewModel : BindableObject
   {
     #region fields
-    private IList<ColumnItem> mDataGridColumns = null;
-    private List<string> mFilterProperties = null;
+    private IList<ColumnItem> _dataGridColumns;
+    private List<string> _filterProperties;
     #endregion fields
 
     #region constructor
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public ColumnsVM()
+    public ColumnsViewModel()
     {
-      this.BuidColumns();
+      BuidColumns();
     }
 
     /// <summary>
     /// Clear all data row values displayed in the view.
     /// </summary>
     /// <param name="columnFilterUpdate"></param>
-    public ColumnsVM(System.EventHandler columnFilterUpdate)
+    public ColumnsViewModel(EventHandler columnFilterUpdate)
     {
-      this.BuidColumns(columnFilterUpdate);
+      BuidColumns(columnFilterUpdate);
     }
     #endregion constructor
 
@@ -47,7 +47,7 @@
     {
       get
       {
-        return this.mDataGridColumns;
+        return _dataGridColumns;
       }
     }
     #endregion properties
@@ -58,11 +58,11 @@
     /// </summary>
     internal void ResetSearchTextBox()
     {
-      if (this.mDataGridColumns != null)
+      if (_dataGridColumns != null)
       {
-        for (int i = 0; i < this.mDataGridColumns.Count; i++)
+        for(int i = 0; i < _dataGridColumns.Count; i++)
         {
-          this.mDataGridColumns[i].ColumnFilterValue = string.Empty;
+          _dataGridColumns[i].ColumnFilterValue = string.Empty;
         }
       }
     }
@@ -73,17 +73,17 @@
     /// <param name="pathFileName"></param>
     internal void SaveColumnsLayout(string pathFileName)
     {
-      if (this.mDataGridColumns == null)
+      if (_dataGridColumns == null)
         return;
 
       // Copy actual width values into width field for persistence
-      for (int i = 0; i < this.mDataGridColumns.Count; i++)
+      for(int i = 0; i < _dataGridColumns.Count; i++)
       {
-        if (this.mDataGridColumns[i].ActualWidth != null)
-          this.mDataGridColumns[i].Width = this.mDataGridColumns[i].ActualWidth.Width;
+        if (_dataGridColumns[i].ActualWidth != null)
+          _dataGridColumns[i].Width = _dataGridColumns[i].ActualWidth.Width;
       }
 
-      ColumnsVM.SaveColumnLayout(pathFileName, this.DataGridColumns);
+      SaveColumnLayout(pathFileName, DataGridColumns);
     }
 
     /// <summary>
@@ -92,16 +92,16 @@
     /// <param name="columnFilterUpdate"></param>
     /// <param name="columnCollection"></param>
     internal void SetColumnsLayout(List<ColumnItem> columnCollection,
-                                   System.EventHandler columnFilterUpdate = null)
+                                   EventHandler columnFilterUpdate = null)
     {
       try
       {
-        if (columnCollection != null)
-          this.mDataGridColumns = new List<ColumnItem>(columnCollection);
+        if(columnCollection != null)
+          _dataGridColumns = new List<ColumnItem>(columnCollection);
         else
-          this.mDataGridColumns = new List<ColumnItem>();
+          _dataGridColumns = new List<ColumnItem>();
 
-        this.ResetColumnProperties(columnFilterUpdate);
+        ResetColumnProperties(columnFilterUpdate);
       }
       catch
       {
@@ -114,14 +114,14 @@
     /// <param name="pathFileName"></param>
     /// <param name="columnFilterUpdate"></param>
     internal void LoadColumnsLayout(string pathFileName,
-                                    System.EventHandler columnFilterUpdate = null)
+                                    EventHandler columnFilterUpdate = null)
     {
-      if ((this.mDataGridColumns = LoadColumnLayout(pathFileName)) == null)
-        this.BuidColumns(columnFilterUpdate);
+      if ((_dataGridColumns = LoadColumnLayout(pathFileName)) == null)
+        BuidColumns(columnFilterUpdate);
       else
-        this.ResetColumnProperties(columnFilterUpdate);
+        ResetColumnProperties(columnFilterUpdate);
 
-      this.RaisePropertyChanged("DataGridColumns");
+      RaisePropertyChanged("DataGridColumns");
     }
 
     #region Load Save Columns Layout
@@ -129,7 +129,7 @@
     {
       IList<ColumnItem> loadedClass = null;
 
-      if (System.IO.File.Exists(pathFileName))
+      if (File.Exists(pathFileName))
       {
         using (FileStream readFileStream = new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
@@ -183,7 +183,7 @@
       }
       catch (Exception e)
       {
-        MessageBox.Show(e.Message, e.StackTrace.ToString(),
+        MessageBox.Show(e.Message, e.StackTrace,
                         MessageBoxButton.OK, MessageBoxImage.Error);
 
         return false;
@@ -195,25 +195,25 @@
     /// Build an intial layout of GridView columns and their text filter textboxes.
     /// </summary>
     /// <param name="columnFilterUpdate"></param>
-    private void BuidColumns(System.EventHandler columnFilterUpdate = null)
+    private void BuidColumns(EventHandler columnFilterUpdate = null)
     {
       try
       {
-        this.mDataGridColumns = new List<ColumnItem>()
-        {
-          new ColumnItem("Entry.GuId",   32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdMergeColumn_Header },
-          new ColumnItem("Entry.Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
-          new ColumnItem("Entry.TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
-          new ColumnItem("Entry.LevelIndex",  32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
-          new ColumnItem("Entry.Message",     32, 400) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MessageColumn_Header },
-          new ColumnItem("Entry.Logger",      32, 100) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
-          new ColumnItem("Entry.MachineName", 32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },
-          new ColumnItem("Entry.HostName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header },
-          new ColumnItem("Entry.UserName",    32, 100, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header },
-          new ColumnItem("Entry.App",         32, 50) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_AppColumn_Header },
-          new ColumnItem("Entry.Thread",      32, 50, CellAlignment.CENTER) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header },
-          new ColumnItem("Entry.Class",       32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_ClassColumn_Header },
-          new ColumnItem("Entry.Method",      32, 150) { Header = YalvLib.Strings.Resources.MainWindowVM_InitDataGrid_MethodColumn_Header },
+        _dataGridColumns = new List<ColumnItem>
+                               {
+          new ColumnItem("Entry.GuId",   32, 50, CellAlignment.CENTER) { Header = Strings.Resources.MainWindowVM_InitDataGrid_IdMergeColumn_Header },
+          new ColumnItem("Entry.Id",          32, 25, CellAlignment.CENTER, string.Empty) { Header = Strings.Resources.MainWindowVM_InitDataGrid_IdColumn_Header },
+          new ColumnItem("Entry.TimeStamp",   32, 100, CellAlignment.CENTER, GlobalHelper.DisplayDateTimeFormat) { Header = Strings.Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header },
+          new ColumnItem("Entry.LevelIndex",  32, 50, CellAlignment.CENTER) { Header = Strings.Resources.MainWindowVM_InitDataGrid_LevelColumn_Header },
+          new ColumnItem("Entry.Message",     32, 400) { Header = Strings.Resources.MainWindowVM_InitDataGrid_MessageColumn_Header },
+          new ColumnItem("Entry.Logger",      32, 100) { Header = Strings.Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header },
+          new ColumnItem("Entry.MachineName", 32, 100, CellAlignment.CENTER) { Header = Strings.Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header },
+          new ColumnItem("Entry.HostName",    32, 100, CellAlignment.CENTER) { Header = Strings.Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header },
+          new ColumnItem("Entry.UserName",    32, 100, CellAlignment.CENTER) { Header = Strings.Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header },
+          new ColumnItem("Entry.App",         32, 50) { Header = Strings.Resources.MainWindowVM_InitDataGrid_AppColumn_Header },
+          new ColumnItem("Entry.Thread",      32, 50, CellAlignment.CENTER) { Header = Strings.Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header },
+          new ColumnItem("Entry.Class",       32, 150) { Header = Strings.Resources.MainWindowVM_InitDataGrid_ClassColumn_Header },
+          new ColumnItem("Entry.Method",      32, 150) { Header = Strings.Resources.MainWindowVM_InitDataGrid_MethodColumn_Header },
           new ColumnItem("Entry.Delta",       32, 50, CellAlignment.CENTER, null, "Δ") { IsColumnVisible = false },
           ////new ColumnItem("Path", 32)
         };
@@ -229,17 +229,17 @@
     /// Re-compute column properties each time when columns are reset (eg.: Layout is reloaded).
     /// </summary>
     /// <param name="columnFilterUpdate"></param>
-    private void ResetColumnProperties(System.EventHandler columnFilterUpdate = null)
+    private void ResetColumnProperties(EventHandler columnFilterUpdate = null)
     {
-      int size = (this.mDataGridColumns == null ? 0 : this.mDataGridColumns.Count);
+      int size = (_dataGridColumns == null ? 0 : _dataGridColumns.Count);
 
-      this.mFilterProperties = new List<string>(size);
-      for (int i = 0; i < size; i++)
+      _filterProperties = new List<string>(size);
+      for(int i = 0; i < size; i++)
       {
-        this.mFilterProperties.Add(string.Empty);
+        _filterProperties.Add(string.Empty);
 
         if (columnFilterUpdate != null)
-          this.mDataGridColumns[i].UpdateColumnFilter += columnFilterUpdate;
+          _dataGridColumns[i].UpdateColumnFilter += columnFilterUpdate;
       }
     }
     #endregion methods

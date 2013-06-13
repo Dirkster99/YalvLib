@@ -28,8 +28,8 @@ namespace YalvLib.Tests.ViewModel
         [Test]
         public void GetTextMarkersViewModelsTest()
         {
-            YalvRegistry.Instance.ActualWorkspace.currentAnalysis.AddTextMarker(new List<LogEntry>() { _entry }, "plop", "Coincoin");
-            List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.currentAnalysis.GetTextMarkersForEntry(_entry);
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<LogEntry>() { _entry }, "plop", "Coincoin");
+            List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
             _manageTextMarkers.GenerateViewModels(textMarkers);
             Assert.AreEqual(_manageTextMarkers.TextMarkerViewModels.Count, textMarkers.Count);
             Assert.AreEqual(_manageTextMarkers.TextMarkerViewModels[0].Marker.Author, "plop");
@@ -38,7 +38,7 @@ namespace YalvLib.Tests.ViewModel
         [Test]
         public void NotificationsMarkersUpdateTest()
         {
-            List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.currentAnalysis.GetTextMarkersForEntry(_entry);
+            List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
 
             PropertyChangedEventHandler delegateViewModelsTextMarker = (senderTextMarkerVM, e) => Assert.AreEqual("TextMarkerToAdd", e.PropertyName);
             try
@@ -54,9 +54,9 @@ namespace YalvLib.Tests.ViewModel
         [Test]
         public void NotificationMarkerDelete()
         {
-            YalvRegistry.Instance.ActualWorkspace.currentAnalysis.AddTextMarker(new List<LogEntry>() {_entry}, "Hallo",
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<LogEntry>() {_entry}, "Hallo",
                                                                          "c'est cotelette que vous comprenez pas?");
-            List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.currentAnalysis.GetTextMarkersForEntry(_entry);
+            List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
             _manageTextMarkers.GenerateViewModels(textMarkers);
             _manageTextMarkers.SelectedEntries = new List<LogEntryRowViewModel>(){new LogEntryRowViewModel(_entry)};
 

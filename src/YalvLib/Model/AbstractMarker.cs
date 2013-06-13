@@ -12,14 +12,13 @@ namespace YalvLib.Model
         #region fields
 
         private List<LogEntry> _linkedEntries;
-        private DateTime _tCreation;
 
         #endregion fields
 
         protected AbstractMarker(List<LogEntry> entries)
         {
             _linkedEntries = entries;
-            _tCreation = DateTime.Now;
+            DateCreation = DateTime.Now;
             DateLastModification = DateTime.Now;
         }
 
@@ -30,11 +29,7 @@ namespace YalvLib.Model
         /// <summary>
         /// return the timestamp of the marker yhen it has been created
         /// </summary>
-        public DateTime DateCreation
-        {
-            get { return _tCreation; }
-            private set { _tCreation = value; }
-        }
+        public DateTime DateCreation { get; private set; }
 
         /// <summary>
         /// Get/Set date of the last modification

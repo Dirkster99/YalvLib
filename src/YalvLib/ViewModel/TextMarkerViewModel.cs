@@ -139,7 +139,7 @@ namespace YalvLib.ViewModel
         {
             get
             {
-                return _marker.LogEntryCount() > 1 && YalvRegistry.Instance.ActualWorkspace.currentAnalysis.IsMultiMarker(_marker);
+                return _marker.LogEntryCount() > 1 && YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.IsMultiMarker(_marker);
             }
         }
 

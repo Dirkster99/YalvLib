@@ -125,14 +125,14 @@ namespace YalvLib.ViewModel
             _selectedEntries = new List<LogEntryRowViewModel>((IEnumerable<LogEntryRowViewModel>) arg);
 
             IEnumerable<TextMarker> markers =
-                YalvRegistry.Instance.ActualWorkspace.currentAnalysis.GetTextMarkersForEntries(
+                YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntries(
                     _selectedEntries.Select(x => x.Entry));
 
             List<TextMarker> markersCommon = markers.Where(
                 x =>
                 _selectedEntries.All(
                     e =>
-                    YalvRegistry.Instance.ActualWorkspace.currentAnalysis.GetTextMarkersForEntry(e.Entry).Contains(x))).
+                    YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(e.Entry).Contains(x))).
                 ToList();
 
             GenerateViewModels(DisplayOnlyCommonMarkers ? markersCommon : markers.ToList());
@@ -166,7 +166,7 @@ namespace YalvLib.ViewModel
         public void ExecuteChange(object sender, EventArgs e)
         {
             TextMarkerViewModels.Add(TextMarkerToAdd);
-            YalvRegistry.Instance.ActualWorkspace.currentAnalysis.AddTextMarker(_selectedEntries.Select(x => x.Entry),
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(_selectedEntries.Select(x => x.Entry),
                                                                                 TextMarkerToAdd.Marker);
             foreach (LogEntryRowViewModel entry in _selectedEntries)
             {
@@ -184,7 +184,7 @@ namespace YalvLib.ViewModel
         public void ExecuteCancel(object obj, EventArgs eventArgs)
         {
             var args = eventArgs as TextMarkerEventArgs;
-            YalvRegistry.Instance.ActualWorkspace.currentAnalysis.DeleteTextMarker(args.TextMarker);
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.DeleteTextMarker(args.TextMarker);
             OnMarkerDeleted(this, (TextMarkerEventArgs) eventArgs);
             CommandUpdateTextMarkersExecute(_selectedEntries);
         }

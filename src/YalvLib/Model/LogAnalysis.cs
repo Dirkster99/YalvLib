@@ -40,7 +40,6 @@ namespace YalvLib.Model
         public IList<TextMarker> TextMarkers
         {
             get { return Markers.Where(x => x is TextMarker).Cast<TextMarker>().ToList(); }
-            private set { }
         }
 
         /// <summary>
@@ -49,7 +48,6 @@ namespace YalvLib.Model
         public IList<ColorMarker> ColorMarkers
         {
             get { return Markers.Where(x => x is ColorMarker).Cast<ColorMarker>().ToList(); }
-            private set {  }
         }
 
         /// <summary>
@@ -162,12 +160,22 @@ namespace YalvLib.Model
             return GetTextMarkersForEntries(logEntries).Any();
         }
 
+        /// <summary>
+        /// add the given log entries to the log entries list of the given marker
+        /// </summary>
+        /// <param name="list">List of log entries</param>
+        /// <param name="color">Color of the marker</param>
         public void SetColorMarker(List<LogEntry> list, Color color)
         {
             foreach(var entry in list)
                 GetColorMarker(color).LogEntries.Add(entry);
         }
 
+        /// <summary>
+        /// Return the color marker for the given color
+        /// </summary>
+        /// <param name="color">Color of the marker to return</param>
+        /// <returns></returns>
         public ColorMarker GetColorMarker(Color color)
         {
             return ColorMarkers.First(colorMarker => colorMarker.HighlightColor.Equals(color));

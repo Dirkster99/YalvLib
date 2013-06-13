@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using YalvLib.Common;
 using YalvLib.Infrastructure.Sqlite;
@@ -25,8 +24,8 @@ namespace YalvLib.ViewModel
 
         #endregion fields
 
-        private ObservableCollection<RepositoryViewModel> _repositories;
         private bool _isFileLoaded;
+        private ObservableCollection<RepositoryViewModel> _repositories;
 
         #region Constructors
 
@@ -178,7 +177,7 @@ namespace YalvLib.ViewModel
 
                     YalvRegistry.Instance.SetActualLogAnalysisWorkspace(loadedWorkspace);
 
-                    YalvRegistry.Instance.ActualWorkspace.currentAnalysis =
+                    YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis =
                         YalvRegistry.Instance.ActualWorkspace.Analyses.First();
                     _repositories.Clear();
                     AddRepositories(YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());
@@ -199,7 +198,8 @@ namespace YalvLib.ViewModel
                         if ((Repositories.Any() && !reposPath.Contains(path)) || !Repositories.Any())
                         {
                             listRepo.Add(CreateLogFileEntryRepository(path));
-                        }else
+                        }
+                        else
                         {
                             MessageBox.Show(Resources.GlobalHelper_RepositoryAlreadyExists_Error_Text);
                         }
