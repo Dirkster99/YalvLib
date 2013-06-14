@@ -135,6 +135,19 @@ namespace YalvLib.ViewModel
             var repo = sender as RepositoryViewModel;
             if(repo != null)
             {
+                //If we delete a repository we have to remove the textmarkers linked to the entries contained in this repository
+                foreach(var entry in repo.Repository.LogEntries)
+                {
+                    foreach(var textmarker in YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.TextMarkers)
+                    {
+                        if(textmarker.LogEntries.Contains(entry))
+                        {
+                            textmarker.LogEntries.Remove(entry);
+                            if (!textmarker.LogEntries.Any())
+                                YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.TextMarkers.Remove(textmarker);
+                        }
+                    }
+                }
                 YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Remove(repo.Repository);
                 Repositories.Remove(repo);
                 ActiveChanged(this, null); // The active didnt changed but it just refresh the view

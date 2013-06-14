@@ -25,7 +25,7 @@ namespace YalvLib.ViewModel
             Repository = repository;
             Active = true;
             CommandRemoveRepository = new CommandRelay(ExecuteRemoveRepository, CanExecuteRemoveRepository);
-            CommandActiveRepository = new CommandRelay(ExecuteChangeActiveRepository, canExecuteChangeActiveRepository);
+            CommandActiveRepository = new CommandRelay(ExecuteChangeActiveRepository, CanExecuteChangeActiveRepository);
         }
 
         /// <summary>
@@ -109,9 +109,16 @@ namespace YalvLib.ViewModel
             return null;
         }
 
-
+        /// <summary>
+        /// Active repositroy command
+        /// </summary>
         public CommandRelay CommandActiveRepository { get; private set; }
-        private bool canExecuteChangeActiveRepository(object obj)
+        /// <summary>
+        /// Can execute of the command Change active repository
+        /// </summary>
+        /// <param name="obj">object</param>
+        /// <returns>true is repo isn't null</returns>
+        private bool CanExecuteChangeActiveRepository(object obj)
         {
             return _repository != null;
         }

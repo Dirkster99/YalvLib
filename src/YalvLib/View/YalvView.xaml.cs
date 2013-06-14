@@ -170,6 +170,7 @@ namespace YalvLib.View
         {
             this.RebuildGrid();
             DataGrid.SelectionChanged += CallUpdateTextMarkers;
+            DataGrid.SelectionChanged += CallUpdateDelta;
             this.Loaded -= this.YalvView_Loaded;
         }
 
@@ -193,6 +194,15 @@ namespace YalvLib.View
             if (YalvDataContext.CommandUpdateTextMarkers.CanExecute(list))
                 YalvDataContext.CommandUpdateTextMarkers.Execute(list);
         }
+
+
+        private void CallUpdateDelta(object sender, SelectionChangedEventArgs e)
+        {
+            IEnumerable<LogEntryRowViewModel> list = DataGrid.SelectedItems.Cast<LogEntryRowViewModel>();
+            if (YalvDataContext.CommandUpdateDelta.CanExecute(list))
+                YalvDataContext.CommandUpdateDelta.Execute(list);
+        }
+
 
         /// <summary>
         /// Create columns and other items (text filter textbox headers) that bring the DataGrid to live.

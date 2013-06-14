@@ -188,7 +188,7 @@
                     </Style>
                     <Style x:Key="TextBlockBaseStyle" TargetType="{x:Type TextBlock}">
                         <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"></Setter>
-                        <Setter Property="Margin" Value="3,0,0,0"></Setter>
+                        <Setter Property="Margin" Value="3,0,10,0"></Setter>
                         <Setter Property="MinWidth" Value="80"></Setter>
                     </Style>
                     <Style x:Key="PanelBaseStyle" TargetType="{x:Type StackPanel}">
@@ -219,6 +219,12 @@
                                Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
                                Text="{Binding Path=SelectedLogItem.Entry.Line, Mode=OneWay}" DataContext="{Binding YalvLogViewModel.LogEntryRows}"></TextBlock>
+                </StackPanel>
+                <StackPanel Style="{StaticResource PanelBaseStyle}">
+                    <TextBlock Style="{StaticResource LabelBaseStyle}"
+                               Text="Calculated Δ t "></TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockBaseStyle}"
+                               Text="{Binding Path=CalculatedDelta, Mode=OneWay}" DataContext="{Binding YalvLogViewModel}"></TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>

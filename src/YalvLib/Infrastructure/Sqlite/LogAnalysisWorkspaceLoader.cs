@@ -55,6 +55,11 @@ namespace YalvLib.Infrastructure.Sqlite
                     if (l.Count > 0)
                         logAnalysisWorkspace = l[0] as LogAnalysisWorkspace;
                     transaction.Commit();
+                    if (transaction.WasCommitted)
+                    {
+                        transaction.Dispose();
+                        session.Close();
+                    }
                 }
             }
             return logAnalysisWorkspace;

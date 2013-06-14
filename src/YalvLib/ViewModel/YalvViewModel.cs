@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
-using YalvLib.Domain;
+using YalvLib.Common;
+using YalvLib.Common.Interfaces;
 using YalvLib.Model;
 using YalvLib.Providers;
+using YalvLib.Strings;
 
 namespace YalvLib.ViewModel
 {
-    using YalvLib.Common;
-    using YalvLib.Common.Interfaces;
-
     /// <summary>
     /// Main ViewModel of Valv Lib control
     /// </summary>
@@ -20,12 +17,13 @@ namespace YalvLib.ViewModel
     {
         #region fields
 
-        private DisplayLogViewModel _logEntryRows = null;
-        private ManageTextMarkersViewModel _manageTextMarkersViewModel = null;
-        private ManageRepositoryViewModel _manageRepoViewModel = null;
- 
+        private readonly LogAnalysis _logAnalysis;
+        private readonly DisplayLogViewModel _logEntryRows;
+        private readonly ManageRepositoryViewModel _manageRepoViewModel;
+        private readonly ManageTextMarkersViewModel _manageTextMarkersViewModel;
 
-        private LogAnalysis _logAnalysis = null;
+
+        private string _calculatedDelta;
 
         #endregion fields
 
@@ -44,8 +42,8 @@ namespace YalvLib.ViewModel
                                      "|{4} (*.*)|*.*", "Log4j files",
                                      "Log files",
                                      "Text files",
-                                     YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_XmlFilesCaption,
-                                     YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
+                                     Resources.MainWindowVM_commandOpenFileExecute_XmlFilesCaption,
+                                     Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
             }
         }
 
@@ -59,7 +57,7 @@ namespace YalvLib.ViewModel
             {
                 return string.Format("{0}| *.db*" +
                                      "|{1} (*.*)|*.*", "Database files",
-                                     YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
+                                     Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
             }
         }
 
@@ -72,7 +70,7 @@ namespace YalvLib.ViewModel
             {
                 return string.Format("{0}| *.yalv*" +
                                      "|{1} (*.*)|*.*", "LogAnalysis files",
-                                     YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
+                                     Resources.MainWindowVM_commandOpenFileExecute_AllFilesCaption);
             }
         }
 
@@ -90,18 +88,22 @@ namespace YalvLib.ViewModel
             _logAnalysis = new LogAnalysis();
             YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis = _logAnalysis;
 
-            this._logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
-            
+            _logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
 
-            this.CommandRefresh = new CommandRelay(this.CommandRefreshExecute, this.CommandRequiresDataCanExecute);
-            this.CommandDelete = new CommandRelay(this.LogEntryRows.CommandDeleteExecute,
-                                                  this.LogEntryRows.CommandDeleteCanExecute);
-            this.FilterYalvView = new CommandRelay(this.CommandFilterYalvView, this.CommandRequiresDataCanExecute);
-            CommandUpdateTextMarkers = new CommandRelay(_manageTextMarkersViewModel.CommandUpdateTextMarkersExecute, _manageTextMarkersViewModel.CommandUpdateTextMarkersCanExecute);
 
+            CommandRefresh = new CommandRelay(CommandRefreshExecute, CommandRequiresDataCanExecute);
+            CommandDelete = new CommandRelay(LogEntryRows.CommandDeleteExecute,
+                                             LogEntryRows.CommandDeleteCanExecute);
+            FilterYalvView = new CommandRelay(CommandFilterYalvView, CommandRequiresDataCanExecute);
+
+            CommandUpdateTextMarkers = new CommandRelay(_manageTextMarkersViewModel.CommandUpdateTextMarkersExecute,
+                                                        _manageTextMarkersViewModel.CommandUpdateTextMarkersCanExecute);
+            CommandUpdateDelta = new CommandRelay(CommandUpdateDeltaExecute, CommandUpdateDeltaCanExecute);
         }
 
-        private void ManageRepoViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+
+        private void ManageRepoViewModelOnPropertyChanged(object sender,
+                                                          PropertyChangedEventArgs propertyChangedEventArgs)
         {
             LoadFinishedEvent(true);
         }
@@ -133,9 +135,12 @@ namespace YalvLib.ViewModel
         /// </summary>
         public DisplayLogViewModel LogEntryRows
         {
-            get { return this._logEntryRows; }
+            get { return _logEntryRows; }
         }
 
+        /// <summary>
+        /// Getter of the repositories managed view model
+        /// </summary>
         public ManageRepositoryViewModel ManageRepositoriesViewModel
         {
             get { return _manageRepoViewModel; }
@@ -147,9 +152,23 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ManageTextMarkersViewModel ManageTextMarkersViewModel
         {
-            get
+            get { return _manageTextMarkersViewModel; }
+        }
+
+
+        /// <summary>
+        /// Getter / Setter of the Calculated Delta between 2 entries
+        /// </summary>
+        public string CalculatedDelta
+        {
+            get { return _calculatedDelta; }
+            private set
             {
-                return _manageTextMarkersViewModel;
+                if(_calculatedDelta != value)
+                {
+                    _calculatedDelta = value;
+                    NotifyPropertyChanged(() => CalculatedDelta);
+                }
             }
         }
 
@@ -159,7 +178,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public bool HasData
         {
-            get { return (this.LogEntryRows != null && this.LogEntryRows.HasData); }
+            get { return (LogEntryRows != null && LogEntryRows.HasData); }
         }
 
         #region Command
@@ -179,17 +198,28 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ICommandAncestor CommandDelete { get; protected set; }
 
+
+        /// <summary>
+        /// UpdateTextMarkers Command
+        /// </summary>
         public ICommandAncestor CommandUpdateTextMarkers { get; protected set; }
 
+        /// <summary>
+        /// ChangeTextmarkers Command
+        /// </summary>
         public ICommandAncestor CommandChangeTextMarkers { get; protected set; }
+
+
+        /// <summary>
+        /// Update calculatedDelta command
+        /// </summary>
+        public ICommandAncestor CommandUpdateDelta { get; protected set; }
 
         #endregion Command
 
         #endregion properties
 
         #region methods
-
-
 
         /// <summary>
         /// Load a log4nez log file to display its content through this ViewModel.
@@ -208,7 +238,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadSqliteDatabase(string path)
         {
-            ManageRepositoriesViewModel.LoadFiles(new List<string>() { path }, EntriesProviderType.Sqlite);
+            ManageRepositoriesViewModel.LoadFiles(new List<string> {path}, EntriesProviderType.Sqlite);
             LoadFinishedEvent(true);
         }
 
@@ -219,7 +249,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadLogAnalysisSession(string path)
         {
-            ManageRepositoriesViewModel.LoadFiles(new List<string>() { path }, EntriesProviderType.Yalv);
+            ManageRepositoriesViewModel.LoadFiles(new List<string> {path}, EntriesProviderType.Yalv);
             LoadFinishedEvent(true);
         }
 
@@ -231,14 +261,36 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         internal virtual object CommandRefreshExecute(object parameter)
         {
-            this.LogEntryRows.CommandRefreshExecute(this.LoadFinishedEvent);
+            LogEntryRows.CommandRefreshExecute(LoadFinishedEvent);
 
             return null;
         }
 
         internal virtual bool CommandRequiresDataCanExecute(object parameter)
         {
-            return this.HasData;
+            return HasData;
+        }
+
+
+        private bool CommandUpdateDeltaCanExecute(object obj)
+        {
+            return ((IEnumerable<LogEntryRowViewModel>) obj).Count() == 2;
+        }
+
+        private object CommandUpdateDeltaExecute(object arg)
+        {
+            var list = arg as IEnumerable<LogEntryRowViewModel>;
+            if (list != null)
+            {
+                // We sure has 2 and only 2 entries
+                var logEntryRowViewModels = list as List<LogEntryRowViewModel> ?? list.ToList();
+                LogEntryRowViewModel entry1 = logEntryRowViewModels.ElementAt(0);
+                LogEntryRowViewModel entry2 = logEntryRowViewModels.ElementAt(1);
+                CalculatedDelta = String.Concat("between GuId : ", entry1.Entry.GuId, " and GuId : ", entry2.Entry.GuId,
+                                                " = ",
+                                                GlobalHelper.GetTimeDelta(entry1.Entry.TimeStamp, entry2.Entry.TimeStamp));
+            }
+            return null;
         }
 
 
@@ -249,9 +301,9 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         protected virtual object CommandFilterYalvView(object parameter)
         {
-            if (this._logEntryRows != null)
+            if (_logEntryRows != null)
             {
-                this._logEntryRows.ApplyFilter();
+                _logEntryRows.ApplyFilter();
             }
 
             return null;
@@ -265,17 +317,17 @@ namespace YalvLib.ViewModel
         /// <param name="loadWasSuccessful"></param>
         private void LoadFinishedEvent(bool loadWasSuccessful)
         {
-            this.LogEntryRows.SetEntries(ManageRepositoriesViewModel.Repositories.ToList());
-            this.RefreshCommandsCanExecute();
+            LogEntryRows.SetEntries(ManageRepositoriesViewModel.Repositories.ToList());
+            RefreshCommandsCanExecute();
         }
 
         private void RefreshCommandsCanExecute()
         {
-            this.CommandRefresh.CanExecute(null);
-            this.CommandDelete.CanExecute(null);
-            this.FilterYalvView.CanExecute(null);
+            CommandRefresh.CanExecute(null);
+            CommandDelete.CanExecute(null);
+            FilterYalvView.CanExecute(null);
 
-            this.RaisePropertyChanged("HasData");
+            RaisePropertyChanged("HasData");
         }
 
         #endregion methods

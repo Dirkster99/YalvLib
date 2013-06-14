@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YalvLib.Model;
 
 namespace YalvLib.ViewModel
@@ -26,7 +23,9 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Getter textmarker associated with the event
         /// </summary>
-        public TextMarker TextMarker { get { return _tm; } }
-
+        public TextMarker TextMarker
+        {
+            get { return _tm; }
+        }
     }
 }

@@ -53,21 +53,19 @@
                 x:Name="TextMarkerAdd"
                 DataContext="{Binding Path=ManageTextMarkersViewModel.TextMarkerToAdd}"
         />
-      <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto"
-                               VerticalScrollBarVisibility="Auto">
-
-        <ItemsControl Name="TextMarkersToDisplay"
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl Name="TextMarkersToDisplay"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top"
                 ItemsSource="{Binding Path=ManageTextMarkersViewModel.TextMarkerViewModels}"
                             >
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <local:TextMarkerView/>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </ScrollViewer>
+                        <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:TextMarkerView/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+    </ScrollViewer>
     </Grid>
 
   </Grid>

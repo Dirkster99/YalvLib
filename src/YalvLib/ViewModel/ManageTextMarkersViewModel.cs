@@ -16,6 +16,7 @@ namespace YalvLib.ViewModel
         private readonly ObservableCollection<TextMarkerViewModel> _textMarkerVmList;
         private List<LogEntryRowViewModel> _selectedEntries;
         private TextMarkerViewModel _textMarkerAdd;
+        private bool _displayOnlyCommonMarkers;
 
         /// <summary>
         /// Constructor
@@ -68,7 +69,16 @@ namespace YalvLib.ViewModel
         /// to know if we have to display every markers for the selected
         /// entries or only the common ones
         /// </summary>
-        public bool DisplayOnlyCommonMarkers { get; private set; }
+        public bool DisplayOnlyCommonMarkers
+        {
+            get { return _displayOnlyCommonMarkers; }
+            private set
+            {
+                _displayOnlyCommonMarkers = value;
+                if (_selectedEntries != null)
+                    CommandUpdateTextMarkersExecute(_selectedEntries);
+            }
+        }
 
         /// <summary>
         /// This command is used to Update the TextMarkers
