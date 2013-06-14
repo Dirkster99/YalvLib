@@ -70,7 +70,8 @@
             TextWrapping="Wrap" 
             Text="{Binding Path=Message, Mode=TwoWay}"
             TextChanged="TextBox_TextChanged"
-            Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" />
+            Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" 
+            Width="Auto"/>
   </Grid>
 
 </UserControl>

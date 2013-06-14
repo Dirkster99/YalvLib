@@ -133,8 +133,12 @@ namespace YalvLib.ViewModel
         private void OnRepositoryDeleted(object sender, EventArgs e)
         {
             var repo = sender as RepositoryViewModel;
-            Repositories.Remove(repo);
-            ActiveChanged(this, null);
+            if(repo != null)
+            {
+                YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Remove(repo.Repository);
+                Repositories.Remove(repo);
+                ActiveChanged(this, null); // The active didnt changed but it just refresh the view
+            }
         }
 
         private void OnActiveChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)

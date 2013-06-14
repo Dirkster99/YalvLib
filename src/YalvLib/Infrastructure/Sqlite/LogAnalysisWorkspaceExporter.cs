@@ -54,6 +54,11 @@ namespace YalvLib.Infrastructure.Sqlite
                 {
                     session.SaveOrUpdate(logWorkspace);
                     transaction.Commit();
+                    if (transaction.WasCommitted)
+                    {
+                        transaction.Dispose();
+                        session.Close();
+                    }
                 }
             }
             sessionFactory.Close();

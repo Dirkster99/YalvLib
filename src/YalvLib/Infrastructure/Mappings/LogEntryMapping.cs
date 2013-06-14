@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
 using YalvLib.Model;
 
 namespace YalvLib.Infrastructure.Mappings
 {
-
     public class LogEntryMapping : ClassMap<LogEntry>
     {
-
         public LogEntryMapping()
         {
             Not.LazyLoad();
@@ -34,7 +28,5 @@ namespace YalvLib.Infrastructure.Mappings
             Map(x => x.MachineName);
             Map(x => x.UserName);
         }
-
     }
-
 }

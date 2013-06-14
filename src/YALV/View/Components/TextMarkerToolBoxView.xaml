@@ -40,11 +40,20 @@
           />
 
     <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
-      <local:TextMarkerView
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+        
+            <local:TextMarkerView Grid.Row="0"
                 x:Name="TextMarkerAdd"
                 DataContext="{Binding Path=ManageTextMarkersViewModel.TextMarkerToAdd}"
         />
-      <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto"
+      <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto"
                                VerticalScrollBarVisibility="Auto">
 
         <ItemsControl Name="TextMarkersToDisplay"
