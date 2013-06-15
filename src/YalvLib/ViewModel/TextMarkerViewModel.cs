@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Input;
 using YalvLib.Common;
 using YalvLib.Model;
+using YalvLib.Strings;
 
 namespace YalvLib.ViewModel
 {
@@ -14,8 +12,10 @@ namespace YalvLib.ViewModel
     /// </summary>
     public class TextMarkerViewModel : BindableObject
     {
-        private TextMarker _marker;
         private string _author;
+        private bool _canExecuteCancel;
+        private bool _canExecuteChange;
+        private TextMarker _marker;
         private string _message;
 
 
@@ -34,19 +34,6 @@ namespace YalvLib.ViewModel
             Author = _marker.Author;
             Message = _marker.Message;
         }
-        /// <summary>
-        /// This function is called everytime a property is changed on the view
-        /// </summary>
-        private void TextMarkerViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            EvaluateCanExecuteConditions();
-        }
-
-        private void EvaluateCanExecuteConditions()
-        {
-            CanExecuteCancel = CommandCancelTextMarker.CanExecute(null);
-            CanExecuteChange = CommandChangeTextMarker.CanExecute(null);
-        }
 
         /// <summary>
         /// Getter Marker
@@ -64,10 +51,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public string Author
         {
-            get
-            {
-                return _author;
-            }
+            get { return _author; }
             set
             {
                 if (_author != value)
@@ -84,38 +68,33 @@ namespace YalvLib.ViewModel
         /// </summary>
         public string Message
         {
-            get
-            {
-                return _message;
-            }
+            get { return _message; }
             set
             {
                 if (_message != value)
                 {
                     _message = value;
-                    this.NotifyPropertyChanged(() => this.Message);
+                    NotifyPropertyChanged(() => Message);
                 }
             }
         }
 
-        private bool _canExecuteCancel;
         /// <summary>
         /// If we can execute the cancel, we rise a property changed event
         /// </summary>
         public bool CanExecuteCancel
         {
-            get { return _canExecuteCancel; } 
+            get { return _canExecuteCancel; }
             set
             {
                 if (_canExecuteCancel != value)
                 {
                     _canExecuteCancel = value;
                     NotifyPropertyChanged(() => CanExecuteCancel);
-                }                
+                }
             }
         }
 
-        private bool _canExecuteChange;
         /// <summary>
         /// If we can execute the change, we rise a property changed event
         /// </summary>
@@ -139,12 +118,28 @@ namespace YalvLib.ViewModel
         {
             get
             {
-                return _marker.LogEntryCount() > 1 && YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.IsMultiMarker(_marker);
+                return _marker.LogEntryCount() > 1 &&
+                       YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.IsMultiMarker(_marker);
             }
         }
 
 
         public CommandRelay CommandCancelTextMarker { get; private set; }
+        public CommandRelay CommandChangeTextMarker { get; private set; }
+
+        /// <summary>
+        /// This function is called everytime a property is changed on the view
+        /// </summary>
+        private void TextMarkerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            EvaluateCanExecuteConditions();
+        }
+
+        private void EvaluateCanExecuteConditions()
+        {
+            CanExecuteCancel = CommandCancelTextMarker.CanExecute(null);
+            CanExecuteChange = CommandChangeTextMarker.CanExecute(null);
+        }
 
         private bool CanExecuteCancelTextMarker(object obj)
         {
@@ -158,14 +153,14 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         public object ExecuteCancelTextMarker(object obj)
         {
-            if(_marker.LogEntryCount() >= 1)
+            if (_marker.LogEntryCount() >= 1)
             {
-                if(_marker.LogEntryCount() > 1)
-                    if (MessageBox.Show(Strings.Resources.MarkerRow_DeleteConfirmation,
-                                                              Strings.Resources.
-                                                                  MarkerRow_DeleteConfirmation_Caption,
-                                                              MessageBoxButton.YesNo,
-                                                              MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+                if (_marker.LogEntryCount() > 1)
+                    if (MessageBox.Show(Resources.MarkerRow_DeleteConfirmation,
+                                        Resources.
+                                            MarkerRow_DeleteConfirmation_Caption,
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                         return null;
                 OnExecutedCancelTextMarker(new TextMarkerEventArgs(_marker));
             }
@@ -185,12 +180,9 @@ namespace YalvLib.ViewModel
         }
 
 
-
-        public CommandRelay CommandChangeTextMarker { get; private set; }
-
         private bool CanExecuteChangeTextmarker(object obj)
         {
-            return _message != string.Empty 
+            return _message != string.Empty
                    && _author != string.Empty
                    && _author != null
                    && _message != null;
@@ -202,7 +194,7 @@ namespace YalvLib.ViewModel
         /// <param name="o"></param>
         /// <returns></returns>
         public object ExecuteChangeTextMarker(object o)
-        {               
+        {
             _marker.Author = _author;
             _marker.Message = _message;
             _marker.DateLastModification = DateTime.Now;

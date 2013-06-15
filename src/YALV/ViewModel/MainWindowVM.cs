@@ -49,6 +49,7 @@ namespace YALV.ViewModel
 
             this.mYalvLogViewModel = new YalvViewModel();
 
+            this.CommandCancelProcessing = this.YalvLogViewModel.CommandCancelProcessing;
 
             if (MainWindowVM.CreateAppDataDir() == true)
             {
@@ -101,6 +102,8 @@ namespace YALV.ViewModel
         public ICommandAncestor CommandExport { get; protected set; }
         public ICommandAncestor CommandOpenSqliteDatabase { get; protected set; }
         public ICommandAncestor CommandOpenLogAnalysisSession { get; protected set; }
+
+        public ICommandAncestor CommandCancelProcessing { get; protected set; }
         #endregion
 
         #region Public Properties

@@ -16,5 +16,10 @@ namespace YalvLib.View.BusyIndicatorBehavior
 
       Timeline.SetDesiredFrameRate(this.sbAnimation, BusyIndicatorBehavior.FRAMERATE);
     }
+
+    private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+
+    }
   }
 }

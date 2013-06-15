@@ -40,6 +40,7 @@ namespace YalvLib.Model
         public IList<TextMarker> TextMarkers
         {
             get { return Markers.Where(x => x is TextMarker).Cast<TextMarker>().ToList(); }
+            set { }
         }
 
         /// <summary>
@@ -48,6 +49,7 @@ namespace YalvLib.Model
         public IList<ColorMarker> ColorMarkers
         {
             get { return Markers.Where(x => x is ColorMarker).Cast<ColorMarker>().ToList(); }
+            set { }
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace YalvLib.View.BusyIndicatorBehavior
 {
-    /// <summary>
+  /// <summary>
   /// Refs: http://gallery.expression.microsoft.com/en-us/BusyIndicator
   /// </summary>
   public static class BusyIndicatorBehavior
@@ -66,6 +66,7 @@ namespace YalvLib.View.BusyIndicatorBehavior
     public static readonly DependencyProperty TargetVisualProperty = DependencyProperty.RegisterAttached("TargetVisual", typeof(UIElement),
                                                                                                          typeof(BusyIndicatorBehavior),
                                                                                                          new UIPropertyMetadata(null));
+
     #endregion Attached Properties
 
     /// <summary>
@@ -81,7 +82,7 @@ namespace YalvLib.View.BusyIndicatorBehavior
     {
       get
       {
-        return BusyIndicatorBehavior.mFRAMERATE; 
+        return BusyIndicatorBehavior.mFRAMERATE;
       }
 
       set
