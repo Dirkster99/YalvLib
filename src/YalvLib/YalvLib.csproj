@@ -144,10 +144,10 @@
     <Compile Include="ViewModel\Cultures.cs" />
     <Compile Include="ViewModel\DisplayLogViewModel.cs" />
     <Compile Include="ViewModel\IManageTextMarkersViewModel.cs" />
-    <Compile Include="ViewModel\Process\LogFileLoader.cs" />
     <Compile Include="ViewModel\ManageTextMarkersViewModel.cs" />
     <Compile Include="ViewModel\LogEntryRowViewModel.cs" />
     <Compile Include="ViewModel\ManageRepositoryViewModel.cs" />
+    <Compile Include="ViewModel\Process\LogFileLoader.cs" />
     <Compile Include="ViewModel\RepositoryViewModel.cs" />
     <Compile Include="ViewModel\TextMarkerEventArgs.cs" />
     <Compile Include="ViewModel\TextMarkerViewModel.cs" />
