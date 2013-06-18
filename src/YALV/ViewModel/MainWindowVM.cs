@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Win32;
 using YalvLib.Infrastructure.Sqlite;
 using YalvLib.Model;
@@ -23,37 +24,37 @@ namespace YALV.ViewModel
         public const string PropTitle = "Title";
         public const string PropRecentFileList = "RecentFileList";
 
-        private readonly string mLayoutFileName;
+        private readonly string _layoutFileName;
 
-        private readonly YalvViewModel mYalvLogViewModel = null;
+        private readonly YalvViewModel _yalvLogViewModel = null;
         private LogAnalysisWorkspace _workspace = null;
-        private RecentFileList mRecentFileList;
+        private RecentFileList _recentFileList;
 
         /// <summary>
         /// Window to which the viewmodel is attached to
         /// </summary>
-        private IWinSimple mCallingWin;
+        private IWinSimple _callingWin;
         #endregion fields
 
         #region constructor
         public MainWindowVM(IWinSimple win,
                             RecentFileList recentFileList)
         {
-            this.mLayoutFileName = System.IO.Path.Combine(MainWindowVM.AppDataDirectoryPath,
+            this._layoutFileName = System.IO.Path.Combine(MainWindowVM.AppDataDirectoryPath,
                                                           Assembly.GetEntryAssembly().GetName().Name + ".ColLayout");
 
-            this.mCallingWin = win;
+            this._callingWin = win;
 
             _workspace = new LogAnalysisWorkspace();
             YalvRegistry.Instance.SetActualLogAnalysisWorkspace(_workspace);
 
-            this.mYalvLogViewModel = new YalvViewModel();
+            this._yalvLogViewModel = new YalvViewModel();
 
             this.CommandCancelProcessing = this.YalvLogViewModel.CommandCancelProcessing;
 
             if (MainWindowVM.CreateAppDataDir() == true)
             {
-                this.mYalvLogViewModel.LogEntryRows.LoadColumnsLayout(this.mLayoutFileName);
+                this._yalvLogViewModel.LogEntryRows.LoadColumnsLayout(this._layoutFileName);
             }
 
             this.RecentFileList = recentFileList;
@@ -115,7 +116,7 @@ namespace YALV.ViewModel
             get
             {
                 string sFile = (this.YalvLogViewModel.FilePaths.Count == 0? string.Empty :
-                                                                                        " - " + this.mYalvLogViewModel.FilePaths[0]);
+                                                                                        " - " + this._yalvLogViewModel.FilePaths[0]);
 
                 return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
             }
@@ -128,7 +129,7 @@ namespace YALV.ViewModel
         {
             get
             {
-                return this.mYalvLogViewModel;
+                return this._yalvLogViewModel;
             }
         }
 
@@ -139,16 +140,16 @@ namespace YALV.ViewModel
         {
             get
             {
-                return this.mRecentFileList;
+                return this._recentFileList;
             }
 
             set
             {
-                this.mRecentFileList = value;
+                this._recentFileList = value;
 
-                if (this.mRecentFileList != null)
+                if (this._recentFileList != null)
                 {
-                    this.mRecentFileList.MenuClick += (s, e) => this.LoadLog4NetFile(e.Filepath);
+                    this._recentFileList.MenuClick += (s, e) => this.LoadLog4NetFile(e.Filepath);
                     this.UpdateJumpList();
                 }
             }
@@ -187,7 +188,7 @@ namespace YALV.ViewModel
         {
             try
             {
-                this.mYalvLogViewModel.LoadFiles(new List<string>(){filePath});
+                this._yalvLogViewModel.LoadFiles(new List<string>(){filePath});
             }
             finally
             {
@@ -204,7 +205,7 @@ namespace YALV.ViewModel
         {
             try
             {
-                this.mYalvLogViewModel.LogEntryRows.SaveColumnsLayout(this.mLayoutFileName);
+                this._yalvLogViewModel.LogEntryRows.SaveColumnsLayout(this._layoutFileName);
             }
             catch (Exception exp)
             {
@@ -215,7 +216,7 @@ namespace YALV.ViewModel
         #region Commands
         protected virtual object CommandExitExecute(object parameter)
         {
-            this.mCallingWin.Close();
+            this._callingWin.Close();
             return null;
         }
 
@@ -235,7 +236,7 @@ namespace YALV.ViewModel
 
             if (dlg.ShowDialog().GetValueOrDefault() == true)
             {
-                this.mYalvLogViewModel.LoadFiles(new List<string>(dlg.FileNames));
+                this._yalvLogViewModel.LoadFiles(new List<string>(dlg.FileNames));
          
 
                 this.RecentFileList.InsertFile(dlg.FileName);
@@ -253,7 +254,7 @@ namespace YALV.ViewModel
 
         protected virtual object CommandAboutExecute(object parameter)
         {
-            var win = new View.About() { Owner = this.mCallingWin as Window };
+            var win = new View.About() { Owner = this._callingWin as Window };
             win.ShowDialog();
 
             return null;
@@ -270,13 +271,24 @@ namespace YALV.ViewModel
                 saveFileDialog.ShowDialog();
                 if(saveFileDialog.FileName != string.Empty)
                 {
-                    new LogAnalysisWorkspaceExporter(saveFileDialog.FileName).Export(workspace);
+                    YalvLogViewModel.ManageRepositoriesViewModel.IsLoading = true;
+                    var exporter = new LogAnalysisWorkspaceExporter(saveFileDialog.FileName);
+                    exporter.ExportResultEvent += exporterResultEvent;
+                    exporter.Export(workspace);
                 }
                
             }else
                 MessageBox.Show("No Data to be exported !");
             
             return null;
+        }
+
+        private void exporterResultEvent(object sender, EventArgs e)
+        {
+            var exporter = ((LogAnalysisWorkspaceExporter) sender);
+            exporter.ExportResultEvent -= exporterResultEvent;
+            YalvLogViewModel.ManageRepositoriesViewModel.IsLoading = false;
+            Process.Start(@exporter.Directory);
         }
 
         protected virtual object CommandOpenSqliteDatabaseExecute(object parameter)
@@ -293,7 +305,7 @@ namespace YALV.ViewModel
 
             if (dlg.ShowDialog().GetValueOrDefault() == true)
             {
-                this.mYalvLogViewModel.LoadSqliteDatabase(dlg.FileName);
+                this._yalvLogViewModel.LoadSqliteDatabase(dlg.FileName);
                 this.RecentFileList.InsertFile(dlg.FileName);
                 this.UpdateJumpList();
             }
@@ -315,7 +327,7 @@ namespace YALV.ViewModel
 
             if (dlg.ShowDialog().GetValueOrDefault() == true)
             {
-                this.mYalvLogViewModel.LoadLogAnalysisSession(dlg.FileName);
+                this._yalvLogViewModel.LoadLogAnalysisSession(dlg.FileName);
                 this.RecentFileList.InsertFile(dlg.FileName);
                 this.UpdateJumpList();
             }
@@ -325,8 +337,8 @@ namespace YALV.ViewModel
 
         protected override void OnDispose()
         {
-            if (this.mYalvLogViewModel != null)
-                this.mYalvLogViewModel.Dispose();
+            if (this._yalvLogViewModel != null)
+                this._yalvLogViewModel.Dispose();
 
             base.OnDispose();
         }

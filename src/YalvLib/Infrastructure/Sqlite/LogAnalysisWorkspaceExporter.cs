@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
@@ -8,7 +9,6 @@ using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using YalvLib.Infrastructure.Mappings;
 using YalvLib.Model;
-using YalvLib.Strings;
 
 namespace YalvLib.Infrastructure.Sqlite
 {
@@ -28,41 +28,78 @@ namespace YalvLib.Infrastructure.Sqlite
             _path = path;
         }
 
+        public string Directory
+        {
+            get { return Path.GetDirectoryName(_path); }
+        }
+
+        /// <summary>
+        /// Build a session based on mapping
+        /// </summary>
+        /// <returns></returns>
+        public ISessionFactory BuildFactory()
+        {
+            foreach(var repo in YalvRegistry.Instance.ActualWorkspace.SourceRepositories)
+            {
+                repo.Uid = Guid.Empty;
+                foreach (var entry in repo.LogEntries)
+                {
+                    entry.Uid = Guid.Empty;
+                }
+            }
+            foreach (var analyse in YalvRegistry.Instance.ActualWorkspace.Analyses)
+            {
+                analyse.Uid = Guid.Empty;
+                foreach(var markers in analyse.Markers)
+                {
+                    markers.Uid = Guid.Empty;
+                }
+            }
+            
+            ISessionFactory sessionFactory = Fluently.Configure()
+                .Database(SQLiteConfiguration.Standard.UsingFile(_path))
+                .Mappings(m =>
+                {
+                    m.FluentMappings.Add
+                        <LogAnalysisWorkspaceMapping>();
+                    m.FluentMappings.Add
+                        <LogAnalysisMapping>();
+                    m.FluentMappings.Add
+                        <LogEntryFileRepositoryMapping>();
+                    m.FluentMappings.Add
+                        <LogEntryRepositoryMapping>();
+                    m.FluentMappings.Add
+                        <TextMarkerMapping>();
+                    m.FluentMappings.Add
+                        <LogEntryMapping>();
+                })
+                .ExposeConfiguration(BuildSchema)
+                .BuildSessionFactory();
+            return sessionFactory;
+        }
+
         /// <summary>
         /// Map and export the logAnalysis workspaces to a SQLite database
         /// </summary>
         /// <param name="logWorkspace">Log Analysis workspace to export</param>
         public void Export(LogAnalysisWorkspace logWorkspace)
         {
-            ISessionFactory sessionFactory = Fluently.Configure()
-                .Database(SQLiteConfiguration.Standard.UsingFile(_path))
-                .Mappings(m =>
-                              {
-                                  m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();
-                                  m.FluentMappings.Add<LogAnalysisMapping>();
-                                  m.FluentMappings.Add<LogEntryFileRepositoryMapping>();
-                                  m.FluentMappings.Add<LogEntryRepositoryMapping>();
-                                  m.FluentMappings.Add<TextMarkerMapping>();
-                                  m.FluentMappings.Add<LogEntryMapping>();
-                              })
-                .ExposeConfiguration(BuildSchema)
-                .BuildSessionFactory();
-
-            using (ISession session = sessionFactory.OpenSession())
+            var cancelToken = new CancellationToken(true);
+            Task taskToComplete = Task.Factory.StartNew(obj =>
             {
-                using (ITransaction transaction = session.BeginTransaction())
+                ISessionFactory factory = BuildFactory();
+                using (ISession session = factory.OpenSession())
                 {
-                    session.SaveOrUpdate(logWorkspace);
-                    transaction.Commit();
-                    if (transaction.WasCommitted)
+                    using (
+                        ITransaction transaction =
+                            session.BeginTransaction())
                     {
-                        transaction.Dispose();
-                        session.Close();
+                        session.SaveOrUpdate(logWorkspace);
+                        transaction.Commit();
                     }
                 }
-            }
-            sessionFactory.Close();
-            MessageBox.Show(Resources.GlobalHelper_ExportDone_Text);
+                factory.Close();
+            }, cancelToken).ContinueWith(ant => ReportExportComplete());
         }
 
         private void BuildSchema(Configuration config)
@@ -75,6 +112,22 @@ namespace YalvLib.Infrastructure.Sqlite
             // and exports a database schema from it
             new SchemaExport(config)
                 .Create(true, true);
+        }
+
+        /// <summary>
+        /// Event raised when the export is done
+        /// </summary>
+        public event EventHandler ExportResultEvent;
+
+        /// <summary>
+        /// Report the asynchronous task as having completed
+        /// </summary>
+        private void ReportExportComplete()
+        {
+            if (ExportResultEvent != null)
+            {
+                ExportResultEvent(this, null);
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using YalvLib.Common;
 using YalvLib.Infrastructure.Sqlite;
 using YalvLib.Model;
@@ -134,26 +135,26 @@ namespace YalvLib.ViewModel
         private void OnRepositoryDeleted(object sender, EventArgs e)
         {
             var repo = sender as RepositoryViewModel;
-      if (repo != null)
-      {
-        //If we delete a repository we have to remove the textmarkers linked to the entries contained in this repository
-        foreach (var entry in repo.Repository.LogEntries)
-        {
-          foreach (var textmarker in YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.TextMarkers)
-          {
-            if (textmarker.LogEntries.Contains(entry))
+            if (repo != null)
             {
-              textmarker.LogEntries.Remove(entry);
-              if (!textmarker.LogEntries.Any())
-                YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.TextMarkers.Remove(textmarker);
+                //If we delete a repository we have to remove the textmarkers linked to the entries contained in this repository
+                foreach (LogEntry entry in repo.Repository.LogEntries)
+                {
+                    foreach (TextMarker textmarker in YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.TextMarkers)
+                    {
+                        if (textmarker.LogEntries.Contains(entry))
+                        {
+                            textmarker.LogEntries.Remove(entry);
+                            if (!textmarker.LogEntries.Any())
+                                YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.TextMarkers.Remove(textmarker);
+                        }
+                    }
+                }
+                YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Remove(repo.Repository);
+                Repositories.Remove(repo);
+                ActiveChanged(this, null); // The active didnt changed but it just refresh the view
             }
-          }
         }
-        YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Remove(repo.Repository);
-            Repositories.Remove(repo);
-        ActiveChanged(this, null); // The active didnt changed but it just refresh the view
-        }
-    }
 
         private void OnActiveChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
@@ -225,7 +226,10 @@ namespace YalvLib.ViewModel
                             MessageBox.Show(Resources.GlobalHelper_RepositoryAlreadyExists_Error_Text);
                         }
                     }
-                    UpdateWorkspace(listRepo);
+                    foreach (LogEntryRepository logEntryRepository in listRepo)
+                    {
+                        YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Add(logEntryRepository);
+                    }
                 }
             }
             catch (Exception exception)
@@ -235,105 +239,99 @@ namespace YalvLib.ViewModel
                 MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
                                 MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-    }
+        }
 
-    /// <summary>
-    /// Load the list of files with the given provider type.
-    /// Update the repository list 
-    /// </summary>
-    /// <param name="paths">Paths of the files</param>
-    /// <param name="providerType">Type of the provider for the given files</param>
-    /// <param name="cancelToken"></param>
-    /// <param name="vm"></param>
-    public static bool LoadFiles(List<string> paths,
-                                 EntriesProviderType providerType,
-                                 ManageRepositoryViewModel vm,
-                                 CancellationToken cancelToken)
-    {
-      try
-      {
-        vm.ProviderType = providerType;
-        if (vm.ProviderType.Equals(EntriesProviderType.Yalv))
+        /// <summary>
+        /// Load the list of files with the given provider type.
+        /// Update the repository list 
+        /// </summary>
+        /// <param name="paths">Paths of the files</param>
+        /// <param name="providerType">Type of the provider for the given files</param>
+        /// <param name="cancelToken"></param>
+        /// <param name="vm"></param>
+        public static bool LoadFiles(List<string> paths,
+                                     EntriesProviderType providerType,
+                                     ManageRepositoryViewModel vm,
+                                     CancellationToken cancelToken)
         {
-          LogAnalysisWorkspace loadedWorkspace = new LogAnalysisWorkspaceLoader(paths.ElementAt(0)).Load();
-
-          YalvRegistry.Instance.SetActualLogAnalysisWorkspace(loadedWorkspace);
-
-          if (cancelToken != null)
-            cancelToken.ThrowIfCancellationRequested();
-
-          YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis =
-              YalvRegistry.Instance.ActualWorkspace.Analyses.First();
-
-          if (cancelToken != null)
-            cancelToken.ThrowIfCancellationRequested();
-
-          vm._repositories.Clear();
-
-          vm.AddRepositories(YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());
-        }
-        else
-        {
-          var listRepo = new List<LogEntryRepository>();
-          List<string> reposPath = vm.Repositories.Select(x => x.Repository.Path).ToList();
-
-          foreach (string path in paths)
-          {
-            if (cancelToken != null)
-              cancelToken.ThrowIfCancellationRequested();
-
-            if (!File.Exists(path))
+            try
             {
-              MessageBox.Show(Resources.GlobalHelper_CantAccessFile_Error_Text, path);
-              return false;
-        }
+                vm.ProviderType = providerType;
+                if (vm.ProviderType.Equals(EntriesProviderType.Yalv))
+                {
+                    LogAnalysisWorkspace loadedWorkspace = new LogAnalysisWorkspaceLoader(paths.ElementAt(0)).Load();
 
-            // If this is the first file or the file hasnt be loaded yet, we can add it to the repo
-            if ((vm.Repositories.Any() && !reposPath.Contains(path)) || !vm.Repositories.Any())
-            {
-              listRepo.Add(vm.CreateLogFileEntryRepository(path));
+                    YalvRegistry.Instance.ActualWorkspace = (loadedWorkspace);
+
+                    if (cancelToken != null)
+                        cancelToken.ThrowIfCancellationRequested();
+
+                    YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis =
+                        YalvRegistry.Instance.ActualWorkspace.Analyses.First();
+
+                    if (cancelToken != null)
+                        cancelToken.ThrowIfCancellationRequested();
+
+
+                    Application.Current.Dispatcher.Invoke(
+                        DispatcherPriority.Normal,
+                        (Action) delegate
+                                     {
+                                         vm._repositories.Clear();
+
+                                         vm.AddRepositories(
+                                             YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());
+                                     });
+                }
+                else
+                {
+                    var listRepo = new List<LogEntryRepository>();
+                    List<string> reposPath = vm.Repositories.Select(x => x.Repository.Path).ToList();
+
+                    foreach (string path in paths)
+                    {
+                        if (cancelToken != null)
+                            cancelToken.ThrowIfCancellationRequested();
+
+                        if (!File.Exists(path))
+                        {
+                            MessageBox.Show(Resources.GlobalHelper_CantAccessFile_Error_Text, path);
+                            return false;
+                        }
+
+                        // If this is the first file or the file hasnt be loaded yet, we can add it to the repo
+                        if ((vm.Repositories.Any() && !reposPath.Contains(path)) || !vm.Repositories.Any())
+                        {
+                            listRepo.Add(vm.CreateLogFileEntryRepository(path));
+                        }
+                        else
+                        {
+                            MessageBox.Show(Resources.GlobalHelper_RepositoryAlreadyExists_Error_Text);
+                        }
+                    }
+
+                    vm.UpdateWorkspace(listRepo);
+
+                    return true;
+                }
             }
-            else
+            catch (Exception exception)
             {
-              MessageBox.Show(Resources.GlobalHelper_RepositoryAlreadyExists_Error_Text);
+                string message = string.Format(Resources.GlobalHelper_ParseLogFile_Error_Text, paths,
+                                               exception.Message);
+                MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
+                                MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-          }
 
-          vm.UpdateWorkspace(listRepo);
-
-          return true;
+            return false;
         }
-      }
-      catch (Exception exception)
-      {
-        string message = string.Format(Resources.GlobalHelper_ParseLogFile_Error_Text, paths,
-                                       exception.Message);
-        MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
-                        MessageBoxButton.OK, MessageBoxImage.Exclamation);
-      }
 
-      return false;
-    }
-
-        private List<LogEntryRepository> CheckRepositoriesValidity(LogAnalysisWorkspace loadedWorkspace)
-        {
-            var invalidRepos = new List<LogEntryRepository>();
-            foreach (LogEntryRepository loadedRepo in loadedWorkspace.SourceRepositories)
-            {
-                if (YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Contains(loadedRepo))
-                    invalidRepos.Add(loadedRepo);
-            }
-            return invalidRepos;
-        }
 
         private void UpdateWorkspace(List<LogEntryRepository> repositories)
         {
-      System.Windows.Application.Current.Dispatcher.Invoke(
-      System.Windows.Threading.DispatcherPriority.Normal,
-      (Action)delegate
-      {
-        this.AddRepositories(repositories);
-      });
+            Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Normal,
+                (Action) delegate { AddRepositories(repositories); });
 
             foreach (LogEntryRepository logEntryRepository in repositories)
             {

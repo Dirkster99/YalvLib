@@ -67,7 +67,7 @@ namespace YalvLib.Model
         /// <param name="workspace"></param>
         public void SetActualLogAnalysisWorkspace(LogAnalysisWorkspace workspace)
         {
-            if (_workspaces.Count == 1 && !_workspaces[0].LogEntries.Any())
+            if (_workspaces.Count == 1 && _workspaces[0] != null && !_workspaces[0].LogEntries.Any())
             {
                 _workspaces[0] = workspace;
             }

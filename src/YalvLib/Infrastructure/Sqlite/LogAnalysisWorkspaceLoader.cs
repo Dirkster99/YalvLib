@@ -45,8 +45,7 @@ namespace YalvLib.Infrastructure.Sqlite
                               })
                 .ExposeConfiguration(BuildSchema)
                 .BuildSessionFactory();
-
-            LogAnalysisWorkspace logAnalysisWorkspace = null;
+                LogAnalysisWorkspace logAnalysisWorkspace = null;
             using (ISession session = sessionFactory.OpenSession())
             {
                 using (ITransaction transaction = session.BeginTransaction())

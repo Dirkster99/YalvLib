@@ -59,6 +59,6 @@ namespace YalvLib.Model
         /// <summary>
         /// Get/Set the Uid
         /// </summary>
-        public Guid Uid { get; protected set; }
+        public Guid Uid { get; set; }
     }
 }

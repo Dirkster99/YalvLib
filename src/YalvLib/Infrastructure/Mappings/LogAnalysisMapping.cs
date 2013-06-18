@@ -15,7 +15,7 @@ namespace YalvLib.Infrastructure.Mappings
             Not.LazyLoad();
             Id(x => x.Uid).GeneratedBy.Guid();
 
-            HasMany(x => x.TextMarkers)
+            HasMany(x => x.TextMarkers).Not.LazyLoad()
                 .Cascade.All();
         }
 

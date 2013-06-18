@@ -22,6 +22,7 @@ namespace YalvLib.Tests.ViewModel
             _manageTextMarkers = new ManageTextMarkersViewModel();
             _entry = new LogEntry();
             YalvRegistry.Instance.SetActualLogAnalysisWorkspace(new LogAnalysisWorkspace());
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis = new LogAnalysis();
             
         }
 
