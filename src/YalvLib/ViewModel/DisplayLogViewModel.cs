@@ -1,4 +1,7 @@
-﻿namespace YalvLib.ViewModel
+﻿using System.Threading.Tasks;
+using System.Windows.Threading;
+
+namespace YalvLib.ViewModel
 {
     using System;
     using System.Collections.Generic;
@@ -808,6 +811,7 @@
         /// <param name="callbackOnFinishedparameter"></param>
         internal virtual void CommandRefreshExecute(EvaluateLoadResult callbackOnFinishedparameter)
         {
+            UpdateCounters();
         }
 
         /// <summary>
@@ -1127,19 +1131,25 @@
         /// <param name="repositories">Repositories containing the entries</param>
         public void SetEntries(List<RepositoryViewModel> repositories)
         {
-            RemoveAllItems();
-            foreach (var repo in repositories)
-            {
-                if (repo.Active)
-                {
-                    foreach (LogEntry entry in repo.Repository.LogEntries)
-                    {
-                        LogEntryRowViewModels.Add(new LogEntryRowViewModel(entry));
-                    }
-                }
-            }
-            UpdateCounters();
-            SelectedLogItem = LogEntryRowViewModels.Any() ? LogEntryRowViewModels.Last() : null;
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Normal,
+                (Action) delegate()
+                             {
+                                 RemoveAllItems();
+                                 foreach (var repo in repositories)
+                                 {
+                                     if (repo.Active)
+                                     {
+                                         foreach (LogEntry entry in repo.Repository.LogEntries)
+                                         {
+                                             LogEntryRowViewModels.Add(new LogEntryRowViewModel(entry));
+                                         }
+                                     }
+                                 }
+                                 SelectedLogItem = LogEntryRowViewModels.Any()
+                                                       ? LogEntryRowViewModels.Last()
+                                                       : null;
+                             });
         }
     }
 }

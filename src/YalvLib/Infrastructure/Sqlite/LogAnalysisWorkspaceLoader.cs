@@ -40,8 +40,8 @@ namespace YalvLib.Infrastructure.Sqlite
                                   m.FluentMappings.Add<LogAnalysisMapping>();
                                   m.FluentMappings.Add<LogEntryFileRepositoryMapping>();
                                   m.FluentMappings.Add<LogEntryRepositoryMapping>();
-                                  m.FluentMappings.Add<LogEntryMapping>();
                                   m.FluentMappings.Add<TextMarkerMapping>();
+                                  m.FluentMappings.Add<LogEntryMapping>();
                               })
                 .ExposeConfiguration(BuildSchema)
                 .BuildSessionFactory();

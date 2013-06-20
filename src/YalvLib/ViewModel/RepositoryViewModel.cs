@@ -22,10 +22,10 @@ namespace YalvLib.ViewModel
         /// <param name="repository"></param>
         public RepositoryViewModel(LogEntryRepository repository)
         {
-      this.Repository = repository;
-      this.Active = true;
-      this.CommandRemoveRepository = new CommandRelay(this.ExecuteRemoveRepository, this.CanExecuteRemoveRepository);
-      this.CommandActiveRepository = new CommandRelay(this.ExecuteChangeActiveRepository, this.CanExecuteChangeActiveRepository);
+              Repository = repository;
+              Active = true;
+              CommandRemoveRepository = new CommandRelay(ExecuteRemoveRepository, CanExecuteRemoveRepository);
+              CommandActiveRepository = new CommandRelay(ExecuteChangeActiveRepository, CanExecuteChangeActiveRepository);
         }
 
         /// <summary>

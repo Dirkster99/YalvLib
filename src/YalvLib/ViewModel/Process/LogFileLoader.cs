@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using YalvLib.Model;
 using YalvLib.Providers;
 
 namespace YalvLib.ViewModel.Process
@@ -95,6 +96,7 @@ namespace YalvLib.ViewModel.Process
                 _cancelTokenSource.Cancel();
         }
 
+
         /// <summary>
         /// Process a file load operation
         /// </summary>
@@ -103,10 +105,8 @@ namespace YalvLib.ViewModel.Process
         /// <param name="providerType"></param>
         /// <param name="vm"></param>
         /// <param name="async"></param>
-        internal void LoadFile(
-            Func<List<string>, EntriesProviderType, ManageRepositoryViewModel, CancellationToken, bool> execFunc,
-            List<string> paths, EntriesProviderType providerType,
-            ManageRepositoryViewModel vm, bool async)
+        internal void ExecuteAsynchronously(
+            Action execFunc, bool async)
         {
             SaveThreadContext(async);
 
@@ -115,7 +115,6 @@ namespace YalvLib.ViewModel.Process
 
             Task taskToProcess = Task.Factory.StartNew(stateObj =>
                                                            {
-                                                               _logFile = vm;
                                                                _abortedWithErrors = _abortedWithCancel = false;
                                                                _objColl = new Dictionary<string, object>();
 
@@ -125,7 +124,7 @@ namespace YalvLib.ViewModel.Process
                                                                try
                                                                {
                                                                    cancelToken.ThrowIfCancellationRequested();
-                                                                   execFunc(paths, providerType, _logFile, cancelToken);
+                                                                   execFunc();
                                                                    // processing task
                                                                }
                                                                catch (OperationCanceledException exp)
@@ -135,22 +134,13 @@ namespace YalvLib.ViewModel.Process
                                                                    string sStatus = exp.Message;
                                                                    // output: "User canceled..." ...
                                                                    results.Add(sStatus);
-
-                                                                   _logFile = new ManageRepositoryViewModel();
                                                                }
                                                                catch (Exception exp)
                                                                {
                                                                    _innerException = exp;
                                                                    _abortedWithErrors = true;
 
-                                                                   _logFile = new ManageRepositoryViewModel();
-
                                                                    results.Add(exp.ToString());
-                                                               }
-                                                               finally
-                                                               {
-                                                                   _logFile.IsLoading = false;
-                                                                   // Make sure that state engine has correct state
                                                                }
 
                                                                return results;
@@ -240,7 +230,7 @@ namespace YalvLib.ViewModel.Process
                 if (_abortedWithErrors == false && _abortedWithCancel == false)
                     LoadResultEvent(this, new ResultEvent("Execution succeeded", false, false, _objColl));
                 else
-                    LoadResultEvent(this, new ResultEvent("Execution was not succesfull", _abortedWithErrors,
+                    LoadResultEvent(this, new ResultEvent("Execution was not successfull", _abortedWithErrors,
                                                           _abortedWithCancel, _objColl, _innerException));
             }
         }

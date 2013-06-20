@@ -184,7 +184,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="paths">Paths of the files</param>
         /// <param name="providerType">Type of the provider for the given files</param>
-        public void LoadFiles(List<string> paths, EntriesProviderType providerType)
+       /* public void LoadFiles(List<string> paths, EntriesProviderType providerType)
         {
             try
             {
@@ -239,7 +239,7 @@ namespace YalvLib.ViewModel
                 MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
                                 MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-        }
+        }*/
 
         /// <summary>
         /// Load the list of files with the given provider type.
@@ -249,11 +249,12 @@ namespace YalvLib.ViewModel
         /// <param name="providerType">Type of the provider for the given files</param>
         /// <param name="cancelToken"></param>
         /// <param name="vm"></param>
-        public static bool LoadFiles(List<string> paths,
+        public void LoadFiles(List<string> paths,
                                      EntriesProviderType providerType,
-                                     ManageRepositoryViewModel vm,
-                                     CancellationToken cancelToken)
+                                     ManageRepositoryViewModel vm)
         {
+            var cancelTokenSource = new CancellationTokenSource();
+            var cancelToken = cancelTokenSource.Token;
             try
             {
                 vm.ProviderType = providerType;
@@ -296,7 +297,7 @@ namespace YalvLib.ViewModel
                         if (!File.Exists(path))
                         {
                             MessageBox.Show(Resources.GlobalHelper_CantAccessFile_Error_Text, path);
-                            return false;
+                            return;
                         }
 
                         // If this is the first file or the file hasnt be loaded yet, we can add it to the repo
@@ -311,8 +312,6 @@ namespace YalvLib.ViewModel
                     }
 
                     vm.UpdateWorkspace(listRepo);
-
-                    return true;
                 }
             }
             catch (Exception exception)
@@ -322,8 +321,6 @@ namespace YalvLib.ViewModel
                 MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
                                 MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-
-            return false;
         }
 
 

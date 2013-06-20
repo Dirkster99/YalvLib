@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using YalvLib.Common;
 using YalvLib.Common.Interfaces;
@@ -264,8 +265,13 @@ namespace YalvLib.ViewModel
             _fileLoader.LoadResultEvent += fileLoader_loadResultEvent;
             ManageRepositoriesViewModel.IsLoading = true;
 
-            _fileLoader.LoadFile(ManageRepositoryViewModel.LoadFiles,
-                                paths, EntriesProviderType.Xml, ManageRepositoriesViewModel, true);
+            _fileLoader.ExecuteAsynchronously(delegate()
+                                                  {
+                                                      ManageRepositoriesViewModel.LoadFiles(paths,
+                                                                                            EntriesProviderType.Xml,
+                                                                                            ManageRepositoriesViewModel);
+                                                  },
+                                     true);
         }
 
         /// <summary>
@@ -288,7 +294,7 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadSqliteDatabase(string path)
         {
-            ManageRepositoriesViewModel.LoadFiles(new List<string> {path}, EntriesProviderType.Sqlite);
+            //ManageRepositoriesViewModel.LoadFiles(new List<string> {path}, EntriesProviderType.Sqlite);
             LoadFinishedEvent(true);
         }
 
@@ -302,8 +308,8 @@ namespace YalvLib.ViewModel
             _fileLoader = new LogFileLoader();
             _fileLoader.LoadResultEvent += fileLoader_loadResultEvent;
             ManageRepositoriesViewModel.IsLoading = true;
-            _fileLoader.LoadFile(ManageRepositoryViewModel.LoadFiles,
-                                new List<string> {path}, EntriesProviderType.Yalv, ManageRepositoriesViewModel, true);
+           /* _fileLoader.LoadFile(ManageRepositoryViewModel.LoadFiles,
+                                new List<string> {path}, EntriesProviderType.Yalv, ManageRepositoriesViewModel, true);*/
         }
 
         /// <summary>
@@ -366,13 +372,23 @@ namespace YalvLib.ViewModel
         /// <param name="loadWasSuccessful"></param>
         private void LoadFinishedEvent(bool loadWasSuccessful)
         {
-            ManageRepositoriesViewModel.IsLoading = false;
-            LogEntryRows.SetEntries(ManageRepositoriesViewModel.Repositories.ToList());
-            RefreshCommandsCanExecute();
+            _fileLoader = new LogFileLoader();
+            _fileLoader.LoadResultEvent += RefreshCommandsCanExecute;
+            ManageRepositoriesViewModel.IsLoading = true;
+            _fileLoader.ExecuteAsynchronously(delegate
+                                                  {
+                                                      LogEntryRows.SetEntries(
+                                                          ManageRepositoriesViewModel.Repositories.ToList());
+                                                  }, true);
+
+  
         }
 
-        private void RefreshCommandsCanExecute()
+        private void RefreshCommandsCanExecute(object sender, LogFileLoader.ResultEvent resultEvent)
         {
+            _fileLoader.LoadResultEvent -= RefreshCommandsCanExecute;
+            _fileLoader = null;
+            ManageRepositoriesViewModel.IsLoading = false;
             CommandRefresh.CanExecute(null);
             CommandDelete.CanExecute(null);
             FilterYalvView.CanExecute(null);

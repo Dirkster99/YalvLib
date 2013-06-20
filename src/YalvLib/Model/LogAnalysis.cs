@@ -18,12 +18,7 @@ namespace YalvLib.Model
         /// </summary>
         public LogAnalysis()
         {
-            Markers = new List<AbstractMarker>
-                               {
-                                   new ColorMarker(Color.BlueViolet),
-                                   new ColorMarker(Color.Chocolate),
-                                   new ColorMarker(Color.CadetBlue)
-                               };
+            Markers = new List<AbstractMarker>();
         }
 
         /// <summary>-

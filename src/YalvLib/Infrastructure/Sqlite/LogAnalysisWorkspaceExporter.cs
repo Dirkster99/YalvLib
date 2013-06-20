@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
@@ -39,39 +42,17 @@ namespace YalvLib.Infrastructure.Sqlite
         /// <returns></returns>
         public ISessionFactory BuildFactory()
         {
-            foreach(var repo in YalvRegistry.Instance.ActualWorkspace.SourceRepositories)
-            {
-                repo.Uid = Guid.Empty;
-                foreach (var entry in repo.LogEntries)
-                {
-                    entry.Uid = Guid.Empty;
-                }
-            }
-            foreach (var analyse in YalvRegistry.Instance.ActualWorkspace.Analyses)
-            {
-                analyse.Uid = Guid.Empty;
-                foreach(var markers in analyse.Markers)
-                {
-                    markers.Uid = Guid.Empty;
-                }
-            }
             
             ISessionFactory sessionFactory = Fluently.Configure()
                 .Database(SQLiteConfiguration.Standard.UsingFile(_path))
                 .Mappings(m =>
                 {
-                    m.FluentMappings.Add
-                        <LogAnalysisWorkspaceMapping>();
-                    m.FluentMappings.Add
-                        <LogAnalysisMapping>();
-                    m.FluentMappings.Add
-                        <LogEntryFileRepositoryMapping>();
-                    m.FluentMappings.Add
-                        <LogEntryRepositoryMapping>();
-                    m.FluentMappings.Add
-                        <TextMarkerMapping>();
-                    m.FluentMappings.Add
-                        <LogEntryMapping>();
+                    m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();
+                    m.FluentMappings.Add<LogAnalysisMapping>();
+                    m.FluentMappings.Add<LogEntryFileRepositoryMapping>();
+                    m.FluentMappings.Add<LogEntryRepositoryMapping>();
+                    m.FluentMappings.Add<TextMarkerMapping>();
+                    m.FluentMappings.Add<LogEntryMapping>();
                 })
                 .ExposeConfiguration(BuildSchema)
                 .BuildSessionFactory();
@@ -101,6 +82,8 @@ namespace YalvLib.Infrastructure.Sqlite
                 factory.Close();
             }, cancelToken).ContinueWith(ant => ReportExportComplete());
         }
+
+
 
         private void BuildSchema(Configuration config)
         {
