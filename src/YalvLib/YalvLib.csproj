@@ -109,6 +109,7 @@
     <Compile Include="Model\RepositoryMerger.cs" />
     <Compile Include="Model\TextMarker.cs" />
     <Compile Include="Model\YalvRegistry.cs" />
+    <Compile Include="Providers\DetectEncoding.cs" />
     <Compile Include="Providers\EntriesProviderType.cs" />
     <Compile Include="Providers\FilterParams.cs" />
     <Compile Include="ViewModel\Common\BindSupport.cs" />

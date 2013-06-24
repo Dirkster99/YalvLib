@@ -39,9 +39,21 @@ namespace YalvLib.Providers
 
             XmlParserContext pc = new XmlParserContext(nt, mgr, "", XmlSpace.Default);
 
+
+            Encoding fileEncoding = Encoding.Default;
+
+            using (FileStream fs = new FileStream(dataSource, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (StreamReader reader = DetectEncoding.OpenStream(fs, Encoding.UTF8))
+                {
+                    // assign encoding after ReadToEnd() so that the StreamReader can autodetect the encoding
+                    fileEncoding = reader.CurrentEncoding;
+                }
+            }
+
             // Specifying encoding for the xml files
             // Still having some display issues on the dataGrid, special characters are not well displayed on it.
-            pc.Encoding = Encoding.UTF8;
+            pc.Encoding = fileEncoding;
 
             using (XmlReader xr = XmlReader.Create(dataSource, settings, pc))
             {

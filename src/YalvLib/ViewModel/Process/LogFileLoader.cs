@@ -99,7 +99,7 @@ namespace YalvLib.ViewModel.Process
 
 
         /// <summary>
-        /// Process a file load operation
+        /// Process an asynchronous function
         /// </summary>
         /// <param name="execFunc"></param>
         /// <param name="paths"></param>
@@ -114,36 +114,32 @@ namespace YalvLib.ViewModel.Process
             _cancelTokenSource = new CancellationTokenSource();
             CancellationToken cancelToken = _cancelTokenSource.Token;
 
-            Task taskToProcess = Task.Factory.StartNew<ObservableCollection<string>>(stateObj =>
+            Task taskToProcess = Task.Factory.StartNew(stateObj =>
                                                            {
                                                                _abortedWithErrors = _abortedWithCancel = false;
                                                                _objColl = new Dictionary<string, object>();
-                                                               ObservableCollection<string> _processResults = new ObservableCollection<string>();
+                                                               var processResults = new ObservableCollection<string>();
 
                                                                // This is not run on the UI thread.
-
-
                                                                try
                                                                {
                                                                    cancelToken.ThrowIfCancellationRequested();
                                                                    execFunc();
-                                                                   // processing task
                                                                }
                                                                catch (OperationCanceledException exp)
                                                                {
                                                                    _abortedWithCancel = true;
-                                                                   // output: "User canceled..." ...
-                                                                   _processResults.Add(exp.Message);
+                                                                   processResults.Add(exp.Message);
                                                                }
                                                                catch (Exception exp)
                                                                {
                                                                    _innerException = new ApplicationException("Error occured",exp);
                                                                    _abortedWithErrors = true;
 
-                                                                   _processResults.Add(exp.ToString());
+                                                                   processResults.Add(exp.ToString());
                                                                }
 
-                                                               return _processResults;
+                                                               return processResults;
                                                                // End of async task with summary list of result strings
                                                            },
                                                        cancelToken).ContinueWith(ant =>
@@ -156,9 +152,6 @@ namespace YalvLib.ViewModel.Process
                                                                                          {
                                                                                              _abortedWithErrors = true;
                                                                                          }
-                                                                                         ////finally
-                                                                                         ////{
-                                                                                         ////}
                                                                                      });
 
             if (async == false) // Execute 'synchronously' via wait/block method
@@ -274,7 +267,7 @@ namespace YalvLib.ViewModel.Process
                 _message = sMessage;
                 _error = bError;
                 _cancel = bCancel;
-                _innerException = (innerException == null ? null : innerException);
+                _innerException =  innerException;
                 _objColl = (objColl == null ? null : new Dictionary<string, object>(objColl));
             }
 
