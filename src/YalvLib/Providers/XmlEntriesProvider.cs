@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Xml.Linq;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using YalvLib.Infrastructure;
 using YalvLib.Infrastructure.Log4Net;
@@ -20,15 +21,18 @@ namespace YalvLib.Providers
     {
 
         private const string Log4jNs = "http://jakarta.apache.org/log4j";
+        private List<string> _xmlParserMess = new List<string>(); 
 
         public override IEnumerable<LogEntry> GetEntries(string dataSource, FilterParams filter)
         {
             List<LogEntry> entries = new List<LogEntry>();
+            LogEntry entry;
 
             XmlReaderSettings settings = new XmlReaderSettings()
             {
                 ConformanceLevel = ConformanceLevel.Fragment
             };
+            settings.ValidationEventHandler += settings_ValidationEventHandler;
             NameTable nt = new NameTable();
             XmlNamespaceManager mgr = new XmlNamespaceManager(nt);
             mgr.AddNamespace("log4j", Log4jNs);
@@ -46,7 +50,15 @@ namespace YalvLib.Providers
                     if (xr.NodeType == XmlNodeType.Element && xr.LocalName == "event")
                     {
                         Event log4jEvent = Deserialize(xr);
-                        LogEntry entry = Event2LogEntry.Convert(log4jEvent);
+                        try
+                        {
+                             entry = Event2LogEntry.Convert(log4jEvent);
+                        }catch(Exception ex)
+                        {
+                            IXmlLineInfo xmlInfo = (IXmlLineInfo) xr;
+                            throw new Exception(string.Format("Error parsing file {0}, on line number {1}, on position {2}",dataSource, xmlInfo.LineNumber, xmlInfo.LinePosition), ex);
+                        }
+                        
                         entries.Add(entry);
                         // [FT] We may need that in the future.
                         //        if (filterByParameters(entry, filter))
@@ -57,7 +69,24 @@ namespace YalvLib.Providers
                     }
                 }
             }
+            settings.ValidationEventHandler -= settings_ValidationEventHandler;
             return entries;
+        }
+
+        private void settings_ValidationEventHandler(object sender, ValidationEventArgs e)
+        {
+            switch(e.Severity)
+            {
+                case XmlSeverityType.Warning: _xmlParserMess.Add(string.Format("Warning : line {0}, Position {1} \n {2}", 
+                    e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
+                    break;
+                case XmlSeverityType.Error: _xmlParserMess.Add(string.Format("Error : line {0}, Position {1} \n {2}",
+                     e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
+                    break;
+                default: _xmlParserMess.Add(string.Format("Unhandled severity type : {0} {1}",
+                    e.Severity, e.Exception.Message));
+                    break;
+            }
         }
 
         private static Event Deserialize(XmlReader reader)

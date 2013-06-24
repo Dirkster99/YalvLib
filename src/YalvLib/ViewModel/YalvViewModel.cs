@@ -284,8 +284,18 @@ namespace YalvLib.ViewModel
         {
             _fileLoader.LoadResultEvent -= fileLoader_loadResultEvent;
             _fileLoader = null;
-
-            LoadFinishedEvent(true);
+            ManageRepositoriesViewModel.IsLoading = false;
+            if(e.InnerException != null)
+            {
+                ApplicationException exp = new ApplicationException(e.Message, e.InnerException)
+                                               {Source = "LoadFileLoader"};
+                exp.Data.Add("Process cancelled?", e.Cancel.ToString());
+                MessageBox.Show(string.Format("Exception : {0} \n {1}", exp, e.Error), Resources.GlobalHelper_ParseLogFile_Error_Title,
+                                MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                LoadFinishedEvent(false);
+            }
+            else { LoadFinishedEvent(true); }
+            
         }
 
         /// <summary>
@@ -308,8 +318,12 @@ namespace YalvLib.ViewModel
             _fileLoader = new LogFileLoader();
             _fileLoader.LoadResultEvent += fileLoader_loadResultEvent;
             ManageRepositoriesViewModel.IsLoading = true;
-           /* _fileLoader.LoadFile(ManageRepositoryViewModel.LoadFiles,
-                                new List<string> {path}, EntriesProviderType.Yalv, ManageRepositoriesViewModel, true);*/
+            _fileLoader.ExecuteAsynchronously(delegate()
+                {
+                ManageRepositoriesViewModel.LoadFiles(new List<string>(){path},
+                                                      EntriesProviderType.Yalv,
+                                                      ManageRepositoriesViewModel);
+                },true);
         }
 
         /// <summary>
@@ -372,16 +386,17 @@ namespace YalvLib.ViewModel
         /// <param name="loadWasSuccessful"></param>
         private void LoadFinishedEvent(bool loadWasSuccessful)
         {
-            _fileLoader = new LogFileLoader();
-            _fileLoader.LoadResultEvent += RefreshCommandsCanExecute;
-            ManageRepositoriesViewModel.IsLoading = true;
-            _fileLoader.ExecuteAsynchronously(delegate
-                                                  {
-                                                      LogEntryRows.SetEntries(
-                                                          ManageRepositoriesViewModel.Repositories.ToList());
-                                                  }, true);
-
-  
+            if (loadWasSuccessful)
+            {
+                _fileLoader = new LogFileLoader();
+                _fileLoader.LoadResultEvent += RefreshCommandsCanExecute;
+                ManageRepositoriesViewModel.IsLoading = true;
+                _fileLoader.ExecuteAsynchronously(delegate
+                                                      {
+                                                          LogEntryRows.SetEntries(
+                                                              ManageRepositoriesViewModel.Repositories.ToList());
+                                                      }, true);
+            }
         }
 
         private void RefreshCommandsCanExecute(object sender, LogFileLoader.ResultEvent resultEvent)

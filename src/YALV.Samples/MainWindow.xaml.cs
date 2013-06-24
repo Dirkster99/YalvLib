@@ -17,7 +17,7 @@
     {
       Random r = new Random();
 
-      for (int i = 0; i < 5000; i++)
+      for (int i = 0; i < 10000; i++)
       {
         int value = r.Next(13);
 
@@ -63,7 +63,7 @@
 
     private void method2()
     {
-      LogService.Trace.Info("This is an information message");
+        LogService.Trace.Info("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nisi non ipsum vulputate viverra non a felis. Suspendisse potenti. Maecenas lorem urna, imperdiet in ultricies vulputate, pulvinar ac erat. Phasellus magna urna, dictum vel neque sed, mattis condimentum erat. Suspendisse tristique tincidunt justo, id sagittis orci faucibus at. Vestibulum vitae pharetra ipsum. Phasellus at orci eu urna consectetur consectetur. Suspendisse diam velit, tristique vitae mi molestie, cursus fringilla arcu. Donec porttitor erat mi, sit amet fringilla libero sollicitudin eget. Curabitur varius elit vitae hendrerit lobortis. Suspendisse potenti.");
     }
 
     private void method3()
@@ -78,7 +78,13 @@
 
     private void method5()
     {
-      LogService.Trace.Fatal("This is a fatal message!", new Exception("Warning Exception!"));
+      LogService.Trace.Fatal("Ut tincidunt, dolor ut egestas porttitor, mauris metus volutpat ante, tristique ornare metus tortor non velit. Ut egestas ultricies ipsum, quis semper sem blandit eu. " +
+                             "Pellentesque at elementum nisi. Nulla dignissim nisi enim, et porta dolor faucibus id. Praesent et justo nec felis accumsan gravida et eu mauris. " +
+                             "Sed turpis urna, sagittis vel est et, molestie viverra sapien. Ut sed ultricies quam. Cras ultricies mi sem, et pharetra orci sodales in. Vivamus vulputate " +
+                             "aliquam lacus, sit amet commodo ipsum accumsan eget. Etiam dictum accumsan turpis, ac pellentesque velit aliquet id. Praesent velit sapien, lacinia nec magna et, commodo semper sem. Nunc lobortis diam non semper porta" +
+                             "Maecenas lectus purus, molestie quis pellentesque sed, sollicitudin at ligula. Curabitur quis nisl dui. In feugiat luctus tincidunt. Nam porta commodo lectus vel commodo. Aenean lobortis leo libero, vitae facilisis " +
+                             "nisi facilisis sit amet. Ut condimentum viverra augue, eu accumsan libero rutrum eget. Nunc aliquam sem vitae enim dapibus pretium. Duis gravida tortor elit, quis ornare tortor sodales quis. Proin sit amet lacinia nisl, " +
+                             "at ullamcorper erat. Cras id risus in nisi ornare auctor. Proin condimentum libero vitae vulputate sollicitudin. Fusce justo odio, dapibus nec elementum quis, rutrum eleifend turpis.", new Exception("Warning Exception!"));
     }
   }
 }

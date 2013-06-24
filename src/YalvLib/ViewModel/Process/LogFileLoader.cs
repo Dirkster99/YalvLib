@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Threading;
 using YalvLib.Model;
 using YalvLib.Providers;
@@ -25,7 +26,7 @@ namespace YalvLib.ViewModel.Process
         private bool _abortedWithErrors;
         private CancellationTokenSource _cancelTokenSource;
 
-        private Exception _innerException;
+        private ApplicationException _innerException;
         private ManageRepositoryViewModel _logFile;
         private Dictionary<string, object> _objColl;
 
@@ -77,7 +78,7 @@ namespace YalvLib.ViewModel.Process
             }
         }
 
-        protected Exception InnerException
+        protected ApplicationException InnerException
         {
             get { return _innerException; }
             set { _innerException = value; }
@@ -113,13 +114,14 @@ namespace YalvLib.ViewModel.Process
             _cancelTokenSource = new CancellationTokenSource();
             CancellationToken cancelToken = _cancelTokenSource.Token;
 
-            Task taskToProcess = Task.Factory.StartNew(stateObj =>
+            Task taskToProcess = Task.Factory.StartNew<ObservableCollection<string>>(stateObj =>
                                                            {
                                                                _abortedWithErrors = _abortedWithCancel = false;
                                                                _objColl = new Dictionary<string, object>();
+                                                               ObservableCollection<string> _processResults = new ObservableCollection<string>();
 
                                                                // This is not run on the UI thread.
-                                                               var results = new ObservableCollection<string>();
+
 
                                                                try
                                                                {
@@ -130,20 +132,18 @@ namespace YalvLib.ViewModel.Process
                                                                catch (OperationCanceledException exp)
                                                                {
                                                                    _abortedWithCancel = true;
-
-                                                                   string sStatus = exp.Message;
                                                                    // output: "User canceled..." ...
-                                                                   results.Add(sStatus);
+                                                                   _processResults.Add(exp.Message);
                                                                }
                                                                catch (Exception exp)
                                                                {
-                                                                   _innerException = exp;
+                                                                   _innerException = new ApplicationException("Error occured",exp);
                                                                    _abortedWithErrors = true;
 
-                                                                   results.Add(exp.ToString());
+                                                                   _processResults.Add(exp.ToString());
                                                                }
 
-                                                               return results;
+                                                               return _processResults;
                                                                // End of async task with summary list of result strings
                                                            },
                                                        cancelToken).ContinueWith(ant =>
@@ -247,7 +247,7 @@ namespace YalvLib.ViewModel.Process
 
             private readonly bool _cancel;
             private readonly bool _error;
-            private readonly Exception _innerException;
+            private readonly ApplicationException _innerException;
             private readonly string _message;
             private readonly Dictionary<string, object> _objColl;
 
@@ -269,7 +269,7 @@ namespace YalvLib.ViewModel.Process
                                bool bError,
                                bool bCancel,
                                Dictionary<string, object> objColl = null,
-                               Exception innerException = null)
+                               ApplicationException innerException = null)
             {
                 _message = sMessage;
                 _error = bError;
@@ -315,7 +315,7 @@ namespace YalvLib.ViewModel.Process
             /// Get property to determine whether there is an innerException to
             /// document an abortion with errors.
             /// </summary>
-            public Exception InnerException
+            public ApplicationException InnerException
             {
                 get { return _innerException; }
             }

@@ -37,7 +37,13 @@ namespace YalvLib.Infrastructure.Log4Net
             
             _logEntry.Class = _log4jEvent.LocationInfo.Class;
             _logEntry.File = _log4jEvent.LocationInfo.File;
-            _logEntry.Line = System.Convert.ToUInt32(_log4jEvent.LocationInfo.Line);
+            try
+            {
+                _logEntry.Line = System.Convert.ToUInt32(_log4jEvent.LocationInfo.Line);
+            }catch(Exception ex)
+            {
+                throw new Exception("Error converting line number field from log4j file", ex);
+            }
             _logEntry.Method = _log4jEvent.LocationInfo.Method;
 
             _logEntry.App = _log4jEvent.Properties.First(x => x.Name.Equals(Log4jConverter.AppKey)).Value;

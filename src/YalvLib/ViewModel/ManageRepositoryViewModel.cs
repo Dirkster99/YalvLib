@@ -318,8 +318,9 @@ namespace YalvLib.ViewModel
             {
                 string message = string.Format(Resources.GlobalHelper_ParseLogFile_Error_Text, paths,
                                                exception.Message);
-                MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
-                                MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                /*MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
+                                MessageBoxButton.OK, MessageBoxImage.Exclamation);*/
+                throw new Exception(message, exception);
             }
         }
 
