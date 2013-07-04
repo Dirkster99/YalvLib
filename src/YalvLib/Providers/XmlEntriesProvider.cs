@@ -1,7 +1,9 @@
-﻿using System.Text;
+﻿using System.Diagnostics.Eventing.Reader;
+using System.Text;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using YalvLib.Exceptions;
 using YalvLib.Infrastructure;
 using YalvLib.Infrastructure.Log4Net;
 using YalvLib.Model;
@@ -82,6 +84,10 @@ namespace YalvLib.Providers
                 }
             }
             settings.ValidationEventHandler -= settings_ValidationEventHandler;
+            if(entries.Count == 0)
+            {
+                throw new NotValidValueException("No valid entries were found. Please check your data file.");
+            }
             return entries;
         }
 

@@ -56,7 +56,7 @@ namespace YalvLib.ViewModel
 
         private readonly ColumnsViewModel mDataGridColumns;
 
-        private ObservableCollection<LogEntryRowViewModel> _RowViewModels;
+        private ObservableCollection<LogEntryRowViewModel> _rowViewModels;
         private EvaluateLoadResult loadResultCallback = null;
 
         private string mGoToLogItemId;
@@ -126,7 +126,7 @@ namespace YalvLib.ViewModel
         public void OnMarkerDeleteExecuted(object obj, TextMarkerEventArgs e)
         {
             TextMarker marker = e.TextMarker;
-            foreach (LogEntryRowViewModel row in _RowViewModels)
+            foreach (LogEntryRowViewModel row in _rowViewModels)
             {
                 if (marker.LogEntries.Contains(row.Entry))
                 {
@@ -175,7 +175,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         internal bool HasData
         {
-            get { return (_RowViewModels != null && (_RowViewModels.Count != 0)); }
+            get { return (_rowViewModels != null && (_rowViewModels.Count != 0)); }
         }
 
         /// <summary>
@@ -184,9 +184,9 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ObservableCollection<LogEntryRowViewModel> LogEntryRowViewModels
         {
-            get { return _RowViewModels; }
+            get { return _rowViewModels; }
 
-            set { _RowViewModels = value; }
+            set { _rowViewModels = value; }
         }
 
         #region LogProperties

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using YalvLib.Common;
 using YalvLib.Common.Interfaces;
@@ -24,6 +23,7 @@ namespace YalvLib.ViewModel
         private readonly DisplayLogViewModel _logEntryRows;
         private readonly ManageRepositoryViewModel _manageRepoViewModel;
         private readonly ManageTextMarkersViewModel _manageTextMarkersViewModel;
+        private FilterConverterViewModel _filterViewModel;
 
         private string _calculatedDelta;
         private LogFileLoader _fileLoader;
@@ -43,6 +43,7 @@ namespace YalvLib.ViewModel
 
             _logAnalysis = new LogAnalysis();
             YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis = _logAnalysis;
+            _filterViewModel = new FilterConverterViewModel(_logAnalysis);
 
             _logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
 
@@ -57,6 +58,9 @@ namespace YalvLib.ViewModel
                                                         _manageTextMarkersViewModel.CommandUpdateTextMarkersCanExecute);
 
             CommandUpdateDelta = new CommandRelay(CommandUpdateDeltaExecute, CommandUpdateDeltaCanExecute);
+            CommandApplyFilter = new CommandRelay(CommandApplyFilterExecute, CommandApplyFilterCanExecute);
+            CommandResetFilter = new CommandRelay(CommandResetFilterExecute, CommandResetFilterCanExecute);
+
         }
 
         private bool CommandCancelProcessing_CanExecute(object obj)
@@ -161,6 +165,14 @@ namespace YalvLib.ViewModel
             get { return _manageRepoViewModel; }
         }
 
+        /// <summary>
+        /// Getter of the FilterViewModel
+        /// </summary>
+        public FilterConverterViewModel FilterViewModel
+        {
+            get { return _filterViewModel; }
+        }
+
 
         /// <summary>
         /// Get the Display Text Marker instance
@@ -214,6 +226,10 @@ namespace YalvLib.ViewModel
         public ICommandAncestor CommandDelete { get; protected set; }
 
 
+        public ICommandAncestor CommandApplyFilter { get; protected set; }
+
+        public ICommandAncestor CommandResetFilter { get; protected set; }
+
         /// <summary>
         /// UpdateTextMarkers Command
         /// </summary>
@@ -265,13 +281,13 @@ namespace YalvLib.ViewModel
             _fileLoader.LoadResultEvent += fileLoader_loadResultEvent;
             ManageRepositoriesViewModel.IsLoading = true;
 
-            _fileLoader.ExecuteAsynchronously(delegate()
+            _fileLoader.ExecuteAsynchronously(delegate
                                                   {
                                                       ManageRepositoriesViewModel.LoadFiles(paths,
                                                                                             EntriesProviderType.Xml,
                                                                                             ManageRepositoriesViewModel);
                                                   },
-                                     true);
+                                              true);
         }
 
         /// <summary>
@@ -285,17 +301,20 @@ namespace YalvLib.ViewModel
             _fileLoader.LoadResultEvent -= fileLoader_loadResultEvent;
             _fileLoader = null;
             ManageRepositoriesViewModel.IsLoading = false;
-            if(e.InnerException != null)
+            if (e.InnerException != null)
             {
-                ApplicationException exp = new ApplicationException(e.Message, e.InnerException)
-                                               {Source = "LoadFileLoader"};
+                var exp = new ApplicationException(e.Message, e.InnerException)
+                              {Source = "LoadFileLoader"};
                 exp.Data.Add("Process cancelled?", e.Cancel.ToString());
-                MessageBox.Show(string.Format("Exception : {0} \n {1}", exp, e.Error), Resources.GlobalHelper_ParseLogFile_Error_Title,
+                MessageBox.Show(string.Format("Exception : {0} \n {1}", exp, e.Error),
+                                Resources.GlobalHelper_ParseLogFile_Error_Title,
                                 MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 LoadFinishedEvent(false);
             }
-            else { LoadFinishedEvent(true); }
-            
+            else
+            {
+                LoadFinishedEvent(true);
+            }
         }
 
         /// <summary>
@@ -318,12 +337,12 @@ namespace YalvLib.ViewModel
             _fileLoader = new LogFileLoader();
             _fileLoader.LoadResultEvent += fileLoader_loadResultEvent;
             ManageRepositoriesViewModel.IsLoading = true;
-            _fileLoader.ExecuteAsynchronously(delegate()
-                {
-                ManageRepositoriesViewModel.LoadFiles(new List<string>(){path},
-                                                      EntriesProviderType.Yalv,
-                                                      ManageRepositoriesViewModel);
-                },true);
+            _fileLoader.ExecuteAsynchronously(delegate
+                                                  {
+                                                      ManageRepositoriesViewModel.LoadFiles(new List<string> {path},
+                                                                                            EntriesProviderType.Yalv,
+                                                                                            ManageRepositoriesViewModel);
+                                                  }, true);
         }
 
         /// <summary>
@@ -342,10 +361,43 @@ namespace YalvLib.ViewModel
             return HasData;
         }
 
-        private bool CommandUpdateDeltaCanExecute(object obj)
+        internal virtual bool CommandUpdateDeltaCanExecute(object obj)
         {
             return ((IEnumerable<LogEntryRowViewModel>) obj).Count() == 2;
         }
+
+
+        internal virtual object CommandApplyFilterExecute(object parameter)
+        {
+            foreach(var entry in _logEntryRows.LogEntryRowViewModels)
+            {
+                entry.Visible = _filterViewModel.Evaluate(entry.Entry);
+            }
+            //_logEntryRows.RefreshView();
+            return null;
+        }
+
+        internal virtual bool CommandApplyFilterCanExecute(object parameter)
+        {
+            return _filterViewModel.IsQueryValid();
+        }
+
+        internal virtual object CommandResetFilterExecute(object parameter)
+        {
+            foreach (var entry in _logEntryRows.LogEntryRowViewModels)
+            {
+                entry.Visible = true;
+            }
+            //_logEntryRows.RefreshView();
+            return null;
+        }
+
+        internal virtual bool CommandResetFilterCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        
 
         private object CommandUpdateDeltaExecute(object arg)
         {

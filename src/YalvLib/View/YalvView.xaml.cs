@@ -221,6 +221,7 @@ namespace YalvLib.View
 
             if (colVM != null && partDataGrid != null)
             {
+                partDataGrid.EnableRowVirtualization = true;
                 GridManager.BuildDataGrid(partDataGrid, colVM,
                                           centerCellStyle, watermarkTextbox,
                                           this.HandleRefreshOnInputKeyInFilter,

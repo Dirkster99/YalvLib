@@ -237,8 +237,13 @@
             <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="5">
         <Setter Property="Background" Value="{StaticResource FatalLevelColor}" />
       </DataTrigger>
+        
+        <!-- Visibility-->
+            <DataTrigger Binding="{Binding Path=Visible, Mode=OneWay}" Value="False">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
 
-    </Style.Triggers>
+        </Style.Triggers>
   </Style>
 
 </ResourceDictionary>

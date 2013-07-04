@@ -33,7 +33,16 @@ namespace YalvLib.Infrastructure.Log4Net
             _logEntry.Logger = _log4jEvent.Logger;
             _logEntry.Thread = _log4jEvent.Thread;
             _logEntry.Throwable = _log4jEvent.Throwable;
-            _logEntry.TimeStamp = DateTime.MinValue.AddMilliseconds(System.Convert.ToDouble(_log4jEvent.Timestamp)).ToLocalTime();
+            try
+            {
+                _logEntry.TimeStamp = DateTime.MinValue.AddMilliseconds(System.Convert.ToDouble(_log4jEvent.Timestamp)).ToLocalTime();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error converting timestamp field from log4j file", ex);
+            }
+            
             
             _logEntry.Class = _log4jEvent.LocationInfo.Class;
             _logEntry.File = _log4jEvent.LocationInfo.File;
@@ -42,7 +51,11 @@ namespace YalvLib.Infrastructure.Log4Net
                 _logEntry.Line = System.Convert.ToUInt32(_log4jEvent.LocationInfo.Line);
             }catch(Exception ex)
             {
-                throw new Exception("Error converting line number field from log4j file", ex);
+                if (_log4jEvent.LocationInfo.Line.Equals("?")){
+                    _logEntry.Line = 0;
+                }else{
+                    throw new Exception("Error converting line number field from log4j file", ex);
+                }
             }
             _logEntry.Method = _log4jEvent.LocationInfo.Method;
 
