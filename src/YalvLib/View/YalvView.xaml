@@ -103,11 +103,11 @@
                                       local:SelectedItem.IsBroughtIntoViewWhenSelected="True"
                                       >
                                 <DataGrid.Resources>
-                                    
+
                                     <DataTemplate x:Key="TextMarkerDataTemplate">
                                         <TextBlock TextAlignment="Center">T</TextBlock>
                                     </DataTemplate>
-                                    
+
                                     <DataTemplate x:Key="ColorMarkerDataTemplate">
                                         <TextBlock TextAlignment="Center">C</TextBlock>
                                     </DataTemplate>
@@ -115,7 +115,7 @@
                                     <DataTemplate x:Key="TextAndColorMarkerDataTemplate">
                                         <TextBlock TextAlignment="Center">CT</TextBlock>
                                     </DataTemplate>
-                                    
+
                                     <DataTemplate x:Key="NoMarkerDataTemplate">
                                         <TextBlock TextAlignment="Center"></TextBlock>
                                     </DataTemplate>
@@ -124,7 +124,7 @@
                                         <Setter Property="local:ScrollSynchronizer.ScrollGroup" Value="dgSync" />
                                     </Style>
                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#19000000" />
-                                    
+
                                 </DataGrid.Resources>
                                 <DataGrid.ContextMenu>
                                     <ContextMenu>

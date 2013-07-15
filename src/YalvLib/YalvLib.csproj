@@ -87,6 +87,7 @@
     <Compile Include="Common\CommandRelay.cs" />
     <Compile Include="Common\Converter\AdjustValueConverter.cs" />
     <Compile Include="Common\DisposableObject.cs" />
+    <Compile Include="Common\Exceptions\LoggerException.cs" />
     <Compile Include="Common\Exceptions\NotValidValueException.cs" />
     <Compile Include="Common\GlobalHelper.cs" />
     <Compile Include="Common\Interfaces\ICommandAncestor.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Model\Filter\BinaryExpression.cs" />
     <Compile Include="Model\Filter\BinaryOperator.cs" />
     <Compile Include="Model\Filter\BooleanExpression.cs" />
+    <Compile Include="Model\Filter\ContainsOperator.cs" />
     <Compile Include="Model\Filter\Context.cs" />
     <Compile Include="Model\Filter\EqualsOperator.cs" />
     <Compile Include="Model\Filter\Not.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Providers\DetectEncoding.cs" />
     <Compile Include="Providers\EntriesProviderType.cs" />
     <Compile Include="Providers\FilterParams.cs" />
+    <Compile Include="ViewModel\Common\AutoCompleteEntry.cs" />
     <Compile Include="ViewModel\Common\BindSupport.cs" />
     <Compile Include="ViewModel\ColumnItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="ViewModel\FilterConverterViewModel.cs" />
     <Compile Include="ViewModel\Cultures.cs" />
     <Compile Include="ViewModel\DisplayLogViewModel.cs" />
+    <Compile Include="ViewModel\FilterQueryViewModel.cs" />
     <Compile Include="ViewModel\IManageTextMarkersViewModel.cs" />
     <Compile Include="ViewModel\ManageTextMarkersViewModel.cs" />
     <Compile Include="ViewModel\LogEntryRowViewModel.cs" />

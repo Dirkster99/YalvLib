@@ -5,14 +5,22 @@ using YalvLib.Model.Filter;
 
 namespace YalvLib.Common.Converter
 {
+    /// <summary>
+    /// string to Filter Query Converter
+    /// </summary>
     public class StringConverter
     {
         private readonly YalvGrammar _grammar;
+        private readonly Parser _parser;
+        private BooleanExpression _expression;
         private string _query;
         private ParseTreeNode _queryTree;
-        private BooleanExpression _expression;
-        private readonly Parser _parser;
 
+        /// <summary>
+        /// Constructor
+        /// Get the defined grammar, instantiate a parser and build the tree from the query
+        /// </summary>
+        /// <param name="query">Query to convert</param>
         public StringConverter(string query)
         {
             _query = query;
@@ -21,15 +29,32 @@ namespace YalvLib.Common.Converter
             Parse();
         }
 
+        /// <summary>
+        /// Constructor
+        /// Get the defined grammar, instantiate a parser
+        /// </summary>
         public StringConverter()
         {
             _grammar = new YalvGrammar();
             _parser = new Parser(_grammar);
         }
 
+        /// <summary>
+        /// getter / setter of the query to parse
+        /// </summary>
+        public string Query
+        {
+            get { return _query; }
+            set { if (value != null) _query = value; }
+        }
+
+        /// <summary>
+        /// Build the tree from the query with the parser
+        /// </summary>
+        /// <returns>Top tree node</returns>
         public ParseTreeNode Parse()
         {
-            if(_query == null)
+            if (_query == null)
             {
                 throw new InterpreterException("The query is undefined");
             }
@@ -44,17 +69,15 @@ namespace YalvLib.Common.Converter
             return _queryTree;
         }
 
-        public string Query
-        {
-            get { return _query; }
-            set { if (value != null) _query = value; }
-        }
-
+        /// <summary>
+        /// Build the expression from the builded treee
+        /// </summary>
+        /// <returns></returns>
         public BooleanExpression Convert()
         {
-            BooleanExpression coin = BuildBooleanExpression(Parse());
-            return coin;
+            return BuildBooleanExpression(Parse());
         }
+
 
         private BooleanExpression BuildBooleanExpression(ParseTreeNode node)
         {
@@ -62,7 +85,7 @@ namespace YalvLib.Common.Converter
             {
                 if (node.ChildNodes[i].Term.Equals(_grammar.BinaryExpression))
                     _expression = BuildBinaryExpression(node.ChildNodes[i - 2], node.ChildNodes[i].ChildNodes[0].Term,
-                                                        node.ChildNodes[i + 2]);
+                                                        node.ChildNodes[i + 2]); // i-2 = leftExpr i+2 = rightExpr i = operator
                 else if (node.ChildNodes[i].Term.Equals(_grammar.CondEval))
                     _expression = BuildSimpleExpression(node.ChildNodes[i]);
             }
@@ -71,34 +94,42 @@ namespace YalvLib.Common.Converter
 
         private BooleanExpression BuildSimpleExpression(ParseTreeNode node)
         {
-            if (node.ChildNodes.Count > 3)
+            // HAS TextMarker is not implemented yet
+            if (node.ChildNodes.Count > 3) // means we have a NOT expr
                 return new SimpleExpression(node.ChildNodes[0].ChildNodes[0].Term.ToString(), new Not(),
                                             GetOperator(node.ChildNodes[2]), node.ChildNodes[3].Token.Value.ToString());
-            
+
             return new SimpleExpression(node.ChildNodes[0].ChildNodes[0].Term.ToString(),
-                                        GetOperator(node.ChildNodes[1]), 
-                                        node.ChildNodes[2].Term.Equals(_grammar.DateValue)?BuildDateValue(node.ChildNodes[2])
-                                        :node.ChildNodes[2].Token.Value.ToString());
+                                        GetOperator(node.ChildNodes[1]),
+                                        node.ChildNodes[2].Term.Equals(_grammar.DateValue)
+                                            ? BuildDateValue(node.ChildNodes[2])
+                                            : node.ChildNodes[2].Token.Value.ToString());
+                // Return the simple expression depending if it's a date query or not
         }
 
         private string BuildDateValue(ParseTreeNode node)
         {
             string dateValue = string.Empty;
-            foreach(var childNode in node.ChildNodes)
+            foreach (ParseTreeNode childNode in node.ChildNodes)
             {
                 dateValue += childNode.Token.Value.ToString();
             }
             return dateValue;
         }
 
+        /// <summary>
+        /// Return the operator of the node
+        /// </summary>
         private Operator GetOperator(ParseTreeNode p)
         {
             if (p.ChildNodes[0].Term.Equals(_grammar.EQUALS))
                 return new EqualsOperator();
+            if (p.ChildNodes[0].Term.Equals(_grammar.CONTAINS))
+                return new ContainsOperator();
             if (p.ChildNodes[0].Term.Equals(_grammar.BEFORE))
-                    return new BeforeOperator();
-            if(p.ChildNodes[0].Term.Equals(_grammar.AFTER))
-                    return new AfterOperator();
+                return new BeforeOperator();
+            if (p.ChildNodes[0].Term.Equals(_grammar.AFTER))
+                return new AfterOperator();
             throw new InterpreterException("Unknown Operator");
         }
 

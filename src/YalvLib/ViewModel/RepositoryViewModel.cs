@@ -108,24 +108,24 @@ namespace YalvLib.ViewModel
             return null;
         }
 
-    /// <summary>
-    /// Active repository command - Load or unload a file from the current view/repository.
-    /// </summary>
-    public CommandRelay CommandActiveRepository { get; private set; }
+        /// <summary>
+        /// Active repository command - Load or unload a file from the current view/repository.
+        /// </summary>
+        public CommandRelay CommandActiveRepository { get; private set; }
  
-    /// <summary>
-    /// Can execute of the command Change active repository
-    /// </summary>
-    /// <param name="obj">object</param>
-    /// <returns>true is repo isn't null</returns>
-    private bool CanExecuteChangeActiveRepository(object obj)
+        /// <summary>
+        /// Can execute of the command Change active repository
+        /// </summary>
+        /// <param name="obj">object</param>
+        /// <returns>true is repo isn't null</returns>
+        private bool CanExecuteChangeActiveRepository(object obj)
         {
             return _repository != null;
         }
 
         private object ExecuteChangeActiveRepository(object arg)
         {
-      this.Active = !this.Active;
+            this.Active = !this.Active;
             return null;
         }
 

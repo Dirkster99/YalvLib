@@ -2,6 +2,9 @@
 
 namespace YalvLib.Infrastructure.Filter
 {
+    /// <summary>
+    /// Class that represent the grammar used by the filter feature in Yalv
+    /// </summary>
     public class YalvGrammar : Irony.Parsing.Grammar
     {
         public Terminal AND = null;
@@ -22,10 +25,12 @@ namespace YalvLib.Infrastructure.Filter
         public Terminal LINE = null;
         public Terminal TEXTMARKERMESSAGE = null;
         public Terminal TEXTMARKERAUTHOR = null;
-
+        public Terminal TEXTMARKER = null;
         public Terminal TIMESTAMP = null;
         public Terminal TEXTMARKERCREATION = null;
         public Terminal TEXTMARKERMODIFICATION = null;
+
+        public Terminal HAS = null;
         public Terminal EQUALS = null;
         public Terminal CONTAINS = null;
         public Terminal BEFORE = null;
@@ -46,7 +51,7 @@ namespace YalvLib.Infrastructure.Filter
         public NonTerminal DateSeparator = new NonTerminal("DateSeparator");
 
         // RegexBasedTerminals
-        public Terminal Value = new RegexBasedTerminal("stringValue", @"[\d|\w]+");
+        public Terminal Value = new RegexBasedTerminal("stringValue", @"[\w+.?|\s?]+");
         public Terminal yearValue = new RegexBasedTerminal("YearValue", @"\d{4}");
         public Terminal monthValue = new RegexBasedTerminal("MonthValue", @"0[1-9]|1[012]");
         public Terminal dayValue = new RegexBasedTerminal("DayValue", @"[012][1-9]|3[01]");
@@ -75,15 +80,17 @@ namespace YalvLib.Infrastructure.Filter
             THROWABLE = ToTerm("Throwable");
             FILE = ToTerm("File");
             LINE = ToTerm("Line");
-            TEXTMARKERMESSAGE = ToTerm("TEXTMARKERMESSAGE");
-            TEXTMARKERAUTHOR = ToTerm("TEXTMARKERAUTHOR");
+            TEXTMARKER = ToTerm("TextMarker");
+            TEXTMARKERMESSAGE = ToTerm("TextMarkerMessage");
+            TEXTMARKERAUTHOR = ToTerm("TextMarkerAuthor");
 
             TIMESTAMP = ToTerm("TimeStamp");
-            TEXTMARKERCREATION = ToTerm("TEXTMARKERCREATION");
-            TEXTMARKERMODIFICATION = ToTerm("TEXTMARKERMODIFICATION");
+            TEXTMARKERCREATION = ToTerm("TextMarkerCreation");
+            TEXTMARKERMODIFICATION = ToTerm("TextMarkerModification");
 
             EQUALS = ToTerm("EQUALS");
             CONTAINS = ToTerm("CONTAINS");
+            HAS = ToTerm("HAS");
 
             BEFORE = ToTerm("BEFORE");
             AFTER = ToTerm("AFTER");
@@ -101,15 +108,18 @@ namespace YalvLib.Infrastructure.Filter
                               |
                               BracketOpen + Expression + BracketClose + BinaryExpression + BracketOpen + Expression +
                               BracketClose;
-            CondEval.Rule = Property + Cond + Value 
+                              
+            CondEval.Rule = Property + Cond + Value
                 | Property + NOT + Cond + Value 
-                | DateProperty + DateCond + DateValue;
+                | DateProperty + DateCond + DateValue
+                | HAS + TEXTMARKER
+                | HAS + NOT + TEXTMARKER;
 
             BinaryExpression.Rule = AND | OR;
             
             Property.Rule = ID | APP | LOGGER | MESSAGE | MACHINENAME | 
                 THREAD | CLASS | METHOD | USERNAME | THROWABLE | FILE | 
-                LINE | TEXTMARKERMESSAGE | TEXTMARKERAUTHOR;
+                LINE | TEXTMARKERMESSAGE | TEXTMARKERAUTHOR | TEXTMARKER;
 
             DateProperty.Rule = TIMESTAMP | TEXTMARKERCREATION | TEXTMARKERMODIFICATION;
 

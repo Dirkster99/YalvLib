@@ -118,7 +118,13 @@ namespace YalvLib.Model
         /// <returns>List of linked TextMarkers</returns>
         public List<TextMarker> GetTextMarkersForEntry(LogEntry entry)
         {
-            return TextMarkers.Where(textMarker => textMarker.LogEntries.Contains(entry)).ToList();
+            var result = new List<TextMarker>();
+            foreach(var textmarker in TextMarkers)
+            {
+                if(textmarker.LogEntries.Contains(entry))
+                    result.Add(textmarker);
+            }
+            return result;
         }
 
         /// <summary>

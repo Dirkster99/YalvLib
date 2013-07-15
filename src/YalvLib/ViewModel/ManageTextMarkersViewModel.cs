@@ -72,7 +72,7 @@ namespace YalvLib.ViewModel
         public bool DisplayOnlyCommonMarkers
         {
             get { return _displayOnlyCommonMarkers; }
-            private set
+            set
             {
                 _displayOnlyCommonMarkers = value;
                 if (_selectedEntries != null)

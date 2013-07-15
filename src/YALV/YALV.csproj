@@ -177,8 +177,14 @@
     <Compile Include="View\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Components\AutoCompleteTextBox.xaml.cs">
+      <DependentUpon>AutoCompleteTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Components\FilterPanel.xaml.cs">
       <DependentUpon>FilterPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Components\FilterQueryView.xaml.cs">
+      <DependentUpon>FilterQueryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Components\FilterView.xaml.cs">
       <DependentUpon>FilterView.xaml</DependentUpon>
@@ -216,7 +222,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Components\AutoCompleteTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Components\FilterPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Components\FilterQueryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

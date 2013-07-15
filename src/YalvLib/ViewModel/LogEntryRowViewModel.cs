@@ -67,7 +67,7 @@ namespace YalvLib.ViewModel
                 if (_visible != value)
                 {
                     _visible = value;
-                    NotifyPropertyChanged(() => Visible);
+                    //NotifyPropertyChanged(() => Visible);
                 }
             }
         }

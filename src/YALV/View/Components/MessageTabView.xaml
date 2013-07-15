@@ -50,7 +50,7 @@
             </TabItem>
             <TabItem Header="Filter">
                 <Grid Background="#FFE5E5E5">
-                    <local:FilterView HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding YalvLogViewModel}"/>
+                    <local:FilterView HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding YalvLogViewModel.LogEntryRows}"/>
                 </Grid>
             </TabItem>
         </TabControl>

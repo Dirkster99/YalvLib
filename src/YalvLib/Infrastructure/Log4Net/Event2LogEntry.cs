@@ -39,7 +39,6 @@ namespace YalvLib.Infrastructure.Log4Net
             }
             catch (Exception ex)
             {
-
                 throw new Exception("Error converting timestamp field from log4j file", ex);
             }
             

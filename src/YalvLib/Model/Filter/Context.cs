@@ -1,20 +1,18 @@
 ﻿namespace YalvLib.Model.Filter
 {
+    /// <summary>
+    /// Represent the context to be evaluate with
+    /// </summary>
     public class Context
     {
-        private LogEntry _logEntry;
-        private LogAnalysis _analysis;
+        /// <summary>
+        /// Getter / setter of the entry
+        /// </summary>
+        public LogEntry Entry { get; set; }
 
-        public LogEntry Entry
-        {
-            get { return _logEntry; }
-            set { _logEntry = value; }
-        }
-
-        public LogAnalysis Analysis
-        {
-            get { return _analysis; }
-            set { _analysis = value; }
-        }
+        /// <summary>
+        /// Getter / setter of the Log Analysis
+        /// </summary>
+        public LogAnalysis Analysis { get; set; }
     }
 }

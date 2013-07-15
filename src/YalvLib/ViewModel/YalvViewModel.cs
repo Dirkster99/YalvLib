@@ -23,7 +23,7 @@ namespace YalvLib.ViewModel
         private readonly DisplayLogViewModel _logEntryRows;
         private readonly ManageRepositoryViewModel _manageRepoViewModel;
         private readonly ManageTextMarkersViewModel _manageTextMarkersViewModel;
-        private FilterConverterViewModel _filterViewModel;
+
 
         private string _calculatedDelta;
         private LogFileLoader _fileLoader;
@@ -43,7 +43,7 @@ namespace YalvLib.ViewModel
 
             _logAnalysis = new LogAnalysis();
             YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis = _logAnalysis;
-            _filterViewModel = new FilterConverterViewModel(_logAnalysis);
+            
 
             _logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
 
@@ -58,8 +58,8 @@ namespace YalvLib.ViewModel
                                                         _manageTextMarkersViewModel.CommandUpdateTextMarkersCanExecute);
 
             CommandUpdateDelta = new CommandRelay(CommandUpdateDeltaExecute, CommandUpdateDeltaCanExecute);
-            CommandApplyFilter = new CommandRelay(CommandApplyFilterExecute, CommandApplyFilterCanExecute);
-            CommandResetFilter = new CommandRelay(CommandResetFilterExecute, CommandResetFilterCanExecute);
+            
+
 
         }
 
@@ -165,13 +165,7 @@ namespace YalvLib.ViewModel
             get { return _manageRepoViewModel; }
         }
 
-        /// <summary>
-        /// Getter of the FilterViewModel
-        /// </summary>
-        public FilterConverterViewModel FilterViewModel
-        {
-            get { return _filterViewModel; }
-        }
+
 
 
         /// <summary>
@@ -226,9 +220,7 @@ namespace YalvLib.ViewModel
         public ICommandAncestor CommandDelete { get; protected set; }
 
 
-        public ICommandAncestor CommandApplyFilter { get; protected set; }
 
-        public ICommandAncestor CommandResetFilter { get; protected set; }
 
         /// <summary>
         /// UpdateTextMarkers Command
@@ -367,35 +359,8 @@ namespace YalvLib.ViewModel
         }
 
 
-        internal virtual object CommandApplyFilterExecute(object parameter)
-        {
-            foreach(var entry in _logEntryRows.LogEntryRowViewModels)
-            {
-                entry.Visible = _filterViewModel.Evaluate(entry.Entry);
-            }
-            //_logEntryRows.RefreshView();
-            return null;
-        }
+        
 
-        internal virtual bool CommandApplyFilterCanExecute(object parameter)
-        {
-            return _filterViewModel.IsQueryValid();
-        }
-
-        internal virtual object CommandResetFilterExecute(object parameter)
-        {
-            foreach (var entry in _logEntryRows.LogEntryRowViewModels)
-            {
-                entry.Visible = true;
-            }
-            //_logEntryRows.RefreshView();
-            return null;
-        }
-
-        internal virtual bool CommandResetFilterCanExecute(object parameter)
-        {
-            return true;
-        }
 
         
 

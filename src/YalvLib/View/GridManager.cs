@@ -61,7 +61,7 @@
                         col.MinWidth = item.MinWidth;
                         col.Width = item.Width;
 
-                        Binding bind = new Binding(item.Field) {Mode = BindingMode.OneWay};
+                        Binding bind = new Binding(item.Field) { Mode = BindingMode.OneWay };
                         bind.ConverterCulture =
                             System.Globalization.CultureInfo.GetCultureInfo(YalvLib.Strings.Resources.CultureName);
 
@@ -87,20 +87,20 @@
                 if (txtSearchPanel != null)
                 {
                     Binding widthBind = new Binding()
-                                            {
-                                                Path = new PropertyPath("ActualWidth"),
-                                                Source = col,
-                                                Mode = BindingMode.OneWay,
-                                                Converter = GridManager.mAdjustConverter,
-                                                ConverterParameter = "-2"
-                                            };
+                    {
+                        Path = new PropertyPath("ActualWidth"),
+                        Source = col,
+                        Mode = BindingMode.OneWay,
+                        Converter = GridManager.mAdjustConverter,
+                        ConverterParameter = "-2"
+                    };
 
                     Binding visibilityBind = new Binding()
-                                                 {
-                                                     Path = new PropertyPath("Visibility"),
-                                                     Source = col,
-                                                     Mode = BindingMode.OneWay,
-                                                 };
+                    {
+                        Path = new PropertyPath("Visibility"),
+                        Source = col,
+                        Mode = BindingMode.OneWay,
+                    };
 
                     TextBox txt = new TextBox();
 
@@ -124,7 +124,7 @@
 
                     // Bind column to width property to viewmodel to enable its persistence
                     // The save function copies ActualWidth into the Width field and persists it
-                    Binding b = new Binding("ActualWidth") {Source = col};
+                    Binding b = new Binding("ActualWidth") { Source = col };
                     BindingOperations.SetBinding(columnVM.ActualWidth, BindSupport.WidthProperty, b);
 
                     if (keyUpEvent != null)
@@ -147,12 +147,12 @@
                 DataTemplate noMarker = dataGrid.FindResource("NoMarkerDataTemplate") as DataTemplate;
 
                 markerCol.CellTemplateSelector = new MarkerTemplateSelector()
-                                                     {
-                                                         ColorMarkerTemplate = colorMarker,
-                                                         TextMarkerTemplate = txtMarker,
-                                                         TextAndColorMarkerTemplate = bothMarker,
-                                                         NoMarkerTemplate = noMarker
-                                                     };
+                {
+                    ColorMarkerTemplate = colorMarker,
+                    TextMarkerTemplate = txtMarker,
+                    TextAndColorMarkerTemplate = bothMarker,
+                    NoMarkerTemplate = noMarker
+                };
 
                 dataGrid.Columns.Add(markerCol);
                 GridManager.BuildMarkerSearchPanel(txtSearchPanel, markerCol);
@@ -165,20 +165,20 @@
                 if (txtSearchPanel != null)
                 {
                     Binding widthBind = new Binding()
-                                            {
-                                                Path = new PropertyPath("ActualWidth"),
-                                                Source = col,
-                                                Mode = BindingMode.OneWay,
-                                                Converter = GridManager.mAdjustConverter,
-                                                ConverterParameter = "-2"
-                                            };
+                    {
+                        Path = new PropertyPath("ActualWidth"),
+                        Source = col,
+                        Mode = BindingMode.OneWay,
+                        Converter = GridManager.mAdjustConverter,
+                        ConverterParameter = "-2"
+                    };
 
                     Binding visibilityBind = new Binding()
-                                                 {
-                                                     Path = new PropertyPath("Visibility"),
-                                                     Source = col,
-                                                     Mode = BindingMode.OneWay,
-                                                 };
+                    {
+                        Path = new PropertyPath("Visibility"),
+                        Source = col,
+                        Mode = BindingMode.OneWay,
+                    };
 
                     TextBlock txt = new TextBlock();
 
@@ -207,7 +207,7 @@
 
             private static void RegisterControl<T>(FrameworkElement element, string controlName, T control)
             {
-                if ((T) element.FindName(controlName) != null)
+                if ((T)element.FindName(controlName) != null)
                     element.UnregisterName(controlName);
 
                 element.RegisterName(controlName, control);

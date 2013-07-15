@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YalvLib.ViewModel;
+using YalvLib.ViewModel.Common;
 
 namespace YALV.View.Components
 {
@@ -22,19 +23,24 @@ namespace YALV.View.Components
     {
         public FilterView()
         {
-            InitializeComponent();
+            InitializeComponent();          
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            if (((YalvViewModel)DataContext).CommandApplyFilter.CanExecute(null))
+            if (((DisplayLogViewModel)DataContext).CommandApplyFilter.CanExecute(textBox_Filter.Text))
             {
                 textBox_Filter.Background = Brushes.White;
-                ((YalvViewModel)DataContext).CommandApplyFilter.Execute(null);
+                ((DisplayLogViewModel)DataContext).CommandApplyFilter.Execute(null);
             }else
             {
                 textBox_Filter.Background = Brushes.IndianRed;
             }
+        }
+
+        private void ButtonReset_OnClick(object sender, RoutedEventArgs e)
+        {
+            textBox_Filter.Text = "";
         }
     }
 }

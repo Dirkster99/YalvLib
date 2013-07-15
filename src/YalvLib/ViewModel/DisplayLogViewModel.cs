@@ -57,7 +57,9 @@ namespace YalvLib.ViewModel
         private readonly ColumnsViewModel mDataGridColumns;
 
         private ObservableCollection<LogEntryRowViewModel> _rowViewModels;
+        private ObservableCollection<LogEntryRowViewModel> _filtredRowViewModels; 
         private EvaluateLoadResult loadResultCallback = null;
+        private FilterConverterViewModel _filterViewModel;
 
         private string mGoToLogItemId;
 
@@ -102,14 +104,19 @@ namespace YalvLib.ViewModel
             CommandClearFilters = new CommandRelay(CommandClearFiltersExecute,
                                                    CommandClearFilterCanExecute);
 
+            CommandResetFilter = new CommandRelay(CommandResetFilterExecute, CommandResetFilterCanExecute);
+            CommandApplyFilter = new CommandRelay(CommandApplyFilterExecute, CommandApplyFilterCanExecute);
+
             SelectAll = true;
             IsFiltered = false;
             LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             RebuildLogView(LogEntryRowViewModels);
+            _filterViewModel = new FilterConverterViewModel(YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis);
+            _filterViewModel.PropertyChanged += (sender, args) => UpdateCounters();
 
             interfaceTextMarkerViewModel.MarkerDeleted +=
                 (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs) args);
-            interfaceTextMarkerViewModel.MarkerAdded += (sender, args) => RefreshView();
+            interfaceTextMarkerViewModel.MarkerAdded += (sender, args) => UpdateCounters();
 
             // Default constructor contains column definitions
             // The callback is invocked when a column filter string item is changed
@@ -164,6 +171,14 @@ namespace YalvLib.ViewModel
         }
 
         /// <summary>
+        /// Getter of the FilterViewModel
+        /// </summary>
+        public FilterConverterViewModel FilterViewModel
+        {
+            get { return _filterViewModel; }
+        }
+
+        /// <summary>
         /// This property represents the datagrid viewmodel part and enables sorting and filtering
         /// being implemented in the viewmodel class.
         /// </summary>
@@ -187,6 +202,13 @@ namespace YalvLib.ViewModel
             get { return _rowViewModels; }
 
             set { _rowViewModels = value; }
+        }
+
+        public ObservableCollection<LogEntryRowViewModel> FiltredLogEntryRowViewModels
+        {
+            get { return _filtredRowViewModels; }
+
+            set { _filtredRowViewModels = value; }
         }
 
         #region LogProperties
@@ -774,6 +796,7 @@ namespace YalvLib.ViewModel
 
         internal void UpdateCounters()
         {
+            
             ItemsDebugCount = (from it in LogEntryRowViewModels
                                     where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
                                     select it).Count();
@@ -858,7 +881,6 @@ namespace YalvLib.ViewModel
                         SelectedLogItem = l;
                 }
             }
-
             CommandManager.InvalidateRequerySuggested();
         }
 
@@ -978,6 +1000,8 @@ namespace YalvLib.ViewModel
             {
                 if (MatchTextFilterColumn(mDataGridColumns, logitemVm.Entry) == false)
                     return false;
+                if (_filterViewModel.Evaluate(logitemVm.Entry) == false)
+                    return false;
             }
 
             if (SelectAll == false)
@@ -1019,7 +1043,7 @@ namespace YalvLib.ViewModel
                 LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             LogView = (CollectionView) CollectionViewSource.GetDefaultView(LogEntryRowViewModels);
             LogView.Filter = OnFilterLogItems;
-            RefreshView();
+            UpdateCounters();
         }
 
         private void RemoveAllItems()
@@ -1078,8 +1102,37 @@ namespace YalvLib.ViewModel
             catch
             {
             }
-
+            
             return messageBoxText;
+        }
+
+        public ICommandAncestor CommandApplyFilter { get; protected set; }
+
+        public ICommandAncestor CommandResetFilter { get; protected set; }
+
+        internal virtual object CommandApplyFilterExecute(object parameter)
+        {
+            _filterViewModel.AddQuery(_filterViewModel.ActualQuery);
+            IsFiltered = true;
+            return null;
+        }
+
+        internal virtual bool CommandApplyFilterCanExecute(object parameter)
+        {
+            _filterViewModel.ActualQuery = parameter as string;
+            return _filterViewModel.IsQueryValid();
+        }
+
+
+        internal virtual object CommandResetFilterExecute(object parameter)
+        {
+            UpdateCounters();
+            return null;
+        }
+
+        internal virtual bool CommandResetFilterCanExecute(object parameter)
+        {
+            return true;
         }
 
         #region commandDelete
@@ -1106,7 +1159,7 @@ namespace YalvLib.ViewModel
             ////if (this.DataGridColumns != null)
             ////  this.DataGridColumns.ResetSearchTextBox();
 
-            RefreshView();
+            UpdateCounters();
 
             return null;
         }
