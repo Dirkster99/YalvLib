@@ -8,12 +8,16 @@ using YalvLib.Model;
 namespace YalvLib.Infrastructure.Mappings
 {
 
-    public class LogEntryFileRepositoryMapping : SubclassMap<LogEntryFileRepository>
+    public class LogEntryFileRepositoryMapping : ClassMap<LogEntryFileRepository>
     {
 
         public LogEntryFileRepositoryMapping()
         {
             Not.LazyLoad();
+            Id(x => x.Uid).GeneratedBy.Guid();
+            HasMany(x => x.LogEntries)
+                .Cascade.All()
+                .Not.LazyLoad();
             Map(x => x.Path);
         }
 

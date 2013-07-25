@@ -11,7 +11,7 @@ namespace YalvLib.Model
     public class LogAnalysisWorkspace
     {
         private IList<LogEntryRepository> _sourceRepositories = new List<LogEntryRepository>();
-        private IList<LogAnalysis> _analyses = new List<LogAnalysis>(); 
+        private IList<LogAnalysis> _analyses = new List<LogAnalysis>();
         private LogAnalysis _currentAnalysis;
          
 

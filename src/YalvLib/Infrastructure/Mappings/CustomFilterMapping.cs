@@ -7,21 +7,13 @@ using YalvLib.Model;
 
 namespace YalvLib.Infrastructure.Mappings
 {
-
-    public class LogEntryRepositoryMapping : ClassMap<LogEntryRepository>
+    public class CustomFilterMapping : ClassMap<CustomFilter>
     {
-
-        public LogEntryRepositoryMapping()
+        public CustomFilterMapping()
         {
             Not.LazyLoad();
             Id(x => x.Uid).GeneratedBy.Guid();
-            HasMany(x => x.LogEntries)
-                .Cascade.All()
-                .Not.LazyLoad();
-            Map(x => x.Path);
-
+            Map(x => x.Value);
         }
-
     }
-
 }

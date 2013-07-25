@@ -106,6 +106,7 @@
     <Compile Include="Infrastructure\Log4Net\Log4jConverter.cs" />
     <Compile Include="Infrastructure\Log4Net\LogEntry2Event.cs" />
     <Compile Include="Infrastructure\Mappings\ColorMarkerMapping.cs" />
+    <Compile Include="Infrastructure\Mappings\CustomFilterMapping.cs" />
     <Compile Include="Infrastructure\Mappings\LogAnalysisMapping.cs" />
     <Compile Include="Infrastructure\Mappings\LogEntryFileRepositoryMapping.cs" />
     <Compile Include="Infrastructure\Mappings\LogAnalysisWorkspaceMapping.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Infrastructure\Sqlite\LogAnalysisWorkspaceExporter.cs" />
     <Compile Include="Model\AbstractMarker.cs" />
     <Compile Include="Model\ColorMarker.cs" />
+    <Compile Include="Model\CustomFilter.cs" />
     <Compile Include="Model\Filter\AfterOperator.cs" />
     <Compile Include="Model\Filter\And.cs" />
     <Compile Include="Model\Filter\BeforeOperator.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Model\Filter\ContainsOperator.cs" />
     <Compile Include="Model\Filter\Context.cs" />
     <Compile Include="Model\Filter\EqualsOperator.cs" />
+    <Compile Include="Model\Filter\HasExpression.cs" />
     <Compile Include="Model\Filter\Not.cs" />
     <Compile Include="Model\Filter\Operator.cs" />
     <Compile Include="Model\Filter\Or.cs" />

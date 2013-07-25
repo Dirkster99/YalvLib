@@ -17,6 +17,9 @@ namespace YalvLib.Infrastructure.Mappings
 
             HasMany(x => x.TextMarkers).Not.LazyLoad()
                 .Cascade.All();
+
+            HasMany(x => x.Filters).Not.LazyLoad()
+                .Cascade.All();
         }
 
     }

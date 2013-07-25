@@ -277,7 +277,7 @@ namespace YalvLib.ViewModel
                                                   {
                                                       ManageRepositoriesViewModel.LoadFiles(paths,
                                                                                             EntriesProviderType.Xml,
-                                                                                            ManageRepositoriesViewModel);
+                                                                                            ManageRepositoriesViewModel);                                                     
                                                   },
                                               true);
         }
@@ -387,7 +387,7 @@ namespace YalvLib.ViewModel
         /// <returns></returns>
         protected virtual object CommandFilterYalvView(object parameter)
         {
-            if (_logEntryRows != null)
+            if (_logEntryRows != null && YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.Filters.Count > 0)
             {
                 _logEntryRows.ApplyFilter();
             }
@@ -410,10 +410,13 @@ namespace YalvLib.ViewModel
                 ManageRepositoriesViewModel.IsLoading = true;
                 _fileLoader.ExecuteAsynchronously(delegate
                                                       {
+                                                         
                                                           LogEntryRows.SetEntries(
                                                               ManageRepositoriesViewModel.Repositories.ToList());
                                                       }, true);
             }
+            _logEntryRows.FilterViewModel.Analysis = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis;
+            
         }
 
         private void RefreshCommandsCanExecute(object sender, LogFileLoader.ResultEvent resultEvent)
@@ -423,9 +426,11 @@ namespace YalvLib.ViewModel
             ManageRepositoriesViewModel.IsLoading = false;
             CommandRefresh.CanExecute(null);
             CommandDelete.CanExecute(null);
-            FilterYalvView.CanExecute(null);
-
             RaisePropertyChanged("HasData");
+            if(FilterYalvView.CanExecute(null))
+            {
+                FilterYalvView.Execute(null);
+            }
         }
 
         #endregion methods

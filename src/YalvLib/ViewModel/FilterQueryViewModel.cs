@@ -1,5 +1,6 @@
 ﻿using System;
 using YalvLib.Common;
+using YalvLib.Model;
 
 namespace YalvLib.ViewModel
 {
@@ -8,7 +9,7 @@ namespace YalvLib.ViewModel
     /// </summary>
     public class FilterQueryViewModel : BindableObject
     {
-        private readonly string _queryString;
+        private CustomFilter _filter;
         private bool _active;
 
         /// <summary>
@@ -17,8 +18,20 @@ namespace YalvLib.ViewModel
         /// <param name="query">Query to create the instance from</param>
         public FilterQueryViewModel(string query)
         {
-            _queryString = query;
+            _filter = new CustomFilter(query);
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddFilter(_filter);
             _active = true;
+            CommandCancelQuery = new CommandRelay(ExecuteCancelQuery, CanExecuteCancelQuery);
+        }
+
+        /// <summary>
+        /// Ctor from an existing log analysis
+        /// </summary>
+        /// <param name="filter"></param>
+        public FilterQueryViewModel(CustomFilter filter)
+        {
+            _filter = filter;
+            _active = false;
             CommandCancelQuery = new CommandRelay(ExecuteCancelQuery, CanExecuteCancelQuery);
         }
 
@@ -27,7 +40,12 @@ namespace YalvLib.ViewModel
         /// </summary>
         public string QueryString
         {
-            get { return _queryString; }
+            get { return _filter.Value; }
+        }
+
+        public CustomFilter Filter
+        {
+            get { return _filter; }
         }
 
         /// <summary>

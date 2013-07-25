@@ -42,21 +42,27 @@ namespace YalvLib.Infrastructure.Sqlite
         /// <returns></returns>
         public ISessionFactory BuildFactory()
         {
+            try
+            {
+                ISessionFactory sessionFactory = Fluently.Configure()
+                    .Database(SQLiteConfiguration.Standard.UsingFile(_path))
+                    .Mappings(m =>
+                                  {
+                                      m.FluentMappings.AddFromAssemblyOf<LogAnalysisWorkspaceMapping>();
+                                      m.FluentMappings.AddFromAssemblyOf<LogAnalysisMapping>();
+                                      m.FluentMappings.AddFromAssemblyOf<LogEntryRepositoryMapping>();
+                                      m.FluentMappings.AddFromAssemblyOf<TextMarkerMapping>();
+                                      m.FluentMappings.AddFromAssemblyOf<LogEntryMapping>();
+                                      m.FluentMappings.AddFromAssemblyOf<CustomFilterMapping>();
+                                  })
+                    .ExposeConfiguration(BuildSchema)
+                    .BuildSessionFactory();
+                return sessionFactory;
+            }catch(Exception e)
+            {
+                throw e;
+            }
             
-            ISessionFactory sessionFactory = Fluently.Configure()
-                .Database(SQLiteConfiguration.Standard.UsingFile(_path))
-                .Mappings(m =>
-                {
-                    m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();
-                    m.FluentMappings.Add<LogAnalysisMapping>();
-                    m.FluentMappings.Add<LogEntryFileRepositoryMapping>();
-                    m.FluentMappings.Add<LogEntryRepositoryMapping>();
-                    m.FluentMappings.Add<TextMarkerMapping>();
-                    m.FluentMappings.Add<LogEntryMapping>();
-                })
-                .ExposeConfiguration(BuildSchema)
-                .BuildSessionFactory();
-            return sessionFactory;
         }
 
         /// <summary>
@@ -65,22 +71,29 @@ namespace YalvLib.Infrastructure.Sqlite
         /// <param name="logWorkspace">Log Analysis workspace to export</param>
         public void Export(LogAnalysisWorkspace logWorkspace)
         {
-            var cancelToken = new CancellationToken(true);
-            Task taskToComplete = Task.Factory.StartNew(obj =>
+            try
             {
-                ISessionFactory factory = BuildFactory();
-                using (ISession session = factory.OpenSession())
-                {
-                    using (
-                        ITransaction transaction =
-                            session.BeginTransaction())
-                    {
-                        session.SaveOrUpdate(logWorkspace);
-                        transaction.Commit();
-                    }
-                }
-                factory.Close();
-            }, cancelToken).ContinueWith(ant => ReportExportComplete());
+                var cancelToken = new CancellationToken(true);
+                Task taskToComplete = Task.Factory.StartNew(obj =>
+                                                                {
+                                                                    ISessionFactory factory = BuildFactory();
+                                                                    using (ISession session = factory.OpenSession())
+                                                                    {
+                                                                        using (
+                                                                            ITransaction transaction =
+                                                                                session.BeginTransaction())
+                                                                        {
+                                                                            session.SaveOrUpdate(logWorkspace);
+                                                                            transaction.Commit();
+                                                                        }
+                                                                    }
+                                                                    factory.Close();
+                                                                }, cancelToken).ContinueWith(
+                                                                    ant => ReportExportComplete());
+            }catch(Exception e)
+            {
+                
+            }
         }
 
 

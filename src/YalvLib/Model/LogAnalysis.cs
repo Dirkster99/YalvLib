@@ -19,6 +19,7 @@ namespace YalvLib.Model
         public LogAnalysis()
         {
             Markers = new List<AbstractMarker>();
+            Filters = new List<CustomFilter>();
         }
 
         /// <summary>-
@@ -28,6 +29,8 @@ namespace YalvLib.Model
         {
             get; private set;
         }
+
+        public IList<CustomFilter> Filters { get; private set; } 
 
         /// <summary>
         /// Return the list of TextMarkers
@@ -45,6 +48,17 @@ namespace YalvLib.Model
         {
             get { return Markers.Where(x => x is ColorMarker).Cast<ColorMarker>().ToList(); }
             set { }
+        }
+
+
+        public void AddFilter(CustomFilter filter)
+        {
+            Filters.Add(filter);
+        }
+
+        public void RemoveFilter(CustomFilter filter)
+        {
+            Filters.Remove(filter);
         }
 
         /// <summary>

@@ -112,7 +112,7 @@ namespace YalvLib.ViewModel
             LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             RebuildLogView(LogEntryRowViewModels);
             _filterViewModel = new FilterConverterViewModel(YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis);
-            _filterViewModel.PropertyChanged += (sender, args) => UpdateCounters();
+            _filterViewModel.PropertyChanged += (sender, args) => UpdateFilteredCounters(LogView);
 
             interfaceTextMarkerViewModel.MarkerDeleted +=
                 (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs) args);
@@ -291,7 +291,6 @@ namespace YalvLib.ViewModel
                     mIsFiltered = value;
                     RaisePropertyChanged("IsFiltered");
                     RefreshView();
-
                     CommandClearFilters.CanExecute(null);
                 }
             }
@@ -826,6 +825,9 @@ namespace YalvLib.ViewModel
         internal void ApplyFilter()
         {
             IsFiltered = !IsFiltered;
+            if (IsFiltered)
+                UpdateFilteredCounters(LogView);
+            else UpdateCounters();
         }
 
         /// <summary>
@@ -834,7 +836,10 @@ namespace YalvLib.ViewModel
         /// <param name="callbackOnFinishedparameter"></param>
         internal virtual void CommandRefreshExecute(EvaluateLoadResult callbackOnFinishedparameter)
         {
-            UpdateCounters();
+            if (IsFiltered)
+                UpdateFilteredCounters(LogView);
+            else
+                UpdateCounters();
         }
 
         /// <summary>
@@ -913,29 +918,29 @@ namespace YalvLib.ViewModel
         {
             if (filteredList != null)
             {
-                IEnumerable<LogEntry> fltList = filteredList.Cast<LogEntry>();
+                IEnumerable<LogEntryRowViewModel> fltList = filteredList.Cast<LogEntryRowViewModel>();
                 if (fltList != null)
                 {
                     ItemsFilterCount = fltList.Count();
 
                     ItemsDebugFilterCount = (from it in fltList
-                                             where it.LevelIndex.Equals(LevelIndex.DEBUG)
+                                             where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
                                              select it).Count();
 
                     ItemsInfoFilterCount = (from it in fltList
-                                            where it.LevelIndex.Equals(LevelIndex.INFO)
+                                            where it.Entry.LevelIndex.Equals(LevelIndex.INFO)
                                             select it).Count();
 
-                    ItemsWarnFilterCount = (from it in fltList
-                                            where it.LevelIndex.Equals(LevelIndex.WARN)
+                    ItemsWarnCount = (from it in fltList
+                                      where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
                                             select it).Count();
 
                     ItemsErrorFilterCount = (from it in fltList
-                                             where it.LevelIndex.Equals(LevelIndex.ERROR)
+                                             where it.Entry.LevelIndex.Equals(LevelIndex.ERROR)
                                              select it).Count();
 
                     ItemsFatalFilterCount = (from it in fltList
-                                             where it.LevelIndex.Equals(LevelIndex.FATAL)
+                                             where it.Entry.LevelIndex.Equals(LevelIndex.FATAL)
                                              select it).Count();
                 }
             }
@@ -948,6 +953,7 @@ namespace YalvLib.ViewModel
                 ItemsErrorFilterCount = 0;
                 ItemsFatalFilterCount = 0;
             }
+            RefreshView();
         }
 
         /// <summary>
@@ -1043,7 +1049,10 @@ namespace YalvLib.ViewModel
                 LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             LogView = (CollectionView) CollectionViewSource.GetDefaultView(LogEntryRowViewModels);
             LogView.Filter = OnFilterLogItems;
-            UpdateCounters();
+            if(IsFiltered)
+                UpdateFilteredCounters(LogView);
+            else
+                UpdateCounters();
         }
 
         private void RemoveAllItems()

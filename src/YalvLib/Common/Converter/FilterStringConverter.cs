@@ -95,6 +95,9 @@ namespace YalvLib.Common.Converter
         private BooleanExpression BuildSimpleExpression(ParseTreeNode node)
         {
             // HAS TextMarker is not implemented yet
+            if(node.ChildNodes.Count == 2)
+                return new HasExpression(node.ChildNodes[0].Term.ToString(),
+                                         node.ChildNodes[1].Term.ToString());
             if (node.ChildNodes.Count > 3) // means we have a NOT expr
                 return new SimpleExpression(node.ChildNodes[0].ChildNodes[0].Term.ToString(), new Not(),
                                             GetOperator(node.ChildNodes[2]), node.ChildNodes[3].Token.Value.ToString());

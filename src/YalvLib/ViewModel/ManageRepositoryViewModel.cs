@@ -36,9 +36,18 @@ namespace YalvLib.ViewModel
         /// </Summary>
         public ManageRepositoryViewModel()
         {
-            _repositories = new ObservableCollection<RepositoryViewModel>();
+            InitRepositories();
             _isFileLoaded = false;
             _isLoading = false;
+        }
+
+        private void InitRepositories()
+        {
+            _repositories = new ObservableCollection<RepositoryViewModel>();
+            foreach(var repo in YalvRegistry.Instance.ActualWorkspace.SourceRepositories)
+            {
+                _repositories.Add(new RepositoryViewModel(repo));
+            }
         }
 
         #endregion Constructors

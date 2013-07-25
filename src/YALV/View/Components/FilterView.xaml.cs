@@ -32,6 +32,7 @@ namespace YALV.View.Components
             {
                 textBox_Filter.Background = Brushes.White;
                 ((DisplayLogViewModel)DataContext).CommandApplyFilter.Execute(null);
+                textBox_Filter.Text = string.Empty;
             }else
             {
                 textBox_Filter.Background = Brushes.IndianRed;
@@ -40,7 +41,8 @@ namespace YALV.View.Components
 
         private void ButtonReset_OnClick(object sender, RoutedEventArgs e)
         {
-            textBox_Filter.Text = "";
+            textBox_Filter.Text = string.Empty;
+            textBox_Filter.Background = Brushes.White;
         }
     }
 }

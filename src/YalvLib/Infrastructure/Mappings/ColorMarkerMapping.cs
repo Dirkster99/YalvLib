@@ -7,7 +7,7 @@ using YalvLib.Model;
 
 namespace YalvLib.Infrastructure.Mappings
 {
-    class ColorMarkerMapping : ClassMap<ColorMarker>
+    public class ColorMarkerMapping : ClassMap<ColorMarker>
     {
         public ColorMarkerMapping()
         {

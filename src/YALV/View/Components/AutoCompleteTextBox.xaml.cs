@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,7 @@ namespace YALV.View.Components
         private readonly ComboBox _comboBox;
         private readonly VisualCollection _controls;
         private readonly Timer _keypressTimer;
-        private readonly TextBox _textBox;
+        private readonly TextBox _textBox;   
 
         public static readonly DependencyProperty AutoCompletionList =
        DependencyProperty.Register("AutoCompleteList", typeof(ObservableCollection<AutoCompleteEntry>), typeof(AutoCompleteTextBox), new UIPropertyMetadata(null));
@@ -46,7 +47,6 @@ namespace YALV.View.Components
             _controls = new VisualCollection(this);
             InitializeComponent();
 
-            AutoCompleteList = new ObservableCollection<AutoCompleteEntry>();
             _searchThreshold = 2; // default threshold to 2 char
 
             // set up the key press timer
@@ -117,6 +117,12 @@ namespace YALV.View.Components
                 var cbItem = (ComboBoxItem) _comboBox.SelectedItem;
                 _textBox.Text = cbItem.Content.ToString();
             }
+        }
+
+        public Brush Background
+        {
+            get { return _textBox.Background; }
+            set { _textBox.Background = value; }
         }
 
         private void TextChanged()

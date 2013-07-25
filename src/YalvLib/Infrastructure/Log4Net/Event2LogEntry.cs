@@ -34,8 +34,9 @@ namespace YalvLib.Infrastructure.Log4Net
             _logEntry.Thread = _log4jEvent.Thread;
             _logEntry.Throwable = _log4jEvent.Throwable;
             try
-            {
-                _logEntry.TimeStamp = DateTime.MinValue.AddMilliseconds(System.Convert.ToDouble(_log4jEvent.Timestamp)).ToLocalTime();
+            {   
+                var dTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                _logEntry.TimeStamp = dTime.AddMilliseconds(System.Convert.ToDouble(_log4jEvent.Timestamp)).ToLocalTime();
             }
             catch (Exception ex)
             {

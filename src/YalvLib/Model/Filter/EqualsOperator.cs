@@ -17,10 +17,9 @@ namespace YalvLib.Model.Filter
         /// <returns>true if equals, false otherwise</returns>
         public override bool Evaluate(object property, string value)
         {
-            if(property is string)
-                return ((string)property).Equals(value,StringComparison.CurrentCultureIgnoreCase);
-            if(property.GetType() != typeof(DateTime))
-                return property.Equals(value);
+            if (!(property is DateTime))
+                return (property.ToString()).Equals(value,StringComparison.CurrentCultureIgnoreCase);
+
             return DateTime.Compare((DateTime) property, DateTime.Parse(value)) == 0;
         }
 

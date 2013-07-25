@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Windows.Threading;
 using YalvLib.Common;
-using YalvLib.Common.Converter;
 using YalvLib.Model;
 using YalvLib.Model.Filter;
 using YalvLib.ViewModel.Common;
+using StringConverter = YalvLib.Common.Converter.StringConverter;
 
 namespace YalvLib.ViewModel
 {
@@ -29,8 +31,17 @@ namespace YalvLib.ViewModel
             _converter = new StringConverter();
             _context = new Context {Analysis = logAnalysis};
             _queries = new List<FilterQueryViewModel>();
+            GenerateFiltersFromAnalysis(logAnalysis);
             ActualQuery = string.Empty;
             InitAutoCompleteList();
+        }
+
+        private void GenerateFiltersFromAnalysis(LogAnalysis logAnalysis)
+        {
+            foreach (var filter in logAnalysis.Filters)
+            {
+                AddQuery(filter);
+            }
         }
 
         private void InitAutoCompleteList()
@@ -77,7 +88,13 @@ namespace YalvLib.ViewModel
         public Context Context
         {
             get { return _context; }
-            set { _context = value; }
+            set { _context = value;}
+        }
+
+        public LogAnalysis Analysis
+        {
+            get { return _context.Analysis; }
+            set { if (value != null && value != Analysis){ _context.Analysis = value;GenerateFiltersFromAnalysis(Analysis);} }
         }
 
         /// <summary>
@@ -90,6 +107,15 @@ namespace YalvLib.ViewModel
             _queries.Add(querytoAdd);
             querytoAdd.QueryDeleted += ExecuteCancel;
             querytoAdd.PropertyChanged += (sender, args) => NotifyPropertyChanged(() => Queries);
+            NotifyPropertyChanged(() => Queries);
+        }
+
+        public void AddQuery(CustomFilter filter)
+        {
+            var filtertoAdd = new FilterQueryViewModel(filter);
+            _queries.Add(filtertoAdd);
+            filtertoAdd.QueryDeleted += ExecuteCancel;
+            filtertoAdd.PropertyChanged += (sender, args) => NotifyPropertyChanged(() => Queries);
             NotifyPropertyChanged(() => Queries);
         }
 
@@ -154,6 +180,7 @@ namespace YalvLib.ViewModel
             if (query == null) return;
             query.QueryDeleted -= ExecuteCancel;
             _queries.Remove(query);
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.RemoveFilter(query.Filter);
             NotifyPropertyChanged(() => Queries);
         }
     }

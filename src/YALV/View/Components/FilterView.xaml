@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Components:AutoCompleteTextBox x:Name="textBox_Filter" Grid.Column="0" Margin="5" Height="23" Width="225" DelayTime="500" Threshold="2" AutoCompleteList="{Binding Path=FilterViewModel.AutoCompleteList, RelativeSource={RelativeSource Mode= TemplatedParent}}" />   
+        <Components:AutoCompleteTextBox x:Name="textBox_Filter" Grid.Column="0" Margin="5" Height="23" MinWidth="225" Width="Auto" DelayTime="500" Threshold="2" AutoCompleteList="{Binding Path=FilterViewModel.AutoCompleteList, RelativeSource={RelativeSource Mode= TemplatedParent}}" />   
         <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
