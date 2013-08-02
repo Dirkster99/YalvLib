@@ -7,17 +7,13 @@ using YalvLib.Model;
 
 namespace YalvLib.Infrastructure.Mappings
 {
-    public class TextMarkerMapping : ClassMap<TextMarker>
+    public class TextMarkerMapping : SubclassMap<TextMarker>
     {
         public TextMarkerMapping()
         {
             Not.LazyLoad();
-            Id(x => x.Uid).GeneratedBy.Guid();
-            HasMany(x => x.LogEntries).Cascade.All().Not.LazyLoad();
             Map(x => x.Author);
             Map(x => x.Message);
-            Map(x => x.DateCreation);
-            Map(x => x.DateLastModification);
         }
     }
 }

@@ -36,6 +36,11 @@ namespace YalvLib.ViewModel
             InitAutoCompleteList();
         }
 
+
+        /// <summary>
+        /// If we load a workspace, we need to instantiate the filters from the loaded model
+        /// </summary>
+        /// <param name="logAnalysis"></param>
         private void GenerateFiltersFromAnalysis(LogAnalysis logAnalysis)
         {
             foreach (var filter in logAnalysis.Filters)
@@ -44,14 +49,17 @@ namespace YalvLib.ViewModel
             }
         }
 
+        /// <summary>
+        /// Intialize the list of completion based on the log entry properties
+        /// </summary>
         private void InitAutoCompleteList()
         {
             var entry = new LogEntry();
-            _autoCompleteList = new List<AutoCompleteEntry>();
-            AutoCompleteList.CollectionChanged += (sender, args) => NotifyPropertyChanged(() => AutoCompleteList);
+            AutoCompleteList = new ObservableCollection<AutoCompleteEntry>();
+            
             foreach (var property in entry.GetType().GetProperties())
             {
-                _autoCompleteList.Add(new AutoCompleteEntry(property.Name, null));
+                AutoCompleteList.Add(new AutoCompleteEntry(property.Name, null));
             }
         }
 
@@ -80,6 +88,7 @@ namespace YalvLib.ViewModel
         public ObservableCollection<AutoCompleteEntry> AutoCompleteList
         {
             get { return new ObservableCollection<AutoCompleteEntry>(_autoCompleteList); }
+            set { _autoCompleteList = new List<AutoCompleteEntry>(value); }
         }
 
         /// <summary>

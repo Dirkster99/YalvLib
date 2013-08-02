@@ -105,6 +105,7 @@
     <Compile Include="Infrastructure\Log4Net\Log4j.Designer.cs" />
     <Compile Include="Infrastructure\Log4Net\Log4jConverter.cs" />
     <Compile Include="Infrastructure\Log4Net\LogEntry2Event.cs" />
+    <Compile Include="Infrastructure\Mappings\AbstractMarkerMapping.cs" />
     <Compile Include="Infrastructure\Mappings\ColorMarkerMapping.cs" />
     <Compile Include="Infrastructure\Mappings\CustomFilterMapping.cs" />
     <Compile Include="Infrastructure\Mappings\LogAnalysisMapping.cs" />

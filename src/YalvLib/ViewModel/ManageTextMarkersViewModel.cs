@@ -17,18 +17,49 @@ namespace YalvLib.ViewModel
         private List<LogEntryRowViewModel> _selectedEntries;
         private TextMarkerViewModel _textMarkerAdd;
         private bool _displayOnlyCommonMarkers;
+        private LogAnalysis _analysis;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ManageTextMarkersViewModel()
+        public ManageTextMarkersViewModel(LogAnalysis analysis)
         {
+            _analysis = analysis;
             _textMarkerAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty));
             _textMarkerVmList = new ObservableCollection<TextMarkerViewModel>();
             _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
             _textMarkerAdd.TextMarkerDeleted += ExecuteCancel;
             CommandUpdateTextMarkers = new CommandRelay(CommandUpdateTextMarkersExecute,
                                                         CommandUpdateTextMarkersCanExecute);
+        }
+
+
+        /// <summary>
+        /// Generate the markers for the model loaded in the workspace
+        /// </summary>
+        /// <param name="currentAnalysis"></param>
+        private void GenerateMarkersFromAnalysis(LogAnalysis currentAnalysis)
+        {
+            foreach(var TextMarker in currentAnalysis.TextMarkers)
+            {
+                _textMarkerVmList.Add(new TextMarkerViewModel(TextMarker));
+            }
+        }
+
+        /// <summary>
+        /// getter / setter of the log analysis linked to the textmarkers
+        /// </summary>
+        public LogAnalysis Analysis
+        {
+            get { return _analysis; }
+            set
+            {
+                if (value != null && value != Analysis)
+                {
+                    _analysis = value;
+                    GenerateMarkersFromAnalysis(Analysis);
+                }
+            }
         }
 
         /// <summary>
@@ -212,5 +243,7 @@ namespace YalvLib.ViewModel
                 MarkerDeleted(this, e);
             }
         }
+
+        
     }
 }

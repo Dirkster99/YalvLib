@@ -110,9 +110,10 @@ namespace YalvLib.ViewModel
             SelectAll = true;
             IsFiltered = false;
             LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
+            FiltredLogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             RebuildLogView(LogEntryRowViewModels);
             _filterViewModel = new FilterConverterViewModel(YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis);
-            _filterViewModel.PropertyChanged += (sender, args) => UpdateFilteredCounters(LogView);
+            _filterViewModel.PropertyChanged += (sender, args) => UpdateFilteredCounters();
 
             interfaceTextMarkerViewModel.MarkerDeleted +=
                 (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs) args);
@@ -760,7 +761,6 @@ namespace YalvLib.ViewModel
                 }
                 return true;
             }
-            // Why do we return true if the column is null??
             return true;
         }
 
@@ -826,7 +826,7 @@ namespace YalvLib.ViewModel
         {
             IsFiltered = !IsFiltered;
             if (IsFiltered)
-                UpdateFilteredCounters(LogView);
+                UpdateFilteredCounters();
             else UpdateCounters();
         }
 
@@ -837,7 +837,7 @@ namespace YalvLib.ViewModel
         internal virtual void CommandRefreshExecute(EvaluateLoadResult callbackOnFinishedparameter)
         {
             if (IsFiltered)
-                UpdateFilteredCounters(LogView);
+                UpdateFilteredCounters();
             else
                 UpdateCounters();
         }
@@ -871,7 +871,8 @@ namespace YalvLib.ViewModel
         {
             LogEntryRowViewModel l = SelectedLogItem;
             SelectedLogItem = null;
-
+            if (FiltredLogEntryRowViewModels != null)
+                FiltredLogEntryRowViewModels.Clear();
             if (LogView != null)
             {
                 LogView.Refresh();
@@ -914,11 +915,11 @@ namespace YalvLib.ViewModel
             SelectFatal = false;
         }
 
-        private void UpdateFilteredCounters(ICollectionView filteredList)
+        private void UpdateFilteredCounters()
         {
-            if (filteredList != null)
+            if (FiltredLogEntryRowViewModels != null)
             {
-                IEnumerable<LogEntryRowViewModel> fltList = filteredList.Cast<LogEntryRowViewModel>();
+                IEnumerable<LogEntryRowViewModel> fltList = FiltredLogEntryRowViewModels;
                 if (fltList != null)
                 {
                     ItemsFilterCount = fltList.Count();
@@ -931,7 +932,7 @@ namespace YalvLib.ViewModel
                                             where it.Entry.LevelIndex.Equals(LevelIndex.INFO)
                                             select it).Count();
 
-                    ItemsWarnCount = (from it in fltList
+                    ItemsWarnFilterCount = (from it in fltList
                                       where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
                                             select it).Count();
 
@@ -1030,7 +1031,7 @@ namespace YalvLib.ViewModel
                         return mShowLevelFatal;
                 }
             }
-
+            FiltredLogEntryRowViewModels.Add(logitemVm);
             return true; // uri.Contains(movie.ID.ToString());
         }
 
@@ -1050,7 +1051,7 @@ namespace YalvLib.ViewModel
             LogView = (CollectionView) CollectionViewSource.GetDefaultView(LogEntryRowViewModels);
             LogView.Filter = OnFilterLogItems;
             if(IsFiltered)
-                UpdateFilteredCounters(LogView);
+                UpdateFilteredCounters();
             else
                 UpdateCounters();
         }

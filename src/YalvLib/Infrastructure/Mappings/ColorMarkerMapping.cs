@@ -12,11 +12,7 @@ namespace YalvLib.Infrastructure.Mappings
         public ColorMarkerMapping()
         {
             Not.LazyLoad();
-            Id(x => x.Uid).GeneratedBy.Guid();
-            HasMany(x => x.LogEntries).Cascade.All();
             Map(x => x.HighlightColor);
-            Map(x => x.DateCreation);
-            Map(x => x.DateLastModification);
         }
     }
 }

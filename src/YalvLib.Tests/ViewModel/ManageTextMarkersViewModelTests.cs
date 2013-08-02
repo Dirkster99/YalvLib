@@ -19,10 +19,11 @@ namespace YalvLib.Tests.ViewModel
         [SetUp]
         public void InitEnvironment()
         {
-            _manageTextMarkers = new ManageTextMarkersViewModel();
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis = new LogAnalysis();
+            _manageTextMarkers = new ManageTextMarkersViewModel(YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis);
             _entry = new LogEntry();
             YalvRegistry.Instance.SetActualLogAnalysisWorkspace(new LogAnalysisWorkspace());
-            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis = new LogAnalysis();
+
             
         }
 

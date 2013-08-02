@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Timers;
@@ -23,8 +24,9 @@ namespace YALV.View.Components
         private readonly Timer _keypressTimer;
         private readonly TextBox _textBox;   
 
-        public static readonly DependencyProperty AutoCompletionList =
-       DependencyProperty.Register("AutoCompleteList", typeof(ObservableCollection<AutoCompleteEntry>), typeof(AutoCompleteTextBox), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty AutoCompletionListProperty =
+       DependencyProperty.Register("AutoCompleteList", typeof(ObservableCollection<AutoCompleteEntry>), typeof(AutoCompleteTextBox), new UIPropertyMetadata());
+
 
         private int _delayTime;
         private bool _insertText;
@@ -73,9 +75,10 @@ namespace YALV.View.Components
 
         public ObservableCollection<AutoCompleteEntry> AutoCompleteList
         {
-            get { return (ObservableCollection<AutoCompleteEntry>)GetValue(AutoCompletionList); }
-            set { SetValue(AutoCompletionList, value); }
+            get { return (ObservableCollection<AutoCompleteEntry>)GetValue(AutoCompletionListProperty); }
+            set { SetValue(AutoCompletionListProperty, value); }
         }
+
 
         public string Text
         {

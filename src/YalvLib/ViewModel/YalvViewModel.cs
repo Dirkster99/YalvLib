@@ -37,12 +37,13 @@ namespace YalvLib.ViewModel
         /// </summary>
         public YalvViewModel()
         {
-            _manageTextMarkersViewModel = new ManageTextMarkersViewModel();
+
             _manageRepoViewModel = new ManageRepositoryViewModel();
             _manageRepoViewModel.ActiveChanged += ManageRepoViewModelOnPropertyChanged;
 
             _logAnalysis = new LogAnalysis();
             YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis = _logAnalysis;
+            _manageTextMarkersViewModel = new ManageTextMarkersViewModel(_logAnalysis);
             
 
             _logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
@@ -58,9 +59,6 @@ namespace YalvLib.ViewModel
                                                         _manageTextMarkersViewModel.CommandUpdateTextMarkersCanExecute);
 
             CommandUpdateDelta = new CommandRelay(CommandUpdateDeltaExecute, CommandUpdateDeltaCanExecute);
-            
-
-
         }
 
         private bool CommandCancelProcessing_CanExecute(object obj)
@@ -416,6 +414,7 @@ namespace YalvLib.ViewModel
                                                       }, true);
             }
             _logEntryRows.FilterViewModel.Analysis = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis;
+            _manageTextMarkersViewModel.Analysis = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis;
             
         }
 

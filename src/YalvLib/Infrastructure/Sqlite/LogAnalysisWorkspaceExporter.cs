@@ -51,6 +51,7 @@ namespace YalvLib.Infrastructure.Sqlite
                                       m.FluentMappings.AddFromAssemblyOf<LogAnalysisWorkspaceMapping>();
                                       m.FluentMappings.AddFromAssemblyOf<LogAnalysisMapping>();
                                       m.FluentMappings.AddFromAssemblyOf<LogEntryRepositoryMapping>();
+                                      m.FluentMappings.AddFromAssemblyOf<AbstractMarkerMapping>();
                                       m.FluentMappings.AddFromAssemblyOf<TextMarkerMapping>();
                                       m.FluentMappings.AddFromAssemblyOf<LogEntryMapping>();
                                       m.FluentMappings.AddFromAssemblyOf<CustomFilterMapping>();

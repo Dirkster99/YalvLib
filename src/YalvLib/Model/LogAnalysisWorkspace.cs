@@ -66,7 +66,7 @@ namespace YalvLib.Model
         }
 
         /// <summary>
-        /// Get the source reporitories list
+        /// Get the source repositories list
         /// </summary>
         public IList<LogAnalysis> Analyses
         { get { return _analyses; } private set { _analyses = value; } }

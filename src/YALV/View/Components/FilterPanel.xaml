@@ -105,6 +105,7 @@
           <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0,10}">
                   <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.ItemsWarnCount" FallbackValue="0" />
+                  <Binding Mode="OneWay" Path="YalvLogViewModel.LogEntryRows.ItemsWarnFilterCount" FallbackValue="0" />
               </MultiBinding>
           </TextBlock.Text>
         </TextBlock>

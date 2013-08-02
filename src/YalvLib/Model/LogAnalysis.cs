@@ -38,7 +38,7 @@ namespace YalvLib.Model
         public IList<TextMarker> TextMarkers
         {
             get { return Markers.Where(x => x is TextMarker).Cast<TextMarker>().ToList(); }
-            set { }
+            set { foreach(var marker in value)Markers.Add(marker);}
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace YalvLib.Model
         public IList<ColorMarker> ColorMarkers
         {
             get { return Markers.Where(x => x is ColorMarker).Cast<ColorMarker>().ToList(); }
-            set { }
+            set { foreach (var marker in value)Markers.Add(marker); }
         }
 
 
