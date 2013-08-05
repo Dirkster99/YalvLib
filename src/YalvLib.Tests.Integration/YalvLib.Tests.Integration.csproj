@@ -46,7 +46,6 @@
     <Compile Include="Model\LogEntrySqliteRepositoryTests.cs" />
     <Compile Include="Model\LogEntryFileRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\YalvViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model\SampleLogs.db3">

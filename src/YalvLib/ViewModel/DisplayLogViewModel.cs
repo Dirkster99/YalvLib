@@ -1,21 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
+using YalvLib.Common;
+using YalvLib.Common.Interfaces;
+using YalvLib.Model;
+using YalvLib.Strings;
 
 namespace YalvLib.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Globalization;
-    using System.Linq;
-    using System.Windows.Data;
-    using System.Windows.Input;
-    using YalvLib.Common;
-    using YalvLib.Common.Interfaces;
-    using YalvLib.Model;
-    using YalvLib.Strings;
-
     /// <summary>
     /// ViewModel class to organize all items relevant to a loaded logfile display
     /// (columns displayed, file name etc).
@@ -52,14 +51,14 @@ namespace YalvLib.ViewModel
         private const string PROP_ItemsErrorFilterCount = "ItemsErrorFilterCount";
         private const string PROP_ItemsFatalFilterCount = "ItemsFatalFilterCount";
         private const string PROP_ItemsFilterCount = "ItemsFilterCount";
+        private readonly FilterConverterViewModel _filterViewModel;
 
 
         private readonly ColumnsViewModel mDataGridColumns;
 
+        private ObservableCollection<LogEntryRowViewModel> _filtredRowViewModels;
         private ObservableCollection<LogEntryRowViewModel> _rowViewModels;
-        private ObservableCollection<LogEntryRowViewModel> _filtredRowViewModels; 
         private EvaluateLoadResult loadResultCallback = null;
-        private FilterConverterViewModel _filterViewModel;
 
         private string mGoToLogItemId;
 
@@ -113,7 +112,7 @@ namespace YalvLib.ViewModel
             FiltredLogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             RebuildLogView(LogEntryRowViewModels);
             _filterViewModel = new FilterConverterViewModel(YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis);
-            _filterViewModel.PropertyChanged += (sender, args) => UpdateFilteredCounters();
+            //_filterViewModel.PropertyChanged += (sender, args) => UpdateFilteredCounters(LogView);
 
             interfaceTextMarkerViewModel.MarkerDeleted +=
                 (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs) args);
@@ -724,6 +723,10 @@ namespace YalvLib.ViewModel
 
         #region Methodes
 
+        public ICommandAncestor CommandApplyFilter { get; protected set; }
+
+        public ICommandAncestor CommandResetFilter { get; protected set; }
+
         /// <summary>
         /// Match View Column filter Value (if any) with item property value
         /// and determine if this item should be displayed or not
@@ -795,26 +798,25 @@ namespace YalvLib.ViewModel
 
         internal void UpdateCounters()
         {
-            
             ItemsDebugCount = (from it in LogEntryRowViewModels
-                                    where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
-                                    select it).Count();
+                               where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
+                               select it).Count();
 
             ItemsInfoCount = (from it in LogEntryRowViewModels
-                                   where it.Entry.LevelIndex.Equals(LevelIndex.INFO)
-                                   select it).Count();
+                              where it.Entry.LevelIndex.Equals(LevelIndex.INFO)
+                              select it).Count();
 
             ItemsWarnCount = (from it in LogEntryRowViewModels
-                                   where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
-                                   select it).Count();
+                              where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
+                              select it).Count();
 
             ItemsErrorCount = (from it in LogEntryRowViewModels
-                                    where it.Entry.LevelIndex.Equals(LevelIndex.ERROR)
-                                    select it).Count();
+                               where it.Entry.LevelIndex.Equals(LevelIndex.ERROR)
+                               select it).Count();
 
             ItemsFatalCount = (from it in LogEntryRowViewModels
-                                    where it.Entry.LevelIndex.Equals(LevelIndex.FATAL)
-                                    select it).Count();
+                               where it.Entry.LevelIndex.Equals(LevelIndex.FATAL)
+                               select it).Count();
 
             RefreshView();
         }
@@ -825,9 +827,6 @@ namespace YalvLib.ViewModel
         internal void ApplyFilter()
         {
             IsFiltered = !IsFiltered;
-            if (IsFiltered)
-                UpdateFilteredCounters();
-            else UpdateCounters();
         }
 
         /// <summary>
@@ -836,10 +835,7 @@ namespace YalvLib.ViewModel
         /// <param name="callbackOnFinishedparameter"></param>
         internal virtual void CommandRefreshExecute(EvaluateLoadResult callbackOnFinishedparameter)
         {
-            if (IsFiltered)
-                UpdateFilteredCounters();
-            else
-                UpdateCounters();
+            
         }
 
         /// <summary>
@@ -871,8 +867,6 @@ namespace YalvLib.ViewModel
         {
             LogEntryRowViewModel l = SelectedLogItem;
             SelectedLogItem = null;
-            if (FiltredLogEntryRowViewModels != null)
-                FiltredLogEntryRowViewModels.Clear();
             if (LogView != null)
             {
                 LogView.Refresh();
@@ -887,6 +881,7 @@ namespace YalvLib.ViewModel
                         SelectedLogItem = l;
                 }
             }
+            UpdateFilteredCounters(LogView);
             CommandManager.InvalidateRequerySuggested();
         }
 
@@ -915,11 +910,11 @@ namespace YalvLib.ViewModel
             SelectFatal = false;
         }
 
-        private void UpdateFilteredCounters()
+        private void UpdateFilteredCounters(ICollectionView view)
         {
-            if (FiltredLogEntryRowViewModels != null)
+            if (view != null)
             {
-                IEnumerable<LogEntryRowViewModel> fltList = FiltredLogEntryRowViewModels;
+                IEnumerable<LogEntryRowViewModel> fltList = view.Cast<LogEntryRowViewModel>();
                 if (fltList != null)
                 {
                     ItemsFilterCount = fltList.Count();
@@ -933,7 +928,7 @@ namespace YalvLib.ViewModel
                                             select it).Count();
 
                     ItemsWarnFilterCount = (from it in fltList
-                                      where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
+                                            where it.Entry.LevelIndex.Equals(LevelIndex.WARN)
                                             select it).Count();
 
                     ItemsErrorFilterCount = (from it in fltList
@@ -954,7 +949,7 @@ namespace YalvLib.ViewModel
                 ItemsErrorFilterCount = 0;
                 ItemsFatalFilterCount = 0;
             }
-            RefreshView();
+            //RefreshView();
         }
 
         /// <summary>
@@ -1031,7 +1026,6 @@ namespace YalvLib.ViewModel
                         return mShowLevelFatal;
                 }
             }
-            FiltredLogEntryRowViewModels.Add(logitemVm);
             return true; // uri.Contains(movie.ID.ToString());
         }
 
@@ -1050,10 +1044,7 @@ namespace YalvLib.ViewModel
                 LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             LogView = (CollectionView) CollectionViewSource.GetDefaultView(LogEntryRowViewModels);
             LogView.Filter = OnFilterLogItems;
-            if(IsFiltered)
-                UpdateFilteredCounters();
-            else
-                UpdateCounters();
+            RefreshView();
         }
 
         private void RemoveAllItems()
@@ -1112,13 +1103,9 @@ namespace YalvLib.ViewModel
             catch
             {
             }
-            
+
             return messageBoxText;
         }
-
-        public ICommandAncestor CommandApplyFilter { get; protected set; }
-
-        public ICommandAncestor CommandResetFilter { get; protected set; }
 
         internal virtual object CommandApplyFilterExecute(object parameter)
         {
@@ -1194,12 +1181,12 @@ namespace YalvLib.ViewModel
         /// <param name="repositories">Repositories containing the entries</param>
         public void SetEntries(List<RepositoryViewModel> repositories)
         {
-            System.Windows.Application.Current.Dispatcher.Invoke(
+            Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal,
-                (Action) delegate()
+                (Action) delegate
                              {
                                  RemoveAllItems();
-                                 foreach (var repo in repositories)
+                                 foreach (RepositoryViewModel repo in repositories)
                                  {
                                      if (repo.Active)
                                      {
@@ -1212,6 +1199,7 @@ namespace YalvLib.ViewModel
                                  SelectedLogItem = LogEntryRowViewModels.Any()
                                                        ? LogEntryRowViewModels.Last()
                                                        : null;
+                                 UpdateCounters();
                              });
         }
     }

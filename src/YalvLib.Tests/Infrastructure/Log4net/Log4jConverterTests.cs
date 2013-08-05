@@ -52,7 +52,7 @@ namespace YalvLib.Tests.Infrastructure.Log4net
             Assert.AreEqual("method4", logEntry.Method);
             Assert.AreEqual("10", logEntry.Thread);
             Assert.AreEqual("System.Exception: Warning Exception!", logEntry.Throwable);
-            Assert.AreEqual((DateTime.MinValue + new TimeSpan(1, 1, 1, 1)).ToLocalTime(), logEntry.TimeStamp);
+            Assert.AreEqual(new DateTime(1970,1,2,2,1,1), logEntry.TimeStamp);
             Assert.AreEqual("tongbong-PC\tongbong", logEntry.UserName);
         }
 

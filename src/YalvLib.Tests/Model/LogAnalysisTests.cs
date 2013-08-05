@@ -23,15 +23,6 @@ namespace YalvLib.Tests.Model
         }
 
         [Test]
-        public void CreateInstance()
-        {
-            Assert.AreEqual(3, _analysis.Markers.Count);
-            Assert.IsTrue(_analysis.ColorMarkers.Any(x => x.HighlightColor.Equals(Color.Chocolate)));
-            Assert.IsTrue(_analysis.ColorMarkers.Any(x => x.HighlightColor.Equals(Color.BlueViolet)));
-            Assert.IsTrue(_analysis.ColorMarkers.Any(x => x.HighlightColor.Equals(Color.CadetBlue)));
-        }
-
-        [Test]
         public void IsMultiMarkerTest()
         {
             TextMarker marker = _analysis.AddTextMarker(new List<LogEntry> {_entry1, _entry2}, "ME", "My message");
@@ -112,20 +103,5 @@ namespace YalvLib.Tests.Model
             LogEntry entry4 = new LogEntry();
             Assert.IsTrue(_analysis.ExistTextMarkerForLogEntries(new List<LogEntry>(){_entry1, _entry2}));
         }
-
-        [Test]
-        public void SetColorMarkersForEntries()
-        {
-            _analysis.SetColorMarker(new List<LogEntry> {_entry1}, Color.BlueViolet);
-            Assert.IsTrue(_analysis.ColorMarkers[0].LogEntries.Contains(_entry1));
-        }
-
-        [Test]
-        public void GetColorMarkerFromColor()
-        {
-            Assert.AreEqual(_analysis.GetColorMarker(Color.BlueViolet), _analysis.ColorMarkers[0]);
-        }
-
-
     }
 }
