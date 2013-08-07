@@ -54,7 +54,7 @@ namespace YalvLib.Infrastructure.Filter
         public Terminal Value = new RegexBasedTerminal("stringValue", @"[\w+.?|\s?]+");
         public Terminal yearValue = new RegexBasedTerminal("YearValue", @"\d{4}");
         public Terminal monthValue = new RegexBasedTerminal("MonthValue", @"0[1-9]|1[012]");
-        public Terminal dayValue = new RegexBasedTerminal("DayValue", @"[012][1-9]|3[01]");
+        public Terminal dayValue = new RegexBasedTerminal("DayValue", @"[012][0-9]|3[01]");
         public Terminal hourValue = new RegexBasedTerminal("HourValue", @"\d{2}");
         public Terminal MinSecValue = new RegexBasedTerminal("MinSecValue", @"\d{2}");
         public Terminal tSeparator = new RegexBasedTerminal("dateSeparator", "T");

@@ -112,11 +112,11 @@ namespace YalvLib.ViewModel
             FiltredLogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             RebuildLogView(LogEntryRowViewModels);
             _filterViewModel = new FilterConverterViewModel(YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis);
-            //_filterViewModel.PropertyChanged += (sender, args) => UpdateFilteredCounters(LogView);
+            _filterViewModel.PropertyChanged += (sender, args) => RefreshView();
 
             interfaceTextMarkerViewModel.MarkerDeleted +=
                 (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs) args);
-            interfaceTextMarkerViewModel.MarkerAdded += (sender, args) => UpdateCounters();
+            interfaceTextMarkerViewModel.MarkerAdded += (sender, args) => RefreshView();
 
             // Default constructor contains column definitions
             // The callback is invocked when a column filter string item is changed

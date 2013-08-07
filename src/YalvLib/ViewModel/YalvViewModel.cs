@@ -426,10 +426,10 @@ namespace YalvLib.ViewModel
             CommandRefresh.CanExecute(null);
             CommandDelete.CanExecute(null);
             RaisePropertyChanged("HasData");
-            if(FilterYalvView.CanExecute(null))
-            {
-                FilterYalvView.Execute(null);
-            }
+            //if(FilterYalvView.CanExecute(null))
+            //{
+            //    FilterYalvView.Execute(null);
+            //}
         }
 
         #endregion methods
