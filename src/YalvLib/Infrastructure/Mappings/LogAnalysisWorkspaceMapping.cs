@@ -18,11 +18,7 @@ namespace YalvLib.Infrastructure.Mappings
             HasMany(x => x.SourceRepositories)
                 .Cascade.All()
                 .Not.LazyLoad();
-
-
             HasMany(x => x.Analyses).Cascade.All().Not.LazyLoad();
-
-
         }
 
     }

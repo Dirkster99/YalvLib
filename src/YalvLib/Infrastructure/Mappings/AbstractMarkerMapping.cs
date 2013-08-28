@@ -11,8 +11,9 @@ namespace YalvLib.Infrastructure.Mappings
     {
         public AbstractMarkerMapping()
         {
+            Not.LazyLoad();
             Id(x => x.Uid).GeneratedBy.Guid();
-            HasMany(x => x.LogEntries);
+            HasManyToMany(x => x.LogEntries);
             Map(x => x.DateCreation);
             Map(x => x.DateLastModification);
         }

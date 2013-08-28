@@ -29,7 +29,7 @@ namespace YalvLib.Model
         /// <summary>
         /// return the timestamp of the marker yhen it has been created
         /// </summary>
-        public DateTime DateCreation { get; private set; }
+        public DateTime DateCreation { get; set; }
 
         /// <summary>
         /// Get/Set date of the last modification

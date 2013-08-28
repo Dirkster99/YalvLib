@@ -7,11 +7,15 @@ using YalvLib.Model;
 
 namespace YalvLib.Infrastructure.Mappings
 {
-    public class ColorMarkerMapping : ClassMap<ColorMarker>
+    class ColorMarkerMapping : ClassMap<ColorMarker>
     {
         public ColorMarkerMapping()
         {
             Not.LazyLoad();
+            Id(x => x.Uid).GeneratedBy.Guid();
+            HasManyToMany(x => x.LogEntries);
+            Map(x => x.DateCreation);
+            Map(x => x.DateLastModification);
             Map(x => x.HighlightColor);
         }
     }

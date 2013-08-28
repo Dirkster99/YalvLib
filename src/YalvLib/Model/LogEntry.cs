@@ -148,15 +148,7 @@ namespace YalvLib.Model
             var e = obj as LogEntry;
             if (e == null)
                 return false;
-            return e.App == App
-                   && e.Class == Class
-                   && e.Delta == Delta
-                   && e.File == File
-                   && e.HostName == HostName
-                   && e.Line == Line
-                   && e.TimeStamp == TimeStamp
-                   && e.Logger == Logger
-                   && e.MachineName == MachineName;
+            return e.Uid == Uid;
         }
 
         public override int GetHashCode()

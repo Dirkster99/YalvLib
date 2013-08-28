@@ -865,6 +865,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public void RefreshView()
         {
+            Console.Write("Refreshing view started at " + DateTime.Now + "." + DateTime.Now.Millisecond + "\n");
             LogEntryRowViewModel l = SelectedLogItem;
             SelectedLogItem = null;
             if (LogView != null)
@@ -883,6 +884,7 @@ namespace YalvLib.ViewModel
             }
             UpdateFilteredCounters(LogView);
             CommandManager.InvalidateRequerySuggested();
+            Console.Write("Refreshing view finished at " + DateTime.Now + "."+ DateTime.Now.Millisecond + "\n");
         }
 
         /// <summary>
@@ -918,6 +920,7 @@ namespace YalvLib.ViewModel
                 if (fltList != null)
                 {
                     ItemsFilterCount = fltList.Count();
+                    Console.Write("Filtering : " + ItemsFilterCount + " / " + LogEntryRowViewModels.Count + "\n");
 
                     ItemsDebugFilterCount = (from it in fltList
                                              where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
@@ -1192,7 +1195,9 @@ namespace YalvLib.ViewModel
                                      {
                                          foreach (LogEntry entry in repo.Repository.LogEntries)
                                          {
-                                             LogEntryRowViewModels.Add(new LogEntryRowViewModel(entry));
+                                             var entryRow = new LogEntryRowViewModel(entry);
+                                             entryRow.UpdateTextMarkerQuantity();
+                                             LogEntryRowViewModels.Add(entryRow);
                                          }
                                      }
                                  }

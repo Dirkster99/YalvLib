@@ -5,8 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Conventions.Helpers;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -46,15 +48,17 @@ namespace YalvLib.Infrastructure.Sqlite
             {
                 ISessionFactory sessionFactory = Fluently.Configure()
                     .Database(SQLiteConfiguration.Standard.UsingFile(_path))
+                    .Diagnostics(diag => diag.Enable().OutputToConsole())
                     .Mappings(m =>
                                   {
-                                      m.FluentMappings.AddFromAssemblyOf<LogAnalysisWorkspaceMapping>();
-                                      m.FluentMappings.AddFromAssemblyOf<LogAnalysisMapping>();
-                                      m.FluentMappings.AddFromAssemblyOf<LogEntryRepositoryMapping>();
-                                      m.FluentMappings.AddFromAssemblyOf<AbstractMarkerMapping>();
-                                      m.FluentMappings.AddFromAssemblyOf<TextMarkerMapping>();
-                                      m.FluentMappings.AddFromAssemblyOf<LogEntryMapping>();
-                                      m.FluentMappings.AddFromAssemblyOf<CustomFilterMapping>();
+                                      m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();
+                                      m.FluentMappings.Add<LogAnalysisMapping>();
+                                      m.FluentMappings.Add<LogEntryRepositoryMapping>();
+                                      m.FluentMappings.Add<LogEntryMapping>();
+                                      //m.FluentMappings.Add<AbstractMarkerMapping>();
+                                      m.FluentMappings.Add<TextMarkerMapping>();
+                                      m.FluentMappings.Add<ColorMarkerMapping>();
+                                      m.FluentMappings.Add<CustomFilterMapping>();
                                   })
                     .ExposeConfiguration(BuildSchema)
                     .BuildSessionFactory();
@@ -76,21 +80,21 @@ namespace YalvLib.Infrastructure.Sqlite
             {
                 var cancelToken = new CancellationToken(true);
                 Task taskToComplete = Task.Factory.StartNew(obj =>
-                                                                {
-                                                                    ISessionFactory factory = BuildFactory();
-                                                                    using (ISession session = factory.OpenSession())
-                                                                    {
-                                                                        using (
-                                                                            ITransaction transaction =
-                                                                                session.BeginTransaction())
-                                                                        {
-                                                                            session.SaveOrUpdate(logWorkspace);
-                                                                            transaction.Commit();
-                                                                        }
-                                                                    }
-                                                                    factory.Close();
-                                                                }, cancelToken).ContinueWith(
-                                                                    ant => ReportExportComplete());
+                {
+                    ISessionFactory factory = BuildFactory();
+                    using (ISession session = factory.OpenSession())
+                    {
+                        using (
+                            ITransaction transaction =
+                                session.BeginTransaction())
+                        {
+                            session.SaveOrUpdate(logWorkspace);
+                            transaction.Commit();
+                        }
+                    }
+                    factory.Close();
+                }, cancelToken).ContinueWith(
+                    ant => ReportExportComplete());
             }catch(Exception e)
             {
                 

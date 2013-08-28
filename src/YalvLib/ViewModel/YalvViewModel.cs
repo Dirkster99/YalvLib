@@ -24,7 +24,6 @@ namespace YalvLib.ViewModel
         private readonly ManageRepositoryViewModel _manageRepoViewModel;
         private readonly ManageTextMarkersViewModel _manageTextMarkersViewModel;
 
-
         private string _calculatedDelta;
         private LogFileLoader _fileLoader;
 
@@ -357,11 +356,6 @@ namespace YalvLib.ViewModel
         }
 
 
-        
-
-
-        
-
         private object CommandUpdateDeltaExecute(object arg)
         {
             var list = arg as IEnumerable<LogEntryRowViewModel>;
@@ -408,14 +402,14 @@ namespace YalvLib.ViewModel
                 ManageRepositoriesViewModel.IsLoading = true;
                 _fileLoader.ExecuteAsynchronously(delegate
                                                       {
-                                                         
                                                           LogEntryRows.SetEntries(
                                                               ManageRepositoriesViewModel.Repositories.ToList());
+
                                                       }, true);
             }
             _logEntryRows.FilterViewModel.Analysis = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis;
             _manageTextMarkersViewModel.Analysis = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis;
-            
+
         }
 
         private void RefreshCommandsCanExecute(object sender, LogFileLoader.ResultEvent resultEvent)
@@ -426,10 +420,6 @@ namespace YalvLib.ViewModel
             CommandRefresh.CanExecute(null);
             CommandDelete.CanExecute(null);
             RaisePropertyChanged("HasData");
-            //if(FilterYalvView.CanExecute(null))
-            //{
-            //    FilterYalvView.Execute(null);
-            //}
         }
 
         #endregion methods
