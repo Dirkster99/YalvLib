@@ -32,7 +32,8 @@
       </Grid.RowDefinitions>
 
       <Label Content="{x:Static Strings:Resources.MainWindow_MarkerRow_Title_Text}" Grid.Row="0" />
-      <TextBox 
+        <Label HorizontalAlignment="Right" Grid.Column="1" Content="{Binding Path=LinkedEntries, Mode=OneWay}" Grid.Row="0"  />
+        <TextBox 
                 Name="AuthorTextBox"
                 Grid.Row="1" 
                 TextWrapping="Wrap" 

@@ -38,8 +38,7 @@ namespace YalvLib.Infrastructure.Sqlite
                               {
                                   m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();
                                   m.FluentMappings.Add<LogAnalysisMapping>();
-                                  m.FluentMappings.Add<LogEntryRepositoryMapping>();
-                                  //m.FluentMappings.Add<AbstractMarkerMapping>();       
+                                  m.FluentMappings.Add<LogEntryRepositoryMapping>();     
                                   m.FluentMappings.Add<LogEntryMapping>();
                                   m.FluentMappings.Add<ColorMarkerMapping>();
                                   m.FluentMappings.Add<TextMarkerMapping>();

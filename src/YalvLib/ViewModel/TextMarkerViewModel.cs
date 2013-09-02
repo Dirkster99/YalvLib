@@ -79,6 +79,18 @@ namespace YalvLib.ViewModel
             }
         }
 
+
+
+        public string LinkedEntries
+        {
+            get { 
+                if (_marker.LogEntryCount() > 1) 
+                    return string.Format("{0} entries linked", _marker.LogEntryCount());
+                return string.Empty;
+            }
+        }
+
+
         /// <summary>
         /// If we can execute the cancel, we rise a property changed event
         /// </summary>

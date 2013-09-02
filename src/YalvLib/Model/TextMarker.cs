@@ -28,6 +28,10 @@ namespace YalvLib.Model
             _message = message;
         }
 
+
+        /// <summary>
+        /// Empty constructor for nhibernate
+        /// </summary>
         public TextMarker()
         {
         }

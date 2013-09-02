@@ -33,6 +33,9 @@ namespace YalvLib.Infrastructure.Sqlite
             _path = path;
         }
 
+        /// <summary>
+        /// Get the directory name of the chosen file
+        /// </summary>
         public string Directory
         {
             get { return Path.GetDirectoryName(_path); }
@@ -48,14 +51,13 @@ namespace YalvLib.Infrastructure.Sqlite
             {
                 ISessionFactory sessionFactory = Fluently.Configure()
                     .Database(SQLiteConfiguration.Standard.UsingFile(_path))
-                    .Diagnostics(diag => diag.Enable().OutputToConsole())
+                    //.Diagnostics(diag => diag.Enable().OutputToConsole())
                     .Mappings(m =>
                                   {
                                       m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();
                                       m.FluentMappings.Add<LogAnalysisMapping>();
                                       m.FluentMappings.Add<LogEntryRepositoryMapping>();
                                       m.FluentMappings.Add<LogEntryMapping>();
-                                      //m.FluentMappings.Add<AbstractMarkerMapping>();
                                       m.FluentMappings.Add<TextMarkerMapping>();
                                       m.FluentMappings.Add<ColorMarkerMapping>();
                                       m.FluentMappings.Add<CustomFilterMapping>();
@@ -97,7 +99,7 @@ namespace YalvLib.Infrastructure.Sqlite
                     ant => ReportExportComplete());
             }catch(Exception e)
             {
-                
+                throw e;
             }
         }
 

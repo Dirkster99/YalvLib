@@ -59,8 +59,9 @@ namespace YalvLib.ViewModel
             
             foreach (var property in entry.GetType().GetProperties())
             {
-                AutoCompleteList.Add(new AutoCompleteEntry(property.Name, null));
+                _autoCompleteList.Add(new AutoCompleteEntry(property.Name, null));
             }
+            NotifyPropertyChanged(() => AutoCompleteList);
         }
 
         /// <summary>

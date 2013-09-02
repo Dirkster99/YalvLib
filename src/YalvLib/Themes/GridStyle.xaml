@@ -204,8 +204,8 @@
                     <TextBlock Text="{Binding Path=Entry.Thread, Mode=OneWay}"                                Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
                     <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeStamp_Text}" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-                    <TextBlock Text="{Binding Path=Entry.TimeStamp, Mode=OneWay}"                                Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
-
+                    <TextBlock Text="{Binding Path=Entry.TimeStamp, Mode=OneWay, StringFormat={}{0:MM/dd/yyyy hh:mm tt}}"  Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    
                     <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeDiff_Text}" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
                     <TextBlock Text="{Binding Path=Entry.Delta, Mode=OneWay}"                                   Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
                 </Grid>

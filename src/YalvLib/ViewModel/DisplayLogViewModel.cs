@@ -109,7 +109,6 @@ namespace YalvLib.ViewModel
             SelectAll = true;
             IsFiltered = false;
             LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
-            FiltredLogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             RebuildLogView(LogEntryRowViewModels);
             _filterViewModel = new FilterConverterViewModel(YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis);
             _filterViewModel.PropertyChanged += (sender, args) => RefreshView();
@@ -204,12 +203,6 @@ namespace YalvLib.ViewModel
             set { _rowViewModels = value; }
         }
 
-        public ObservableCollection<LogEntryRowViewModel> FiltredLogEntryRowViewModels
-        {
-            get { return _filtredRowViewModels; }
-
-            set { _filtredRowViewModels = value; }
-        }
 
         #region LogProperties
 
@@ -865,7 +858,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public void RefreshView()
         {
-            Console.Write("Refreshing view started at " + DateTime.Now + "." + DateTime.Now.Millisecond + "\n");
+            //Console.Write("Refreshing view started at " + DateTime.Now + "." + DateTime.Now.Millisecond + "\n");
             LogEntryRowViewModel l = SelectedLogItem;
             SelectedLogItem = null;
             if (LogView != null)
@@ -884,7 +877,7 @@ namespace YalvLib.ViewModel
             }
             UpdateFilteredCounters(LogView);
             CommandManager.InvalidateRequerySuggested();
-            Console.Write("Refreshing view finished at " + DateTime.Now + "."+ DateTime.Now.Millisecond + "\n");
+            //Console.Write("Refreshing view finished at " + DateTime.Now + "."+ DateTime.Now.Millisecond + "\n");
         }
 
         /// <summary>
@@ -920,7 +913,7 @@ namespace YalvLib.ViewModel
                 if (fltList != null)
                 {
                     ItemsFilterCount = fltList.Count();
-                    Console.Write("Filtering : " + ItemsFilterCount + " / " + LogEntryRowViewModels.Count + "\n");
+                    //Console.Write("Filtering : " + ItemsFilterCount + " / " + LogEntryRowViewModels.Count + "\n");
 
                     ItemsDebugFilterCount = (from it in fltList
                                              where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
