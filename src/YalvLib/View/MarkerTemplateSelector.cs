@@ -8,47 +8,55 @@ using YalvLib.ViewModel;
 
 namespace YalvLib.View
 {
+    /// <summary>
+    /// Marker Data Template Selector
+    /// </summary>
     public class MarkerTemplateSelector : DataTemplateSelector
     {
-
+        /// <summary>
+        /// TextAndColorMarker DataTemplate
+        /// </summary>
         public DataTemplate TextAndColorMarkerTemplate
         {
             get; set; 
         }
 
+        /// <summary>
+        /// ColorMarker DataTemplate
+        /// </summary>
         public DataTemplate ColorMarkerTemplate
         {
             get; set; 
         }
 
+        /// <summary>
+        /// TextMarker DataTemplate
+        /// </summary>
         public DataTemplate TextMarkerTemplate
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// NoMarker DataTemplate
+        /// </summary>
         public DataTemplate NoMarkerTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
-        {
-            /*DataTemplate txtMarker = dataGrid.FindResource("TextMarkerDataTemplate") as DataTemplate;
-            DataTemplate colorMarker = dataGrid.FindResource("ColorMarkerDataTemplate") as DataTemplate;
-            DataTemplate bothMarker = dataGrid.FindResource("TextAndColorMarkerDataTemplate") as DataTemplate;
-            DataTemplate noMarker = dataGrid.FindResource("NoMarkerDataTemplate") as DataTemplate;*/
+        {    
+            var logEntryVm = item as LogEntryRowViewModel;
 
-            
-            LogEntryRowViewModel logEntryVM = item as LogEntryRowViewModel;
-
-            if (logEntryVM == null)
+            if (logEntryVm == null)
                 return null;
 
-            if (logEntryVM.ColorMarkerQuantity >= 1 && logEntryVM.TextMarkerQuantity >= 1)
+            if (logEntryVm.ColorMarkerQuantity >= 1 && logEntryVm.TextMarkerQuantity >= 1)
                 return TextAndColorMarkerTemplate;
 
-            if (logEntryVM.ColorMarkerQuantity >= 1 && logEntryVM.TextMarkerQuantity == 0)
+            if (logEntryVm.ColorMarkerQuantity >= 1 && logEntryVm.TextMarkerQuantity == 0)
                 return ColorMarkerTemplate;
 
-            if (logEntryVM.TextMarkerQuantity >= 1 && logEntryVM.ColorMarkerQuantity == 0)
+            if (logEntryVm.TextMarkerQuantity >= 1 && logEntryVm.ColorMarkerQuantity == 0)
                 return TextMarkerTemplate;
 
             return NoMarkerTemplate;

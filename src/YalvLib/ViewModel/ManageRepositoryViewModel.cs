@@ -60,7 +60,6 @@ namespace YalvLib.ViewModel
         public bool IsLoading
         {
             get { return _isLoading; }
-
             set
             {
                 if (_isLoading != value)
@@ -77,7 +76,6 @@ namespace YalvLib.ViewModel
         public bool IsFileLoaded
         {
             get { return _isFileLoaded; }
-
             internal set
             {
                 if (_isFileLoaded != value)
@@ -100,7 +98,6 @@ namespace YalvLib.ViewModel
         public ObservableCollection<RepositoryViewModel> Repositories
         {
             get { return (_repositories ?? new ObservableCollection<RepositoryViewModel>()); }
-
             internal set
             {
                 if (_repositories != value)
@@ -319,7 +316,6 @@ namespace YalvLib.ViewModel
                             MessageBox.Show(Resources.GlobalHelper_RepositoryAlreadyExists_Error_Text);
                         }
                     }
-
                     vm.UpdateWorkspace(listRepo);
                 }
             }

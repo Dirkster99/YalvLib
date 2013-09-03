@@ -40,9 +40,9 @@ namespace YalvLib.ViewModel
         /// <param name="currentAnalysis"></param>
         private void GenerateMarkersFromAnalysis(LogAnalysis currentAnalysis)
         {
-            foreach(var TextMarker in currentAnalysis.TextMarkers)
+            foreach(var textMarker in currentAnalysis.TextMarkers)
             {
-                _textMarkerVmList.Add(new TextMarkerViewModel(TextMarker));
+                _textMarkerVmList.Add(new TextMarkerViewModel(textMarker));
             }
         }
 

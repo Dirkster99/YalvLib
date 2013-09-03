@@ -80,7 +80,9 @@ namespace YalvLib.ViewModel
         }
 
 
-
+        /// <summary>
+        /// Return a string informing about the number of entries linked to the marker
+        /// </summary>
         public string LinkedEntries
         {
             get { 
@@ -135,8 +137,14 @@ namespace YalvLib.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Command for canceling a marker
+        /// </summary>
         public CommandRelay CommandCancelTextMarker { get; private set; }
+
+        /// <summary>
+        /// Command for changing a marker
+        /// </summary>
         public CommandRelay CommandChangeTextMarker { get; private set; }
 
         /// <summary>
@@ -181,6 +189,9 @@ namespace YalvLib.ViewModel
             return null;
         }
 
+        /// <summary>
+        /// Event handler for a deleted marker
+        /// </summary>
         public event EventHandler<TextMarkerEventArgs> TextMarkerDeleted;
 
         private void OnExecutedCancelTextMarker(TextMarkerEventArgs textMarkerEventArgs)

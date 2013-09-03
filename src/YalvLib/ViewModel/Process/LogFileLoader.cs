@@ -115,44 +115,44 @@ namespace YalvLib.ViewModel.Process
             CancellationToken cancelToken = _cancelTokenSource.Token;
 
             Task taskToProcess = Task.Factory.StartNew(stateObj =>
-                                                           {
-                                                               _abortedWithErrors = _abortedWithCancel = false;
-                                                               _objColl = new Dictionary<string, object>();
-                                                               var processResults = new ObservableCollection<string>();
+                {
+                    _abortedWithErrors = _abortedWithCancel = false;
+                    _objColl = new Dictionary<string, object>();
+                    var processResults = new ObservableCollection<string>();
 
-                                                               // This is not run on the UI thread.
-                                                               try
-                                                               {
-                                                                   cancelToken.ThrowIfCancellationRequested();
-                                                                   execFunc();
-                                                               }
-                                                               catch (OperationCanceledException exp)
-                                                               {
-                                                                   _abortedWithCancel = true;
-                                                                   processResults.Add(exp.Message);
-                                                               }
-                                                               catch (Exception exp)
-                                                               {
-                                                                   _innerException = new ApplicationException("Error occured",exp);
-                                                                   _abortedWithErrors = true;
+                    // This is not run on the UI thread.
+                    try
+                    {
+                        cancelToken.ThrowIfCancellationRequested();
+                        execFunc();
+                    }
+                    catch (OperationCanceledException exp)
+                    {
+                        _abortedWithCancel = true;
+                        processResults.Add(exp.Message);
+                    }
+                    catch (Exception exp)
+                    {
+                        _innerException = new ApplicationException("Error occured",exp);
+                        _abortedWithErrors = true;
 
-                                                                   processResults.Add(exp.ToString());
-                                                               }
+                        processResults.Add(exp.ToString());
+                    }
 
-                                                               return processResults;
-                                                               // End of async task with summary list of result strings
-                                                           },
-                                                       cancelToken).ContinueWith(ant =>
-                                                                                     {
-                                                                                         try
-                                                                                         {
-                                                                                             ReportBatchResultEvent(async);
-                                                                                         }
-                                                                                         catch (AggregateException aggExp)
-                                                                                         {
-                                                                                             _abortedWithErrors = true;
-                                                                                         }
-                                                                                     });
+                    return processResults;
+                    // End of async task with summary list of result strings
+                },
+            cancelToken).ContinueWith(ant =>
+                                            {
+                                                try
+                                                {
+                                                    ReportBatchResultEvent(async);
+                                                }
+                                                catch (AggregateException aggExp)
+                                                {
+                                                    _abortedWithErrors = true;
+                                                }
+                                            });
 
             if (async == false) // Execute 'synchronously' via wait/block method
                 taskToProcess.Wait();
@@ -168,7 +168,7 @@ namespace YalvLib.ViewModel.Process
         /// <returns></returns>
         protected static string PrintException(Task task, AggregateException agg, string taskName)
         {
-            string sResult = string.Empty;
+            var sResult = string.Empty;
 
             foreach (Exception ex in agg.InnerExceptions)
             {

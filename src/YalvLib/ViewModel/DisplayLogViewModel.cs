@@ -100,14 +100,12 @@ namespace YalvLib.ViewModel
         /// </summary>
         public DisplayLogViewModel(IManageTextMarkersViewModel interfaceTextMarkerViewModel)
         {
-            CommandClearFilters = new CommandRelay(CommandClearFiltersExecute,
-                                                   CommandClearFilterCanExecute);
-
+            CommandClearFilters = new CommandRelay(CommandClearFiltersExecute, CommandClearFilterCanExecute);
             CommandResetFilter = new CommandRelay(CommandResetFilterExecute, CommandResetFilterCanExecute);
             CommandApplyFilter = new CommandRelay(CommandApplyFilterExecute, CommandApplyFilterCanExecute);
 
             SelectAll = true;
-            IsFiltered = false;
+            IsFiltered = true;
             LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
             RebuildLogView(LogEntryRowViewModels);
             _filterViewModel = new FilterConverterViewModel(YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis);
@@ -199,7 +197,6 @@ namespace YalvLib.ViewModel
         public ObservableCollection<LogEntryRowViewModel> LogEntryRowViewModels
         {
             get { return _rowViewModels; }
-
             set { _rowViewModels = value; }
         }
 
@@ -237,7 +234,6 @@ namespace YalvLib.ViewModel
             set
             {
                 mGoToLogItemId = value;
-
                 int idGoTo;
                 int.TryParse(value, out idGoTo);
                 UInt32 currentId = SelectedLogItem != null ? SelectedLogItem.LogEntryId : 0;
@@ -247,13 +243,11 @@ namespace YalvLib.ViewModel
                     var selectItem = (from it in LogEntryRowViewModels
                                       where it.LogEntryId == idGoTo
                                       select it).FirstOrDefault<LogEntryRowViewModel>();
-
                     if (selectItem != null)
                         SelectedLogItem = selectItem;
                 }
                 else
                     mGoToLogItemId = currentId != 0 ? currentId.ToString(CultureInfo.InvariantCulture) : string.Empty;
-
                 RaisePropertyChanged(PROP_GoToLogItemId);
             }
         }
@@ -295,7 +289,6 @@ namespace YalvLib.ViewModel
         public bool ShowLevelDebug
         {
             get { return mShowLevelDebug; }
-
             set
             {
                 if (value != mShowLevelDebug)
@@ -314,10 +307,9 @@ namespace YalvLib.ViewModel
         public bool ShowLevelInfo
         {
             get { return mShowLevelInfo; }
-
             set
             {
-                if (value != mShowLevelInfo)
+                if(value != mShowLevelInfo)
                 {
                     mShowLevelInfo = value;
                     RaisePropertyChanged(PROP_ShowLevelInfo);
@@ -333,10 +325,9 @@ namespace YalvLib.ViewModel
         public bool ShowLevelWarn
         {
             get { return mShowLevelWarn; }
-
             set
             {
-                if (value != mShowLevelWarn)
+                if(value != mShowLevelWarn)
                 {
                     mShowLevelWarn = value;
                     RaisePropertyChanged(PROP_ShowLevelWarn);
@@ -352,10 +343,9 @@ namespace YalvLib.ViewModel
         public bool ShowLevelError
         {
             get { return mShowLevelError; }
-
             set
             {
-                if (value != mShowLevelError)
+                if(value != mShowLevelError)
                 {
                     mShowLevelError = value;
                     RaisePropertyChanged(PROP_ShowLevelError);
@@ -371,10 +361,9 @@ namespace YalvLib.ViewModel
         public bool ShowLevelFatal
         {
             get { return mShowLevelFatal; }
-
             set
             {
-                if (value != mShowLevelFatal)
+                if(value != mShowLevelFatal)
                 {
                     mShowLevelFatal = value;
                     RaisePropertyChanged(PROP_ShowLevelFatal);
@@ -849,7 +838,6 @@ namespace YalvLib.ViewModel
             {
                 val = null;
             }
-
             return val;
         }
 
@@ -858,7 +846,6 @@ namespace YalvLib.ViewModel
         /// </summary>
         public void RefreshView()
         {
-            //Console.Write("Refreshing view started at " + DateTime.Now + "." + DateTime.Now.Millisecond + "\n");
             LogEntryRowViewModel l = SelectedLogItem;
             SelectedLogItem = null;
             if (LogView != null)
@@ -877,7 +864,6 @@ namespace YalvLib.ViewModel
             }
             UpdateFilteredCounters(LogView);
             CommandManager.InvalidateRequerySuggested();
-            //Console.Write("Refreshing view finished at " + DateTime.Now + "."+ DateTime.Now.Millisecond + "\n");
         }
 
         /// <summary>
@@ -913,7 +899,6 @@ namespace YalvLib.ViewModel
                 if (fltList != null)
                 {
                     ItemsFilterCount = fltList.Count();
-                    //Console.Write("Filtering : " + ItemsFilterCount + " / " + LogEntryRowViewModels.Count + "\n");
 
                     ItemsDebugFilterCount = (from it in fltList
                                              where it.Entry.LevelIndex.Equals(LevelIndex.DEBUG)
@@ -945,7 +930,6 @@ namespace YalvLib.ViewModel
                 ItemsErrorFilterCount = 0;
                 ItemsFatalFilterCount = 0;
             }
-            //RefreshView();
         }
 
         /// <summary>
@@ -977,7 +961,6 @@ namespace YalvLib.ViewModel
                         return ShowLevelFatal;
                 }
             }
-
             return true;
         }
 
@@ -1083,23 +1066,18 @@ namespace YalvLib.ViewModel
             try
             {
                 messageBoxText = exp.Message;
-
                 Exception innerEx = exp.InnerException;
-
                 for (int i = 0; innerEx != null; i++, innerEx = innerEx.InnerException)
                 {
                     string spaces = string.Empty;
-
                     for (int j = 0; j < i; j++)
                         spaces += "  ";
-
                     messageBoxText += "\n" + spaces + "+->" + innerEx.Message;
                 }
             }
             catch
             {
             }
-
             return messageBoxText;
         }
 
@@ -1148,12 +1126,9 @@ namespace YalvLib.ViewModel
         {
             IsFiltered = false; // Reset column text filter
             SelectAll = true; // Reset level classification filter
-
             ////if (this.DataGridColumns != null)
             ////  this.DataGridColumns.ResetSearchTextBox();
-
             UpdateCounters();
-
             return null;
         }
 
@@ -1163,7 +1138,6 @@ namespace YalvLib.ViewModel
             {
                 return (IsFiltered | SelectAll == false);
             }
-
             return false;
         }
 

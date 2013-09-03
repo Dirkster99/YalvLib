@@ -38,7 +38,15 @@ namespace YalvLib.Model
         public IList<TextMarker> TextMarkers
         {
             get { return Markers.Where(x => x is TextMarker).Cast<TextMarker>().ToList(); }
-            set { foreach(var marker in value)Markers.Add(marker);}
+            set
+            {
+                foreach(var marker in value)
+                {
+                    if(!Markers.Contains(marker))
+                        Markers.Add(marker);
+                }
+                    
+            }
         }
 
         /// <summary>
@@ -47,15 +55,29 @@ namespace YalvLib.Model
         public IList<ColorMarker> ColorMarkers
         {
             get { return Markers.Where(x => x is ColorMarker).Cast<ColorMarker>().ToList(); }
-            set { foreach (var marker in value)Markers.Add(marker); }
+            set
+            {
+                foreach (var marker in value)
+                {
+                    if (!Markers.Contains(marker))
+                        Markers.Add(marker);
+                }
+            }
         }
 
-
+        /// <summary>
+        /// Add a filter to the filter list
+        /// </summary>
+        /// <param name="filter">filter to add</param>
         public void AddFilter(CustomFilter filter)
         {
             Filters.Add(filter);
         }
 
+        /// <summary>
+        /// Reöove a filter from the filter list
+        /// </summary>
+        /// <param name="filter"> filter to remove </param>
         public void RemoveFilter(CustomFilter filter)
         {
             Filters.Remove(filter);
@@ -70,7 +92,7 @@ namespace YalvLib.Model
         /// <returns></returns>
         public TextMarker AddTextMarker(List<LogEntry> list, string author, string message)
         {
-            TextMarker marker = new TextMarker(list, author, message);
+            var marker = new TextMarker(list, author, message);
             Markers.Add(marker);
             return marker;
         }
@@ -148,8 +170,8 @@ namespace YalvLib.Model
         /// <returns>List of linked TextMarkers</returns>
         public List<TextMarker> GetTextMarkersForEntries(IEnumerable<LogEntry> logEntries)
         {
-            List<TextMarker> markers = new List<TextMarker>();
-            foreach(LogEntry entry in logEntries)
+            var markers = new List<TextMarker>();
+            foreach(var entry in logEntries)
             {
                 markers.AddRange(GetTextMarkersForEntry(entry).Where(x=> !markers.Contains(x)));
             }

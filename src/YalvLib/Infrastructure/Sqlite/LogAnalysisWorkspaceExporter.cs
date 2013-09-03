@@ -51,7 +51,6 @@ namespace YalvLib.Infrastructure.Sqlite
             {
                 ISessionFactory sessionFactory = Fluently.Configure()
                     .Database(SQLiteConfiguration.Standard.UsingFile(_path))
-                    //.Diagnostics(diag => diag.Enable().OutputToConsole())
                     .Mappings(m =>
                                   {
                                       m.FluentMappings.Add<LogAnalysisWorkspaceMapping>();

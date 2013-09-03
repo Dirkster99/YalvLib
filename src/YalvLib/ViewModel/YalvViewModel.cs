@@ -312,7 +312,8 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadSqliteDatabase(string path)
         {
-            //ManageRepositoriesViewModel.LoadFiles(new List<string> {path}, EntriesProviderType.Sqlite);
+            // to be tested
+            ManageRepositoriesViewModel.LoadFiles(new List<string> { path }, EntriesProviderType.Sqlite, ManageRepositoriesViewModel);
             LoadFinishedEvent(true);
         }
 
@@ -383,7 +384,6 @@ namespace YalvLib.ViewModel
             {
                 _logEntryRows.ApplyFilter();
             }
-
             return null;
         }
 

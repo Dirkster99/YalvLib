@@ -150,13 +150,15 @@ namespace YalvLib.Model
                 return false;
             return e.App == App
                    && e.Uid == Uid
+                   && e.GuId == GuId
                    && e.Class == Class
                    && e.Delta == Delta
                    && e.File == File
                    && e.HostName == HostName
                    && e.Line == Line
-                   && e.TimeStamp == TimeStamp
+                   && e.TimeStamp.Equals(TimeStamp) 
                    && e.Logger == Logger
+                   && e.Method == Method
                    && e.MachineName == MachineName;
         }
 

@@ -43,6 +43,9 @@ namespace YalvLib.ViewModel
             get { return _filter.Value; }
         }
 
+        /// <summary>
+        /// Return the filter
+        /// </summary>
         public CustomFilter Filter
         {
             get { return _filter; }

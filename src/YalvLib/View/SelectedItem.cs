@@ -50,7 +50,7 @@ namespace YalvLib.View
         private static void OnIsBroughtIntoViewWhenSelectedChanged(
           DependencyObject depObj, DependencyPropertyChangedEventArgs e)
         {
-            DataGrid item = depObj as DataGrid;
+            var item = depObj as DataGrid;
             if (item == null)
                 return;
 
@@ -71,14 +71,14 @@ namespace YalvLib.View
             if (!object.ReferenceEquals(sender, e.OriginalSource))
                 return;
 
-            DataGrid lv = e.OriginalSource as DataGrid;
+            var lv = e.OriginalSource as DataGrid;
             if (lv != null)
             {
                 ////lv.SelectedItem = lv.LogEntryRowViewModels.GetItemAt(lv.LogEntryRowViewModels.Count - 1);
                 if (lv.SelectedItem != null)
                 {
                     lv.ScrollIntoView(lv.SelectedItem);
-                    DataGridRow item = lv.ItemContainerGenerator.ContainerFromItem(lv.SelectedItem) as DataGridRow;
+                    var item = lv.ItemContainerGenerator.ContainerFromItem(lv.SelectedItem) as DataGridRow;
 
                     if (item != null)
                         item.Focus();

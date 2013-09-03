@@ -12,13 +12,13 @@
     {
         private class GridManager
         {
-            private static AdjustValueConverter mAdjustConverter = null;
-            private static BoolToVisibilityConverter mBoolToVisConverter = null;
+            private static AdjustValueConverter _mAdjustConverter = null;
+            private static BoolToVisibilityConverter _mBoolToVisConverter = null;
 
             static GridManager()
             {
-                GridManager.mAdjustConverter = new AdjustValueConverter();
-                GridManager.mBoolToVisConverter = new BoolToVisibilityConverter();
+                _mAdjustConverter = new AdjustValueConverter();
+                _mBoolToVisConverter = new BoolToVisibilityConverter();
             }
 
             /// <summary>
@@ -52,7 +52,7 @@
                         // Bind column to visibility property via bool - visibility converter
                         var visiblityBinding = new Binding("IsColumnVisible");
                         visiblityBinding.Source = item;
-                        visiblityBinding.Converter = GridManager.mBoolToVisConverter;
+                        visiblityBinding.Converter = GridManager._mBoolToVisConverter;
                         BindingOperations.SetBinding(col, DataGridTextColumn.VisibilityProperty, visiblityBinding);
 
                         if (item.Alignment == CellAlignment.CENTER && centerCellStyle != null)
@@ -81,7 +81,7 @@
             private static void BuildTextSearchPanel(KeyEventHandler keyUpEvent,
                                                      Panel txtSearchPanel,
                                                      DataGridTextColumn col,
-                                                     ColumnItem columnVM,
+                                                     ColumnItem columnVm,
                                                      Style watermarkTextbox)
             {
                 if (txtSearchPanel != null)
@@ -91,7 +91,7 @@
                         Path = new PropertyPath("ActualWidth"),
                         Source = col,
                         Mode = BindingMode.OneWay,
-                        Converter = GridManager.mAdjustConverter,
+                        Converter = GridManager._mAdjustConverter,
                         ConverterParameter = "-2"
                     };
 
@@ -107,25 +107,25 @@
                     if (watermarkTextbox != null)
                         txt.Style = watermarkTextbox;
 
-                    columnVM.FilterControlName = txt.Name = getTextBoxName(columnVM.Field);
+                    columnVm.FilterControlName = txt.Name = GetTextBoxName(columnVm.Field);
                     txt.ToolTip =
                         string.Format(
                             YalvLib.Strings.Resources.FilteredGridManager_BuildDataGrid_FilterTextBox_Tooltip,
-                            columnVM.Header);
+                            columnVm.Header);
                     txt.Tag = txt.ToolTip.ToString().ToLower();
                     txt.Text = string.Empty;
                     txt.AcceptsReturn = false;
 
                     // Bind width of filter text box to ActualWidth of datagrid column
-                    txt.SetBinding(TextBox.WidthProperty, widthBind);
+                    txt.SetBinding(WidthProperty, widthBind);
 
                     // Bind visibility of text box to visibility of the column
-                    txt.SetBinding(TextBox.VisibilityProperty, visibilityBind);
+                    txt.SetBinding(VisibilityProperty, visibilityBind);
 
                     // Bind column to width property to viewmodel to enable its persistence
                     // The save function copies ActualWidth into the Width field and persists it
                     Binding b = new Binding("ActualWidth") { Source = col };
-                    BindingOperations.SetBinding(columnVM.ActualWidth, BindSupport.WidthProperty, b);
+                    BindingOperations.SetBinding(columnVm.ActualWidth, BindSupport.WidthProperty, b);
 
                     if (keyUpEvent != null)
                         txt.KeyUp += keyUpEvent;
@@ -155,7 +155,7 @@
                 };
 
                 dataGrid.Columns.Add(markerCol);
-                GridManager.BuildMarkerSearchPanel(txtSearchPanel, markerCol);
+                BuildMarkerSearchPanel(txtSearchPanel, markerCol);
             }
 
 
@@ -169,29 +169,24 @@
                         Path = new PropertyPath("ActualWidth"),
                         Source = col,
                         Mode = BindingMode.OneWay,
-                        Converter = GridManager.mAdjustConverter,
+                        Converter = GridManager._mAdjustConverter,
                         ConverterParameter = "-2"
                     };
 
-                    Binding visibilityBind = new Binding()
+                    Binding visibilityBind = new Binding
                     {
                         Path = new PropertyPath("Visibility"),
                         Source = col,
                         Mode = BindingMode.OneWay,
                     };
 
-                    TextBlock txt = new TextBlock();
-
-
-
+                    var txt = new TextBlock();
                     txt.Text = string.Empty;
-
-
                     // Bind width of filter text box to ActualWidth of datagrid column
-                    txt.SetBinding(TextBox.WidthProperty, widthBind);
+                    txt.SetBinding(WidthProperty, widthBind);
 
                     // Bind visibility of text box to visibility of the column
-                    txt.SetBinding(TextBox.VisibilityProperty, visibilityBind);
+                    txt.SetBinding(VisibilityProperty, visibilityBind);
 
                     // Bind column to width property to viewmodel to enable its persistence
                     // The save function copies ActualWidth into the Width field and persists it
@@ -199,8 +194,7 @@
                     //Binding b = new Binding("ActualWidth") {Source = col};
                     //BindingOperations.SetBinding(TextBlock.ActualWidth, BindSupport.WidthProperty, b);
 
-
-                    RegisterControl<TextBlock>(txtSearchPanel, txt.Name, txt);
+                    RegisterControl(txtSearchPanel, txt.Name, txt);
                     txtSearchPanel.Children.Add(txt);
                 }
             }
@@ -213,7 +207,7 @@
                 element.RegisterName(controlName, control);
             }
 
-            private static string getTextBoxName(string prop)
+            private static string GetTextBoxName(string prop)
             {
                 return string.Format("txtFilter{0}", prop).Replace(".", string.Empty);
             }

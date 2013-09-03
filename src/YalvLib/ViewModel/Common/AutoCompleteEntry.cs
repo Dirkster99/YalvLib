@@ -1,37 +1,51 @@
 namespace YalvLib.ViewModel.Common
 {
+    /// <summary>
+    /// Class used to display an help for typing a filter
+    /// </summary>
     public class AutoCompleteEntry
     {
-        private string[] keywordStrings;
-        private string displayString;
+        private string[] _keywordStrings;
+        private string _displayString;
 
+        /// <summary>
+        /// Getter / Setter for the table of keywords
+        /// </summary>
         public string[] KeywordStrings
         {
             get
             {
-                if (keywordStrings == null)
+                if (_keywordStrings == null)
                 {
-                    keywordStrings = new string[] { displayString };
+                    _keywordStrings = new string[] { _displayString };
                 }
-                return keywordStrings;
+                return _keywordStrings;
             }
         }
 
+        /// <summary>
+        /// Getter / Setter displayString
+        /// </summary>
         public string DisplayName
         {
-            get { return displayString; }
-            set { displayString = value; }
+            get { return _displayString; }
+            set { _displayString = value; }
         }
 
+        /// <summary>
+        /// Constructor of the autocompleteentry
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="keywords"></param>
         public AutoCompleteEntry(string name, params string[] keywords)
         {
-            displayString = name;
-            keywordStrings = keywords;
+            _displayString = name;
+            _keywordStrings = keywords;
         }
 
         public override string ToString()
         {
-            return displayString;
+            return _displayString;
         }
     }
 }

@@ -101,6 +101,9 @@ namespace YalvLib.ViewModel
             set { _context = value;}
         }
 
+        /// <summary>
+        /// Return the analysis contained in the context
+        /// </summary>
         public LogAnalysis Analysis
         {
             get { return _context.Analysis; }
@@ -120,6 +123,10 @@ namespace YalvLib.ViewModel
             NotifyPropertyChanged(() => Queries);
         }
 
+        /// <summary>
+        /// Add the query to the list of queries
+        /// </summary>
+        /// <param name="filter"> filter containing the query </param>
         public void AddQuery(CustomFilter filter)
         {
             var filtertoAdd = new FilterQueryViewModel(filter);

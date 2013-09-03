@@ -58,7 +58,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         public string PathDisplay
         {
-      get { return Path.Split(new[] { '\\' }, StringSplitOptions.None).Last(); }
+            get { return Path.Split(new[] { '\\' }, StringSplitOptions.None).Last(); }
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace YalvLib.ViewModel
             get { return _repository; }
             private set
             {
-                if (_repository != value)
+                if (!Equals(_repository, value))
                 {
                     _repository = value;
                     NotifyPropertyChanged(() => Repository);
@@ -125,7 +125,7 @@ namespace YalvLib.ViewModel
 
         private object ExecuteChangeActiveRepository(object arg)
         {
-            this.Active = !this.Active;
+            Active = !Active;
             return null;
         }
 

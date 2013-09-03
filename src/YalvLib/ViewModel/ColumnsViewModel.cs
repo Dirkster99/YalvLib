@@ -202,11 +202,9 @@ namespace YalvLib.ViewModel
         private static IList<ColumnItem> LoadColumnLayout(string pathFileName)
         {
             IList<ColumnItem> loadedClass = null;
-
             if (File.Exists(pathFileName))
             {
-                using (var readFileStream = new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.Read)
-                    )
+                using (var readFileStream = new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     try
                     {
@@ -217,7 +215,6 @@ namespace YalvLib.ViewModel
                     catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
-
                         return null;
                     }
                     finally
@@ -226,7 +223,6 @@ namespace YalvLib.ViewModel
                     }
                 }
             }
-
             return loadedClass;
         }
 
@@ -247,11 +243,8 @@ namespace YalvLib.ViewModel
                 {
                     // Create a new XmlSerializer instance with the type of the class
                     var serializerObj = new XmlSerializer(typeof (List<ColumnItem>));
-
                     serializerObj.Serialize(xw, vm);
-
                     xw.Close();
-
                     return true;
                 }
             }
@@ -259,13 +252,11 @@ namespace YalvLib.ViewModel
             {
                 MessageBox.Show(e.Message, e.StackTrace,
                                 MessageBoxButton.OK, MessageBoxImage.Error);
-
                 return false;
             }
         }
 
         #endregion Load Save Columns Layout
-
         #endregion methods
     }
 }
