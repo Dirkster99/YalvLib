@@ -5,7 +5,7 @@ namespace YalvLib.Infrastructure.Filter
     /// <summary>
     /// Class that represent the grammar used by the filter feature in Yalv
     /// </summary>
-    public class YalvGrammar : Irony.Parsing.Grammar
+    public class YalvGrammar : Grammar
     {
         public Terminal AND = null;
         public Terminal OR = null;

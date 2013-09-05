@@ -102,6 +102,10 @@ namespace YalvLib.Common.Converter
                 return new SimpleExpression(node.ChildNodes[0].ChildNodes[0].Term.ToString(), new Not(),
                                             GetOperator(node.ChildNodes[2]), node.ChildNodes[3].Token.Value.ToString());
 
+            if (node.ChildNodes[0].Term.Equals(_grammar.HAS))
+            {
+                return new HasExpression(node.ChildNodes[0].Term.ToString(), node.ChildNodes[2].Term.ToString(), new Not());
+            }
             return new SimpleExpression(node.ChildNodes[0].ChildNodes[0].Term.ToString(),
                                         GetOperator(node.ChildNodes[1]),
                                         node.ChildNodes[2].Term.Equals(_grammar.DateValue)

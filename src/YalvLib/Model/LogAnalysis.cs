@@ -30,6 +30,9 @@ namespace YalvLib.Model
             get; private set;
         }
 
+        /// <summary>
+        /// Get / Set the filters list
+        /// </summary>
         public IList<CustomFilter> Filters { get; private set; } 
 
         /// <summary>

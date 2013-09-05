@@ -103,6 +103,7 @@ namespace YalvLib.ViewModel
             CommandClearFilters = new CommandRelay(CommandClearFiltersExecute, CommandClearFilterCanExecute);
             CommandResetFilter = new CommandRelay(CommandResetFilterExecute, CommandResetFilterCanExecute);
             CommandApplyFilter = new CommandRelay(CommandApplyFilterExecute, CommandApplyFilterCanExecute);
+            FilterYalvView = new CommandRelay(CommandFilterYalvView, CommandApplyFiltersCanExecute);
 
             SelectAll = true;
             IsFiltered = true;
@@ -158,6 +159,11 @@ namespace YalvLib.ViewModel
         /// Clear Command
         /// </summary>
         public ICommandAncestor CommandClearFilters { get; protected set; }
+
+        /// <summary>
+        /// FilterYalvView command to switches a filtered view on or off
+        /// </summary>
+        public ICommandAncestor FilterYalvView { get; protected set; }
 
         /// <summary>
         /// Get a list of columns to be displayed in a DataGrid view display
@@ -1106,6 +1112,18 @@ namespace YalvLib.ViewModel
             return true;
         }
 
+
+        /// <summary>
+        /// Default command method for applying column filters.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        protected virtual object CommandFilterYalvView(object parameter)
+        {
+            ApplyFilter();
+            return null;
+        }
+
         #region commandDelete
 
         internal virtual object CommandDeleteExecute(object parameter)
@@ -1139,6 +1157,11 @@ namespace YalvLib.ViewModel
                 return (IsFiltered | SelectAll == false);
             }
             return false;
+        }
+
+        internal virtual bool CommandApplyFiltersCanExecute(object parameter)
+        {
+            return HasData;
         }
 
         #endregion commandClear

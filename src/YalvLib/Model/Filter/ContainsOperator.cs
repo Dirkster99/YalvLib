@@ -25,7 +25,7 @@ namespace YalvLib.Model.Filter
         }
 
         /// <summary>
-        /// Evalute the list of properties, checknig if the given value is contained in one of the given property value
+        /// Evalute the list of properties, checking if the given value is contained in one of the given property value
         /// </summary>
         /// <param name="properties">List of property values</param>
         /// <param name="value">given value</param>

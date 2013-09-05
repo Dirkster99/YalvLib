@@ -52,7 +52,7 @@ namespace YalvLib.ViewModel
 
             CommandRefresh = new CommandRelay(CommandRefreshExecute, CommandRequiresDataCanExecute);
             CommandDelete = new CommandRelay(LogEntryRows.CommandDeleteExecute, LogEntryRows.CommandDeleteCanExecute);
-            FilterYalvView = new CommandRelay(CommandFilterYalvView, CommandRequiresDataCanExecute);
+            
 
             CommandUpdateTextMarkers = new CommandRelay(_manageTextMarkersViewModel.CommandUpdateTextMarkersExecute,
                                                         _manageTextMarkersViewModel.CommandUpdateTextMarkersCanExecute);
@@ -201,10 +201,7 @@ namespace YalvLib.ViewModel
 
         #region Command
 
-        /// <summary>
-        /// FilterYalvView command to switches a filtered view on or off
-        /// </summary>
-        public ICommandAncestor FilterYalvView { get; protected set; }
+
 
         /// <summary>
         /// Refresh Command
@@ -373,19 +370,7 @@ namespace YalvLib.ViewModel
             return null;
         }
 
-        /// <summary>
-        /// Default command method for applying column filters.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        protected virtual object CommandFilterYalvView(object parameter)
-        {
-            if (_logEntryRows != null && YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.Filters.Count > 0)
-            {
-                _logEntryRows.ApplyFilter();
-            }
-            return null;
-        }
+
 
         /// <summary>
         /// This is a callback method that is always called when

@@ -96,7 +96,7 @@
                                     </StackPanel>
                                 </Button>
 
-                                <ToggleButton DataContext="{Binding YalvLogViewModel}" Command="{Binding FilterYalvView}"
+                                <ToggleButton DataContext="{Binding YalvLogViewModel}" Command="{Binding LogEntryRows.FilterYalvView}"
                                               IsChecked="{Binding LogEntryRows.IsFiltered, Mode=OneWay}" Margin="3" VerticalAlignment="Center"
                                               ToolTip="Activate the filter and type a criteria to filter the display" ToolTipService.ShowOnDisabled="True"
                                               Grid.Column="1" HorizontalAlignment="Center">

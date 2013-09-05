@@ -63,6 +63,7 @@ namespace YalvLib.Model.Filter
 
         /// <summary>
         /// If the given property is not directly defined in the model we use this function
+        /// Case is ignored for the property name
         /// </summary>
         private List<object> ExtractCustomProperty(Context context)
         {
@@ -71,6 +72,10 @@ namespace YalvLib.Model.Filter
                 result.AddRange(context.Analysis.GetTextMarkersForEntry(context.Entry).Select(marker => marker.Message));
             if (_propertyName.Equals("TextMarkerAuthor"))
                 result.AddRange(context.Analysis.GetTextMarkersForEntry(context.Entry).Select(marker => marker.Author));
+            if (_propertyName.Equals("TextMarkerCreation"))
+                result.AddRange(context.Analysis.GetTextMarkersForEntry(context.Entry).Select(marker => marker.DateCreation.ToString()));
+            if (_propertyName.Equals("TextMarkerModification"))
+                result.AddRange(context.Analysis.GetTextMarkersForEntry(context.Entry).Select(marker => marker.DateLastModification.ToString()));
             return result;
         }
 
