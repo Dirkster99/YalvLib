@@ -404,6 +404,7 @@ namespace YalvLib.ViewModel
             ManageRepositoriesViewModel.IsLoading = false;
             CommandRefresh.CanExecute(null);
             CommandDelete.CanExecute(null);
+            LogEntryRows.FilterYalvView.CanExecute(null);
             RaisePropertyChanged("HasData");
         }
 

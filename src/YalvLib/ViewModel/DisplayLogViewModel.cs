@@ -823,7 +823,7 @@ namespace YalvLib.ViewModel
         /// <param name="callbackOnFinishedparameter"></param>
         internal virtual void CommandRefreshExecute(EvaluateLoadResult callbackOnFinishedparameter)
         {
-            
+            RefreshView();
         }
 
         /// <summary>

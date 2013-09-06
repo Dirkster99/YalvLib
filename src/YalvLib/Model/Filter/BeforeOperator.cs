@@ -29,12 +29,6 @@ namespace YalvLib.Model.Filter
             return DateTime.Compare((DateTime) property, DateTime.Parse(value)) == -1;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="property"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public override bool Evaluate(List<object> properties, string value)
         {
             return properties.Any(obj => Evaluate(obj, value));

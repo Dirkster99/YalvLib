@@ -379,10 +379,10 @@
     <value>SELECTION</value>
   </data>
   <data name="MainWindow_Title" xml:space="preserve">
-    <value>YALV! - Yet Another Log4Net Viewer</value>
+    <value>YalvLib</value>
   </data>
   <data name="SaveFolderPath_Title" xml:space="preserve">
-    <value>YALV! - Save Folder Path</value>
+    <value>YalvLib - Save Folder Path</value>
   </data>
   <data name="AddFolderPath_Grid_NameColumn_Name" xml:space="preserve">
     <value>Name</value>
@@ -391,10 +391,10 @@
     <value>Path</value>
   </data>
   <data name="About_Title" xml:space="preserve">
-    <value>YALV! - About</value>
+    <value>YalvLib - About</value>
   </data>
   <data name="About_Header_Text" xml:space="preserve">
-    <value>YALV! - Yet Another Log4Net Viewer</value>
+    <value>YalvLib</value>
   </data>
   <data name="About_AboutGroupBox_Header" xml:space="preserve">
     <value>About</value>
@@ -509,15 +509,16 @@
     <comment>0 - FileVersionInfo</comment>
   </data>
   <data name="About_Description" xml:space="preserve">
-    <value>YALV! is a log viewer for Log4Net that allow to compare multiple logs file simultaneously.
+    <value>YalvLib is a log analyser for Log4Net that allow to compare multiple logs file simultaneously.
 
 MAIN FEATURES:
 - Log files merging
 - Dynamic filtering
 - Dynamic show/hide log levels
-- Save favorite log folders
-- Open most recently used files
 - Column sorting
+- Annotations on logs
+- Powerful filter feature
+- Import / Export analysis sessions
 
 Log4Net config file must be setup with XmlLayoutSchemaLog4j layout; just need a few lines in your application config file to configure it to use this format (see examples on right).
 
