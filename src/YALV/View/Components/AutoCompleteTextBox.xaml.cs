@@ -122,7 +122,7 @@ namespace YALV.View.Components
             }
         }
 
-        public Brush Background
+        public new Brush Background
         {
             get { return _textBox.Background; }
             set { _textBox.Background = value; }

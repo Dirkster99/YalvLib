@@ -29,7 +29,7 @@ namespace YalvLib.ViewModel
 
             CommandChangeTextMarker = new CommandRelay(ExecuteChangeTextMarker, CanExecuteChangeTextmarker);
             CommandCancelTextMarker = new CommandRelay(ExecuteCancelTextMarker, CanExecuteCancelTextMarker);
-            PropertyChanged += TextMarkerViewModel_PropertyChanged;
+            PropertyChanged += TextMarkerViewModelPropertyChanged;
 
             Author = _marker.Author;
             Message = _marker.Message;
@@ -150,7 +150,7 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// This function is called everytime a property is changed on the view
         /// </summary>
-        private void TextMarkerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void TextMarkerViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             EvaluateCanExecuteConditions();
         }

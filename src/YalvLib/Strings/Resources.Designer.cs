@@ -623,7 +623,7 @@ namespace YalvLib.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -{0} s.
+        ///   Looks up a localized string similar to {0} s.
         /// </summary>
         public static string GlobalHelper_getTimeDelta_Negative_Text {
             get {
@@ -817,6 +817,15 @@ namespace YalvLib.Strings {
         public static string MainWindow_DetailsBox_Class_Text {
             get {
                 return ResourceManager.GetString("MainWindow_DetailsBox_Class_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calculated Δ t:.
+        /// </summary>
+        public static string MainWindow_DetailsBox_Delta_Text {
+            get {
+                return ResourceManager.GetString("MainWindow_DetailsBox_Delta_Text", resourceCulture);
             }
         }
         

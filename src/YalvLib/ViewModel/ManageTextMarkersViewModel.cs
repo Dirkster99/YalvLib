@@ -225,6 +225,8 @@ namespace YalvLib.ViewModel
         public void ExecuteCancel(object obj, EventArgs eventArgs)
         {
             var args = eventArgs as TextMarkerEventArgs;
+            if(args == null)
+                throw new Exception("Args null");
             YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.DeleteTextMarker(args.TextMarker);
             OnMarkerDeleted(this, (TextMarkerEventArgs) eventArgs);
             CommandUpdateTextMarkersExecute(_selectedEntries);

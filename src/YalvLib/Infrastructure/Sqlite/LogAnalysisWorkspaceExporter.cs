@@ -1,14 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
-using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using FluentNHibernate.Conventions.Helpers;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -48,7 +43,7 @@ namespace YalvLib.Infrastructure.Sqlite
         public ISessionFactory BuildFactory()
         {
             try
-            {
+            {       
                 ISessionFactory sessionFactory = Fluently.Configure()
                     .Database(SQLiteConfiguration.Standard.UsingFile(_path))
                     .Mappings(m =>
@@ -66,9 +61,8 @@ namespace YalvLib.Infrastructure.Sqlite
                 return sessionFactory;
             }catch(Exception e)
             {
-                throw e;
+                throw e.InnerException;
             }
-            
         }
 
         /// <summary>
@@ -80,17 +74,29 @@ namespace YalvLib.Infrastructure.Sqlite
             try
             {
                 var cancelToken = new CancellationToken(true);
-                Task taskToComplete = Task.Factory.StartNew(obj =>
+                Task.Factory.StartNew(obj =>
                 {
                     ISessionFactory factory = BuildFactory();
+                    NHibernateUtil.Initialize(factory);
+                    
                     using (ISession session = factory.OpenSession())
                     {
                         using (
                             ITransaction transaction =
                                 session.BeginTransaction())
                         {
-                            session.SaveOrUpdate(logWorkspace);
-                            transaction.Commit();
+                            try
+                            {
+                                session.SaveOrUpdate(logWorkspace);
+                                transaction.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                throw e.InnerException;
+                            }finally
+                            {
+                                factory.Close();
+                            }
                         }
                     }
                     factory.Close();
@@ -98,7 +104,7 @@ namespace YalvLib.Infrastructure.Sqlite
                     ant => ReportExportComplete());
             }catch(Exception e)
             {
-                throw e;
+                throw e.InnerException;
             }
         }
 

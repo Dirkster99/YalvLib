@@ -184,12 +184,7 @@ namespace YalvLib.ViewModel
             }
         }
 
-        /// <summary>
-        /// Load the list of files with the given provider type.
-        /// Update the repository list 
-        /// </summary>
-        /// <param name="paths">Paths of the files</param>
-        /// <param name="providerType">Type of the provider for the given files</param>
+
        /* public void LoadFiles(List<string> paths, EntriesProviderType providerType)
         {
             try
@@ -253,7 +248,6 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="paths">Paths of the files</param>
         /// <param name="providerType">Type of the provider for the given files</param>
-        /// <param name="cancelToken"></param>
         /// <param name="vm"></param>
         public void LoadFiles(List<string> paths,
                                      EntriesProviderType providerType,
@@ -270,13 +264,11 @@ namespace YalvLib.ViewModel
 
                     YalvRegistry.Instance.ActualWorkspace = (loadedWorkspace);
 
-                    if (cancelToken != null)
                         cancelToken.ThrowIfCancellationRequested();
 
                     YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis =
                         YalvRegistry.Instance.ActualWorkspace.Analyses.First();
 
-                    if (cancelToken != null)
                         cancelToken.ThrowIfCancellationRequested();
 
 
@@ -297,7 +289,6 @@ namespace YalvLib.ViewModel
 
                     foreach (string path in paths)
                     {
-                        if (cancelToken != null)
                             cancelToken.ThrowIfCancellationRequested();
 
                         if (!File.Exists(path))

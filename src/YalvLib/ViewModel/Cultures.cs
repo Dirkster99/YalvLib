@@ -4,7 +4,7 @@
   {
     public static System.Globalization.CultureInfo ResolvedCulture
     {
-      get { return System.Globalization.CultureInfo.GetCultureInfo(YalvLib.Strings.Resources.CultureName); }
+      get { return System.Globalization.CultureInfo.GetCultureInfo(Strings.Resources.CultureName); }
     }
   }
 }

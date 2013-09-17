@@ -56,7 +56,6 @@ namespace YalvLib.ViewModel
 
         private readonly ColumnsViewModel mDataGridColumns;
 
-        private ObservableCollection<LogEntryRowViewModel> _filtredRowViewModels;
         private ObservableCollection<LogEntryRowViewModel> _rowViewModels;
         private EvaluateLoadResult loadResultCallback = null;
 
@@ -1166,7 +1165,7 @@ namespace YalvLib.ViewModel
 
         #endregion commandClear
 
-        #endregion Methodes
+
 
         /// <summary>
         /// Reload the LogEntryRowViewModels then update counters and update the selectedlogitem
@@ -1197,5 +1196,6 @@ namespace YalvLib.ViewModel
                                  UpdateCounters();
                              });
         }
+        #endregion Methodes
     }
 }

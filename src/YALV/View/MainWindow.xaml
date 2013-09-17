@@ -178,7 +178,7 @@
             </Grid>
 
             <!-- StatusBar-->
-            <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel Grid.Row="1" HorizontalAlignment="left" Orientation="Horizontal">
 
                 <StackPanel.Resources>
                     <Style x:Key="LabelBaseStyle" TargetType="{x:Type TextBlock}">
@@ -222,7 +222,7 @@
                 </StackPanel>
                 <StackPanel Style="{StaticResource PanelBaseStyle}">
                     <TextBlock Style="{StaticResource LabelBaseStyle}"
-                               Text="Calculated Δ t "></TextBlock>
+                               Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Delta_Text}"></TextBlock>
                     <TextBlock Style="{StaticResource TextBlockBaseStyle}"
                                Text="{Binding Path=CalculatedDelta, Mode=OneWay}" DataContext="{Binding YalvLogViewModel}"></TextBlock>
                 </StackPanel>

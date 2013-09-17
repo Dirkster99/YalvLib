@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Windows.Threading;
 using YalvLib.Common;
 using YalvLib.Model;
 using YalvLib.Model.Filter;
@@ -86,6 +83,9 @@ namespace YalvLib.ViewModel
             }
         }
 
+        /// <summary>
+        /// Getter / Setter for the autocompletelist
+        /// </summary>
         public ObservableCollection<AutoCompleteEntry> AutoCompleteList
         {
             get { return new ObservableCollection<AutoCompleteEntry>(_autoCompleteList); }

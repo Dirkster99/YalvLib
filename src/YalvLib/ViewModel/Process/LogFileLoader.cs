@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Windows.Threading;
-using YalvLib.Model;
-using YalvLib.Providers;
 
 namespace YalvLib.ViewModel.Process
 {
@@ -27,7 +24,6 @@ namespace YalvLib.ViewModel.Process
         private CancellationTokenSource _cancelTokenSource;
 
         private ApplicationException _innerException;
-        private ManageRepositoryViewModel _logFile;
         private Dictionary<string, object> _objColl;
 
         /// <summary>
@@ -55,8 +51,6 @@ namespace YalvLib.ViewModel.Process
 
         public LogFileLoader()
         {
-            _logFile = new ManageRepositoryViewModel();
-
             _abortedWithErrors = _abortedWithCancel = false;
             _innerException = null;
             _objColl = new Dictionary<string, object>();
@@ -102,9 +96,6 @@ namespace YalvLib.ViewModel.Process
         /// Process an asynchronous function
         /// </summary>
         /// <param name="execFunc"></param>
-        /// <param name="paths"></param>
-        /// <param name="providerType"></param>
-        /// <param name="vm"></param>
         /// <param name="async"></param>
         internal void ExecuteAsynchronously(
             Action execFunc, bool async)
@@ -151,6 +142,7 @@ namespace YalvLib.ViewModel.Process
                                                 catch (AggregateException aggExp)
                                                 {
                                                     _abortedWithErrors = true;
+                                                    throw new Exception(aggExp.Message, aggExp);
                                                 }
                                             });
 

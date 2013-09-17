@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.Win32;
 using YalvLib.Infrastructure.Sqlite;
 using YalvLib.Model;
@@ -12,8 +11,8 @@ namespace YALV.ViewModel
     using System.Windows;
     using System.Windows.Shell;
 
-    using YALV.Common;
-    using YALV.Interfaces;
+    using Common;
+    using Interfaces;
     using YalvLib.Common;
     using YalvLib.Common.Interfaces;
     using YalvLib.ViewModel;
@@ -26,43 +25,43 @@ namespace YALV.ViewModel
 
         private readonly string _layoutFileName;
 
-        private readonly YalvViewModel _yalvLogViewModel = null;
-        private LogAnalysisWorkspace _workspace = null;
+        private readonly YalvViewModel _yalvLogViewModel;
+        private readonly LogAnalysisWorkspace _workspace;
         private RecentFileList _recentFileList;
 
         /// <summary>
         /// Window to which the viewmodel is attached to
         /// </summary>
-        private IWinSimple _callingWin;
+        private readonly IWinSimple _callingWin;
         #endregion fields
 
         #region constructor
         public MainWindowVM(IWinSimple win,
                             RecentFileList recentFileList)
         {
-            this._layoutFileName = System.IO.Path.Combine(MainWindowVM.AppDataDirectoryPath,
+            _layoutFileName = Path.Combine(AppDataDirectoryPath,
                                                           Assembly.GetEntryAssembly().GetName().Name + ".ColLayout");
 
-            this._callingWin = win;
+            _callingWin = win;
 
             _workspace = new LogAnalysisWorkspace();
             YalvRegistry.Instance.SetActualLogAnalysisWorkspace(_workspace);
 
-            this._yalvLogViewModel = new YalvViewModel();
+            _yalvLogViewModel = new YalvViewModel();
 
-            this.CommandCancelProcessing = this.YalvLogViewModel.CommandCancelProcessing;
+            CommandCancelProcessing = YalvLogViewModel.CommandCancelProcessing;
 
-            if (MainWindowVM.CreateAppDataDir() == true)
+            if (CreateAppDataDir())
             {
-                this._yalvLogViewModel.LogEntryRows.LoadColumnsLayout(this._layoutFileName);
+                _yalvLogViewModel.LogEntryRows.LoadColumnsLayout(_layoutFileName);
             }
 
-            this.RecentFileList = recentFileList;
+            RecentFileList = recentFileList;
 
-            this.CommandExit = new CommandRelay(this.CommandExitExecute, p => true);
-            this.CommandOpenFile = new CommandRelay(this.CommandOpenFileExecute, this.CommandOpenFileCanExecute);
+            CommandExit = new CommandRelay(CommandExitExecute, p => true);
+            CommandOpenFile = new CommandRelay(CommandOpenFileExecute, CommandOpenFileCanExecute);
 
-            this.CommandAbout = new CommandRelay(this.CommandAboutExecute, p => true);
+            CommandAbout = new CommandRelay(CommandAboutExecute, p => true);
             CommandExport = new CommandRelay(CommandExportExecute, p => true);
             CommandOpenSqliteDatabase = new CommandRelay(CommandOpenSqliteDatabaseExecute, p => true);
             CommandOpenLogAnalysisSession = new CommandRelay(CommandOpenLogAnalysisSessionExecute, p => true);
@@ -78,7 +77,7 @@ namespace YALV.ViewModel
             get
             {
                 return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-                                                 + System.IO.Path.DirectorySeparatorChar + "Yalv";
+                                                 + Path.DirectorySeparatorChar + "Yalv";
             }
         }
         #endregion static properties
@@ -115,8 +114,8 @@ namespace YALV.ViewModel
         {
             get
             {
-                string sFile = (this.YalvLogViewModel.FilePaths.Count == 0? string.Empty :
-                                                                                        " - " + this._yalvLogViewModel.FilePaths[0]);
+                string sFile = (YalvLogViewModel.FilePaths.Count == 0? string.Empty :
+                                                                                        " - " + _yalvLogViewModel.FilePaths[0]);
 
                 return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
             }
@@ -129,7 +128,7 @@ namespace YALV.ViewModel
         {
             get
             {
-                return this._yalvLogViewModel;
+                return _yalvLogViewModel;
             }
         }
 
@@ -140,17 +139,17 @@ namespace YALV.ViewModel
         {
             get
             {
-                return this._recentFileList;
+                return _recentFileList;
             }
 
             set
             {
-                this._recentFileList = value;
+                _recentFileList = value;
 
-                if (this._recentFileList != null)
+                if (_recentFileList != null)
                 {
-                    this._recentFileList.MenuClick += (s, e) => this.LoadLog4NetFile(e.Filepath);
-                    this.UpdateJumpList();
+                    _recentFileList.MenuClick += (s, e) => LoadLog4NetFile(e.Filepath);
+                    UpdateJumpList();
                 }
             }
         }
@@ -166,9 +165,9 @@ namespace YALV.ViewModel
         {
             try
             {
-                if (System.IO.Directory.Exists(MainWindowVM.AppDataDirectoryPath) == false)
+                if (Directory.Exists(AppDataDirectoryPath) == false)
                 {
-                    System.IO.Directory.CreateDirectory(MainWindowVM.AppDataDirectoryPath);
+                    Directory.CreateDirectory(AppDataDirectoryPath);
                     return false;
                 }
 
@@ -188,11 +187,11 @@ namespace YALV.ViewModel
         {
             try
             {
-                this._yalvLogViewModel.LoadFiles(new List<string>(){filePath});
+                _yalvLogViewModel.LoadFiles(new List<string>{filePath});
             }
             finally
             {
-                this.RaisePropertyChanged(PropTitle);
+                RaisePropertyChanged(PropTitle);
             }
         }
         #endregion
@@ -205,28 +204,26 @@ namespace YALV.ViewModel
         {
             try
             {
-                this._yalvLogViewModel.LogEntryRows.SaveColumnsLayout(this._layoutFileName);
+                _yalvLogViewModel.LogEntryRows.SaveColumnsLayout(_layoutFileName);
             }
             catch (Exception exp)
             {
-                MessageBox.Show(exp.Message, exp.StackTrace.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(exp.Message, exp.StackTrace, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         #region Commands
         protected virtual object CommandExitExecute(object parameter)
         {
-            this._callingWin.Close();
+            _callingWin.Close();
             return null;
         }
 
         protected virtual object CommandOpenFileExecute(object parameter)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            var dlg = new OpenFileDialog();
 
             bool addFile = parameter != null && parameter.Equals("ADD");
-            if (parameter == null)
-                parameter = "";
 
             dlg.Filter = YalvViewModel.FileExtensionDialogFilter;
             dlg.DefaultExt = "*.log4j";
@@ -234,14 +231,14 @@ namespace YALV.ViewModel
             dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
                                   YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
 
-            if (dlg.ShowDialog().GetValueOrDefault() == true)
+            if (dlg.ShowDialog().GetValueOrDefault())
             {
-                this._yalvLogViewModel.LoadFiles(new List<string>(dlg.FileNames));
+                _yalvLogViewModel.LoadFiles(new List<string>(dlg.FileNames));
          
 
-                this.RecentFileList.InsertFile(dlg.FileName);
+                RecentFileList.InsertFile(dlg.FileName);
 
-                this.UpdateJumpList();
+                UpdateJumpList();
             }
 
             return null;
@@ -254,7 +251,7 @@ namespace YALV.ViewModel
 
         protected virtual object CommandAboutExecute(object parameter)
         {
-            var win = new View.About() { Owner = this._callingWin as Window };
+            var win = new View.About{ Owner = _callingWin as Window };
             win.ShowDialog();
 
             return null;
@@ -263,17 +260,15 @@ namespace YALV.ViewModel
         protected virtual object CommandExportExecute(object parameter)
         {
             LogAnalysisWorkspace workspace = YalvRegistry.Instance.ActualWorkspace;
-            if (workspace != null && this.YalvLogViewModel.HasData)
+            if (workspace != null && YalvLogViewModel.HasData)
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Yalv file | *.yalv";
-                saveFileDialog.Title = "Save a workspace";
+                var saveFileDialog = new SaveFileDialog {Filter = "Yalv file | *.yalv", Title = "Save a workspace"};
                 saveFileDialog.ShowDialog();
                 if(saveFileDialog.FileName != string.Empty)
                 {
                     YalvLogViewModel.ManageRepositoriesViewModel.IsLoading = true;
                     var exporter = new LogAnalysisWorkspaceExporter(saveFileDialog.FileName);
-                    exporter.ExportResultEvent += exporterResultEvent;
+                    exporter.ExportResultEvent += ExporterResultEvent;
                     exporter.Export(workspace);
                 }
                
@@ -283,17 +278,16 @@ namespace YALV.ViewModel
             return null;
         }
 
-        private void exporterResultEvent(object sender, EventArgs e)
+        private void ExporterResultEvent(object sender, EventArgs e)
         {
             var exporter = ((LogAnalysisWorkspaceExporter) sender);
-            exporter.ExportResultEvent -= exporterResultEvent;
+            exporter.ExportResultEvent -= ExporterResultEvent;
             YalvLogViewModel.ManageRepositoriesViewModel.IsLoading = false;
-            Process.Start(@exporter.Directory);
         }
 
         protected virtual object CommandOpenSqliteDatabaseExecute(object parameter)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            var dlg = new OpenFileDialog();
 
             bool addFile = parameter != null && parameter.Equals("ADD");
 
@@ -303,11 +297,11 @@ namespace YALV.ViewModel
             dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
                                   YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
 
-            if (dlg.ShowDialog().GetValueOrDefault() == true)
+            if (dlg.ShowDialog().GetValueOrDefault())
             {
-                this._yalvLogViewModel.LoadSqliteDatabase(dlg.FileName);
-                this.RecentFileList.InsertFile(dlg.FileName);
-                this.UpdateJumpList();
+                _yalvLogViewModel.LoadSqliteDatabase(dlg.FileName);
+                RecentFileList.InsertFile(dlg.FileName);
+                UpdateJumpList();
             }
             return null;
         }
@@ -315,9 +309,9 @@ namespace YALV.ViewModel
 
         protected virtual object CommandOpenLogAnalysisSessionExecute(object parameter)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            var dlg = new OpenFileDialog();
 
-            bool addFile = parameter != null && parameter.Equals("ADD");
+            var addFile = parameter != null && parameter.Equals("ADD");
 
             dlg.Filter = YalvViewModel.LogAnalysisExtensionDialogFilter;
             dlg.DefaultExt = "*.yalv";
@@ -325,11 +319,11 @@ namespace YALV.ViewModel
             dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
                                   YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
 
-            if (dlg.ShowDialog().GetValueOrDefault() == true)
+            if (dlg.ShowDialog().GetValueOrDefault())
             {
-                this._yalvLogViewModel.LoadLogAnalysisSession(dlg.FileName);
-                this.RecentFileList.InsertFile(dlg.FileName);
-                this.UpdateJumpList();
+                _yalvLogViewModel.LoadLogAnalysisSession(dlg.FileName);
+                RecentFileList.InsertFile(dlg.FileName);
+                UpdateJumpList();
             }
             return null;
         }
@@ -337,15 +331,15 @@ namespace YALV.ViewModel
 
         protected override void OnDispose()
         {
-            if (this._yalvLogViewModel != null)
-                this._yalvLogViewModel.Dispose();
+            if (_yalvLogViewModel != null)
+                _yalvLogViewModel.Dispose();
 
             base.OnDispose();
         }
 
         private void UpdateJumpList()
         {
-            JumpList myJumpList = JumpList.GetJumpList(Application.Current);
+            var myJumpList = JumpList.GetJumpList(Application.Current);
 
             if (myJumpList == null)
             {
@@ -360,16 +354,23 @@ namespace YALV.ViewModel
                 {
                     try
                     {
-                        JumpTask myJumpTask = new JumpTask();
-                        myJumpTask.CustomCategory = YalvLib.Strings.Resources.MainWindowVM_updateJumpList_CustomCategoryName;
-                        myJumpTask.Title = Path.GetFileName(item);
+                        var myJumpTask = new JumpTask
+                                             {
+                                                 CustomCategory =
+                                                     YalvLib.Strings.Resources.
+                                                     MainWindowVM_updateJumpList_CustomCategoryName,
+                                                 Title = Path.GetFileName(item),
+                                                 ApplicationPath =
+                                                     Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                                                  AppDomain.CurrentDomain.FriendlyName),
+                                                 Arguments = item
+                                             };
                         ////myJumpTask.Description = "";
-                        myJumpTask.ApplicationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, System.AppDomain.CurrentDomain.FriendlyName);
-                        myJumpTask.Arguments = item;
                         myJumpList.JumpItems.Add(myJumpTask);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        throw e.InnerException;
                         ////throw;
                     }
                 }

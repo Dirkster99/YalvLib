@@ -496,7 +496,7 @@
     <value>en-US</value>
   </data>
   <data name="GlobalHelper_getTimeDelta_Negative_Text" xml:space="preserve">
-    <value>-{0} s</value>
+    <value>{0} s</value>
   </data>
   <data name="MainWindow_FullDateTimeFormatWithMilliseconds" xml:space="preserve">
     <value>dddd, MMMM d, yyyy h:mm:ss.fff tt</value>
@@ -583,5 +583,8 @@ It is a WPF Application based on .NET Framework 4.0 and written with C# language
   </data>
   <data name="GlobalHelper_RepositoryAlreadyExists_Error_Text" xml:space="preserve">
     <value>This Repository is already loaded in the current workspace</value>
+  </data>
+  <data name="MainWindow_DetailsBox_Delta_Text" xml:space="preserve">
+    <value>Calculated Δ t:</value>
   </data>
 </root>

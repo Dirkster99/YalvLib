@@ -47,8 +47,8 @@ namespace YalvLib.ViewModel
 
             _logEntryRows = new DisplayLogViewModel(_manageTextMarkersViewModel);
 
-            CommandCancelProcessing = new CommandRelay(CommandCancelProcessing_Executed,
-                                                       CommandCancelProcessing_CanExecute);
+            CommandCancelProcessing = new CommandRelay(CommandCancelProcessingExecuted,
+                                                       CommandCancelProcessingCanExecute);
 
             CommandRefresh = new CommandRelay(CommandRefreshExecute, CommandRequiresDataCanExecute);
             CommandDelete = new CommandRelay(LogEntryRows.CommandDeleteExecute, LogEntryRows.CommandDeleteCanExecute);
@@ -60,12 +60,12 @@ namespace YalvLib.ViewModel
             CommandUpdateDelta = new CommandRelay(CommandUpdateDeltaExecute, CommandUpdateDeltaCanExecute);
         }
 
-        private bool CommandCancelProcessing_CanExecute(object obj)
+        private bool CommandCancelProcessingCanExecute(object obj)
         {
             return (_fileLoader != null);
         }
 
-        private object CommandCancelProcessing_Executed(object arg)
+        private object CommandCancelProcessingExecuted(object arg)
         {
             if (_fileLoader != null)
                 _fileLoader.Cancel();
@@ -232,6 +232,9 @@ namespace YalvLib.ViewModel
         /// </summary>
         public ICommandAncestor CommandUpdateDelta { get; protected set; }
 
+        /// <summary>
+        /// Cancel processing command
+        /// </summary>
         public ICommandAncestor CommandCancelProcessing { get; protected set; }
 
         #endregion Command
@@ -264,7 +267,7 @@ namespace YalvLib.ViewModel
             }
 
             _fileLoader = new LogFileLoader();
-            _fileLoader.LoadResultEvent += fileLoader_loadResultEvent;
+            _fileLoader.LoadResultEvent += FileLoaderLoadResultEvent;
             ManageRepositoriesViewModel.IsLoading = true;
 
             _fileLoader.ExecuteAsynchronously(delegate
@@ -282,9 +285,9 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void fileLoader_loadResultEvent(object sender, LogFileLoader.ResultEvent e)
+        private void FileLoaderLoadResultEvent(object sender, LogFileLoader.ResultEvent e)
         {
-            _fileLoader.LoadResultEvent -= fileLoader_loadResultEvent;
+            _fileLoader.LoadResultEvent -= FileLoaderLoadResultEvent;
             _fileLoader = null;
             ManageRepositoriesViewModel.IsLoading = false;
             if (e.InnerException != null)
@@ -322,7 +325,7 @@ namespace YalvLib.ViewModel
         public void LoadLogAnalysisSession(string path)
         {
             _fileLoader = new LogFileLoader();
-            _fileLoader.LoadResultEvent += fileLoader_loadResultEvent;
+            _fileLoader.LoadResultEvent += FileLoaderLoadResultEvent;
             ManageRepositoriesViewModel.IsLoading = true;
             _fileLoader.ExecuteAsynchronously(delegate
                                                   {

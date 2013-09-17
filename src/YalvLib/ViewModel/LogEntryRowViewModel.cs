@@ -58,19 +58,6 @@ namespace YalvLib.ViewModel
             get { return _entry.Id; }
         }
 
-        /// <summary>
-        /// getter / setter the visibility of the current entry
-        /// </summary>
-        public bool Visible {
-            get { return _visible; } 
-            set {
-                if (_visible != value)
-                {
-                    _visible = value;
-                    //NotifyPropertyChanged(() => Visible);
-                }
-            }
-        }
 
         /// <summary>
         /// Get / set the linked logEntry

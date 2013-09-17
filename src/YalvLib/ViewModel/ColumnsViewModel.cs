@@ -109,8 +109,9 @@ namespace YalvLib.ViewModel
 
                 ResetColumnProperties(columnFilterUpdate);
             }
-            catch
+            catch(Exception e)
             {
+                throw e.InnerException;
             }
         }
 
@@ -174,8 +175,9 @@ namespace YalvLib.ViewModel
 
                 ResetColumnProperties(columnFilterUpdate);
             }
-            catch
+            catch(Exception e)
             {
+                throw e.InnerException;
             }
         }
 

@@ -20,7 +20,7 @@ namespace YalvLib.Domain
         {
             return string.Format(
                 "Date: {0}, Level: {1}, Thread: {2}, Logger: {3}, Message: {4}",
-                this.Date, this.Level, this.Thread, this.Logger, this.Message);
+                Date, Level, Thread, Logger, Message);
         }
     }
 }
