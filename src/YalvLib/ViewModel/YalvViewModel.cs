@@ -324,6 +324,20 @@ namespace YalvLib.ViewModel
         /// <param name="path">file path</param>
         public void LoadLogAnalysisSession(string path)
         {
+            var erase = true;
+            if(YalvRegistry.Instance.ActualWorkspace.LogEntries.Count != 0)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    string.Format("You are about to overwrite the current session, do you wish to continue?"),
+                    Resources.MarkerRow_DeleteConfirmation_Caption, MessageBoxButton.YesNo,
+                    MessageBoxImage.Error);
+                if(result == MessageBoxResult.No)
+                {
+                    erase = false;
+                }
+            }
+
+            if (!erase) return;
             _fileLoader = new LogFileLoader();
             _fileLoader.LoadResultEvent += FileLoaderLoadResultEvent;
             ManageRepositoriesViewModel.IsLoading = true;
