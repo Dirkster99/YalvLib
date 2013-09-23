@@ -4,9 +4,9 @@
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Input;
-    using YalvLib.Common.Converters;
-    using YalvLib.ViewModel;
-    using YalvLib.ViewModel.Common;
+    using Common.Converters;
+    using ViewModel;
+    using ViewModel.Common;
 
     public partial class YalvView : Control
     {
@@ -52,8 +52,8 @@
                         // Bind column to visibility property via bool - visibility converter
                         var visiblityBinding = new Binding("IsColumnVisible");
                         visiblityBinding.Source = item;
-                        visiblityBinding.Converter = GridManager._mBoolToVisConverter;
-                        BindingOperations.SetBinding(col, DataGridTextColumn.VisibilityProperty, visiblityBinding);
+                        visiblityBinding.Converter = _mBoolToVisConverter;
+                        BindingOperations.SetBinding(col, DataGridColumn.VisibilityProperty, visiblityBinding);
 
                         if (item.Alignment == CellAlignment.CENTER && centerCellStyle != null)
                             col.CellStyle = centerCellStyle;
@@ -63,7 +63,7 @@
 
                         Binding bind = new Binding(item.Field) { Mode = BindingMode.OneWay };
                         bind.ConverterCulture =
-                            System.Globalization.CultureInfo.GetCultureInfo(YalvLib.Strings.Resources.CultureName);
+                            System.Globalization.CultureInfo.GetCultureInfo(Strings.Resources.CultureName);
 
                         if (!string.IsNullOrWhiteSpace(item.StringFormat))
                             bind.StringFormat = item.StringFormat;
@@ -86,16 +86,16 @@
             {
                 if (txtSearchPanel != null)
                 {
-                    Binding widthBind = new Binding()
+                    var widthBind = new Binding
                     {
                         Path = new PropertyPath("ActualWidth"),
                         Source = col,
                         Mode = BindingMode.OneWay,
-                        Converter = GridManager._mAdjustConverter,
+                        Converter = _mAdjustConverter,
                         ConverterParameter = "-2"
                     };
 
-                    Binding visibilityBind = new Binding()
+                    var visibilityBind = new Binding
                     {
                         Path = new PropertyPath("Visibility"),
                         Source = col,
@@ -110,7 +110,7 @@
                     columnVm.FilterControlName = txt.Name = GetTextBoxName(columnVm.Field);
                     txt.ToolTip =
                         string.Format(
-                            YalvLib.Strings.Resources.FilteredGridManager_BuildDataGrid_FilterTextBox_Tooltip,
+                            Strings.Resources.FilteredGridManager_BuildDataGrid_FilterTextBox_Tooltip,
                             columnVm.Header);
                     txt.Tag = txt.ToolTip.ToString().ToLower();
                     txt.Text = string.Empty;
@@ -130,7 +130,7 @@
                     if (keyUpEvent != null)
                         txt.KeyUp += keyUpEvent;
 
-                    RegisterControl<TextBox>(txtSearchPanel, txt.Name, txt);
+                    RegisterControl(txtSearchPanel, txt.Name, txt);
                     txtSearchPanel.Children.Add(txt);
                 }
             }
@@ -146,7 +146,7 @@
                 DataTemplate bothMarker = dataGrid.FindResource("TextAndColorMarkerDataTemplate") as DataTemplate;
                 DataTemplate noMarker = dataGrid.FindResource("NoMarkerDataTemplate") as DataTemplate;
 
-                markerCol.CellTemplateSelector = new MarkerTemplateSelector()
+                markerCol.CellTemplateSelector = new MarkerTemplateSelector
                 {
                     ColorMarkerTemplate = colorMarker,
                     TextMarkerTemplate = txtMarker,
@@ -164,16 +164,16 @@
             {
                 if (txtSearchPanel != null)
                 {
-                    Binding widthBind = new Binding()
+                    var widthBind = new Binding
                     {
                         Path = new PropertyPath("ActualWidth"),
                         Source = col,
                         Mode = BindingMode.OneWay,
-                        Converter = GridManager._mAdjustConverter,
+                        Converter = _mAdjustConverter,
                         ConverterParameter = "-2"
                     };
 
-                    Binding visibilityBind = new Binding
+                    var visibilityBind = new Binding
                     {
                         Path = new PropertyPath("Visibility"),
                         Source = col,

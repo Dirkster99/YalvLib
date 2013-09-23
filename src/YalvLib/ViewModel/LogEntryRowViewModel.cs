@@ -11,7 +11,6 @@ namespace YalvLib.ViewModel
         private int _colorMarkerQuantity;
         private LogEntry _entry;
         private int _textMarkerquantity;
-        private bool _visible;
 
         /// <summary>
         /// Constructor based on a logentry
@@ -20,7 +19,6 @@ namespace YalvLib.ViewModel
         public LogEntryRowViewModel(LogEntry item)
         {
             Entry = item;
-            _visible = true;
         }
 
         /// <summary>

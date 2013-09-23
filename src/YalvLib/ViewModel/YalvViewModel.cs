@@ -147,7 +147,7 @@ namespace YalvLib.ViewModel
         }
 
         /// <summary>
-        /// Get a list of filter columns and data items (for display in a DataGridView)
+        /// Return the current displayLogViewModel
         /// </summary>
         public DisplayLogViewModel LogEntryRows
         {
@@ -155,15 +155,12 @@ namespace YalvLib.ViewModel
         }
 
         /// <summary>
-        /// Getter of the repositories managed view model
+        /// Return repositories managed view model
         /// </summary>
         public ManageRepositoryViewModel ManageRepositoriesViewModel
         {
             get { return _manageRepoViewModel; }
         }
-
-
-
 
         /// <summary>
         /// Get the Display Text Marker instance
@@ -212,9 +209,6 @@ namespace YalvLib.ViewModel
         /// Delete Command
         /// </summary>
         public ICommandAncestor CommandDelete { get; protected set; }
-
-
-
 
         /// <summary>
         /// UpdateTextMarkers Command
