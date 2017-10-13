@@ -1,6 +1,6 @@
 # YalvLib
 
-<table>
+<table border="0">
 <tr>
 <td><img src="https://github.com/Dirkster99/Docu/blob/master/YalvLib/filter_Applied.png?raw=true"></td>
 <td>
