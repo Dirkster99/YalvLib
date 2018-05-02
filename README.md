@@ -12,3 +12,16 @@ YalvLibLib is a WPF/MVVM log4net viewer library based on an earlier Winforms Yal
 </td>
 </tr>
 </table>
+
+This project is focused on a log4net viewer developed in .Net/WPF. The control contained in the YalvLib sub-project is a native WPF (look-less) control that can easily be used in IoCs, such as, AvalonDock or PRISM (since it follows MVVM).
+
+The YalvLib control is a refactored version of the Yalv project published on codeplex:
+https://yalv.codeplex.com/
+
+Please review the Documentation page to see its full list of features.
+This control is MVVM compliant and can be used in a theming context as the EDI project, which is based on AvalonDock:
+
+https://edi.codeplex.com/wikipage?title=Log4Net%20Log%20Document%20Viewer
+
+# Download
+The release version is updated at regular intervals but you are always welcome to download the current version and compile it with VS 2012 Express or better to see what we are up to.
