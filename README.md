@@ -25,3 +25,6 @@ https://edi.codeplex.com/wikipage?title=Log4Net%20Log%20Document%20Viewer
 
 # Download
 The release version is updated at regular intervals but you are always welcome to download the current version and compile it with VS 2012 Express or better to see what we are up to.
+
+I have originally developed this project based on Yalv! with two other software developers on CodePlex:
+* https://yalvlib.codeplex.com</li>
