@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using YalvLib.Common;
-using YalvLib.Common.Interfaces;
-using YalvLib.Model;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using YalvLib.Common;
+    using YalvLib.Common.Interfaces;
+    using YalvLib.Model;
+
     /// <summary>
     /// This class contains every TextMarkerViewModels linked to the selected entries
     /// </summary>

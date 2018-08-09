@@ -12,8 +12,8 @@ ECHO Edi.Core
 ECHO YALV
 ECHO YALV.Samples
 ECHO YalvLib
-ECHO YalvLib.Tests
-ECHO YalvLib.Tests.Integration
+ECHO UnitTests\YalvLib.UnitTests
+ECHO UnitTests\YalvLib.IntegrationTests
 ECHO.
 ECHO Debug and Release folders
 ECHO.
@@ -29,6 +29,7 @@ ECHO.
 ECHO Removing vs settings folder with *.sou file
 ECHO.
 RMDIR /S /Q .vs
+RMDIR /S /Q TestResults
 
 ECHO Deleting BIN and OBJ Folders in ModernYalv folder
 ECHO.
@@ -60,15 +61,15 @@ ECHO.
 RMDIR /S /Q YalvLib\bin
 RMDIR /S /Q YalvLib\obj
 
-ECHO Deleting BIN and OBJ Folders in YalvLib.Tests folder
+ECHO Deleting BIN and OBJ Folders in UnitTests\YalvLib.UnitTests folder
 ECHO.
-RMDIR /S /Q YalvLib.Tests\bin
-RMDIR /S /Q YalvLib.Tests\obj
+RMDIR /S /Q UnitTests\YalvLib.UnitTests\bin
+RMDIR /S /Q UnitTests\YalvLib.UnitTests\obj
 
 ECHO Deleting BIN and OBJ Folders in YalvLib.Tests.Integration folder
 ECHO.
-RMDIR /S /Q YalvLib.Tests.Integration\bin
-RMDIR /S /Q YalvLib.Tests.Integration\obj
+RMDIR /S /Q UnitTests\YalvLib.IntegrationTests\bin
+RMDIR /S /Q UnitTests\YalvLib.IntegrationTests\obj
 
 PAUSE
 
