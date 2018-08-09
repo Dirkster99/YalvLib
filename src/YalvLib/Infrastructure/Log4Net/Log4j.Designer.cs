@@ -12,24 +12,31 @@ namespace YalvLib.Infrastructure.Log4Net
 {
     public partial class Event
     {
-
         [XmlElement("message")]
         public string Message { get; set; }
+
         [XmlElement("NDC")]
         public string NDC { get; set; }
+
         [XmlElement("throwable")]
         public string Throwable { get; set; }
+
         [XmlElement("locationInfo")]
         public LocationInfo LocationInfo { get; set; }
+
         [XmlArray("properties")]
         [XmlArrayItem("data")]
         public List<Data> Properties { get; set; }
+
         [XmlAttribute("logger")]
         public string Logger { get; set; }
+
         [XmlAttribute("timestamp")]
         public string Timestamp { get; set; }
+
         [XmlAttribute("level")]
         public string Level { get; set; }
+
         [XmlAttribute("thread")]
         public string Thread { get; set; }
 

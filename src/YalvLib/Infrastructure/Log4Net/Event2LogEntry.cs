@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YalvLib.Model;
-
-namespace YalvLib.Infrastructure.Log4Net
+﻿namespace YalvLib.Infrastructure.Log4Net
 {
+    using System;
+    using System.Linq;
+    using YalvLib.Model;
 
     internal class Event2LogEntry
     {
         public static LogEntry Convert(Event log4jEvent)
         {
             Event2LogEntry converter = new Event2LogEntry(log4jEvent);
+
             return converter.GetLogEntry();
         }
 
@@ -33,16 +31,19 @@ namespace YalvLib.Infrastructure.Log4Net
             _logEntry.Logger = _log4jEvent.Logger;
             _logEntry.Thread = _log4jEvent.Thread;
             _logEntry.Throwable = _log4jEvent.Throwable;
+
             try
             {   
                 var dTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                _logEntry.TimeStamp = dTime.AddMilliseconds(System.Convert.ToDouble(_log4jEvent.Timestamp)).ToLocalTime();
+                var doubleMilliSecs = Double.Parse(_log4jEvent.Timestamp);
+                _logEntry.TimeStamp = dTime.AddMilliseconds(doubleMilliSecs).ToLocalTime();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error converting timestamp field from log4j file", ex);
+                throw new Exception(string.Format("Error converting timestamp field '{0}' from log4j file",
+                                        (_log4jEvent.Timestamp != null ? _log4jEvent.Timestamp : "(null)"))
+                                        , ex);
             }
-            
             
             _logEntry.Class = _log4jEvent.LocationInfo.Class;
             _logEntry.File = _log4jEvent.LocationInfo.File;

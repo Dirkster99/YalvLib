@@ -36,6 +36,7 @@
         {
             Event e = TestDataProvider.CreateLog4jEvent("ERROR");
             LogEntry logEntry = Log4jConverter.Convert(e);
+
             Assert.AreEqual(LevelIndex.ERROR, logEntry.LevelIndex);
             Assert.AreEqual("This is an error message!", logEntry.Message);
             Assert.AreEqual("YALV.Samples.vshost.exe", logEntry.App);
@@ -48,7 +49,12 @@
             Assert.AreEqual("method4", logEntry.Method);
             Assert.AreEqual("10", logEntry.Thread);
             Assert.AreEqual("System.Exception: Warning Exception!", logEntry.Throwable);
+
+            var doubleMilliSecs = Double.Parse(e.Timestamp);
+            Assert.AreEqual(doubleMilliSecs, 90061000);
+
             Assert.AreEqual(new DateTime(1970, 1, 2, 2, 1, 1), logEntry.TimeStamp);
+
             Assert.AreEqual("tongbong-PC\tongbong", logEntry.UserName);
         }
 
