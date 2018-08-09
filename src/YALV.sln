@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YalvLib.Tests", "YalvLib.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YalvLib.Tests.Integration", "YalvLib.Tests.Integration\YalvLib.Tests.Integration.csproj", "{F57D5BE8-FA71-49B7-A074-F0D2E0030B4F}"
 EndProject
-Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "Setup", "Setup\Setup.isproj", "{8E8A8023-4973-4B2B-9756-5385C93A7729}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -231,36 +229,6 @@ Global
 		{F57D5BE8-FA71-49B7-A074-F0D2E0030B4F}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F57D5BE8-FA71-49B7-A074-F0D2E0030B4F}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
 		{F57D5BE8-FA71-49B7-A074-F0D2E0030B4F}.SingleImage|x86.ActiveCfg = Release|Any CPU
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.CD_ROM|Any CPU.Build.0 = CD_ROM
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.CD_ROM|Mixed Platforms.ActiveCfg = CD_ROM
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.CD_ROM|Mixed Platforms.Build.0 = CD_ROM
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.CD_ROM|x86.ActiveCfg = CD_ROM
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.CD_ROM|x86.Build.0 = CD_ROM
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Debug|Any CPU.ActiveCfg = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Debug|Any CPU.Build.0 = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Debug|Mixed Platforms.ActiveCfg = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Debug|Mixed Platforms.Build.0 = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Debug|x86.ActiveCfg = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Debug|x86.Build.0 = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.DVD-5|Any CPU.ActiveCfg = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.DVD-5|Any CPU.Build.0 = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.DVD-5|Mixed Platforms.ActiveCfg = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.DVD-5|Mixed Platforms.Build.0 = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.DVD-5|x86.ActiveCfg = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.DVD-5|x86.Build.0 = DVD-5
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Release|Any CPU.ActiveCfg = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Release|Any CPU.Build.0 = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Release|Mixed Platforms.ActiveCfg = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Release|Mixed Platforms.Build.0 = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Release|x86.ActiveCfg = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.Release|x86.Build.0 = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.SingleImage|Any CPU.ActiveCfg = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.SingleImage|Any CPU.Build.0 = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.SingleImage|Mixed Platforms.ActiveCfg = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.SingleImage|Mixed Platforms.Build.0 = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.SingleImage|x86.ActiveCfg = SingleImage
-		{8E8A8023-4973-4B2B-9756-5385C93A7729}.SingleImage|x86.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
