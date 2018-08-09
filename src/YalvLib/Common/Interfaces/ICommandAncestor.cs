@@ -1,9 +1,15 @@
 ﻿namespace YalvLib.Common.Interfaces
 {
-  using System.Windows.Input;
+    using System.Windows.Input;
 
-  public interface ICommandAncestor : ICommand
-  {
-    void OnCanExecuteChanged();
-  }
+    /// <summary>
+    /// Implements the ICommand interface with additional methods.
+    /// </summary>
+    public interface ICommandAncestor : ICommand
+    {
+        /// <summary>
+        /// Re-compute whether a command can be executed or not.
+        /// </summary>
+        void OnCanExecuteChanged();
+    }
 }

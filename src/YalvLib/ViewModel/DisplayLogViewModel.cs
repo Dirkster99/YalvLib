@@ -57,7 +57,6 @@ namespace YalvLib.ViewModel
         private readonly ColumnsViewModel mDataGridColumns;
 
         private ObservableCollection<LogEntryRowViewModel> _rowViewModels;
-        private EvaluateLoadResult loadResultCallback = null;
 
         private string mGoToLogItemId;
 

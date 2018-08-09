@@ -44,10 +44,10 @@ namespace YalvLib.Common
 
         #endregion constructor
 
-
+        /// <summary>
+        /// Event is raised to tell subscribers that the bound command has been executed.
+        /// </summary>
         public event EventHandler Executed;
-
-
 
         /// <summary>
         /// This event is fired when the state of whether a command can execute or not changes.
