@@ -123,8 +123,8 @@
                  Grid.Column="2" Grid.Row="1" />
 
         <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeStamp_Text}"
-               VerticalAlignment="Center" HorizontalAlignment="Right"
-               Grid.Column="0" Grid.Row="2" />
+                   VerticalAlignment="Center" HorizontalAlignment="Right"
+                   Grid.Column="0" Grid.Row="2" />
         <TextBox  Style="{StaticResource TextBoxLabelStyle}"
                   Grid.Column="2" Grid.Row="2">
           <TextBox.Text>

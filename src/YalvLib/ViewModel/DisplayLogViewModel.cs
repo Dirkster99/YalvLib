@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
-using YalvLib.Common;
-using YalvLib.Common.Interfaces;
-using YalvLib.Model;
-using YalvLib.Strings;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Input;
+    using System.Windows.Threading;
+    using YalvLib.Common;
+    using YalvLib.Common.Interfaces;
+    using YalvLib.Model;
+    using YalvLib.Strings;
+
     /// <summary>
     /// ViewModel class to organize all items relevant to a loaded logfile display
     /// (columns displayed, file name etc).
@@ -22,7 +22,6 @@ namespace YalvLib.ViewModel
     public class DisplayLogViewModel : BindableObject
     {
         #region fields
-
         private const string PROP_FileDir = "FileDir";
         private const string PROP_LogView = "LogView";
         private const string PROP_HasData = "HasData";
@@ -52,7 +51,6 @@ namespace YalvLib.ViewModel
         private const string PROP_ItemsFatalFilterCount = "ItemsFatalFilterCount";
         private const string PROP_ItemsFilterCount = "ItemsFilterCount";
         private readonly FilterConverterViewModel _filterViewModel;
-
 
         private readonly ColumnsViewModel mDataGridColumns;
 
@@ -86,9 +84,6 @@ namespace YalvLib.ViewModel
         private bool mShowLevelFatal;
         private bool mShowLevelInfo;
         private bool mShowLevelWarn;
-
-        public event EventHandler SelectedItemChanged;
-
         #endregion fields
 
         #region Constructor
@@ -141,6 +136,11 @@ namespace YalvLib.ViewModel
 
         #endregion Constructor
 
+        /// <summary>
+        /// Raises an event that indicates that the currently selected item has changed.
+        /// </summary>
+        public event EventHandler SelectedItemChanged;
+
         #region delegate
 
         /// <summary>
@@ -152,7 +152,6 @@ namespace YalvLib.ViewModel
         #endregion delegate
 
         #region Properties
-
         /// <summary>
         /// Clear Command
         /// </summary>
@@ -256,13 +255,16 @@ namespace YalvLib.ViewModel
             }
         }
 
+        /// <summary>
+        /// Method is invoked when the currently selected item has been changed.
+        /// </summary>
+        /// <param name="e"></param>
         protected void OnSelectedItemChanged(EventArgs e)
         {
             EventHandler handler = SelectedItemChanged;
             if (handler != null)
                 handler(this, e);
         }
-
         #endregion LogProperties
 
         #region LogFilterProperties
@@ -708,9 +710,14 @@ namespace YalvLib.ViewModel
         #endregion Properties
 
         #region Methodes
-
+        /// <summary>
+        /// Gets a command to apply a certain filter to this view.
+        /// </summary>
         public ICommandAncestor CommandApplyFilter { get; protected set; }
 
+        /// <summary>
+        /// Gets a command to reset any current filter (if any) on this view.
+        /// </summary>
         public ICommandAncestor CommandResetFilter { get; protected set; }
 
         /// <summary>
@@ -808,7 +815,7 @@ namespace YalvLib.ViewModel
         }
 
         /// <summary>
-        /// Turn filter on or off and refresh the corresponding <see cref="LogItem"/> collection view.
+        /// Turn filter on or off and refresh the corresponding logitem collection view.
         /// </summary>
         internal void ApplyFilter()
         {

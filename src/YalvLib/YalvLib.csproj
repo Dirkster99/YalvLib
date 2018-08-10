@@ -176,8 +176,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ViewModel\ColumnsViewModel.cs" />
+    <Compile Include="ViewModel\ResolveCultures.cs" />
     <Compile Include="ViewModel\FilterConverterViewModel.cs" />
-    <Compile Include="ViewModel\Cultures.cs" />
     <Compile Include="ViewModel\DisplayLogViewModel.cs" />
     <Compile Include="ViewModel\FilterQueryViewModel.cs" />
     <Compile Include="ViewModel\IManageTextMarkersViewModel.cs" />

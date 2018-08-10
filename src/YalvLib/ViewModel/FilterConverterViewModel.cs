@@ -167,7 +167,7 @@ namespace YalvLib.ViewModel
         }
 
         /// <summary>
-        /// Apply the set of filter to the current context
+        /// Apply the set of filters to the current context
         /// </summary>
         /// <returns>true if the context match</returns>
         public Boolean ApplyFilter()
@@ -183,6 +183,7 @@ namespace YalvLib.ViewModel
                     }
                 }
             }
+
             return true;
         }
 

@@ -1,7 +1,7 @@
-using System;
-
 namespace YalvLib.Model
 {
+    using System;
+
     /// <summary>
     /// Model an entry of a log file such that it can be consumed by a collection
     /// (to model all entries in a log file)
@@ -9,13 +9,13 @@ namespace YalvLib.Model
     [Serializable]
     public class LogEntry
     {
+        #region constructors
         /// <summary>
         /// Empty constructor for the Fluent Nhibernate mapping
         /// </summary>
         public LogEntry()
         {
         }
-
 
         /// <summary>
         /// Constructor of a log entry
@@ -38,6 +38,7 @@ namespace YalvLib.Model
             Line = entry.Line;
             LevelIndex = entry.LevelIndex;
         }
+        #endregion constructors
 
         #region properties
 
@@ -143,11 +144,19 @@ namespace YalvLib.Model
 
         #endregion properties
 
+        #region methods
+        /// <summary>
+        /// Determines if this object is equal to <paramref name="obj"/> or not.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             var e = obj as LogEntry;
+
             if (e == null)
                 return false;
+
             return e.App == App
                    && e.Uid == Uid
                    && e.GuId == GuId
@@ -156,15 +165,20 @@ namespace YalvLib.Model
                    && e.File == File
                    && e.HostName == HostName
                    && e.Line == Line
-                   && e.TimeStamp.Equals(TimeStamp) 
+                   && e.TimeStamp.Equals(TimeStamp)
                    && e.Logger == Logger
                    && e.Method == Method
                    && e.MachineName == MachineName;
         }
 
+        /// <summary>
+        /// Determines the Hash Code of this object.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
+        #endregion methods
     }
 }

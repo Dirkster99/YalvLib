@@ -20,32 +20,29 @@
     <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_Header}">
         <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_OpenFile_Header}"
                   Command="{Binding Path=CommandOpenFile}"
-                  CommandParameter="OPEN">
-        </MenuItem>
+                  CommandParameter="OPEN"/>
+
         <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_OpenSqliteDatabase_Header}"
                   Command="{Binding Path=CommandOpenSqliteDatabase}"
-                  CommandParameter="OPEN">
-        </MenuItem>
+                  CommandParameter="OPEN"/>
+
+        <Separator />
         <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_OpenLogAnalysisSession_Header}"
                   Command="{Binding Path=CommandOpenLogAnalysisSession}"
-                  CommandParameter="OPEN">
-        </MenuItem>
+                  CommandParameter="OPEN" />
+        
+        <MenuItem 
+            Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_ExportToSqlite_Header}"
+            Command="{Binding Path=CommandExport}"/>
 
         <Separator />
         <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_RecentFiles_Header}">
             <recentList:RecentFileList x:Name="RecentFileListMenu" />
         </MenuItem>
-        <Separator />
-        <MenuItem 
-            Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_ExportToSqlite_Header}"
-            Command="{Binding Path=CommandExport}">
-        </MenuItem>
-        <Separator />
 
         <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_Exit_Header}"
               Command="{Binding Path=CommandExit}"
-              InputGestureText="Alt+F4">
-        </MenuItem>
+              InputGestureText="Alt+F4"/>
     </MenuItem>
 
     <!-- View Items -->
@@ -53,18 +50,17 @@
         <MenuItem
             Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_RefreshLog_Header}"
             Command="{Binding Path=YalvLogViewModel.CommandRefresh}"
-            InputGestureText="F5">
-        </MenuItem>
+            InputGestureText="F5"/>
+
         <MenuItem
             Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_ClearFilters_Header}"
             Command="{Binding Path=YalvLogViewModel.LogEntryRows.CommandClearFilters}"
-            InputGestureText="Ctrl+D">
-        </MenuItem>
+            InputGestureText="Ctrl+D"/>
+
         <MenuItem
             Header="{x:Static strs:Resources.Common_Components_MainMenu_ViewMenu_DeleteFile_Header}"
             Command="{Binding Path=YalvLogViewModel.CommandDelete}"
-            InputGestureText="DEL">
-        </MenuItem>
+            InputGestureText="DEL"/>
 
         <MenuItem ItemsSource="{Binding Path=LogEntryRows.DataGridColumns.DataGridColumns}"
                 Header="Columns"
@@ -82,6 +78,6 @@
     <!-- About Items -->
     <MenuItem
         Header="{x:Static strs:Resources.Common_Components_MainMenu_AboutMenu_Header}"
-        Command="{Binding Path=CommandAbout}">
-    </MenuItem>
+        Command="{Binding Path=CommandAbout}"/>
+
 </Menu>

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using YalvLib.Common.Exceptions;
-
-namespace YalvLib.Model.Filter
+﻿namespace YalvLib.Model.Filter
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using YalvLib.Common.Exceptions;
+
     /// <summary>
-    /// Represent the operator BEFORE used on date expression comparaison
+    /// Represents the BEFORE operator used on date expression comparison
     /// </summary>
     public class BeforeOperator : Operator
     {
@@ -22,13 +22,21 @@ namespace YalvLib.Model.Filter
             {
                 throw new InterpreterException(property + " Not a DateTime");
             }
+
             if (property is string)
             {
                 return DateTime.Compare(DateTime.Parse(property.ToString()), DateTime.Parse(value)) == -1;
             }
+
             return DateTime.Compare((DateTime) property, DateTime.Parse(value)) == -1;
         }
 
+        /// <summary>
+        /// Evaluate if any date property in the list is before the value
+        /// </summary>
+        /// <param name="properties"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public override bool Evaluate(List<object> properties, string value)
         {
             return properties.Any(obj => Evaluate(obj, value));

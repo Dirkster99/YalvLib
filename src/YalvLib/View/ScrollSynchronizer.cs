@@ -237,9 +237,14 @@ namespace YalvLib.View
     /// Scrolls all scroll viewers of a group to the position of the selected scroll viewer.
     /// </summary>
     /// <param name="changedScrollViewer">Sroll viewer, that specifies the current position of the group.</param>
-    private static void Scroll(ScrollViewer changedScrollViewer, bool verticalChange, bool horizontalChange)
+    /// <param name="horizontalChange"></param>
+    /// <param name="verticalChange"></param>
+    private static void Scroll(ScrollViewer changedScrollViewer,
+                               bool verticalChange,
+                               bool horizontalChange)
     {
       var group = scrollViewers[changedScrollViewer];
+
       verticalScrollOffsets[group] = changedScrollViewer.VerticalOffset;
       horizontalScrollOffsets[group] = changedScrollViewer.HorizontalOffset;
 

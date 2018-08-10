@@ -76,14 +76,11 @@ namespace YalvLib.Model
             entry.GuId = YalvRegistry.Instance.GenerateGuid();
         }
 
-        private void AssignDelta(LogEntry entry)
-        {
-            DateTime comparisonDateTime = entry.TimeStamp;
-            if (_lastLogEntry != null)
-                comparisonDateTime = _lastLogEntry.TimeStamp;
-            entry.Delta = GlobalHelper.GetTimeDelta(comparisonDateTime, entry.TimeStamp);
-        }
-
+        /// <summary>
+        /// Determines if this object is equal to <paramref name="obj"/> or not.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             var item = obj as LogEntryRepository;
@@ -96,9 +93,21 @@ namespace YalvLib.Model
             return !LogEntries.Where((t, i) => !t.Equals(item.LogEntries[i])).Any();
         }
 
+        /// <summary>
+        /// Gets the hash code of this object.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        private void AssignDelta(LogEntry entry)
+        {
+            DateTime comparisonDateTime = entry.TimeStamp;
+            if (_lastLogEntry != null)
+                comparisonDateTime = _lastLogEntry.TimeStamp;
+            entry.Delta = GlobalHelper.GetTimeDelta(comparisonDateTime, entry.TimeStamp);
         }
     }
 }

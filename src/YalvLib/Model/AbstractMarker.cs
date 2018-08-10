@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace YalvLib.Model
+﻿namespace YalvLib.Model
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
-    /// A Marker is made to allow user pointing out some log entries in order to add comments, highlighting and so on...
+    /// A Marker is made to allow user pointing out some log entries in order to add comments,
+    /// highlighting and so on...
     /// </summary>
     public abstract class AbstractMarker
     {
@@ -15,6 +16,11 @@ namespace YalvLib.Model
 
         #endregion fields
 
+        #region Constructors
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="entries"></param>
         protected AbstractMarker(List<LogEntry> entries)
         {
             _linkedEntries = entries;
@@ -22,10 +28,15 @@ namespace YalvLib.Model
             DateLastModification = DateTime.Now;
         }
 
+        /// <summary>
+        /// Hidden default class constructor
+        /// </summary>
         protected AbstractMarker()
         {
         }
+        #endregion  Constructors
 
+        #region Properties
         /// <summary>
         /// return the timestamp of the marker yhen it has been created
         /// </summary>
@@ -36,7 +47,6 @@ namespace YalvLib.Model
         /// </summary>
         public DateTime DateLastModification { get; set; }
 
-
         /// <summary>
         /// Return logEntries linked with this marker
         /// </summary>
@@ -45,7 +55,6 @@ namespace YalvLib.Model
             get { return _linkedEntries; }
             set { _linkedEntries = value.ToList(); }
         }
-
 
         /// <summary>
         /// Return the number of logEntries binded with the current marker
@@ -60,5 +69,6 @@ namespace YalvLib.Model
         /// Get/Set the Uid
         /// </summary>
         public Guid Uid { get; set; }
+        #endregion Properties
     }
 }

@@ -15,7 +15,6 @@ namespace YalvLib.Providers
   /// </summary>
   public abstract class AbstractEntriesProviderBase
   {
-
       /// <summary>
       /// Get collection of logitems representing a log file from this data source
       /// </summary>

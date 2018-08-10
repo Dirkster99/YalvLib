@@ -1,15 +1,31 @@
 namespace YalvLib.ViewModel.Common
 {
     /// <summary>
-    /// Class used to display an help for typing a filter
+    /// Class is used to display a help string for typing a filter
     /// </summary>
     public class AutoCompleteEntry
     {
+        #region fields
         private string[] _keywordStrings;
         private string _displayString;
+        #endregion fields
 
+        #region constructors
         /// <summary>
-        /// Getter / Setter for the table of keywords
+        /// Constructor of the autocompleteentry
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="keywords"></param>
+        public AutoCompleteEntry(string name, params string[] keywords)
+        {
+            _displayString = name;
+            _keywordStrings = keywords;
+        }
+        #endregion constructors
+
+        #region methods
+        /// <summary>
+        /// Gets the table of keywords
         /// </summary>
         public string[] KeywordStrings
         {
@@ -24,7 +40,7 @@ namespace YalvLib.ViewModel.Common
         }
 
         /// <summary>
-        /// Getter / Setter displayString
+        /// Gets/Sets the display string
         /// </summary>
         public string DisplayName
         {
@@ -33,19 +49,13 @@ namespace YalvLib.ViewModel.Common
         }
 
         /// <summary>
-        /// Constructor of the autocompleteentry
+        /// Standard method to support debugging and display raw data stored in this object.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="keywords"></param>
-        public AutoCompleteEntry(string name, params string[] keywords)
-        {
-            _displayString = name;
-            _keywordStrings = keywords;
-        }
-
+        /// <returns></returns>
         public override string ToString()
         {
             return _displayString;
         }
+        #endregion methods
     }
 }

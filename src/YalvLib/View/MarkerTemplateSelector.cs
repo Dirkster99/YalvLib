@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using YalvLib.ViewModel;
-
-namespace YalvLib.View
+﻿namespace YalvLib.View
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using YalvLib.ViewModel;
+
     /// <summary>
     /// Marker Data Template Selector
     /// </summary>
@@ -16,33 +12,30 @@ namespace YalvLib.View
         /// <summary>
         /// TextAndColorMarker DataTemplate
         /// </summary>
-        public DataTemplate TextAndColorMarkerTemplate
-        {
-            get; set; 
-        }
+        public DataTemplate TextAndColorMarkerTemplate { get; set; }
 
         /// <summary>
         /// ColorMarker DataTemplate
         /// </summary>
-        public DataTemplate ColorMarkerTemplate
-        {
-            get; set; 
-        }
+        public DataTemplate ColorMarkerTemplate { get; set; }
 
         /// <summary>
         /// TextMarker DataTemplate
         /// </summary>
-        public DataTemplate TextMarkerTemplate
-        {
-            get;
-            set;
-        }
+        public DataTemplate TextMarkerTemplate { get; set; }
 
         /// <summary>
         /// NoMarker DataTemplate
         /// </summary>
         public DataTemplate NoMarkerTemplate { get; set; }
 
+        /// <summary>
+        /// Is overridden in derived class to return a <see cref="DataTemplate"/> based
+        /// custom logic.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="container"></param>
+        /// <returns></returns>
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {    
             var logEntryVm = item as LogEntryRowViewModel;
@@ -61,6 +54,5 @@ namespace YalvLib.View
 
             return NoMarkerTemplate;
         }
-
     }
 }

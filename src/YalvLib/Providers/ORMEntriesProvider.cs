@@ -1,16 +1,15 @@
-﻿using System.Data;
-using System.Linq;
-using YalvLib.Infrastructure;
-using YalvLib.Model;
-
-namespace YalvLib.Providers
+﻿namespace YalvLib.Providers
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using YalvLib.Infrastructure;
+    using YalvLib.Model;
     using YalvLib.Domain;
 
     /// <summary>
-    /// Base class for file based log file providers
+    /// Base class for file based log file providers. 
     /// </summary>
     public abstract class ORMEntriesProvider : AbstractEntriesProviderBase
     {
@@ -18,13 +17,6 @@ namespace YalvLib.Providers
         /// Minimum date available for this class and its inherating classes
         /// </summary>
         protected static readonly DateTime MinDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-
-        /// <summary>
-        /// Create a database connection based on a string connection descriptor.
-        /// </summary>
-        /// <param name="dataSource"></param>
-        /// <returns></returns>
-        protected abstract IDbConnection CreateConnection(string dataSource);
 
         /// <summary>
         /// Get log file entries from a datasource with an applied filter in <paramref name="filter"/>.
@@ -40,6 +32,12 @@ namespace YalvLib.Providers
             return enumerable.ToArray();
         }
 
+        /// <summary>
+        /// Create a database connection based on a string connection descriptor.
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <returns></returns>
+        protected abstract IDbConnection CreateConnection(string dataSource);
 
         private static void AddLevelClause(IDbCommand command, string level)
         {
@@ -236,6 +234,5 @@ namespace YalvLib.Providers
                 }
             }
         }
-
     }
 }
