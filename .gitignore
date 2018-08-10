@@ -5,6 +5,15 @@
 /src/TestResults/*.*
 /src/.vs/*.*
 /src/packages/*.*
+debug/
+release/
+build/
+bin/
+obj/
+cache/
+log/
+tmp/
+
 /src/YalvLib.Tests/bin/Debug
 /src/ModernYalv/bin/x86/Debug
 /src/ModernYalv/obj/x86/Debug
