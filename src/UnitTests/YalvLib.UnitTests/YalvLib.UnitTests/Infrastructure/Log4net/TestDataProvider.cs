@@ -7,7 +7,6 @@
     [TestClass]
     public class TestDataProvider
     {
-
         public static Event CreateLog4jEvent(String level)
         {
             Event e = new Event();

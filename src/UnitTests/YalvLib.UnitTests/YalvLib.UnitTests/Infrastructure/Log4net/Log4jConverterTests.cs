@@ -5,11 +5,20 @@
     using System.Linq;
     using YalvLib.Infrastructure.Log4Net;
     using YalvLib.Model;
-
+    using System.Globalization;
+    using System.Threading;
 
     [TestClass]
     public class Log4jConverterTests
     {
+        [TestInitialize]
+        public void InitTest()
+        {
+            // Make sure cutlure of test is fixed to ensure correct DateTime String
+            // conversion and interpretation of expected value below
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+        }
+
         [TestMethod]
         public void LogEntry2Event()
         {
