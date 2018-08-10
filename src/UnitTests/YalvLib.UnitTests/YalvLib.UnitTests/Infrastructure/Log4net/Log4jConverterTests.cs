@@ -56,11 +56,11 @@
             Assert.AreEqual("10", logEntry.Thread);
             Assert.AreEqual("System.Exception: Warning Exception!", logEntry.Throwable);
 
-            var doubleMilliSecs = Double.Parse(e.Timestamp);
-            var dTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            var dTest = dTime.AddMilliseconds(doubleMilliSecs).ToLocalTime();
-
-            Assert.AreEqual(dTest, logEntry.TimeStamp);
+            var timeZone = TimeZoneInfo.Local;  // Make sure this works for all time zones around the globe
+            var timeZoneSpan = timeZone.BaseUtcOffset;
+            var testTime = new DateTime(1970, 1, 2, 1, 1, 1);
+            testTime = testTime.Add(timeZoneSpan);
+            Assert.AreEqual(testTime, logEntry.TimeStamp);
 
             Assert.AreEqual("tongbong-PC\tongbong", logEntry.UserName);
         }
