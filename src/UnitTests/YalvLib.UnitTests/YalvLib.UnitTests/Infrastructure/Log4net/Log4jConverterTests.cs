@@ -11,17 +11,14 @@
     [TestClass]
     public class Log4jConverterTests
     {
-        [TestInitialize]
-        public void InitTest()
+        [TestMethod]
+        public void LogEntry2Event()
         {
             // Make sure cutlure of test is fixed to ensure correct DateTime String
             // conversion and interpretation of expected value below
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-        }
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-        [TestMethod]
-        public void LogEntry2Event()
-        {
             LogEntry entry = TestDataProvider.CreateLogEntry();
             Event e = Log4jConverter.Convert(entry);
             Assert.AreEqual("ERROR", e.Level);
@@ -60,9 +57,10 @@
             Assert.AreEqual("System.Exception: Warning Exception!", logEntry.Throwable);
 
             var doubleMilliSecs = Double.Parse(e.Timestamp);
-            Assert.AreEqual(doubleMilliSecs, 90061000);
+            var dTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            var dTest = dTime.AddMilliseconds(doubleMilliSecs).ToLocalTime();
 
-            Assert.AreEqual(new DateTime(1970, 1, 2, 2, 1, 1), logEntry.TimeStamp);
+            Assert.AreEqual(dTest, logEntry.TimeStamp);
 
             Assert.AreEqual("tongbong-PC\tongbong", logEntry.UserName);
         }
