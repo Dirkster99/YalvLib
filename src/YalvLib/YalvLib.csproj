@@ -74,20 +74,19 @@
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
-    <Reference Include="Xceed.Wpf.DataGrid">
+    <!-- Reference Include="Xceed.Wpf.DataGrid">
       <HintPath>..\Lib\Xceed.Wpf.DataGrid.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
+    </Reference -->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BindableObject.cs" />
     <Compile Include="Common\CommandRelay.cs" />
     <Compile Include="Common\Converter\AdjustValueConverter.cs" />
     <Compile Include="Common\DisposableObject.cs" />
-    <Compile Include="Common\Exceptions\LoggerException.cs" />
     <Compile Include="Common\Exceptions\NotValidValueException.cs" />
     <Compile Include="Common\GlobalHelper.cs" />
     <Compile Include="Common\Interfaces\ICommandAncestor.cs" />

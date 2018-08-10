@@ -17,7 +17,6 @@ namespace YalvLib.Model.Filter
         private readonly string _propertyName;
         private readonly string _propertyValue;
         private PropertyInfo _propertyInfo;
-        private object _propertyValueCustom;
 
         /// <summary>
         /// Constructor
