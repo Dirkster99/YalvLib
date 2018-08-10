@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/7r06lm7v5o9xq7xj?svg=true)](https://ci.appveyor.com/project/Dirkster99/YalvLib)
+[![Build status](https://ci.appveyor.com/api/projects/status/qcn6cgd31r6yx5ch?svg=true)](https://ci.appveyor.com/project/Dirkster99/yalvlib)
 # YalvLib
 
 <table border="0">
