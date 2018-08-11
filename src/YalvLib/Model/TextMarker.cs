@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace YalvLib.Model
+﻿namespace YalvLib.Model
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// A TextMarker is used to add a comment on a Log entry
     /// </summary>
     public class TextMarker : AbstractMarker
     {
         #region fields
-
         private string _author;
         private string _message;
-
         #endregion fields
 
+        #region constructors
         /// <summary>
         /// TextMarker constructor
         /// </summary>
@@ -28,15 +27,15 @@ namespace YalvLib.Model
             _message = message;
         }
 
-
         /// <summary>
         /// Empty constructor for nhibernate
         /// </summary>
         public TextMarker()
         {
         }
+        #endregion constructors
 
-
+        #region properties
         /// <summary>
         /// Get or Set the author. Update Date of last modification on get
         /// </summary>
@@ -62,6 +61,6 @@ namespace YalvLib.Model
                 DateLastModification = DateTime.Now;
             }
         }
-
+        #endregion properties
     }
 }

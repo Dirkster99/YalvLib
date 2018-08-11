@@ -1,30 +1,38 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-
-namespace YalvLib.Model
+﻿namespace YalvLib.Model
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+
     /// <summary>
     /// This class is a singleton representing the unique instance of the Registry
     /// containing the whole data
+    /// 
+    /// This class actually manage only one workspace at a time (cf getter)
+    /// but still have a list of workspace that can be returned to be read
     /// </summary>
     public class YalvRegistry
     {
-        // This class actually manage only one workspace at a time (cf getter)
-        // but still have a list of workspace that can be returned to be read
-
+        #region fields
         private static YalvRegistry _singleton;
         private readonly List<LogAnalysisWorkspace> _workspaces = new List<LogAnalysisWorkspace>();
 
         private LogAnalysisWorkspace _actualWorkSpace;
 
         private uint _guidCounter;
+        #endregion fields
 
+        #region constructors
+        /// <summary>
+        /// Class constructor
+        /// </summary>
         private YalvRegistry()
         {
             _guidCounter = 0;
         }
+        #endregion constructors
 
+        #region properties
         /// <summary>
         /// Return the instance of this class or create one if none exists
         /// </summary>
@@ -52,7 +60,6 @@ namespace YalvLib.Model
             set { _actualWorkSpace = value; }
         }
 
-
         /// <summary>
         /// Return a readonly collection containing the sessions
         /// </summary>
@@ -60,7 +67,9 @@ namespace YalvLib.Model
         {
             get { return new ReadOnlyCollection<LogAnalysisWorkspace>(_workspaces); }
         }
+        #endregion properties
 
+        #region methods
         /// <summary>
         /// Clears and replace the actual workspace 
         /// </summary>
@@ -86,5 +95,6 @@ namespace YalvLib.Model
         {
             return _guidCounter += 1;
         }
+        #endregion methods
     }
 }

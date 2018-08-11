@@ -108,7 +108,7 @@
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return Uid.GetHashCode();
         }
         #endregion methods
     }

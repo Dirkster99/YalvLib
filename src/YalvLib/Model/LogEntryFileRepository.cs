@@ -47,7 +47,7 @@
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return Path.GetHashCode();
         }
         #endregion methods
     }

@@ -1,7 +1,7 @@
-﻿using YalvLib.Providers;
-
-namespace YalvLib.Model
+﻿namespace YalvLib.Model
 {
+    using YalvLib.Providers;
+
     /// <summary>
     /// This class represent a repository based on a sql file
     /// </summary>

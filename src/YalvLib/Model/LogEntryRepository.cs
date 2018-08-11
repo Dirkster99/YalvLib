@@ -10,8 +10,12 @@ namespace YalvLib.Model
     /// </summary>
     public class LogEntryRepository : object
     {
+        #region fields
         private readonly List<LogEntry> _logEntries = new List<LogEntry>();
+        private LogEntry _lastLogEntry;
+        #endregion fields
 
+        #region properties
         /// <summary>
         /// Boolean telling if the log entries of this repo have to be displayed
         /// </summary>
@@ -21,8 +25,6 @@ namespace YalvLib.Model
         /// Path of the repository
         /// </summary>
         public string Path;
-
-        private LogEntry _lastLogEntry;
 
         /// <summary>
         /// Getter of the list of log entries contained in the file
@@ -36,7 +38,9 @@ namespace YalvLib.Model
         /// The uniaue identifier of this instance (used for sql mapping)
         /// </summary>
         public Guid Uid { get; set; }
+        #endregion properties
 
+        #region methods
         /// <summary>
         /// Add a log entry to the repository
         /// </summary>
@@ -73,6 +77,7 @@ namespace YalvLib.Model
             {
                 entry.Id = 1;
             }
+
             entry.GuId = YalvRegistry.Instance.GenerateGuid();
         }
 
@@ -88,8 +93,10 @@ namespace YalvLib.Model
             {
                 return false;
             }
+
             if (LogEntries.Count != item.LogEntries.Count)
                 return false;
+
             return !LogEntries.Where((t, i) => !t.Equals(item.LogEntries[i])).Any();
         }
 
@@ -99,7 +106,7 @@ namespace YalvLib.Model
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return new { Active, Path, Uid }.GetHashCode();
         }
 
         private void AssignDelta(LogEntry entry)
@@ -109,5 +116,6 @@ namespace YalvLib.Model
                 comparisonDateTime = _lastLogEntry.TimeStamp;
             entry.Delta = GlobalHelper.GetTimeDelta(comparisonDateTime, entry.TimeStamp);
         }
+        #endregion methods
     }
 }

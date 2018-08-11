@@ -177,7 +177,18 @@ namespace YalvLib.Model
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return new {  App
+                         ,Uid
+                         ,GuId
+                         ,Class
+                         ,Delta
+                         ,File
+                         ,HostName
+                         ,Line
+                         ,TimeStamp
+                         ,Logger
+                         ,Method
+                         ,MachineName }.GetHashCode();
         }
         #endregion methods
     }
