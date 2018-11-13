@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using YalvLib.ViewModel;
-
-namespace YalvLib.View
+﻿namespace YalvLib.View
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using YalvLib.ViewModel;
+
     /// <summary>
     /// ValvView is a look-less WPF control that displays log4net log data entries (by default) in a gridview.
     /// </summary>
@@ -62,7 +62,7 @@ namespace YalvLib.View
         #region properties
 
         /// <summary>
-        /// Class constructor
+        /// Column dependency property
         /// </summary>
         public ColumnsViewModel Columns
         {
@@ -173,12 +173,18 @@ namespace YalvLib.View
             }
         }
 
+        /// <summary>
+        /// Method executes when the control is loaded into the view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void YalvView_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= YalvView_Loaded;
+
             RebuildGrid();
             DataGrid.SelectionChanged += CallUpdateTextMarkers;
             DataGrid.SelectionChanged += CallUpdateDelta;
-            Loaded -= YalvView_Loaded;
         }
 
         private void CallUpdateTextMarkers(object sender, SelectionChangedEventArgs e)

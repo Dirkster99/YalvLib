@@ -30,7 +30,8 @@
             /// <param name="txtSearchPanel"></param>
             /// <param name="colVM"></param>
             /// <param name="watermarkTextbox"></param>
-            internal static void BuildDataGrid(DataGrid dataGrid, ColumnsViewModel colVM,
+            internal static void BuildDataGrid(DataGrid dataGrid,
+                                               ColumnsViewModel colVM,
                                                Style centerCellStyle, Style watermarkTextbox,
                                                KeyEventHandler keyUpEvent,
                                                Panel txtSearchPanel)
@@ -43,7 +44,10 @@
 
                 if (colVM.DataGridColumns != null)
                 {
-                    CreateMarkersColumn(dataGrid, txtSearchPanel);
+                    // Create marker column and each filterable column
+                    var markerCol = CreateMarkersColumn(dataGrid, txtSearchPanel);
+                    BuildMarkerSearchPanel(txtSearchPanel, markerCol);
+
                     foreach (ColumnItem item in colVM.DataGridColumns)
                     {
                         DataGridTextColumn col = new DataGridTextColumn();
@@ -135,7 +139,7 @@
                 }
             }
 
-            private static void CreateMarkersColumn(DataGrid dataGrid, Panel txtSearchPanel)
+            private static DataGridTemplateColumn CreateMarkersColumn(DataGrid dataGrid, Panel txtSearchPanel)
             {
                 var markerCol = new DataGridTemplateColumn();
 
@@ -155,12 +159,13 @@
                 };
 
                 dataGrid.Columns.Add(markerCol);
-                BuildMarkerSearchPanel(txtSearchPanel, markerCol);
+
+                return markerCol;
             }
 
 
             private static void BuildMarkerSearchPanel(Panel txtSearchPanel,
-                                                     DataGridTemplateColumn col)
+                                                       DataGridTemplateColumn col)
             {
                 if (txtSearchPanel != null)
                 {
@@ -170,7 +175,7 @@
                         Source = col,
                         Mode = BindingMode.OneWay,
                         Converter = _mAdjustConverter,
-                        ConverterParameter = "-2"
+                        ConverterParameter = "0"
                     };
 
                     var visibilityBind = new Binding

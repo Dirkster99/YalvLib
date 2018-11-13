@@ -5,9 +5,10 @@
         xmlns:cult="clr-namespace:YalvLib.ViewModel;assembly=YalvLib"
         xmlns:Properties="clr-namespace:YalvLib.Strings;assembly=YalvLib"
         xmlns:BusyIndicatorBehavior="clr-namespace:YalvLib.View.BusyIndicatorBehavior;assembly=YalvLib"
-        Style="{StaticResource DefaultWindowStyle}"
-        Height="850" Width="1250" Title="{Binding Title}"
-        WindowStartupLocation="CenterScreen">
+
+        Height="850" Width="1250"
+        Title="{Binding Title}"
+        >
     <Window.Resources>
         <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -52,8 +53,7 @@
 
                 <!-- Splitter between ToggleButton and DataGrid View -->
                 <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                              Style="{StaticResource DefaultGridSplitterStyle}" />
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
                 <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
                     <Grid.RowDefinitions>
@@ -144,8 +144,10 @@
                 <!-- CenterCellStyle="{StaticResource CenterDataGridCellStyle}" -->
 
                 <!-- horizontal splitter -->
-                <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Row="1" Grid.Column="1"
-                              Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeDirection="Rows" />
+                <GridSplitter Grid.Row="1" Grid.Column="1"
+                              Grid.ColumnSpan="3"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              ResizeDirection="Rows" />
                 
                 <Grid Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0">
 
@@ -161,16 +163,16 @@
                                     Grid.Column="0" DataContext="{Binding YalvLogViewModel}"
                                     IsEnabled="{Binding HasData}" Margin="0,20,0,0" MinWidth="300"/>
 
-                <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Column="1"
-                                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
+                <GridSplitter Grid.Column="1" VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch" ResizeDirection="Columns" />
 
                   <common:TextMarkerToolBoxView Grid.Column="2"
                                 HorizontalAlignment="Stretch"
                                 DataContext="{Binding YalvLogViewModel}"
                                 IsEnabled="{Binding HasData}" />
 
-                    <GridSplitter Style="{StaticResource DefaultGridSplitterStyle}" Grid.Column="3"
-                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ResizeDirection="Columns" />
+                    <GridSplitter Grid.Column="3" VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch" ResizeDirection="Columns" />
                     
                     <common:MessageTabView Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                            MinWidth="350"  IsEnabled="{Binding YalvLogViewModel.HasData}" />

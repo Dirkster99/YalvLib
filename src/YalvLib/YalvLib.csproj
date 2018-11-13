@@ -58,7 +58,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -154,6 +153,7 @@
     <Compile Include="Providers\DetectEncoding.cs" />
     <Compile Include="Providers\EntriesProviderType.cs" />
     <Compile Include="Providers\FilterParams.cs" />
+    <Compile Include="Themes\ResourceKeys.cs" />
     <Compile Include="ViewModel\Common\AutoCompleteEntry.cs" />
     <Compile Include="ViewModel\Common\BindSupport.cs" />
     <Compile Include="ViewModel\ColumnItem.cs" />
@@ -212,6 +212,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\DarkBrushs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\LightBrushs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -3,9 +3,7 @@
                     
           xmlns:Properties="clr-namespace:YalvLib.Strings;assembly=YalvLib"
           xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
-          xmlns:sys="clr-namespace:System;assembly=mscorlib"
-          xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
-    >
+          xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
   <ResourceDictionary.MergedDictionaries><!-- Default styles setup -->
     <ResourceDictionary Source="/YalvLib;component/Themes/Brushes.xaml" />
@@ -69,67 +67,6 @@
         x:Key="DefaultForegroundColor"
         Color="#FF272727"
         PresentationOptions:Freeze="True" / -->
-  <SolidColorBrush x:Key="BorderColor" Color="#777" PresentationOptions:Freeze="True" />
-
-  <!-- TOOLBAR
-  <Style
-        x:Key="DefaultToolbarStyle"
-        TargetType="{x:Type ToolBar}">
-    <Setter
-            Property="ToolBarTray.IsLocked"
-            Value="True" />
-    <Setter
-            Property="FocusManager.IsFocusScope"
-            Value="False" />
-    <Setter
-            Property="Background"
-            Value="Transparent">
-    </Setter>
-    <Setter
-            Property="FontSize"
-            Value="{StaticResource DefaultFontSize}" />
-    <Setter
-            Property="BorderThickness"
-            Value="0" />
-  </Style> -->
-
-  <!-- WINDOW -->
-  <Style x:Key="DefaultWindowStyle" TargetType="{x:Type Window}">
-    <Setter Property="Control.FontFamily" Value="{StaticResource DefaultFontFamily}" />
-    <Setter Property="Control.FontSize" Value="{StaticResource DefaultFontSize}" />
-    <Setter Property="UseLayoutRounding" Value="True" />
-    <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-    <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
-    <Setter Property="RenderOptions.BitmapScalingMode" Value="Linear" />
-    <Setter Property="Background" Value="{StaticResource DefaultGradientBackground}" />
-    <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
-    <Setter Property="Window.ResizeMode" Value="CanResizeWithGrip" />
-    <Setter Property="Window.Icon" Value="{StaticResource imgWindowIcon}" />
-  </Style>
-
-  <Style x:Key="tbRbStyle" TargetType="TextBlock">
-    <Setter Property="Margin" Value="0,0,0,0" />
-    <Setter Property="FontSize" Value="11" />
-    <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
-    <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="FontWeight" Value="Normal" />
-    <Setter Property="TextAlignment" Value="Center" />
-  </Style>
-
-  <!-- GRIDSPLITTER -->
-  <Style x:Key="DefaultGridSplitterStyle" TargetType="GridSplitter">
-    <Setter Property="Background"  Value="#15000000" />
-    <Setter Property="BorderBrush" Value="Silver" />
-    <Style.Triggers>
-      <Trigger Property="ResizeDirection" Value="Columns">
-        <Setter Property="BorderThickness" Value="1,0" />
-        <Setter Property="Width" Value="5" />
-      </Trigger>
-      <Trigger Property="ResizeDirection" Value="Rows">
-        <Setter Property="BorderThickness" Value="0,1" />
-        <Setter Property="Height" Value="5" />
-      </Trigger>
-    </Style.Triggers>
-  </Style>
+  <!--SolidColorBrush x:Key="BorderColor" Color="#777" PresentationOptions:Freeze="True" /-->
 
 </ResourceDictionary>

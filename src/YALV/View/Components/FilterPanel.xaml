@@ -40,7 +40,7 @@
         <!-- ALL -->
       <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectAll}"
                    VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0" Margin="3">
-        <TextBlock Style="{StaticResource tbRbStyle}" Text="ALL" />
+        <TextBlock Text="ALL" />
       </RadioButton>
         <TextBlock Style="{StaticResource tbCountStyle}" Grid.Column="2" Grid.Row="0" Margin="3" VerticalAlignment="Center" HorizontalAlignment="Right">
           <TextBlock.Text>
@@ -58,7 +58,7 @@
       
         <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectDebug}"
                      HorizontalAlignment="Stretch"  Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="3">
-        <TextBlock Style="{StaticResource tbRbStyle}" Text="DEBUG" Margin="0,3,0,0"/>
+        <TextBlock Text="DEBUG" Margin="0,3,0,0"/>
         </RadioButton>
 
         <TextBlock Style="{StaticResource tbCountStyle}" Grid.Column="2" Margin="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -80,7 +80,7 @@
 
         <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectInfo}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2" Margin="3">
-          <TextBlock Style="{StaticResource tbRbStyle}" Text="INFO" />
+          <TextBlock Text="INFO" />
         </RadioButton>
         <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="2" Margin="3">
                   <TextBlock.Text>
@@ -101,7 +101,7 @@
 
       <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectWarn}"
                    VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3"  Margin="3">
-        <TextBlock Style="{StaticResource tbRbStyle}" Text="WARN" />
+        <TextBlock Text="WARN" />
       </RadioButton>
         <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="3" Margin="3">
           <TextBlock.Text>
@@ -122,7 +122,7 @@
 
         <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectError}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="4" Margin="3">
-          <TextBlock Style="{StaticResource tbRbStyle}" Text="ERROR" />
+          <TextBlock Text="ERROR" />
         </RadioButton>
       <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="4" Margin="3">
           <TextBlock.Text>
@@ -142,7 +142,7 @@
                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3"/>
         <RadioButton IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.SelectFatal}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="5" Margin="3">
-          <TextBlock Style="{StaticResource tbRbStyle}" Text="FATAL" Foreground="#FF80FF" />
+          <TextBlock Text="FATAL" Foreground="#FF80FF" />
         </RadioButton>
 
         <TextBlock Style="{StaticResource tbCountStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="5" Margin="3">

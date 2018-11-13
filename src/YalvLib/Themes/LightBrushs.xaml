@@ -1,0 +1,35 @@
+﻿<ResourceDictionary
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:reskeys="clr-namespace:YalvLib.Themes"
+      xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    >
+
+    <!-- Accent Color Brush Definition
+             - Look for references on ControlAccentBrushKey to find where this is being set in code -->
+    <Color x:Key="{x:Static reskeys:ResourceKeys.ControlAccentColorKey}">#1ba1e2</Color>
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ControlAccentBrushKey}"
+                     Color="{DynamicResource {x:Static reskeys:ResourceKeys.ControlAccentColorKey}}" options:Freeze="true"/>
+
+    <!-- SolidColorBrush x:Key="SystemButtonMouseOverBackgroundColor" Color="#20FFFFFF" options:Freeze="true" / -->
+
+    <!-- MetroLight Theme -->
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ControlNormalBackgroundKey}"
+                     Color="White" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ControlTextBrushKey}"
+                     Color="Black" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ControlNormalForegroundBrushKey}"
+                     Color="Black" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ControlBorderBrushKey}"
+                     Color="#FFe9def5" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=DataGridHeaderBorderBrushKey}"
+                     Color="Gray" options:Freeze="true"/>
+
+</ResourceDictionary>

@@ -9,13 +9,8 @@
     xmlns:strs="clr-namespace:YalvLib.Strings;assembly=YalvLib"
 
     mc:Ignorable="d"
-    
     d:DesignHeight="300"
-    d:DesignWidth="300"
-    Background="Transparent"
-    Height="20"
-    BorderThickness="0,0,0,1"
-    BorderBrush="{StaticResource BorderColor}">
+    d:DesignWidth="300">
     <!-- File Items -->
     <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_Header}">
         <MenuItem Header="{x:Static strs:Resources.Common_Components_MainMenu_FileMenu_OpenFile_Header}"

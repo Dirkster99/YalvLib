@@ -48,8 +48,7 @@
 
     <!-- Splitter between Message and Throwable -->
     <GridSplitter Grid.Column="1"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                        Style="{StaticResource DefaultGridSplitterStyle}" />
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
     <Grid Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
       <!-- Throwable -->
