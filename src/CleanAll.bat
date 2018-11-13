@@ -6,9 +6,6 @@ ECHO.
 ECHO This script deletes all temporary build files in their
 ECHO corresponding BIN and OBJ Folder contained in the following projects
 ECHO.
-ECHO ModernYalv
-ECHO MRU
-ECHO Edi.Core
 ECHO YALV
 ECHO YALV.Samples
 ECHO YalvLib
@@ -30,21 +27,6 @@ ECHO Removing vs settings folder with *.sou file
 ECHO.
 RMDIR /S /Q .vs
 RMDIR /S /Q TestResults
-
-ECHO Deleting BIN and OBJ Folders in ModernYalv folder
-ECHO.
-RMDIR /S /Q ModernYalv\bin
-RMDIR /S /Q ModernYalv\obj
-
-ECHO Deleting BIN and OBJ Folders in MRU folder
-ECHO.
-RMDIR /S /Q MRU\bin
-RMDIR /S /Q MRU\obj
-
-ECHO Deleting BIN and OBJ Folders in Edi.Core folder
-ECHO.
-RMDIR /S /Q Edi.Core\bin
-RMDIR /S /Q Edi.Core\obj
 
 ECHO Deleting BIN and OBJ Folders in YALV folder
 ECHO.

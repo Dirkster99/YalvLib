@@ -356,10 +356,6 @@
     <Resource Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MRU\MRU.csproj">
-      <Project>{92e1c751-ba8e-404c-803c-57a197b3bb31}</Project>
-      <Name>MRU</Name>
-    </ProjectReference>
     <ProjectReference Include="..\YalvLib\YalvLib.csproj">
       <Project>{5891D6C4-E0CE-4511-B689-B845491470F0}</Project>
       <Name>YalvLib</Name>
