@@ -63,14 +63,14 @@ RMDIR /S /Q YalvLib\obj
 
 ECHO Deleting BIN and OBJ Folders in UnitTests\YalvLib.UnitTests folder
 ECHO.
-RMDIR /S /Q UnitTests\YalvLib.UnitTests\bin
-RMDIR /S /Q UnitTests\YalvLib.UnitTests\obj
-
-ECHO Deleting BIN and OBJ Folders in YalvLib.Tests.Integration folder
-ECHO.
 RMDIR /S /Q UnitTests\YalvLib.IntegrationTests\bin
 RMDIR /S /Q UnitTests\YalvLib.IntegrationTests\obj
 
+ECHO Deleting BIN and OBJ Folders in YalvLib.Tests.Integration folder
+ECHO.
+RMDIR /S /Q UnitTests\YalvLib.UnitTests\YalvLib.UnitTests\bin
+RMDIR /S /Q UnitTests\YalvLib.UnitTests\YalvLib.UnitTests\obj
+            
 PAUSE
 
 :EndOfBatch
