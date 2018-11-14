@@ -99,7 +99,7 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=SelectedCellBackgroundBrushKey}"
                      Color="#40FFFFFF" options:Freeze="true"/>
-
+    
     <!-- Begin LogLevel Brush Keys -->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=DebugLevelBackgroundBrushKey}"
@@ -121,4 +121,6 @@
                      ResourceId=FatalLevelBackgroundBrushKey}"
                      Color="Crimson" options:Freeze="true"/>
     <!-- End of LogLevel Brush Keys -->
+    
+    
 </ResourceDictionary>

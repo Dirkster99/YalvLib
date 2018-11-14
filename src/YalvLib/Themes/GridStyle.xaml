@@ -9,7 +9,10 @@
     xmlns:conv="clr-namespace:YalvLib.Common.Converters"
     >
     <!-- DATAGRID -->
-    <Style x:Key="DefaultDataGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+           ResourceId=DefaultDataGridStyleKey}"
+           TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+
         <Setter Property="Background" Value="{DynamicResource {x:Static reskeys:ResourceKeys.ControlNormalBackgroundKey}}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="RowHeight" Value="21" />
@@ -35,7 +38,9 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="DefaultColumnHeaderGripperStyle" TargetType="{x:Type Thumb}" BasedOn="{StaticResource {x:Type Thumb}}">
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+           ResourceId=DefaultColumnHeaderGripperStyleKey}"
+           TargetType="{x:Type Thumb}" BasedOn="{StaticResource {x:Type Thumb}}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Cursor" Value="SizeWE" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -53,7 +58,9 @@
         <Setter Property="Width" Value="8" />
     </Style>
 
-    <Style x:Key="DefaultDataGridHeaderStyle" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+           ResourceId=DefaultDataGridHeaderStyleKey}"
+           TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="BorderThickness" Value="0" />
@@ -103,14 +110,14 @@
                                Grid.Column="0"
                                HorizontalAlignment="Left"
                                Background="Transparent"
-                               Style="{StaticResource DefaultColumnHeaderGripperStyle}"
+                               Style="{StaticResource DefaultColumnHeaderGripperStyleKey}"
                                /-->
 
                         <Thumb x:Name="PART_RightHeaderGripper"
                                Grid.Column="1"
                                HorizontalAlignment="Right"
                                Background="Transparent"
-                               Style="{StaticResource DefaultColumnHeaderGripperStyle}"
+                               Style="{DynamicResource {x:Static reskeys:ResourceKeys.DefaultColumnHeaderGripperStyleKey}}"
                                />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -129,7 +136,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultDataGridCellStyle" TargetType="DataGridCell">
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+           ResourceId=DefaultDataGridCellStyleKey}" TargetType="DataGridCell">
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -155,14 +163,18 @@
     </Style>
 
     <!-- Defines the cell style that is applied when a column alignment is set to center -->
-    <Style x:Key="CenterDataGridCellStyle"
-           BasedOn="{StaticResource DefaultDataGridCellStyle}" TargetType="DataGridCell">
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+           ResourceId=CenterDataGridCellStyleKey}"
+           TargetType="DataGridCell"
+           BasedOn="{StaticResource {x:Static reskeys:ResourceKeys.DefaultDataGridCellStyleKey}}">
         <Style.Setters>
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
         </Style.Setters>
     </Style>
 
-    <Style x:Key="LogItemDataGridRowStyle" TargetType="{x:Type DataGridRow}">
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+           ResourceId=LogItemDataGridRowStyleKey}"
+           TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
         <Style.Resources>
             <conv:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter"
                 DebugColor="{DynamicResource {x:Static reskeys:ResourceKeys.DebugLevelBackgroundBrushKey}}"

@@ -1,9 +1,10 @@
 ﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
   <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/YalvLib;component/Themes/LightBrushs.xaml"/>
+        <ResourceDictionary Source="/YalvLib;component/Themes/GridStyle.xaml" />
+        <ResourceDictionary Source="/YalvLib;component/Themes/WatermarkTextBox.xaml" />
         <ResourceDictionary Source="/YalvLib;component/View/YalvView.xaml" />
   </ResourceDictionary.MergedDictionaries>
 

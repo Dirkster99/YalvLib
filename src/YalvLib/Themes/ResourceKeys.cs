@@ -120,6 +120,44 @@
         /// </summary>
         public static readonly ComponentResourceKey SelectedCellBackgroundBrushKey = new ComponentResourceKey(typeof(ResourceKeys), "SelectedCellBackgroundBrushKey");
 
+        #region DataGrid styles
+        /// <summary>
+        /// Gets the default style to be applied for the data grid.
+        /// </summary>
+        public static readonly ComponentResourceKey DefaultDataGridStyleKey = new ComponentResourceKey(typeof(ResourceKeys), "DefaultDataGridStyleKey");
+
+        /// <summary>
+        /// Gets the default style to be applied for data grid cells.
+        /// </summary>
+        public static readonly ComponentResourceKey DefaultDataGridCellStyleKey = new ComponentResourceKey(typeof(ResourceKeys), "DefaultDataGridCellStyleKey");
+
+        /// <summary>
+        /// Gets the default style to be applied for data grid header cells.
+        /// </summary>
+        public static readonly ComponentResourceKey DefaultDataGridHeaderStyleKey = new ComponentResourceKey(typeof(ResourceKeys), "DefaultDataGridHeaderStyleKey");
+
+        /// <summary>
+        /// Gets the default style to be applied for data grid rows that are colored
+        /// in correspondence to the type of log item (Warning, Info, Error) being displayed.
+        /// </summary>
+        public static readonly ComponentResourceKey LogItemDataGridRowStyleKey = new ComponentResourceKey(typeof(ResourceKeys), "LogItemDataGridRowStyleKey");
+
+        /// <summary>
+        /// Gets the default style to be applied for data grid cells that should be
+        /// displayed with centered content since the column is defined like this.
+        /// </summary>
+        public static readonly ComponentResourceKey CenterDataGridCellStyleKey = new ComponentResourceKey(typeof(ResourceKeys), "CenterDataGridCellStyleKey");
+
+        /// <summary>
+        /// Gets the default style to be applied for the header column gripper
+        /// which can be used to resize a column.
+        /// </summary>
+        public static readonly ComponentResourceKey DefaultColumnHeaderGripperStyleKey = new ComponentResourceKey(typeof(ResourceKeys), "DefaultColumnHeaderGripperStyleKey");
+
+        public static readonly ComponentResourceKey WatermarkTextBoxStyleKey = new ComponentResourceKey(typeof(ResourceKeys), "WatermarkTextBoxStyleKey");
+        
+        #endregion DataGrid styles
+
         #region LogLevel BrushKeys
         /// <summary>
         /// Gets the background brush key for the data row that represents a debug level log entry.
