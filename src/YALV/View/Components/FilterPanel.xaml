@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
              xmlns:Properties="clr-namespace:YalvLib.Strings;assembly=YALVLib"
+             xmlns:reskeys="clr-namespace:YalvLib.Themes;assembly=YALVLib"
 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -51,7 +52,8 @@
         </TextBlock>
 
         <!-- DEBUG -->
-        <Border Background="{StaticResource DebugLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" Padding="3" />
+        <Border Background="{DynamicResource {x:Static reskeys:ResourceKeys.DebugLevelBackgroundBrushKey}}"
+                Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" Padding="3" />
 
         <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelDebug}" Name="chkShowDebug" ToolTip="DEBUG"
                              Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,3,3,3" />
@@ -71,7 +73,8 @@
         </TextBlock>
 
         <!-- INFO -->
-        <Border Background="{StaticResource InfoLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Padding="3" />
+        <Border Background="{DynamicResource {x:Static reskeys:ResourceKeys.InfoLevelBackgroundBrushKey}}"
+                Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Padding="3" />
 
         <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelInfo}"
                   Name="chkShowInfo" ToolTip="INFO"
@@ -92,7 +95,8 @@
         </TextBlock>
 
         <!-- WARN -->
-        <Border Background="{StaticResource WarnLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" Padding="3" />
+        <Border Background="{DynamicResource {x:Static reskeys:ResourceKeys.WarnLevelBackgroundBrushKey}}"
+                Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" Padding="3" />
 
         <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelWarn}"
                   Name="chkShowWarn" ToolTip="WARN"
@@ -113,7 +117,8 @@
         </TextBlock>
 
         <!-- ERROR -->
-        <Border Background="{StaticResource ErrorLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Padding="3" />
+        <Border Background="{DynamicResource {x:Static reskeys:ResourceKeys.ErrorLevelBackgroundBrushKey}}"
+                Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Padding="3" />
 
         <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelError}"
                   Name="chkShowError" ToolTip="ERROR"
@@ -134,7 +139,8 @@
         </TextBlock>
 
         <!-- FATAL -->
-        <Border Background="{StaticResource FatalLevelColor}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Padding="3" />
+        <Border Background="{DynamicResource {x:Static reskeys:ResourceKeys.FatalLevelBackgroundBrushKey}}"
+                Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Padding="3" />
 
         <CheckBox IsChecked="{Binding Path=YalvLogViewModel.LogEntryRows.ShowLevelFatal}"
                   Name="chkShowFatal" ToolTip="FATAL"

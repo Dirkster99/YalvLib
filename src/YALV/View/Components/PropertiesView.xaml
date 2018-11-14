@@ -15,7 +15,13 @@
     d:DesignHeight="450" d:DesignWidth="300">
   <UserControl.Resources>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <converters:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter" />
+    <converters:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter"
+                                           DebugColor="{DynamicResource {x:Static reskeys:ResourceKeys.DebugLevelBackgroundBrushKey}}"
+                                           InfoColor="{DynamicResource {x:Static reskeys:ResourceKeys.InfoLevelBackgroundBrushKey}}"
+                                           WarnColor="{DynamicResource {x:Static reskeys:ResourceKeys.WarnLevelBackgroundBrushKey}}"
+                                           ErrorColor="{DynamicResource {x:Static reskeys:ResourceKeys.ErrorLevelBackgroundBrushKey}}"
+                                           FatalColor="{DynamicResource {x:Static reskeys:ResourceKeys.FatalLevelBackgroundBrushKey}}"
+                                           />
     <converters:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter" />
     <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
   </UserControl.Resources>

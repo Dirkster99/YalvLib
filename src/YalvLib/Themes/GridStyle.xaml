@@ -6,6 +6,7 @@
     xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:reskeys="clr-namespace:YalvLib.Themes"
+    xmlns:conv="clr-namespace:YalvLib.Common.Converters"
     >
 
     <ResourceDictionary.MergedDictionaries>
@@ -14,14 +15,14 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- DATAGRID -->
-    <Style x:Key="DefaultDataGridStyle" TargetType="{x:Type DataGrid}">
-        <Setter Property="Background" Value="Transparent" />
+    <Style x:Key="DefaultDataGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static reskeys:ResourceKeys.ControlNormalBackgroundKey}}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="RowHeight" Value="20" />
+        <Setter Property="RowHeight" Value="21" />
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="HeadersVisibility" Value="Column" />
-        <Setter Property="VerticalGridLinesBrush" Value="#8C6C6C6C" />
-        <Setter Property="HorizontalGridLinesBrush" Value="White" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.VerticalGridLinesBrush}}" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.HorizontalGridLinesBrush}}" />
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="SelectionMode" Value="Extended" />
         <Setter Property="SelectionUnit" Value="FullRow" />
@@ -30,8 +31,8 @@
         <Setter Property="CanUserReorderColumns" Value="False" />
         <Setter Property="CanUserResizeColumns" Value="True" />
         <Setter Property="CanUserSortColumns" Value="True" />
-        <Setter Property="ClipboardCopyMode" Value="ExcludeHeader" />
-        <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
+        <Setter Property="ClipboardCopyMode" Value="IncludeHeader" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static reskeys:ResourceKeys.ControlNormalForegroundBrushKey}}" />
         <Style.Triggers>
             <Trigger Property="HeadersVisibility" Value="Column">
                 <!-- Workaround datagrid bug; refs: http://wpf.codeplex.com/discussions/47047 -->
@@ -63,10 +64,10 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.ControlBorderBrushKey}}" />
-        <Setter Property="Background" Value="White" />
-        <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DataGridHeaderBackgroundBrushKey}}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DataGridHeaderForegroundBrushKey}}" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontSize" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DataGridHeaderFontSize}}" />
         <Setter Property="MinHeight" Value="21" />
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0" />
@@ -94,17 +95,14 @@
 
                         <Path x:Name="SortArrow"
                               Grid.Column="1"
-                              HorizontalAlignment="Right"
-                              VerticalAlignment="Center"
-                              Margin="2,1,2,0"
                               Width="8"
                               Height="10"
+                              Margin="0 0 8 2"
+                              VerticalAlignment="Center"
+                              Fill="{DynamicResource {x:Static reskeys:ResourceKeys.DataGridHeaderSortArrowForegroundBrushKey}}"
+                              RenderTransformOrigin="0.5,0.5"
                               Stretch="Fill"
-                              Opacity="0.5"
-                              Fill="White"
-                              RenderTransformOrigin="0.5,0.4"
-                              Visibility="Collapsed"
-                              Data="M0,0 L1,0 0.5,1 z" />
+                              Visibility="Collapsed" />
 
                         <!--Thumb x:Name="PART_LeftHeaderGripper"
                                Grid.Column="0"
@@ -122,19 +120,13 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="SortDirection" Value="Ascending">
-                            <Setter TargetName="SortArrow"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="SortArrow" Property="RenderTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="180" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="SortArrow" Property="Data" Value="F1 M 34,57L 42,57L 42,32.25L 52,42.25L 52,31.75L 38,17.75L 24,31.75L 24,42.25L 34,32.25L 34,57 Z " />
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="SortDirection" Value="Descending">
-                            <Setter TargetName="SortArrow"
-                                    Property="Visibility"
-                                    Value="Visible" />
+                            <Setter TargetName="SortArrow" Property="Data" Value="F1 M 42,19.0002L 34,19.0002L 34,43.7502L 24,33.7502L 24,44.2502L 38,58.2502L 52,44.2502L 52,33.7502L 42,43.7502L 42,19.0002 Z " />
+                            <Setter TargetName="SortArrow" Property="Margin" Value="0 0 8 0" />
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -144,20 +136,48 @@
 
     <Style x:Key="DefaultDataGridCellStyle" TargetType="DataGridCell">
         <Style.Triggers>
-            <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Foreground"
-                Value="{StaticResource DefaultForegroundColor}" />
-            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsFocused" Value="true"/>
+                    <Condition Property="IsSelected" Value="true"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static reskeys:ResourceKeys.SelectedFocusedCellForegroundBrushKey}}" />
+                    <Setter Property="Background" Value="{DynamicResource {x:Static reskeys:ResourceKeys.SelectedFocusedCellBackgroundBrushKey}}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsFocused" Value="false"/>
+                    <Condition Property="IsSelected" Value="true"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static reskeys:ResourceKeys.SelectedCellForegroundBrushKey}}" />
+                    <Setter Property="Background" Value="{DynamicResource {x:Static reskeys:ResourceKeys.SelectedCellBackgroundBrushKey}}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="CenterDataGridCellStyle" BasedOn="{StaticResource DefaultDataGridCellStyle}" TargetType="DataGridCell">
+    <!-- Defines the cell style that is applied when a column alignment is set to center -->
+    <Style x:Key="CenterDataGridCellStyle"
+           BasedOn="{StaticResource DefaultDataGridCellStyle}" TargetType="DataGridCell">
         <Style.Setters>
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
         </Style.Setters>
     </Style>
 
     <Style x:Key="LogItemDataGridRowStyle" TargetType="{x:Type DataGridRow}">
+        <Style.Resources>
+            <conv:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter"
+                DebugColor="{DynamicResource {x:Static reskeys:ResourceKeys.DebugLevelBackgroundBrushKey}}"
+                InfoColor="{DynamicResource {x:Static reskeys:ResourceKeys.InfoLevelBackgroundBrushKey}}"
+                WarnColor="{DynamicResource {x:Static reskeys:ResourceKeys.WarnLevelBackgroundBrushKey}}"
+                ErrorColor="{DynamicResource {x:Static reskeys:ResourceKeys.ErrorLevelBackgroundBrushKey}}"
+                FatalColor="{DynamicResource {x:Static reskeys:ResourceKeys.FatalLevelBackgroundBrushKey}}"
+                />
+        </Style.Resources>
+        <Setter Property="Background" Value="{Binding Path=Entry.LevelIndex, Mode=OneWay,Converter={StaticResource LevelToSolidColorConverter}}" />
         <Setter Property="ToolTip">
             <!-- Show details data on mouse over row -->
             <Setter.Value>
@@ -200,34 +220,6 @@
                 </Grid>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-
-            <!-- Debug -->
-            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="1">
-                <Setter Property="Background" Value="{StaticResource DebugLevelColor}" />
-            </DataTrigger>
-
-            <!-- Info -->
-            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="2">
-                <Setter Property="Background" Value="{StaticResource InfoLevelColor}" />
-            </DataTrigger>
-
-            <!-- Warn -->
-            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="3">
-                <Setter Property="Background" Value="{StaticResource WarnLevelColor}" />
-            </DataTrigger>
-
-            <!-- Error -->
-            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="4">
-                <Setter Property="Background" Value="{StaticResource ErrorLevelColor}" />
-            </DataTrigger>
-
-            <!-- Fatal -->
-            <DataTrigger Binding="{Binding Path=Entry.LevelIndex, Mode=OneWay}" Value="5">
-                <Setter Property="Background" Value="{StaticResource FatalLevelColor}" />
-            </DataTrigger>
-
-        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

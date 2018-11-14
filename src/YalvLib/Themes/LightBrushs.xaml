@@ -28,8 +28,70 @@
     <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ControlBorderBrushKey}"
                      Color="#FFe9def5" options:Freeze="true"/>
 
+    <!-- Begin DataGrid Header Keys-->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=DataGridHeaderBorderBrushKey}"
-                     Color="Gray" options:Freeze="true"/>
+                     Color="Transparent" options:Freeze="true"/>
 
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=DataGridHeaderBackgroundBrushKey}"
+                     Color="White" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=DataGridHeaderForegroundBrushKey}"
+                     Color="Black" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=DataGridHeaderSortArrowForegroundBrushKey}"
+                     Color="Black" options:Freeze="true"/>
+    
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                ResourceId=DataGridHeaderFontSize}">11</sys:Double>
+    <!-- End of DataGrid Header Keys-->
+    
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=VerticalGridLinesBrush}"
+                     Color="White" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=HorizontalGridLinesBrush}"
+                     Color="White" options:Freeze="true"/>
+
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=SelectedFocusedCellForegroundBrushKey}"
+                     Color="White" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=SelectedFocusedCellBackgroundBrushKey}"
+                     Color="#40FFFFFF" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=SelectedCellForegroundBrushKey}"
+                     Color="Black" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=SelectedCellBackgroundBrushKey}"
+                     Color="#40FFFFFF" options:Freeze="true"/>
+
+    <!-- Begin LogLevel Brush Keys -->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=DebugLevelBackgroundBrushKey}"
+                     Color="LightBlue" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=InfoLevelBackgroundBrushKey}"
+                     Color="LightGreen" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=WarnLevelBackgroundBrushKey}"
+                     Color="Moccasin" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=ErrorLevelBackgroundBrushKey}"
+                     Color="Salmon" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=FatalLevelBackgroundBrushKey}"
+                     Color="Crimson" options:Freeze="true"/>
+    <!-- End of LogLevel Brush Keys -->
 </ResourceDictionary>
