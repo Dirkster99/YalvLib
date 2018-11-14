@@ -65,10 +65,28 @@
         public static readonly ComponentResourceKey DataGridHeaderSortArrowForegroundBrushKey = new ComponentResourceKey(typeof(ResourceKeys), "DataGridHeaderSortArrowForegroundBrushKey");
 
         /// <summary>
+        /// Gets the FontFamily to be used for text displays inside the DataGrid control.
+        /// <seealso cref="DefaultFontFamily"/>
+        /// </summary>
+        public static readonly ComponentResourceKey DataGridHeaderFontFamily = new ComponentResourceKey(typeof(ResourceKeys), "DefaultFontFamily");
+
+        /// <summary>
         /// Gets the font size of the text displayed in the DataGrid header row.
         /// </summary>
         public static readonly ComponentResourceKey DataGridHeaderFontSize = new ComponentResourceKey(typeof(ResourceKeys), "DataGridHeaderFontSize");
         #endregion DataGridHeader Keys
+
+        /// <summary>
+        /// Gets the FontFamily to be used for text displays inside the DataGrid control.
+        /// <seealso cref="DataGridHeaderFontFamily"/>
+        /// </summary>
+        public static readonly ComponentResourceKey DefaultFontFamily = new ComponentResourceKey(typeof(ResourceKeys), "DefaultFontFamily");
+
+        /// <summary>
+        /// Gets the size of the Font used for text displays inside the DataGrid control.
+        /// <seealso cref="DataGridHeaderFontSize"/>
+        /// </summary>
+        public static readonly ComponentResourceKey DefaultFontSize = new ComponentResourceKey(typeof(ResourceKeys), "DefaultFontSize");
 
         /// <summary>
         /// Gets the Brush key of the border color

@@ -5,6 +5,7 @@
         xmlns:cult="clr-namespace:YalvLib.ViewModel;assembly=YalvLib"
         xmlns:Properties="clr-namespace:YalvLib.Strings;assembly=YalvLib"
         xmlns:BusyIndicatorBehavior="clr-namespace:YalvLib.View.BusyIndicatorBehavior;assembly=YalvLib"
+        xmlns:reskeys="clr-namespace:YalvLib.Themes;assembly=YalvLib"
 
         Height="850" Width="1250"
         Title="{Binding Title}"
@@ -185,14 +186,14 @@
 
                 <StackPanel.Resources>
                     <Style x:Key="LabelBaseStyle" TargetType="{x:Type TextBlock}">
-                        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"></Setter>
-                        <Setter Property="FontWeight" Value="DemiBold"></Setter>
-                        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                        <Setter Property="FontSize" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DefaultFontSize}}"/>
+                        <Setter Property="FontWeight" Value="DemiBold"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
                     </Style>
                     <Style x:Key="TextBlockBaseStyle" TargetType="{x:Type TextBlock}">
-                        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"></Setter>
-                        <Setter Property="Margin" Value="3,0,10,0"></Setter>
-                        <Setter Property="MinWidth" Value="80"></Setter>
+                        <Setter Property="FontSize" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DefaultFontSize}}"/>
+                        <Setter Property="Margin" Value="3,0,10,0"/>
+                        <Setter Property="MinWidth" Value="80"/>
                     </Style>
                     <Style x:Key="PanelBaseStyle" TargetType="{x:Type StackPanel}">
                         <Setter Property="Margin" Value="20,3,5,3"></Setter>

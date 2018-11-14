@@ -8,12 +8,6 @@
     xmlns:reskeys="clr-namespace:YalvLib.Themes"
     xmlns:conv="clr-namespace:YalvLib.Common.Converters"
     >
-
-    <ResourceDictionary.MergedDictionaries>
-        <!-- Default styles setup -->
-        <ResourceDictionary Source="/YalvLib;component/Themes/Brushes.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <!-- DATAGRID -->
     <Style x:Key="DefaultDataGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
         <Setter Property="Background" Value="{DynamicResource {x:Static reskeys:ResourceKeys.ControlNormalBackgroundKey}}" />
@@ -68,6 +62,7 @@
         <Setter Property="Foreground" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DataGridHeaderForegroundBrushKey}}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="FontSize" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DataGridHeaderFontSize}}" />
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DataGridHeaderFontFamily}}"/>
         <Setter Property="MinHeight" Value="21" />
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0" />

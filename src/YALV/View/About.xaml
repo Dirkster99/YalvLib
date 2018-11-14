@@ -18,7 +18,6 @@
             DockPanel.Dock="Top"
             FontSize="18"
             FontWeight="Bold"
-            Foreground="{StaticResource DarkGradientBackground}"
             Text="{x:Static Properties:Resources.About_Header_Text}"
             TextAlignment="Center" />
 

@@ -5,24 +5,26 @@
                     xmlns:Properties="clr-namespace:YalvLib.Strings"
 
                     xmlns:ViewModel="clr-namespace:YalvLib.ViewModel"
-                    xmlns:Model="clr-namespace:YalvLib.Model">
+                    xmlns:Model="clr-namespace:YalvLib.Model"
+                    xmlns:reskeys="clr-namespace:YalvLib.Themes"
+                    >
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/YalvLib;component/Themes/Brushes.xaml" />
         <ResourceDictionary Source="/YalvLib;component/Themes/GridStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Watermark TEXTBOX to accept filter input in header element -->
-    <Style x:Key="WatermarkTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Style x:Key="WatermarkTextBoxStyle"
+           TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Height" Value="21" />
         <Setter Property="AllowDrop" Value="True" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
-        <Setter Property="FontStyle" Value="Italic" />
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DefaultFontFamily}}" />
+        <Setter Property="FontSize" Value="{DynamicResource {x:Static reskeys:ResourceKeys.DefaultFontSize}}" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
+        <Setter Property="FontStyle" Value="Italic" />
         <Setter Property="AcceptsReturn" Value="True" />
         <Setter Property="Padding" Value="5,3,3,3" />
         <Setter Property="BorderThickness" Value="0" />
@@ -105,10 +107,14 @@
                             <DataGrid Name="PART_DataGrid"
                                       Grid.Row="1"
                                       Grid.Column="0"
+                                      
                                       Style="{StaticResource DefaultDataGridStyle}"
                                       CellStyle="{StaticResource DefaultDataGridCellStyle}"
                                       ColumnHeaderStyle="{StaticResource DefaultDataGridHeaderStyle}"
                                       RowStyle="{StaticResource LogItemDataGridRowStyle}"
+                                      FontFamily="{DynamicResource {x:Static reskeys:ResourceKeys.DefaultFontFamily}}"
+                                      FontSize="{DynamicResource {x:Static reskeys:ResourceKeys.DefaultFontSize}}"
+                                      FontWeight="Normal"
                                       SelectionMode="Extended"
                                       Margin="3,1,0,0"
                                       IsSynchronizedWithCurrentItem="True"

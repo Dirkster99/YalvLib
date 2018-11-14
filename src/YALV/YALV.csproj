@@ -227,18 +227,6 @@
     <Compile Include="View\Components\PropertiesView.xaml.cs">
       <DependentUpon>PropertiesView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Resources\CustomScrollBarStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\GlobalAppResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\AppWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Components\AutoCompleteTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -290,9 +278,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="View\AppWindow.xaml.cs">
-      <DependentUpon>AppWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Components\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>

@@ -44,11 +44,38 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=DataGridHeaderSortArrowForegroundBrushKey}"
                      Color="Black" options:Freeze="true"/>
-    
+
+    <FontFamily x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                ResourceId=DataGridHeaderFontFamily}" options:Freeze="true">
+        <!--Arial-->
+        <!--Calibri-->
+        <!--Georgia-->
+        <!--Helvetica-->
+        <!--Lucida Sans-->
+        Segoe UI
+        <!--Times New Roman-->
+        <!--Verdana-->
+    </FontFamily>
+
     <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
-                ResourceId=DataGridHeaderFontSize}">11</sys:Double>
+                ResourceId=DataGridHeaderFontSize}" options:Freeze="true">11</sys:Double>
     <!-- End of DataGrid Header Keys-->
-    
+
+    <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                ResourceId=DefaultFontSize}" options:Freeze="true">12</sys:Double>
+
+    <FontFamily x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                ResourceId=DefaultFontFamily}" options:Freeze="true">
+        <!--Arial-->
+        <!--Calibri-->
+        <!--Georgia-->
+        <!--Helvetica-->
+        <!--Lucida Sans-->
+        Segoe UI
+        <!--Times New Roman-->
+        <!--Verdana-->
+    </FontFamily>
+
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=VerticalGridLinesBrush}"
                      Color="White" options:Freeze="true"/>
