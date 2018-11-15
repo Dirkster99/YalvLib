@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="YalvLib.Common.BindableObject" Collapsed="true">
+    <Position X="12.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACQAAAEIAAAAAAAAAAgEAACAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Common\BindableObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="YalvLib.Common.CommandRelay" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAgCBAQAAEQAAAAAAAAAAAAAAAACQAAAAAA=</HashCode>
+      <FileName>Common\CommandRelay.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="YalvLib.Common.DisposableObject" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAACAAA=</HashCode>
+      <FileName>Common\DisposableObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="YalvLib.Common.GlobalHelper" Collapsed="true">
+    <Position X="30" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAgAAAAAAAAAAAAACAAAAAAAAAAABE=</HashCode>
+      <FileName>Common\GlobalHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Common.Converter.StringConverter" Collapsed="true">
+    <Position X="31.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAkAAIEACAAAAAgAIAAAACAAgEACAgAAAAAgAAAAAA=</HashCode>
+      <FileName>Common\Converter\FilterStringConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Common.Converters.StringEmptyToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Converter\StringEmptyToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="YalvLib.Common.Exceptions.InterpreterException" Collapsed="true">
+    <Position X="31.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Exceptions\InterpreterException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Exceptions.NotValidValueException" Collapsed="true">
+    <Position X="37" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Exceptions\NotValidValueException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Filter.YalvGrammar" Collapsed="true">
+    <Position X="26.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiwA2AASRAgAAEAACQACRwAAkKiEAShQBkQYiCAEI=</HashCode>
+      <FileName>Infrastructure\Filter\YalvGrammar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.LevelConverter" Collapsed="true">
+    <Position X="33.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\LevelConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Log4Net.Event2LogEntry" Collapsed="true">
+    <Position X="37" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Infrastructure\Log4Net\Event2LogEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Log4Net.Event" Collapsed="true">
+    <Position X="35.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAQIAAEEAAAACAAAAAAAAAAABAAAAIAACAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Log4Net.LocationInfo" Collapsed="true">
+    <Position X="35.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIgAAAAAAAEAAAAAAAAAAABAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Log4Net.Data" Collapsed="true">
+    <Position X="30" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Log4Net.Properties" Collapsed="true">
+    <Position X="26.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Log4Net.Log4jConverter" Collapsed="true">
+    <Position X="37" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAEAAAAAAAAAAAIAAgAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Infrastructure\Log4Net\Log4jConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Log4Net.LogEntry2Event" Collapsed="true">
+    <Position X="26.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAACACAA=</HashCode>
+      <FileName>Infrastructure\Log4Net\LogEntry2Event.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.AbstractMarkerMapping" Collapsed="true">
+    <Position X="26.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\AbstractMarkerMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.ColorMarkerMapping" Collapsed="true">
+    <Position X="33.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\ColorMarkerMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.CustomFilterMapping" Collapsed="true">
+    <Position X="28.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\CustomFilterMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.LogAnalysisMapping" Collapsed="true">
+    <Position X="28.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\LogAnalysisMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.LogAnalysisWorkspaceMapping" Collapsed="true">
+    <Position X="35.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\LogAnalysisWorkspaceMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.LogEntryFileRepositoryMapping" Collapsed="true">
+    <Position X="28.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\LogEntryFileRepositoryMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.LogEntryMapping" Collapsed="true">
+    <Position X="30" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\LogEntryMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.LogEntryRepositoryMapping" Collapsed="true">
+    <Position X="31.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\LogEntryRepositoryMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Mappings.TextMarkerMapping" Collapsed="true">
+    <Position X="37" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Mappings\TextMarkerMapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Sqlite.LogAnalysisWorkspaceExporter" Collapsed="true">
+    <Position X="31.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAABAAAAACAAAAAAAABAAIQAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Sqlite\LogAnalysisWorkspaceExporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Infrastructure.Sqlite.LogAnalysisWorkspaceLoader" Collapsed="true">
+    <Position X="33.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAACAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Sqlite\LogAnalysisWorkspaceLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.AbstractMarker" Collapsed="true">
+    <Position X="14.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAgAABAAAIAAAAAAQAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Model\AbstractMarker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.ColorMarker" Collapsed="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ColorMarker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.CustomFilter" Collapsed="true">
+    <Position X="26.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Model\CustomFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.LogAnalysis" Collapsed="true">
+    <Position X="26.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAEQQIAAAJoQAAABggAiAgAAAEAAAAAAAAA=</HashCode>
+      <FileName>Model\LogAnalysis.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.LogAnalysisWorkspace" Collapsed="true">
+    <Position X="30" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAACAAAAAgBAAAAAAAAQAQIAAAGCAEAAAAAI=</HashCode>
+      <FileName>Model\LogAnalysisWorkspace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.LogEntry" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAACAACAAQYAIEIAgBIgAAAAAAAEBIAAAQAAYAAhAAA=</HashCode>
+      <FileName>Model\LogEntry.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="YalvLib.Model.LogEntryFileRepository" Collapsed="true">
+    <Position X="0.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\LogEntryFileRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.LogEntryRepository" Collapsed="true">
+    <Position X="1.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gCAAAAAACAAAAgIAgBAAAAAAABAAQIAkAAAAAAAAAAA=</HashCode>
+      <FileName>Model\LogEntryRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.LogEntrySqliteRepository" Collapsed="true">
+    <Position X="2.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\LogEntrySqliteRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.RepositoryMerger" Collapsed="true">
+    <Position X="28.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAQAAQQAAAAAAAAAAAI=</HashCode>
+      <FileName>Model\RepositoryMerger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.TextMarker" Collapsed="true">
+    <Position X="13.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAgAAAAAAAAAAAAAAAEAAAIAAAAAA=</HashCode>
+      <FileName>Model\TextMarker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.YalvRegistry" Collapsed="true">
+    <Position X="28.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAQAAAAIAEAAAAAQJAAAAAAQAAAgAAAAAA=</HashCode>
+      <FileName>Model\YalvRegistry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.AfterOperator" Collapsed="true">
+    <Position X="0.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\AfterOperator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.And" Collapsed="true">
+    <Position X="8.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\And.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.BeforeOperator" Collapsed="true">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\BeforeOperator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.BinaryExpression" Collapsed="true">
+    <Position X="8.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAFAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\BinaryExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.BinaryOperator" Collapsed="true">
+    <Position X="9.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\BinaryOperator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.BooleanExpression" Collapsed="true">
+    <Position X="11" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\BooleanExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.ContainsOperator" Collapsed="true">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\ContainsOperator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.Context" Collapsed="true">
+    <Position X="37" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Model\Filter\Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.EqualsOperator" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\EqualsOperator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.HasExpression" Collapsed="true">
+    <Position X="13.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\HasExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.Not" Collapsed="true">
+    <Position X="35.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\Not.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.Operator" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\Operator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.Or" Collapsed="true">
+    <Position X="10.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\Or.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Model.Filter.SimpleExpression" Collapsed="true">
+    <Position X="11" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQAAACAACBAAAIAAAAAAAgAAAAgEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Filter\SimpleExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Providers.AbstractEntriesProviderBase">
+    <Position X="0.5" Y="14.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Providers\AbstractEntriesProviderBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Providers.DetectEncoding" Collapsed="true">
+    <Position X="31.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Providers\DetectEncoding.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Providers.EntriesProviderFactory" Collapsed="true">
+    <Position X="33.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Providers\EntriesProviderFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Providers.MsSqlServerEntriesProvider">
+    <Position X="6.25" Y="14" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Providers\MsSqlServerEntriesProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Providers.ORMEntriesProvider">
+    <Position X="3.25" Y="14.75" Width="2.25" />
+    <Members>
+      <Method Name="AddLevelClause" Hidden="true" />
+      <Method Name="AddLoggerClause" Hidden="true" />
+      <Method Name="AddMessageClause" Hidden="true" />
+      <Method Name="AddOrderByClause" Hidden="true" />
+      <Method Name="AddThreadClause" Hidden="true" />
+      <Method Name="CreateConnection" Hidden="true" />
+      <Method Name="Find" Hidden="true" />
+      <Method Name="GetValue" Hidden="true" />
+      <Method Name="InternalGetEntries" Hidden="true" />
+      <Field Name="MinDateTime" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAIAAAAEEAAAAAAAAAgCQIAAAEAEABAAAAAAA=</HashCode>
+      <FileName>Providers\ORMEntriesProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Providers.SqliteEntriesProvider">
+    <Position X="6.25" Y="15.5" Width="2.5" />
+    <InheritanceLine Type="YalvLib.Providers.ORMEntriesProvider" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="15.75" />
+        <Point X="6.25" Y="15.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Providers\SqliteEntriesProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Providers.XmlEntriesProvider">
+    <Position X="0.5" Y="16.75" Width="2.5" />
+    <Members>
+      <Field Name="_xmlParserMess" Hidden="true" />
+      <Field Name="_xmlSerializerSingleton" Hidden="true" />
+      <Method Name="CreateRootAttribute" Hidden="true" />
+      <Method Name="Deserialize" Hidden="true" />
+      <Method Name="GetXmlSerializer" Hidden="true" />
+      <Field Name="Log4jNs" Hidden="true" />
+      <Method Name="settings_ValidationEventHandler" Hidden="true" />
+    </Members>
+    <InheritanceLine Type="YalvLib.Providers.AbstractEntriesProviderBase" FixedFromPoint="true">
+      <Path>
+        <Point X="1.75" Y="16.046" />
+        <Point X="1.75" Y="16.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAECAAAoBBAEAAAAAAABAAAAAA=</HashCode>
+      <FileName>Providers\XmlEntriesProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.Domain.FilterParams" Collapsed="true">
+    <Position X="26.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQIAAAAEAAAAAAAAAAAAAAABAAAAIAAAAAA=</HashCode>
+      <FileName>Providers\FilterParams.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.View.BusyIndicatorBehavior.BusyIndicatorBehavior" Collapsed="true">
+    <Position X="30" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>0EAAAAAJABCAAARAQOAYAAAGRAAgAQACAAAAAAFBAAE=</HashCode>
+      <FileName>View\BusyIndicatorBehavior\BusyIndicatorBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.View.BusyIndicatorBehavior.CircularProgressBar" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="31.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\BusyIndicatorBehavior\CircularProgressBar.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="YalvLib.View.BusyIndicatorBehavior.FrameRateHelper" Collapsed="true">
+    <Position X="28.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAEAAAA=</HashCode>
+      <FileName>View\BusyIndicatorBehavior\FrameRateHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.ColumnItem" Collapsed="true">
+    <Position X="12.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DBIAAAAACgAAEBAAASAQAEEAABAAAAEQAAAYAQAAgAQ=</HashCode>
+      <FileName>ViewModel\ColumnItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="YalvLib.ViewModel.ColumnsViewModel" Collapsed="true">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEACAAAgAEBAAAAAAAAAAACAIAAAAAAAAACIAQQA=</HashCode>
+      <FileName>ViewModel\ColumnsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="YalvLib.ViewModel.DisplayLogViewModel" Collapsed="true">
+    <Position X="17.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ZBt7cA5tI7paqACQgSIDYWEBW3gmSh1EGx5AdScTIA4=</HashCode>
+      <FileName>ViewModel\DisplayLogViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.FilterConverterViewModel" Collapsed="true">
+    <Position X="21.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAgAAgAABAABAAAARgQAAAAAAQSAAIAQBQQAAAA=</HashCode>
+      <FileName>ViewModel\FilterConverterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.FilterQueryViewModel" Collapsed="true">
+    <Position X="1.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgARAAABABAAAIAhAAAQAAACAAA=</HashCode>
+      <FileName>ViewModel\FilterQueryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.LogEntryRowViewModel" Collapsed="true">
+    <Position X="3.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgQAAAAAAAAAAAAUAAAAAABBAAAAAAAIAAAAAIAAAA=</HashCode>
+      <FileName>ViewModel\LogEntryRowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="YalvLib.ViewModel.ManageRepositoryViewModel" Collapsed="true">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAOCACAIYAAgIBAQAACAACAAACAAAAAAAhAI=</HashCode>
+      <FileName>ViewModel\ManageRepositoryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.ManageTextMarkersViewModel" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ADAACIAAICgAIAAAAGAAAAACAAIABAAIACCSBAIAgAA=</HashCode>
+      <FileName>ViewModel\ManageTextMarkersViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="YalvLib.ViewModel.RepositoryViewModel" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAYSAIBABAIAAIAABAAAAAIQAAAgAAAAAIAAAAA=</HashCode>
+      <FileName>ViewModel\RepositoryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.ResolveCultures" Collapsed="true">
+    <Position X="30" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ResolveCultures.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.TextMarkerEventArgs" Collapsed="true">
+    <Position X="35.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\TextMarkerEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.TextMarkerViewModel" Collapsed="true">
+    <Position X="19.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IACAAAABAAAAgACAkYCQAQAIEAAgACAAEAAAIACBBAE=</HashCode>
+      <FileName>ViewModel\TextMarkerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.YalvViewModel" Collapsed="true">
+    <Position X="24" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQDAAIAAQIICAAAHIAEAIQiIgAAwCAFAABADCACBAI=</HashCode>
+      <FileName>ViewModel\YalvViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="YalvLib.ViewModel.Common.AutoCompleteEntry" Collapsed="true">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAQAAAAEAAAAAAgAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>ViewModel\Common\AutoCompleteEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YalvLib.ViewModel.Process.LogFileLoader" Collapsed="true">
+    <Position X="33.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAYIEIAEAACAAAAACABIAQIAAABEIAAAAAAgA=</HashCode>
+      <FileName>ViewModel\Process\LogFileLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="YalvLib.ViewModel.IManageTextMarkersViewModel" Collapsed="true">
+    <Position X="26.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\IManageTextMarkersViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="YalvLib.Providers.EntriesProviderType" Collapsed="true">
+    <Position X="26.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAABAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Providers\EntriesProviderType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

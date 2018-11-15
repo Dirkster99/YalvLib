@@ -28,5 +28,17 @@ namespace YalvLib.Providers
         /// <returns></returns>
         public abstract IEnumerable<LogEntry> GetEntries(string dataSource, FilterParams filter);
 
+        /// <summary>
+        /// Implements a simple way for returning meaningful messages to the user.
+        /// 
+        /// Deriving classes should override and return their own user messages to
+        /// give meaningful feedback to the user when reading was not possible without
+        /// warnings or errors.
+        /// </summary>
+        /// <returns></returns>
+        public virtual List<string> GetMessages()
+        {
+            return new List<string>();
+        }
     }
 }

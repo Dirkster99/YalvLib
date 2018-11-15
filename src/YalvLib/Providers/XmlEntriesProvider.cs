@@ -12,13 +12,26 @@
     using System.Xml;
     using YalvLib.Domain;
 
+    /// <summary>
+    /// Data provider to read log data items from log4net Xml standard format.
+    /// </summary>
     internal class XmlEntriesProvider : AbstractEntriesProviderBase
     {
-
+        #region fields
         private const string Log4jNs = "http://jakarta.apache.org/log4j";
-        private List<string> _xmlParserMess = new List<string>();
+        private readonly List<string> _xmlParserMess = new List<string>();
+        #endregion fields
 
-        public override IEnumerable<LogEntry> GetEntries(string dataSource, FilterParams filter)
+        #region methods
+        /// <summary>
+        /// Get collection of logitems representing a log file from Xml data source.
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public override IEnumerable<LogEntry> GetEntries(
+            string dataSource,
+            FilterParams filter)
         {
             List<LogEntry> entries = new List<LogEntry>();
             LogEntry entry;
@@ -85,21 +98,33 @@
             return entries;
         }
 
+        /// <summary>
+        /// Implements a simple way for returning meaningful messages to the user.
+        /// warnings or errors.
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetMessages()
+        {
+            return _xmlParserMess;
+        }
+
         private void settings_ValidationEventHandler(object sender, ValidationEventArgs e)
         {
             switch (e.Severity)
             {
                 case XmlSeverityType.Warning:
                     _xmlParserMess.Add(string.Format("Warning : line {0}, Position {1} \n {2}",
-e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
+                                        e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
                     break;
+
                 case XmlSeverityType.Error:
                     _xmlParserMess.Add(string.Format("Error : line {0}, Position {1} \n {2}",
-e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
+                                        e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
                     break;
+
                 default:
                     _xmlParserMess.Add(string.Format("Unhandled severity type : {0} {1}",
-               e.Severity, e.Exception.Message));
+                                       e.Severity, e.Exception.Message));
                     break;
             }
         }
@@ -190,5 +215,6 @@ e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
 
         //  return accept;
         //}
+        #endregion methods
     }
 }
