@@ -138,6 +138,19 @@
 
     <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
            ResourceId=DefaultDataGridCellStyleKey}" TargetType="DataGridCell">
+        <Style.Resources>
+            <conv:LevelToSolidColorConverter x:Key="ForegroundLevelToSolidColorConverter"
+                DebugColor="{DynamicResource {x:Static reskeys:ResourceKeys.DebugLevelForegroundBrushKey}}"
+                InfoColor="{DynamicResource {x:Static reskeys:ResourceKeys.InfoLevelForegroundBrushKey}}"
+                WarnColor="{DynamicResource {x:Static reskeys:ResourceKeys.WarnLevelForegroundBrushKey}}"
+                ErrorColor="{DynamicResource {x:Static reskeys:ResourceKeys.ErrorLevelForegroundBrushKey}}"
+                FatalColor="{DynamicResource {x:Static reskeys:ResourceKeys.FatalLevelForegroundBrushKey}}"
+                />
+        </Style.Resources>
+        <Style.Setters>
+            <!-- Define foreground color of displayed text based on level of log entry -->
+            <Setter Property="TextBlock.Foreground" Value="{Binding Entry.LevelIndex, Converter={StaticResource ForegroundLevelToSolidColorConverter}}"/>
+        </Style.Setters>
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -204,20 +217,20 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-                    <TextBlock Text="{Binding Path=Entry.Class, Mode=OneWay}"                                Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3" />
+                    <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Class_Text}"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.Class, Mode=OneWay}"                           Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3" />
 
-                    <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Method_Text}"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-                    <TextBlock Text="{Binding Path=Entry.Method, Mode=OneWay}"                                 Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Method_Text}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.Method, Mode=OneWay}"                          Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
-                    <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-                    <TextBlock Text="{Binding Path=Entry.File, Mode=OneWay}"                                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}"   Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.File, Mode=OneWay}"                            Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
-                    <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-                    <TextBlock Text="{Binding Path=Entry.Line, Mode=OneWay}"                                Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Line_Text}"   Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.Line, Mode=OneWay}"                            Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
                     <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_Thread_Text}" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
-                    <TextBlock Text="{Binding Path=Entry.Thread, Mode=OneWay}"                                Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
+                    <TextBlock Text="{Binding Path=Entry.Thread, Mode=OneWay}"                          Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>
 
                     <TextBlock Text="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeStamp_Text}" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="3"/>
                     <TextBlock Text="{Binding Path=Entry.TimeStamp, Mode=OneWay, StringFormat={}{0:MM/dd/yyyy hh:mm tt}}"  Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"/>

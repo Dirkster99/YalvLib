@@ -6,27 +6,35 @@
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="230">
     <Grid>
-        <StackPanel Orientation="Horizontal">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             <TextBlock 
-                MinWidth="150"
-                Width="Auto"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Margin="10 5 5 5"
-                 Text="{Binding Path=PathDisplay}"/>
+                MinWidth="150" Grid.Column="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="3"
+                Text="{Binding Path=PathDisplay}"/>
             <CheckBox 
+                Grid.Column="1"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Command="{Binding CommandActiveRepository}"
                 IsChecked="{Binding Path=Active, Mode=OneWay}"
                 Margin="3"/>
-            <Button Width="18" Height="15"
+            
+            <Button Grid.Column="2"
+                    MinWidth="18" MinHeight="15"
+                    HorizontalAlignment="Right" VerticalAlignment="Center"
         		    x:Name="DeleteButton"
         		    Command="{Binding CommandRemoveRepository}" >
                 <StackPanel>
                     <Image Source="/YALV;component/Resources/Icons/delete.png" Width="10" Height="10" />
                 </StackPanel>
             </Button>
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

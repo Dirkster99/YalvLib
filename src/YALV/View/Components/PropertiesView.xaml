@@ -23,6 +23,13 @@
                                      ErrorColor="{DynamicResource {x:Static reskeys:ResourceKeys.ErrorLevelBackgroundBrushKey}}"
                                      FatalColor="{DynamicResource {x:Static reskeys:ResourceKeys.FatalLevelBackgroundBrushKey}}"
                                      />
+        <conv:LevelToSolidColorConverter x:Key="ForegroundLevelToSolidColorConverter"
+                                     DebugColor="{DynamicResource {x:Static reskeys:ResourceKeys.DebugLevelForegroundBrushKey}}"
+                                     InfoColor="{DynamicResource {x:Static reskeys:ResourceKeys.InfoLevelForegroundBrushKey}}"
+                                     WarnColor="{DynamicResource {x:Static reskeys:ResourceKeys.WarnLevelForegroundBrushKey}}"
+                                     ErrorColor="{DynamicResource {x:Static reskeys:ResourceKeys.ErrorLevelForegroundBrushKey}}"
+                                     FatalColor="{DynamicResource {x:Static reskeys:ResourceKeys.FatalLevelForegroundBrushKey}}"
+                                     />
         <converters:LevelIndexToVisibilityConverter x:Key="LevelIndexToVisibilityConverter" />
         <conv:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
     </UserControl.Resources>
@@ -87,112 +94,108 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                <!-- Begin Input ItemId Row -->
                 <Label Grid.Column="0"
-               Content="{x:Static Properties:Resources.MainWindow_DetailsBox_ItemId_Text}"
-               VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_ItemId_Text}"
+                       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <Grid HorizontalAlignment="Stretch" Grid.Column="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBox HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                   Text="{Binding Path=LogEntryRows.GoToLogItemId, UpdateSourceTrigger=PropertyChanged}"
-                   Width="75"
-                   Grid.Column="0" />
+                    <TextBox HorizontalAlignment="Left"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center"
+                             Text="{Binding Path=LogEntryRows.GoToLogItemId, UpdateSourceTrigger=PropertyChanged}"
+                             MinWidth="75"
+                             Grid.Column="0" />
 
-                    <Label Content="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay}"
-                 ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_Level_Text}"
-                 Grid.Column="1"
-                 VerticalAlignment="Center" HorizontalAlignment="Left" />
-
-                    <Border Height="11" Grid.Column="2"
-                  Margin="2,0,0,0"
-                  Width="11"
-                  Background="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay, Converter={StaticResource LevelToSolidColorConverter}}"
-                  BorderBrush="{DynamicResource {x:Static reskeys:ResourceKeys.ControlBorderBrushKey}}"
-                  BorderThickness="1"
-                  CornerRadius="0"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Left"
-                  Visibility="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay, Converter={StaticResource LevelIndexToVisibilityConverter}, FallbackValue=Collapsed}" />
+                    <Label 
+                        Grid.Column="1"
+                        Background="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay, Converter={StaticResource LevelToSolidColorConverter}}"
+                        Foreground="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay,Converter={StaticResource ForegroundLevelToSolidColorConverter}}"
+                        Content="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay}"
+                        ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_Level_Text}"
+                        VerticalAlignment="Center" HorizontalAlignment="Left"
+                        Visibility="{Binding Path=LogEntryRows.SelectedLogItem.Entry.LevelIndex, Mode=OneWay, Converter={StaticResource LevelIndexToVisibilityConverter}, FallbackValue=Collapsed}"
+                        Margin="3,0"
+                        />
                 </Grid>
+                <!-- End of Input ItemId Row -->
 
                 <Label Grid.Column="0" Grid.Row="1"
-               Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Logger_Text}"
-               VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Logger_Text}"
+                       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Logger, Mode=OneWay}" Style="{StaticResource TextBoxLabelStyle}"
-                 Grid.Column="2" Grid.Row="1"/>
+                         Grid.Column="2" Grid.Row="1"/>
 
 
                 <Label Content="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeStamp_Text}"
-               VerticalAlignment="Center" HorizontalAlignment="Right"
-               Grid.Column="0" Grid.Row="2" />
+                       VerticalAlignment="Center" HorizontalAlignment="Right"
+                       Grid.Column="0" Grid.Row="2" />
                 <TextBox  Style="{StaticResource TextBoxLabelStyle}"
-                  Grid.Column="2" Grid.Row="2">
+                          Grid.Column="2" Grid.Row="2">
                     <TextBox.Text>
                         <Binding Mode="OneWay"
-                     StringFormat="{x:Static Properties:Resources.MainWindow_FullDateTimeFormatWithMilliseconds}"
-                     ConverterCulture="{x:Static cult:ResolveCultures.ResolvedCulture}"
-                     Path="LogEntryRows.SelectedLogItem.Entry.TimeStamp" />
+                                 StringFormat="{x:Static Properties:Resources.MainWindow_FullDateTimeFormatWithMilliseconds}"
+                                 ConverterCulture="{x:Static cult:ResolveCultures.ResolvedCulture}"
+                                 Path="LogEntryRows.SelectedLogItem.Entry.TimeStamp" />
                     </TextBox.Text>
                 </TextBox>
 
-
                 <Label Grid.Column="0" Grid.Row="3"
-               Content="Δ t:"
-               ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeDiff_Text}"
-               VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                       Content="Δ t:"
+                       ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeDiff_Text}"
+                       VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Delta, Mode=OneWay}"
-                 ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeDiff_Text}"
-                 Style="{StaticResource TextBoxLabelStyle}"
-                 Grid.Column="2" Grid.Row="3" />
+                         ToolTip="{x:Static Properties:Resources.MainWindow_DetailsBox_TimeDiff_Text}"
+                         Style="{StaticResource TextBoxLabelStyle}"
+                         Grid.Column="2" Grid.Row="3" />
 
                 <Label Grid.Column="0" Grid.Row="4"
-	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_MachineName_Text}"
-	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	                   Content="{x:Static Properties:Resources.MainWindow_DetailsBox_MachineName_Text}"
+	                   VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.MachineName, Mode=OneWay}"
-	         Style="{StaticResource TextBoxLabelStyle}"
-	         Grid.Column="2" Grid.Row="4" />
+	                     Style="{StaticResource TextBoxLabelStyle}"
+	                     Grid.Column="2" Grid.Row="4" />
 
 
                 <Label Grid.Column="0" Grid.Row="5"
-	       Content="{x:Static Properties:Resources.MainWindow_DetailsBox_HostName_Text}"
-	       VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	                   Content="{x:Static Properties:Resources.MainWindow_DetailsBox_HostName_Text}"
+	                   VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.HostName, Mode=OneWay}"
-	         Style="{StaticResource TextBoxLabelStyle}"
-	         Grid.Column="2" Grid.Row="5" />
-
+	                     Style="{StaticResource TextBoxLabelStyle}"
+	                     Grid.Column="2" Grid.Row="5" />
 
                 <Label Grid.Column="0" Grid.Row="6"
-	             Content="{x:Static Properties:Resources.MainWindow_DetailsBox_UserName_Text}"
-	             VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    Content="{x:Static Properties:Resources.MainWindow_DetailsBox_UserName_Text}"
+                    VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.UserName, Mode=OneWay}"
-	               Style="{StaticResource TextBoxLabelStyle}"
-	               Grid.Column="2" Grid.Row="6" />
+	                   Style="{StaticResource TextBoxLabelStyle}"
+	                   Grid.Column="2" Grid.Row="6" />
 
                 <Label Grid.Column="0" Grid.Row="7"
-	             Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Application_Text}"
-	             VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	                 Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Application_Text}"
+	                 VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.App, Mode=OneWay}"
-	               Style="{StaticResource TextBoxLabelStyle}"
-	               Grid.Column="2" Grid.Row="7" />
+	                   Style="{StaticResource TextBoxLabelStyle}"
+	                   Grid.Column="2" Grid.Row="7" />
 
                 <Label Grid.Column="0" Grid.Row="8"
-	             Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Thread_Text}"
-	             VerticalAlignment="Center" HorizontalAlignment="Right"/>
+	                 Content="{x:Static Properties:Resources.MainWindow_DetailsBox_Thread_Text}"
+	                 VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
                 <TextBox Text="{Binding Path=LogEntryRows.SelectedLogItem.Entry.Thread, Mode=OneWay}"
-	               Style="{StaticResource TextBoxLabelStyle}"
-	               Grid.Column="2" Grid.Row="8" />
+	                   Style="{StaticResource TextBoxLabelStyle}"
+	                   Grid.Column="2" Grid.Row="8" />
 
                 <Label Grid.Column="0" Grid.Row="9"
 	                     Content="{x:Static Properties:Resources.MainWindow_DetailsBox_File_Text}"

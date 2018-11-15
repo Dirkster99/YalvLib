@@ -87,7 +87,7 @@
 
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=SelectedFocusedCellForegroundBrushKey}"
-                     Color="White" options:Freeze="true"/>
+                     Color="#A0000000" options:Freeze="true"/>
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=SelectedFocusedCellBackgroundBrushKey}"
                      Color="#40FFFFFF" options:Freeze="true"/>
@@ -100,27 +100,48 @@
                      ResourceId=SelectedCellBackgroundBrushKey}"
                      Color="#40FFFFFF" options:Freeze="true"/>
     
-    <!-- Begin LogLevel Brush Keys -->
+    <!-- Begin Background LogLevel Brush Keys -->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=DebugLevelBackgroundBrushKey}"
-                     Color="LightBlue" options:Freeze="true"/>
+                     Color="Transparent" options:Freeze="true"/>
 
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=InfoLevelBackgroundBrushKey}"
-                     Color="LightGreen" options:Freeze="true"/>
+                     Color="Transparent" options:Freeze="true"/>
 
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=WarnLevelBackgroundBrushKey}"
-                     Color="Moccasin" options:Freeze="true"/>
+                     Color="#FFFAFF03" options:Freeze="true"/>
 
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=ErrorLevelBackgroundBrushKey}"
-                     Color="Salmon" options:Freeze="true"/>
+                     Color="#FFF36969" options:Freeze="true"/>
 
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=FatalLevelBackgroundBrushKey}"
-                     Color="Crimson" options:Freeze="true"/>
-    <!-- End of LogLevel Brush Keys -->
-    
-    
+                     Color="#FFB00099" options:Freeze="true"/>
+    <!-- End of Background LogLevel Brush Keys -->
+
+    <!-- Begin Foreground LogLevel Brush Keys -->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=DebugLevelForegroundBrushKey}"
+                     Color="Blue" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=InfoLevelForegroundBrushKey}"
+                     Color="Black" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=WarnLevelForegroundBrushKey}"
+                     Color="Black" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=ErrorLevelForegroundBrushKey}"
+                     Color="Black" options:Freeze="true"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=FatalLevelForegroundBrushKey}"
+                     Color="LightPink" options:Freeze="true"/>
+    <!-- End of Foreground LogLevel Brush Keys -->
+
 </ResourceDictionary>

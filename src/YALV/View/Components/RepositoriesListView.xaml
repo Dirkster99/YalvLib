@@ -7,7 +7,7 @@
              d:DesignHeight="220" d:DesignWidth="250">
     <Grid>
         <StackPanel>
-            <Label>File List : </Label>
+            <Label>File List:</Label>
             <ItemsControl Name="ListRepositories"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top"

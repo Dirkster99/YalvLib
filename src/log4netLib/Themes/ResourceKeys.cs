@@ -161,6 +161,7 @@
         #endregion DataGrid styles
 
         #region LogLevel BrushKeys
+        #region Background
         /// <summary>
         /// Gets the background brush key for the data row that represents a debug level log entry.
         /// </summary>
@@ -185,6 +186,34 @@
         /// Gets the background brush key for the data row that represents a fatal level log entry.
         /// </summary>
         public static readonly ComponentResourceKey FatalLevelBackgroundBrushKey = new ComponentResourceKey(typeof(ResourceKeys), "FatalLevelBackgroundBrushKey");
+        #endregion Background
+
+        #region Foreground
+        /// <summary>
+        /// Gets the background brush key for the data row that represents a debug level log entry.
+        /// </summary>
+        public static readonly ComponentResourceKey DebugLevelForegroundBrushKey = new ComponentResourceKey(typeof(ResourceKeys), "DebugLevelForegroundBrushKey");
+
+        /// <summary>
+        /// Gets the background brush key for the data row that represents a information level log entry.
+        /// </summary>
+        public static readonly ComponentResourceKey InfoLevelForegroundBrushKey = new ComponentResourceKey(typeof(ResourceKeys), "InfoLevelForegroundBrushKey");
+
+        /// <summary>
+        /// Gets the background brush key for the data row that represents a warning level log entry.
+        /// </summary>
+        public static readonly ComponentResourceKey WarnLevelForegroundBrushKey = new ComponentResourceKey(typeof(ResourceKeys), "WarnLevelForegroundBrushKey");
+
+        /// <summary>
+        /// Gets the background brush key for the data row that represents a error level log entry.
+        /// </summary>
+        public static readonly ComponentResourceKey ErrorLevelForegroundBrushKey = new ComponentResourceKey(typeof(ResourceKeys), "ErrorLevelForegroundBrushKey");
+
+        /// <summary>
+        /// Gets the background brush key for the data row that represents a fatal level log entry.
+        /// </summary>
+        public static readonly ComponentResourceKey FatalLevelForegroundBrushKey = new ComponentResourceKey(typeof(ResourceKeys), "FatalLevelForegroundBrushKey");
+        #endregion Foreground
         #endregion LogLevel BrushKeys
     }
 }
