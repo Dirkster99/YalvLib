@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YalvLib.Model;
-using YalvLib.ViewModel;
+using YalvLib.ViewModels;
 
 namespace YALV.View.Components
 {

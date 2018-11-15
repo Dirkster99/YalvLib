@@ -70,7 +70,7 @@
         /// <summary>
         /// Get/set whether column is visible or not.
         /// </summary>
-        bool IsColumnVisible { get; }
+        bool IsColumnVisible { get; set; }
         #endregion properties
 
         #region methods

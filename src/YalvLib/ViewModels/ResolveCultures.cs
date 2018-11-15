@@ -1,4 +1,4 @@
-﻿namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModels
 {
     using System.Globalization;
 

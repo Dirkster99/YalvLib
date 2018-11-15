@@ -2,7 +2,7 @@
 {
     using System.Windows;
     using System.Windows.Controls;
-    using YalvLib.ViewModel;
+    using YalvLib.ViewModels;
 
     /// <summary>
     /// Interaction logic for TextMarkerView.xaml

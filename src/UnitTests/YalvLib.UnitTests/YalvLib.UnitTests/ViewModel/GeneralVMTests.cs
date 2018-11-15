@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using YalvLib.Model;
-using YalvLib.ViewModel;
-
-namespace YalvLib.Tests.ViewModel
+﻿namespace YalvLib.Tests.ViewModel
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class GeneralVMTests

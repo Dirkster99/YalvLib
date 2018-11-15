@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-    xmlns:cult="clr-namespace:YalvLib.ViewModel;assembly=YALVLib"
+    xmlns:cult="clr-namespace:YalvLib.ViewModels;assembly=YALVLib"
     xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
              
     xmlns:Properties="clr-namespace:log4netLib.Strings;assembly=log4netLib"

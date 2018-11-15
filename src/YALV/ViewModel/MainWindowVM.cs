@@ -12,7 +12,7 @@
     using Common;
     using Interfaces;
     using YalvLib.Common;
-    using YalvLib.ViewModel;
+    using YalvLib.ViewModels;
     using log4netLib.Interfaces;
 
     internal class MainWindowVM : BindableObject, IDisposable

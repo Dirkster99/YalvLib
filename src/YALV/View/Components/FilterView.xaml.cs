@@ -11,8 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using YalvLib.ViewModel;
-using YalvLib.ViewModel.Common;
+using YalvLib.ViewModels;
+using YalvLib.ViewModels.Common;
 
 namespace YALV.View.Components
 {

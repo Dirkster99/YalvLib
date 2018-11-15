@@ -7,7 +7,7 @@
     using System.ComponentModel;
     using YalvLib.Common;
     using YalvLib.Model;
-    using YalvLib.ViewModel;
+    using YalvLib.ViewModels;
 
     [TestClass]
     public class ManageTextMarkersViewModelTests

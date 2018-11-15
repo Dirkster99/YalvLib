@@ -53,31 +53,5 @@
             ////    return "-";
         }
         #endregion properties
-
-        #region methods
-        /// <summary>
-        /// Parse a log4net log file via abstract parser Provider class for SQL, Sqlite, XML file etc...
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static IList<LogEntry> ParseLogFile(string path)
-        {
-            IEnumerable<LogEntry> result = null;
-            try
-            {
-                AbstractEntriesProviderBase provider = EntriesProviderFactory.GetProvider();
-                result = provider.GetEntries(path);
-                return result.ToList();
-            }
-            catch (Exception ex)
-            {
-                string message = string.Format(log4netLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path, ex.Message);
-
-                MessageBox.Show(message, log4netLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-                return result == null ? new List<LogEntry>() : result.ToList();
-            }
-        }
-        #endregion methods
     }
 }

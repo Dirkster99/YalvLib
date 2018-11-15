@@ -6,7 +6,7 @@
     using System.Threading;
     using YalvLib.Model;
     using YalvLib.UnitTests.ViewModel;
-    using YalvLib.ViewModel;
+    using YalvLib.ViewModels;
 
     [TestClass]
     public class TextMarkerViewModelTests
