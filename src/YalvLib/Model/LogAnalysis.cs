@@ -1,3 +1,4 @@
+using log4netLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -93,7 +94,9 @@ namespace YalvLib.Model
         /// <param name="author">Author of the TextMarker</param>
         /// <param name="message">Message of the Textmarker</param>
         /// <returns></returns>
-        public TextMarker AddTextMarker(List<LogEntry> list, string author, string message)
+        public TextMarker AddTextMarker(List<ILogEntry> list,
+                                        string author,
+                                        string message)
         {
             var marker = new TextMarker(list, author, message);
             Markers.Add(marker);
@@ -106,7 +109,7 @@ namespace YalvLib.Model
         /// <param name="list">List of logEntry</param>
         /// <param name="marker">TextMarker</param>
         /// <returns>Markers</returns>
-        public TextMarker AddTextMarker(IEnumerable<LogEntry> list, TextMarker marker)
+        public TextMarker AddTextMarker(IEnumerable<ILogEntry> list, TextMarker marker)
         {
             marker.LogEntries = list.ToList();
             Markers.Add(marker);
@@ -155,13 +158,16 @@ namespace YalvLib.Model
         /// </summary>
         /// <param name="entry">Log Entry</param>
         /// <returns>List of linked TextMarkers</returns>
-        public List<TextMarker> GetTextMarkersForEntry(LogEntry entry)
+        public List<TextMarker> GetTextMarkersForEntry(ILogEntry entry)
         {
             var result = new List<TextMarker>();
             foreach(var textmarker in TextMarkers)
             {
-                if(textmarker.LogEntries.Contains(entry))
-                    result.Add(textmarker);
+                if (textmarker.LogEntries != null)
+                {
+                    if (textmarker.LogEntries.Contains(entry))
+                        result.Add(textmarker);
+                }
             }
             return result;
         }
@@ -171,7 +177,7 @@ namespace YalvLib.Model
         /// </summary>
         /// <param name="logEntries">List of log entry</param>
         /// <returns>List of linked TextMarkers</returns>
-        public List<TextMarker> GetTextMarkersForEntries(IEnumerable<LogEntry> logEntries)
+        public List<TextMarker> GetTextMarkersForEntries(IEnumerable<ILogEntry> logEntries)
         {
             var markers = new List<TextMarker>();
             foreach(var entry in logEntries)

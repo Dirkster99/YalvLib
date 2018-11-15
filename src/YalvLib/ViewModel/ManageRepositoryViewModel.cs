@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Windows;
-using System.Windows.Threading;
-using YalvLib.Common;
-using YalvLib.Infrastructure.Sqlite;
-using YalvLib.Model;
-using YalvLib.Providers;
-using YalvLib.Strings;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using System.Windows;
+    using System.Windows.Threading;
+    using YalvLib.Common;
+    using YalvLib.Infrastructure.Sqlite;
+    using YalvLib.Model;
+    using YalvLib.Providers;
+    using log4netLib.Strings;
+
     /// <summary>
     /// Class to manage data for every logfile loaded
     /// </summary>

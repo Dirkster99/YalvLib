@@ -1,21 +1,19 @@
-﻿using System.Collections.Generic;
-using Microsoft.Win32;
-using YalvLib.Infrastructure.Sqlite;
-using YalvLib.Model;
-
-namespace YALV.ViewModel
+﻿namespace YALV.ViewModel
 {
+    using System.Collections.Generic;
+    using Microsoft.Win32;
+    using YalvLib.Infrastructure.Sqlite;
+    using YalvLib.Model;
     using System;
     using System.IO;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Shell;
-
     using Common;
     using Interfaces;
     using YalvLib.Common;
-    using YalvLib.Common.Interfaces;
     using YalvLib.ViewModel;
+    using log4netLib.Interfaces;
 
     internal class MainWindowVM : BindableObject
     {
@@ -40,7 +38,7 @@ namespace YALV.ViewModel
                             RecentFileList recentFileList)
         {
             _layoutFileName = Path.Combine(AppDataDirectoryPath,
-                                                          Assembly.GetEntryAssembly().GetName().Name + ".ColLayout");
+                                           Assembly.GetEntryAssembly().GetName().Name + ".ColLayout");
 
             _callingWin = win;
 
@@ -117,7 +115,7 @@ namespace YALV.ViewModel
                 string sFile = (YalvLogViewModel.FilePaths.Count == 0? string.Empty :
                                                                                         " - " + _yalvLogViewModel.FilePaths[0]);
 
-                return string.Format("{0}{1}", YalvLib.Strings.Resources.MainWindow_Title, sFile);
+                return string.Format("{0}{1}", log4netLib.Strings.Resources.MainWindow_Title, sFile);
             }
         }
 
@@ -228,8 +226,8 @@ namespace YALV.ViewModel
             dlg.Filter = YalvViewModel.FileExtensionDialogFilter;
             dlg.DefaultExt = "*.log4j";
             dlg.Multiselect = true;
-            dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
-                                  YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
+            dlg.Title = addFile ? log4netLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
+                                  log4netLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
 
             if (dlg.ShowDialog().GetValueOrDefault())
             {
@@ -294,8 +292,8 @@ namespace YALV.ViewModel
             dlg.Filter = YalvViewModel.DatabaseExtensionDialogFilter;
             dlg.DefaultExt = "*.db3";
             dlg.Multiselect = false;
-            dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
-                                  YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
+            dlg.Title = addFile ? log4netLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
+                                  log4netLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
 
             if (dlg.ShowDialog().GetValueOrDefault())
             {
@@ -316,8 +314,8 @@ namespace YALV.ViewModel
             dlg.Filter = YalvViewModel.LogAnalysisExtensionDialogFilter;
             dlg.DefaultExt = "*.yalv";
             dlg.Multiselect = false;
-            dlg.Title = addFile ? YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
-                                  YalvLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
+            dlg.Title = addFile ? log4netLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Add_Log_File :
+                                  log4netLib.Strings.Resources.MainWindowVM_commandOpenFileExecute_Open_Log_File;
 
             if (dlg.ShowDialog().GetValueOrDefault())
             {
@@ -357,7 +355,7 @@ namespace YALV.ViewModel
                         var myJumpTask = new JumpTask
                                              {
                                                  CustomCategory =
-                                                     YalvLib.Strings.Resources.
+                                                     log4netLib.Strings.Resources.
                                                      MainWindowVM_updateJumpList_CustomCategoryName,
                                                  Title = Path.GetFileName(item),
                                                  ApplicationPath =

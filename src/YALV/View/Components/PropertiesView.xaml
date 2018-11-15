@@ -3,27 +3,28 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-    xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
     xmlns:cult="clr-namespace:YalvLib.ViewModel;assembly=YALVLib"
-    xmlns:Properties="clr-namespace:YalvLib.Strings;assembly=YALVLib"
+    xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
+             
+    xmlns:Properties="clr-namespace:log4netLib.Strings;assembly=log4netLib"
+    xmlns:conv="clr-namespace:log4netLib.Converters;assembly=log4netLib"
+    xmlns:reskeys="clr-namespace:log4netLib.Themes;assembly=log4netLib"
 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             
-    xmlns:reskeys="clr-namespace:YalvLib.Themes;assembly=YalvLib"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="300">
   <UserControl.Resources>
-    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <converters:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter"
-                                           DebugColor="{DynamicResource {x:Static reskeys:ResourceKeys.DebugLevelBackgroundBrushKey}}"
-                                           InfoColor="{DynamicResource {x:Static reskeys:ResourceKeys.InfoLevelBackgroundBrushKey}}"
-                                           WarnColor="{DynamicResource {x:Static reskeys:ResourceKeys.WarnLevelBackgroundBrushKey}}"
-                                           ErrorColor="{DynamicResource {x:Static reskeys:ResourceKeys.ErrorLevelBackgroundBrushKey}}"
-                                           FatalColor="{DynamicResource {x:Static reskeys:ResourceKeys.FatalLevelBackgroundBrushKey}}"
-                                           />
+    <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <conv:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter"
+                                     DebugColor="{DynamicResource {x:Static reskeys:ResourceKeys.DebugLevelBackgroundBrushKey}}"
+                                     InfoColor="{DynamicResource {x:Static reskeys:ResourceKeys.InfoLevelBackgroundBrushKey}}"
+                                     WarnColor="{DynamicResource {x:Static reskeys:ResourceKeys.WarnLevelBackgroundBrushKey}}"
+                                     ErrorColor="{DynamicResource {x:Static reskeys:ResourceKeys.ErrorLevelBackgroundBrushKey}}"
+                                     FatalColor="{DynamicResource {x:Static reskeys:ResourceKeys.FatalLevelBackgroundBrushKey}}"
+                                     />
     <converters:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter" />
-    <converters:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
+    <conv:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
   </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>

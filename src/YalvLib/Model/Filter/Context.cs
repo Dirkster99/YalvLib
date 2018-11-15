@@ -1,5 +1,7 @@
 ﻿namespace YalvLib.Model.Filter
 {
+    using log4netLib.Interfaces;
+
     /// <summary>
     /// Represent the context to be evaluate with
     /// </summary>
@@ -8,7 +10,7 @@
         /// <summary>
         /// Getter / setter of the entry
         /// </summary>
-        public LogEntry Entry { get; set; }
+        public ILogEntry Entry { get; set; }
 
         /// <summary>
         /// Getter / setter of the Log Analysis

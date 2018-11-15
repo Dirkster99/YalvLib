@@ -33,7 +33,7 @@ namespace YalvLib.Common
         {
             get
             {
-                string localizedFormat = YalvLib.Strings.Resources.GlobalHelper_DISPLAY_DATETIME_FORMAT;
+                string localizedFormat = log4netLib.Strings.Resources.GlobalHelper_DISPLAY_DATETIME_FORMAT;
                 return string.IsNullOrWhiteSpace(localizedFormat) ? DISPLAY_DATETIME_FORMAT : localizedFormat;
             }
         }
@@ -49,9 +49,9 @@ namespace YalvLib.Common
             double delta = (currentDate - prevDate).TotalSeconds;
 
             ////if (DateTime.Compare(currentDate.Date, prevDate.Date) == 0)
-            return string.Format(delta >= 0 ? YalvLib.Strings.Resources.GlobalHelper_getTimeDelta_Positive_Text :
-                                              YalvLib.Strings.Resources.GlobalHelper_getTimeDelta_Negative_Text,
-                                              delta.ToString(System.Globalization.CultureInfo.GetCultureInfo(YalvLib.Strings.Resources.CultureName)));
+            return string.Format(delta >= 0 ? log4netLib.Strings.Resources.GlobalHelper_getTimeDelta_Positive_Text :
+                                              log4netLib.Strings.Resources.GlobalHelper_getTimeDelta_Negative_Text,
+                                              delta.ToString(System.Globalization.CultureInfo.GetCultureInfo(log4netLib.Strings.Resources.CultureName)));
             ////else
             ////    return "-";
         }
@@ -74,9 +74,9 @@ namespace YalvLib.Common
             }
             catch (Exception ex)
             {
-                string message = string.Format(YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path, ex.Message);
+                string message = string.Format(log4netLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Text, path, ex.Message);
 
-                MessageBox.Show(message, YalvLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(message, log4netLib.Strings.Resources.GlobalHelper_ParseLogFile_Error_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
                 return result == null ? new List<LogEntry>() : result.ToList();
             }

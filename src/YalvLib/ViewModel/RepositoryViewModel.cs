@@ -1,13 +1,13 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using YalvLib.Common;
-using YalvLib.Model;
-using YalvLib.Strings;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using System;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Windows;
+    using YalvLib.Common;
+    using YalvLib.Model;
+    using log4netLib.Strings;
+
     /// <summary>
     /// This class represent a repository displayed on the list of files in the view
     /// </summary>

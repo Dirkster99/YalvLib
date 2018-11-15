@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4netLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using YalvLib.Common;
@@ -150,7 +151,7 @@ namespace YalvLib.ViewModel
         /// </summary>
         /// <param name="entry">entry to check</param>
         /// <returns>true if the entry match</returns>
-        public Boolean Evaluate(LogEntry entry)
+        public Boolean Evaluate(ILogEntry entry)
         {
             _context.Entry = entry;
             return ApplyFilter();

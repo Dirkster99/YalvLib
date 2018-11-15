@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Windows;
-using System.Xml;
-using System.Xml.Serialization;
-using YalvLib.Common;
-using YalvLib.Strings;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using log4netLib.Enums;
+    using log4netLib.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+    using System.Windows;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using YalvLib.Common;
+    using log4netLib.Strings;
+
     /// <summary>
     /// ViewModel class to organize all items that apply on a column of the log4net (YalvView) column.
     /// These items are the actual column layouts (number and columns and their names) and contents
     /// of the filter search boxes.
     /// </summary>
-    public class ColumnsViewModel : BindableObject
+    public class ColumnsViewModel : BindableObject, IColumnsViewModel
     {
         #region fields
-
-        private IList<ColumnItem> _dataGridColumns;
+        private IList<IColumnItem> _dataGridColumns;
         private List<string> _filterProperties;
-
         #endregion fields
 
         #region constructor
@@ -50,15 +50,13 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Return a list of columns to be displayed in a DataGrid view display
         /// </summary>
-        public IList<ColumnItem> DataGridColumns
+        public IList<IColumnItem> DataGridColumns
         {
             get { return _dataGridColumns; }
         }
-
         #endregion properties
 
         #region methods
-
         /// <summary>
         /// Reset all filter values to empty strings
         /// </summary>
@@ -103,9 +101,9 @@ namespace YalvLib.ViewModel
             try
             {
                 if (columnCollection != null)
-                    _dataGridColumns = new List<ColumnItem>(columnCollection);
+                    _dataGridColumns = new List<IColumnItem>(columnCollection);
                 else
-                    _dataGridColumns = new List<ColumnItem>();
+                    _dataGridColumns = new List<IColumnItem>();
 
                 ResetColumnProperties(columnFilterUpdate);
             }
@@ -139,39 +137,39 @@ namespace YalvLib.ViewModel
         {
             try
             {
-                _dataGridColumns = new List<ColumnItem>
-                                       {
-                                           new ColumnItem("Entry.GuId", 32, 50, CellAlignment.CENTER)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_IdMergeColumn_Header},
-                                           new ColumnItem("Entry.Id", 32, 25, CellAlignment.CENTER, string.Empty)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_IdColumn_Header},
-                                           new ColumnItem("Entry.TimeStamp", 32, 100, CellAlignment.CENTER,
-                                                          GlobalHelper.DisplayDateTimeFormat)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header},
-                                           new ColumnItem("Entry.LevelIndex", 32, 50, CellAlignment.CENTER)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_LevelColumn_Header},
-                                           new ColumnItem("Entry.Message", 32, 400)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_MessageColumn_Header},
-                                           new ColumnItem("Entry.Logger", 32, 100)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header},
-                                           new ColumnItem("Entry.MachineName", 32, 100, CellAlignment.CENTER)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header},
-                                           new ColumnItem("Entry.HostName", 32, 100, CellAlignment.CENTER)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header},
-                                           new ColumnItem("Entry.UserName", 32, 100, CellAlignment.CENTER)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header},
-                                           new ColumnItem("Entry.App", 32, 50)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_AppColumn_Header},
-                                           new ColumnItem("Entry.Thread", 32, 50, CellAlignment.CENTER)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header},
-                                           new ColumnItem("Entry.Class", 32, 150)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_ClassColumn_Header},
-                                           new ColumnItem("Entry.Method", 32, 150)
-                                               {Header = Resources.MainWindowVM_InitDataGrid_MethodColumn_Header},
-                                           new ColumnItem("Entry.Delta", 32, 50, CellAlignment.CENTER, null, "Δ")
-                                               {IsColumnVisible = false},
-                                           ////new ColumnItem("Path", 32)
-                                       };
+                _dataGridColumns = new List<IColumnItem>
+                {
+                    new ColumnItem("Entry.GuId", 32, 50, CellAlignment.CENTER)
+                        {Header = Resources.MainWindowVM_InitDataGrid_IdMergeColumn_Header},
+                    new ColumnItem("Entry.Id", 32, 25, CellAlignment.CENTER, string.Empty)
+                        {Header = Resources.MainWindowVM_InitDataGrid_IdColumn_Header},
+                    new ColumnItem("Entry.TimeStamp", 32, 100, CellAlignment.CENTER,
+                                    GlobalHelper.DisplayDateTimeFormat)
+                        {Header = Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header},
+                    new ColumnItem("Entry.LevelIndex", 32, 50, CellAlignment.CENTER)
+                        {Header = Resources.MainWindowVM_InitDataGrid_LevelColumn_Header},
+                    new ColumnItem("Entry.Message", 32, 400)
+                        {Header = Resources.MainWindowVM_InitDataGrid_MessageColumn_Header},
+                    new ColumnItem("Entry.Logger", 32, 100)
+                        {Header = Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header},
+                    new ColumnItem("Entry.MachineName", 32, 100, CellAlignment.CENTER)
+                        {Header = Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header},
+                    new ColumnItem("Entry.HostName", 32, 100, CellAlignment.CENTER)
+                        {Header = Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header},
+                    new ColumnItem("Entry.UserName", 32, 100, CellAlignment.CENTER)
+                        {Header = Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header},
+                    new ColumnItem("Entry.App", 32, 50)
+                        {Header = Resources.MainWindowVM_InitDataGrid_AppColumn_Header},
+                    new ColumnItem("Entry.Thread", 32, 50, CellAlignment.CENTER)
+                        {Header = Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header},
+                    new ColumnItem("Entry.Class", 32, 150)
+                        {Header = Resources.MainWindowVM_InitDataGrid_ClassColumn_Header},
+                    new ColumnItem("Entry.Method", 32, 150)
+                        {Header = Resources.MainWindowVM_InitDataGrid_MethodColumn_Header},
+                    new ColumnItem("Entry.Delta", 32, 50, CellAlignment.CENTER, null, "Δ")
+                        {IsColumnVisible = false},
+                    ////new ColumnItem("Path", 32)
+                };
 
                 ResetColumnProperties(columnFilterUpdate);
             }
@@ -201,9 +199,9 @@ namespace YalvLib.ViewModel
 
         #region Load Save Columns Layout
 
-        private static IList<ColumnItem> LoadColumnLayout(string pathFileName)
+        private static IList<IColumnItem> LoadColumnLayout(string pathFileName)
         {
-            IList<ColumnItem> loadedClass = null;
+            IList<IColumnItem> loadedClass = null;
             if (File.Exists(pathFileName))
             {
                 using (var readFileStream = new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -212,7 +210,7 @@ namespace YalvLib.ViewModel
                     {
                         var serializerObj = new XmlSerializer(typeof (List<ColumnItem>));
 
-                        loadedClass = (List<ColumnItem>) serializerObj.Deserialize(readFileStream);
+                        loadedClass = (List<IColumnItem>) serializerObj.Deserialize(readFileStream);
                     }
                     catch (Exception e)
                     {
@@ -229,11 +227,11 @@ namespace YalvLib.ViewModel
         }
 
         private static bool SaveColumnLayout(string settingsFileName,
-                                             IList<ColumnItem> iList)
+                                             IList<IColumnItem> iList)
         {
             try
             {
-                var vm = new List<ColumnItem>(iList);
+                var vm = new List<IColumnItem>(iList);
 
                 var xws = new XmlWriterSettings();
                 xws.NewLineOnAttributes = true;

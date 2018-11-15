@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YalvLib.Model;
-
-namespace YalvLib.Infrastructure
+﻿namespace YalvLib.Infrastructure
 {
+    using log4netLib.Enums;
+    using System;
+
     /// <summary>
     /// Implements a class that converts a string based level indication
     /// into a LevelIndex enum based value.
@@ -31,7 +28,5 @@ namespace YalvLib.Infrastructure
             }
             return levelIndexParsed;
         }
-
     }
-
 }

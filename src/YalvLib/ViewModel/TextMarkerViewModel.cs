@@ -1,12 +1,12 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows;
-using YalvLib.Common;
-using YalvLib.Model;
-using YalvLib.Strings;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using System;
+    using System.ComponentModel;
+    using System.Windows;
+    using YalvLib.Common;
+    using YalvLib.Model;
+    using log4netLib.Strings;
+
     /// <summary>
     /// View Model of a TextMarker, it binds the action on the views to functions
     /// </summary>

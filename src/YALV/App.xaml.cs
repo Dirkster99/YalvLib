@@ -73,7 +73,7 @@ namespace YALV
         var culture = ConfigurationManager.AppSettings["Culture"];
 
         if (!string.IsNullOrWhiteSpace(culture))
-          YalvLib.Strings.Resources.Culture = new CultureInfo(culture);
+          log4netLib.Strings.Resources.Culture = new CultureInfo(culture);
       }
       catch (Exception ex)
       {

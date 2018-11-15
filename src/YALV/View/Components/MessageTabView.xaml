@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Strings="clr-namespace:YalvLib.Strings;assembly=YalvLib" xmlns:local="clr-namespace:YALV.View.Components" x:Class="YALV.View.Components.MessageTabView"
+             xmlns:Strings="clr-namespace:log4netLib.Strings;assembly=log4netLib" xmlns:local="clr-namespace:YALV.View.Components" x:Class="YALV.View.Components.MessageTabView"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>

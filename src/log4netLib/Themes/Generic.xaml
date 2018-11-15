@@ -1,0 +1,9 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/log4netLib;component/Themes/LightBrushs.xaml"/>
+        <ResourceDictionary Source="/log4netLib;component/Controls/WatermarkTextBox.xaml"/>
+        <ResourceDictionary Source="/log4netLib;component/Controls/GridStyle.xaml"/>
+        <ResourceDictionary Source="/log4netLib;component/Controls/Log4NetView.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

@@ -11,9 +11,10 @@
     using System.Windows.Input;
     using System.Windows.Threading;
     using YalvLib.Common;
-    using YalvLib.Common.Interfaces;
     using YalvLib.Model;
-    using YalvLib.Strings;
+    using log4netLib.Strings;
+    using log4netLib.Enums;
+    using log4netLib.Interfaces;
 
     /// <summary>
     /// ViewModel class to organize all items relevant to a loaded logfile display
@@ -727,7 +728,8 @@
         /// <param name="col"></param>
         /// <param name="logitem"></param>
         /// <returns></returns>
-        public static bool MatchTextFilterColumn(ColumnsViewModel col, LogEntry logitem)
+        public static bool MatchTextFilterColumn(ColumnsViewModel col,
+                                                 ILogEntry logitem)
         {
             if (col != null)
             {
@@ -992,6 +994,7 @@
             {
                 if (MatchTextFilterColumn(mDataGridColumns, logitemVm.Entry) == false)
                     return false;
+
                 if (_filterViewModel.Evaluate(logitemVm.Entry) == false)
                     return false;
             }

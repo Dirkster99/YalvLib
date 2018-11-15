@@ -7,6 +7,7 @@
     using YalvLib.Model;
     using System.Globalization;
     using System.Threading;
+    using log4netLib.Enums;
 
     [TestClass]
     public class Log4jConverterTests

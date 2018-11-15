@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-
-namespace YalvLib.ViewModel.Process
+﻿namespace YalvLib.ViewModel.Process
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows.Threading;
+
     /// <summary>
     /// This class implements a task based log4net loader
     /// that can run in an async task and generate an event

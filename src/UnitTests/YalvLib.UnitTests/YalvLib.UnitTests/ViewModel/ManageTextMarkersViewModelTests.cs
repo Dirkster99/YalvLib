@@ -1,5 +1,6 @@
 ﻿namespace YalvLib.Tests.ViewModel
 {
+    using log4netLib.Interfaces;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;
@@ -26,7 +27,7 @@
         [TestMethod]
         public void GetTextMarkersViewModelsTest()
         {
-            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<LogEntry>() { _entry }, "plop", "Coincoin");
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<ILogEntry>() { _entry }, "plop", "Coincoin");
             List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
             _manageTextMarkers.GenerateViewModels(textMarkers);
             Assert.AreEqual(_manageTextMarkers.TextMarkerViewModels.Count, textMarkers.Count);
@@ -52,11 +53,11 @@
         [TestMethod]
         public void NotificationMarkerDelete()
         {
-            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<LogEntry>() {_entry}, "Hallo",
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<ILogEntry>() {_entry}, "Hallo",
                                                                          "c'est cotelette que vous comprenez pas?");
             List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
             _manageTextMarkers.GenerateViewModels(textMarkers);
-            _manageTextMarkers.SelectedEntries = new List<LogEntryRowViewModel>(){new LogEntryRowViewModel(_entry)};
+            _manageTextMarkers.SelectedEntries = new List<ILogEntryRowViewModel>(){new LogEntryRowViewModel(_entry)};
 
             EventHandler e = (sender, args) => Assert.IsInstanceOfType(sender, typeof(CommandRelay));
 

@@ -1,15 +1,16 @@
-﻿using YalvLib.Common;
-using YalvLib.Model;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using log4netLib.Interfaces;
+    using YalvLib.Common;
+    using YalvLib.Model;
+
     /// <summary>
     /// This class represent a row in the data grid
     /// </summary>
-    public class LogEntryRowViewModel : BindableObject
+    public class LogEntryRowViewModel : BindableObject, ILogEntryRowViewModel
     {
         private int _colorMarkerQuantity;
-        private LogEntry _entry;
+        private ILogEntry _entry;
         private int _textMarkerquantity;
 
         /// <summary>
@@ -60,10 +61,13 @@ namespace YalvLib.ViewModel
         /// <summary>
         /// Get / set the linked logEntry
         /// </summary>
-        public LogEntry Entry
+        public ILogEntry Entry
         {
             get { return _entry; }
-            private set { _entry = value; }
+            private set
+            {
+                _entry = value;
+            }
         }
 
         internal void UpdateTextMarkerQuantity()

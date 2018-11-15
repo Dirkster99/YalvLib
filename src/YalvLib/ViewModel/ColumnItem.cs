@@ -1,31 +1,17 @@
-﻿using System;
-using System.Xml.Serialization;
-using YalvLib.Common;
-using YalvLib.ViewModel.Common;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
-    /// <summary>
-    /// Indicate whether cells in a column are to be arranged by their default or center.
-    /// </summary>
-    public enum CellAlignment
-    {
-        /// <summary>
-        /// Apply default alignment in column.
-        /// </summary>
-        DEFAULT = 0,
-
-        /// <summary>
-        /// Center cell contents in a datagrid column.
-        /// </summary>
-        CENTER = 1
-    }
+    using log4netLib.Enums;
+    using log4netLib.Interfaces;
+    using log4netLib.Utils;
+    using System;
+    using System.Xml.Serialization;
+    using YalvLib.Common;
 
     /// <summary>
     /// Objects of this class store layout data about a column in a data grid
     /// </summary>
     [Serializable]
-    public class ColumnItem : BindableObject
+    public class ColumnItem : BindableObject, IColumnItem
     {
         #region fields
 

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using YalvLib.Common.Interfaces;
-
-namespace YalvLib.Common
+﻿namespace YalvLib.Common
 {
+    using log4netLib.Interfaces;
+    using System;
+
     /// <summary>
     /// Class to support command binding between view and viewmodels
     /// </summary>

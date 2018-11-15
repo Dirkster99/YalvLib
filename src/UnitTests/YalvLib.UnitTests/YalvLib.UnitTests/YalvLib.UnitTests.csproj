@@ -65,6 +65,10 @@
     <Compile Include="ViewModel\TextMarkerViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\log4netLib\log4netLib.csproj">
+      <Project>{5881dd09-2e74-4e58-94c4-d9f74c4512bf}</Project>
+      <Name>log4netLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\YalvLib\YalvLib.csproj">
       <Project>{5891d6c4-e0ce-4511-b689-b845491470f0}</Project>
       <Name>YalvLib</Name>

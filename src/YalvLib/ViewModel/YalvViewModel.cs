@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using YalvLib.Common;
-using YalvLib.Common.Interfaces;
-using YalvLib.Model;
-using YalvLib.Providers;
-using YalvLib.Strings;
-using YalvLib.ViewModel.Process;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Windows;
+    using YalvLib.Common;
+    using YalvLib.Model;
+    using YalvLib.Providers;
+    using log4netLib.Strings;
+    using YalvLib.ViewModel.Process;
+    using log4netLib.Interfaces;
+
     /// <summary>
     /// Main ViewModel of Valv Lib control
     /// </summary>
-    public class YalvViewModel : BindableObject
+    public class YalvViewModel : BindableObject, IYalvViewModel
     {
         #region fields
 
@@ -197,9 +197,6 @@ namespace YalvLib.ViewModel
         }
 
         #region Command
-
-
-
         /// <summary>
         /// Refresh Command
         /// </summary>
@@ -219,7 +216,6 @@ namespace YalvLib.ViewModel
         /// ChangeTextmarkers Command
         /// </summary>
         public ICommandAncestor CommandChangeTextMarkers { get; protected set; }
-
 
         /// <summary>
         /// Update calculatedDelta command
@@ -361,9 +357,8 @@ namespace YalvLib.ViewModel
 
         internal virtual bool CommandUpdateDeltaCanExecute(object obj)
         {
-            return ((IEnumerable<LogEntryRowViewModel>) obj).Count() == 2;
+            return ((IEnumerable<ILogEntryRowViewModel>) obj).Count() == 2;
         }
-
 
         private object CommandUpdateDeltaExecute(object arg)
         {

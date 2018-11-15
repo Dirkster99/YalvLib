@@ -1,5 +1,7 @@
 namespace YalvLib.Model
 {
+    using log4netLib.Enums;
+    using log4netLib.Interfaces;
     using System;
 
     /// <summary>
@@ -7,7 +9,7 @@ namespace YalvLib.Model
     /// (to model all entries in a log file)
     /// </summary>
     [Serializable]
-    public class LogEntry
+    public class LogEntry : ILogEntry
     {
         #region constructors
         /// <summary>

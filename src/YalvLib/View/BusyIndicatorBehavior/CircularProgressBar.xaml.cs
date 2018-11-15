@@ -15,7 +15,7 @@ namespace YalvLib.View.BusyIndicatorBehavior
         {
             this.InitializeComponent();
 
-            this.tbMessage.Text = YalvLib.Strings.Resources.CircularProgressBar_CircularProgressBar_BusyText;
+            this.tbMessage.Text = log4netLib.Strings.Resources.CircularProgressBar_CircularProgressBar_BusyText;
 
             Timeline.SetDesiredFrameRate(this.sbAnimation, BusyIndicatorBehavior.FRAMERATE);
         }

@@ -14,7 +14,7 @@
             this.InitializeComponent();
 
             FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string version = string.Format(YalvLib.Strings.Resources.About_Version_Text, verInfo != null ? verInfo.FileVersion : "---");
+            string version = string.Format(log4netLib.Strings.Resources.About_Version_Text, verInfo != null ? verInfo.FileVersion : "---");
             this.lblVersion.Text = version;
 
             string config1 = @"<log4net>

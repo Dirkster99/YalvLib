@@ -17,7 +17,7 @@
         {
             Not.LazyLoad();
             Id(x => x.Uid).GeneratedBy.Guid();
-            HasManyToMany(x => x.LogEntries);
+            HasManyToMany(x => x.LogEntries);  // Can't be done with interfaces :-(
             Map(x => x.DateCreation);
             Map(x => x.DateLastModification);
             Map(x => x.HighlightColor);

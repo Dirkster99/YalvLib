@@ -1,11 +1,11 @@
 ﻿namespace YalvLib.ViewModel
 {
+    using log4netLib.Interfaces;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using YalvLib.Common;
-    using YalvLib.Common.Interfaces;
     using YalvLib.Model;
 
     /// <summary>
@@ -14,7 +14,7 @@
     public class ManageTextMarkersViewModel : BindableObject, IManageTextMarkersViewModel
     {
         private readonly ObservableCollection<TextMarkerViewModel> _textMarkerVmList;
-        private List<LogEntryRowViewModel> _selectedEntries;
+        private List<ILogEntryRowViewModel> _selectedEntries;
         private TextMarkerViewModel _textMarkerAdd;
         private bool _displayOnlyCommonMarkers;
         private LogAnalysis _analysis;
@@ -25,7 +25,7 @@
         public ManageTextMarkersViewModel(LogAnalysis analysis)
         {
             _analysis = analysis;
-            _textMarkerAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty));
+            _textMarkerAdd = new TextMarkerViewModel(new TextMarker(new List<ILogEntry>(), string.Empty, string.Empty));
             _textMarkerVmList = new ObservableCollection<TextMarkerViewModel>();
             _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
             _textMarkerAdd.TextMarkerDeleted += ExecuteCancel;
@@ -89,7 +89,7 @@
         /// Getter / Setter for the list of entries
         /// selected by the user
         /// </summary>
-        public List<LogEntryRowViewModel> SelectedEntries
+        public List<ILogEntryRowViewModel> SelectedEntries
         {
             get { return _selectedEntries; }
             set { _selectedEntries = value; }
@@ -163,7 +163,7 @@
         /// <returns>null</returns>
         internal object CommandUpdateTextMarkersExecute(object arg)
         {
-            _selectedEntries = new List<LogEntryRowViewModel>((IEnumerable<LogEntryRowViewModel>) arg);
+            _selectedEntries = new List<ILogEntryRowViewModel>((IEnumerable<ILogEntryRowViewModel>) arg);
 
             IEnumerable<TextMarker> markers =
                 YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntries(
@@ -188,15 +188,14 @@
         {
             TextMarkerToAdd.TextMarkerDeleted -= ExecuteCancel;
             TextMarkerToAdd.CommandChangeTextMarker.Executed -= ExecuteChange;
-            TextMarkerToAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty));
+            TextMarkerToAdd = new TextMarkerViewModel(new TextMarker(new List<ILogEntry>(), string.Empty, string.Empty));
             TextMarkerToAdd.CommandChangeTextMarker.Executed += ExecuteChange;
             TextMarkerToAdd.TextMarkerDeleted += ExecuteCancel;
         }
 
-
         internal bool CommandUpdateTextMarkersCanExecute(object obj)
         {
-            return ((IEnumerable<LogEntryRowViewModel>) obj).Any();
+            return ((IEnumerable<ILogEntryRowViewModel>) obj).Any();
         }
 
         /// <summary>

@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YalvLib.Test.Integration", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YalvLib.UnitTests", "UnitTests\YalvLib.UnitTests\YalvLib.UnitTests\YalvLib.UnitTests.csproj", "{E5D9123E-315A-406E-80C8-143D91584168}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "log4netLib", "log4netLib\log4netLib.csproj", "{5881DD09-2E74-4E58-94C4-D9F74C4512BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -124,6 +126,26 @@ Global
 		{E5D9123E-315A-406E-80C8-143D91584168}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 		{E5D9123E-315A-406E-80C8-143D91584168}.SingleImage|x86.ActiveCfg = Release|Any CPU
 		{E5D9123E-315A-406E-80C8-143D91584168}.SingleImage|x86.Build.0 = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.CD_ROM|x86.Build.0 = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.Debug|x86.Build.0 = Debug|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.DVD-5|x86.Build.0 = Debug|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.Release|x86.ActiveCfg = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.Release|x86.Build.0 = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{5881DD09-2E74-4E58-94C4-D9F74C4512BF}.SingleImage|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

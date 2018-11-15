@@ -14,7 +14,7 @@
         /// </summary>
         public static CultureInfo ResolvedCulture
         {
-            get { return CultureInfo.GetCultureInfo(Strings.Resources.CultureName); }
+            get { return CultureInfo.GetCultureInfo(log4netLib.Strings.Resources.CultureName); }
         }
     }
 }
