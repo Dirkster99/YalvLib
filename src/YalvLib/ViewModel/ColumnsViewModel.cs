@@ -21,12 +21,11 @@
     public class ColumnsViewModel : BindableObject, IColumnsViewModel
     {
         #region fields
-        private IList<ColumnItem> _dataGridColumns;
+        private IList<IColumnItem> _dataGridColumns;
         private List<string> _filterProperties;
         #endregion fields
 
-        #region constructor
-
+        #region constructors
         /// <summary>
         /// Standard constructor
         /// </summary>
@@ -43,11 +42,9 @@
         {
             BuidColumns(columnFilterUpdate);
         }
-
-        #endregion constructor
+        #endregion constructors
 
         #region properties
-
         /// <summary>
         /// Return a list of columns to be displayed in a DataGrid view display
         /// </summary>
@@ -67,7 +64,7 @@
             {
                 for (int i = 0; i < _dataGridColumns.Count; i++)
                 {
-                    _dataGridColumns[i].ColumnFilterValue = string.Empty;
+                    _dataGridColumns[i].SetColumnFilterValue(string.Empty);
                 }
             }
         }
@@ -85,7 +82,7 @@
             for (int i = 0; i < _dataGridColumns.Count; i++)
             {
                 if (_dataGridColumns[i].ActualWidth != null)
-                    _dataGridColumns[i].Width = _dataGridColumns[i].ActualWidth.Width;
+                    _dataGridColumns[i].SetWidth(_dataGridColumns[i].ActualWidth.Width);
             }
 
             SaveColumnLayout(pathFileName, _dataGridColumns);
@@ -96,15 +93,15 @@
         /// </summary>
         /// <param name="columnFilterUpdate"></param>
         /// <param name="columnCollection"></param>
-        internal void SetColumnsLayout(List<ColumnItem> columnCollection,
+        internal void SetColumnsLayout(List<IColumnItem> columnCollection,
                                        EventHandler columnFilterUpdate = null)
         {
             try
             {
                 if (columnCollection != null)
-                    _dataGridColumns = new List<ColumnItem>(columnCollection);
+                    _dataGridColumns = new List<IColumnItem>(columnCollection);
                 else
-                    _dataGridColumns = new List<ColumnItem>();
+                    _dataGridColumns = new List<IColumnItem>();
 
                 ResetColumnProperties(columnFilterUpdate);
             }
@@ -138,37 +135,24 @@
         {
             try
             {
-                _dataGridColumns = new List<ColumnItem>
+                _dataGridColumns = new List<IColumnItem>
                 {
-                    new ColumnItem("Entry.GuId", 32, 50, CellAlignment.CENTER)
-                        {Header = Resources.MainWindowVM_InitDataGrid_IdMergeColumn_Header},
-                    new ColumnItem("Entry.Id", 32, 25, CellAlignment.CENTER, string.Empty)
-                        {Header = Resources.MainWindowVM_InitDataGrid_IdColumn_Header},
+                    new ColumnItem("Entry.GuId", 32, 50, CellAlignment.CENTER,null, Resources.MainWindowVM_InitDataGrid_IdMergeColumn_Header),
+                    new ColumnItem("Entry.Id", 32, 25, CellAlignment.CENTER, null, Resources.MainWindowVM_InitDataGrid_IdColumn_Header),
                     new ColumnItem("Entry.TimeStamp", 32, 100, CellAlignment.CENTER,
-                                    GlobalHelper.DisplayDateTimeFormat)
-                        {Header = Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header},
-                    new ColumnItem("Entry.LevelIndex", 32, 50, CellAlignment.CENTER)
-                        {Header = Resources.MainWindowVM_InitDataGrid_LevelColumn_Header},
-                    new ColumnItem("Entry.Message", 32, 400)
-                        {Header = Resources.MainWindowVM_InitDataGrid_MessageColumn_Header},
-                    new ColumnItem("Entry.Logger", 32, 100)
-                        {Header = Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header},
-                    new ColumnItem("Entry.MachineName", 32, 100, CellAlignment.CENTER)
-                        {Header = Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header},
-                    new ColumnItem("Entry.HostName", 32, 100, CellAlignment.CENTER)
-                        {Header = Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header},
-                    new ColumnItem("Entry.UserName", 32, 100, CellAlignment.CENTER)
-                        {Header = Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header},
-                    new ColumnItem("Entry.App", 32, 50)
-                        {Header = Resources.MainWindowVM_InitDataGrid_AppColumn_Header},
-                    new ColumnItem("Entry.Thread", 32, 50, CellAlignment.CENTER)
-                        {Header = Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header},
-                    new ColumnItem("Entry.Class", 32, 150)
-                        {Header = Resources.MainWindowVM_InitDataGrid_ClassColumn_Header},
-                    new ColumnItem("Entry.Method", 32, 150)
-                        {Header = Resources.MainWindowVM_InitDataGrid_MethodColumn_Header},
-                    new ColumnItem("Entry.Delta", 32, 50, CellAlignment.CENTER, null, "Δ")
-                        {IsColumnVisible = false},
+                                    GlobalHelper.DisplayDateTimeFormat,
+                                    Resources.MainWindowVM_InitDataGrid_TimeStampColumn_Header),
+                    new ColumnItem("Entry.LevelIndex", 32, 50, CellAlignment.CENTER, null, Resources.MainWindowVM_InitDataGrid_LevelColumn_Header),
+                    new ColumnItem("Entry.Message", 32, 400, CellAlignment.DEFAULT, null, Resources.MainWindowVM_InitDataGrid_MessageColumn_Header),
+                    new ColumnItem("Entry.Logger", 32, 100, CellAlignment.DEFAULT, null, Resources.MainWindowVM_InitDataGrid_LoggerColumn_Header),
+                    new ColumnItem("Entry.MachineName", 32, 100, CellAlignment.CENTER, null,Resources.MainWindowVM_InitDataGrid_MachineNameColumn_Header),
+                    new ColumnItem("Entry.HostName", 32, 100, CellAlignment.CENTER, null, Resources.MainWindowVM_InitDataGrid_HostNameColumn_Header),
+                    new ColumnItem("Entry.UserName", 32, 100, CellAlignment.CENTER, null, Resources.MainWindowVM_InitDataGrid_UserNameColumn_Header),
+                    new ColumnItem("Entry.App", 32, 50, CellAlignment.DEFAULT, null,Resources.MainWindowVM_InitDataGrid_AppColumn_Header),
+                    new ColumnItem("Entry.Thread", 32, 50, CellAlignment.CENTER, null,Resources.MainWindowVM_InitDataGrid_ThreadColumn_Header),
+                    new ColumnItem("Entry.Class", 32, 150, CellAlignment.DEFAULT, null,Resources.MainWindowVM_InitDataGrid_ClassColumn_Header),
+                    new ColumnItem("Entry.Method", 32, 150, CellAlignment.DEFAULT, null,Resources.MainWindowVM_InitDataGrid_MethodColumn_Header),
+                    new ColumnItem("Entry.Delta", 32, 50, CellAlignment.CENTER, null, "Δ", false)
                     ////new ColumnItem("Path", 32)
                 };
 
@@ -200,7 +184,7 @@
 
         #region Load Save Columns Layout
 
-        private static IList<ColumnItem> LoadColumnLayout(string pathFileName)
+        private static IList<IColumnItem> LoadColumnLayout(string pathFileName)
         {
             IList<ColumnItem> loadedClass = null;
             if (File.Exists(pathFileName))
@@ -213,6 +197,14 @@
 
                         loadedClass = (List<ColumnItem>)serializerObj.Deserialize(readFileStream);
                     }
+                    catch (XmlException e)
+                    {
+                        Console.WriteLine(string.Format("'{0}' Line: {1} Pos: {2}",
+                            e.Message, e.LineNumber, e.LinePosition));
+
+                        Console.WriteLine(e.StackTrace);
+                        return null;
+                    }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
@@ -224,15 +216,16 @@
                     }
                 }
             }
-            return loadedClass;
+
+            return loadedClass.Cast<IColumnItem>().ToList();
         }
 
         private static bool SaveColumnLayout(string settingsFileName,
-                                             IList<ColumnItem> iList)
+                                             IList<IColumnItem> iList)
         {
             try
             {
-                var vm = new List<ColumnItem>(iList);
+                var vm = new List<ColumnItem>(iList.Cast<ColumnItem>());
 
                 var xws = new XmlWriterSettings();
                 xws.NewLineOnAttributes = true;

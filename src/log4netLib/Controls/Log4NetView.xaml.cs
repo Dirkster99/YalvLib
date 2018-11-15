@@ -124,7 +124,7 @@
             if (col == null)
                 return;
 
-            col.ColumnFilterValue = tb.Text;
+            col.SetColumnFilterValue(tb.Text);
         }
 
         /// <summary>

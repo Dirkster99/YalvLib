@@ -119,7 +119,8 @@
                     if (watermarkTextbox != null)
                         txt.Style = watermarkTextbox;
 
-                    columnVm.FilterControlName = txt.Name = GetTextBoxName(columnVm.Field);
+                    txt.Name = GetTextBoxName(columnVm.Field);
+                    columnVm.SetFilterControlName(txt.Name);
                     txt.ToolTip =
                         string.Format(
                             Strings.Resources.FilteredGridManager_BuildDataGrid_FilterTextBox_Tooltip,

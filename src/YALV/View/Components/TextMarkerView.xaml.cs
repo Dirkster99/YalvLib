@@ -1,10 +1,9 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using YalvLib.ViewModel;
-
-namespace YALV.View.Components
+﻿namespace YALV.View.Components
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using YalvLib.ViewModel;
+
     /// <summary>
     /// Interaction logic for TextMarkerView.xaml
     /// </summary>

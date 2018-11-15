@@ -766,7 +766,7 @@
         /// Set the column layout indicated by the <paramref name="columnCollection"/> parameter
         /// </summary>
         /// <param name="columnCollection"></param>
-        public void SetColumnsLayout(List<ColumnItem> columnCollection)
+        public void SetColumnsLayout(List<IColumnItem> columnCollection)
         {
             mDataGridColumns.SetColumnsLayout(columnCollection,
                                               ColumnsVmUpdateColumnFilter);
