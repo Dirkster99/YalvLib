@@ -20,6 +20,7 @@
         /// </summary>
         /// <param name="path">path of the file</param>
         public LogEntryFileRepository(string path)
+            : this()
         {
             Path = path;
             AbstractEntriesProviderBase provider = EntriesProviderFactory.GetProvider();

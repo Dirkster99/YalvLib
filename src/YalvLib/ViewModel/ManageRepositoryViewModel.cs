@@ -21,35 +21,26 @@
     public class ManageRepositoryViewModel : BindableObject
     {
         #region fields
-
         private bool _isLoading;
-
+        private bool _isFileLoaded;
+        private readonly ObservableCollection<RepositoryViewModel> _repositories;
         #endregion fields
 
-        private bool _isFileLoaded;
-        private ObservableCollection<RepositoryViewModel> _repositories;
-
         #region Constructors
-
         /// <Summary>
         /// Standard constructor of the <seealso cref="ManageRepositoryViewModel"/> class
         /// </Summary>
         public ManageRepositoryViewModel()
         {
-            InitRepositories();
             _isFileLoaded = false;
             _isLoading = false;
-        }
 
-        private void InitRepositories()
-        {
             _repositories = new ObservableCollection<RepositoryViewModel>();
             foreach (var repo in YalvRegistry.Instance.ActualWorkspace.SourceRepositories)
             {
                 _repositories.Add(new RepositoryViewModel(repo));
             }
         }
-
         #endregion Constructors
 
         #region Properties
@@ -87,10 +78,11 @@
         }
 
         /// <summary>
-        /// Get / Set the provider type. Used to be able to read different files
+        /// Gets the provider type.
+        /// Used to be able to read log data from different data sources
+        /// (eg.: files or DB Server database etc ...)
         /// </summary>
-        public EntriesProviderType ProviderType { get; set; }
-
+        public EntriesProviderType ProviderType { get; protected set; }
 
         /// <summary>
         /// Get a the file system path of the log file
@@ -98,14 +90,6 @@
         public ObservableCollection<RepositoryViewModel> Repositories
         {
             get { return (_repositories ?? new ObservableCollection<RepositoryViewModel>()); }
-            internal set
-            {
-                if (_repositories != value)
-                {
-                    _repositories = value;
-                    NotifyPropertyChanged(() => Repositories);
-                }
-            }
         }
 
         /// <summary>
@@ -300,7 +284,7 @@
                         // If this is the first file or the file hasnt be loaded yet, we can add it to the repo
                         if ((vm.Repositories.Any() && !reposPath.Contains(path)) || !vm.Repositories.Any())
                         {
-                            listRepo.Add(vm.CreateLogFileEntryRepository(path));
+                            listRepo.Add(vm.CreateLogFileEntryRepository(path, ProviderType));
                         }
                         else
                         {
@@ -333,15 +317,26 @@
             }
         }
 
-        private LogEntryRepository CreateLogFileEntryRepository(string path)
+        /// <summary>
+        /// Creates a log entry model object that can hold common log4net
+        /// imput information as well as specialied information that is
+        /// applicable to a given data source (eg. file or DB server) only.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="providerType"></param>
+        /// <returns></returns>
+        private LogEntryRepository CreateLogFileEntryRepository(string path,
+                                                                EntriesProviderType providerType)
         {
-            switch (ProviderType)
+            switch (providerType)
             {
                 case EntriesProviderType.Sqlite:
                     return new LogEntrySqliteRepository(path);
+
                 case EntriesProviderType.Xml:
                     return new LogEntryFileRepository(path);
             }
+
             return null;
         }
 
@@ -360,7 +355,7 @@
                 // Delete all selected file
                 if (DeleteFiles(Repositories))
                 {
-                    Repositories = new ObservableCollection<RepositoryViewModel>();
+                    Repositories.Clear();
                     IsFileLoaded = false;
                 }
             }

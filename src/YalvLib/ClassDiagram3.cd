@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="YalvLib.Common.BindableObject" Collapsed="true">
-    <Position X="12.75" Y="2" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAACQAAAEIAAAAAAAAAAgEAACAAAAAAAAAAgAAA=</HashCode>
       <FileName>Common\BindableObject.cs</FileName>
@@ -231,22 +231,37 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="YalvLib.Model.LogEntryFileRepository" Collapsed="true">
-    <Position X="0.5" Y="12.75" Width="1.5" />
+  <Class Name="YalvLib.Model.LogEntryFileRepository">
+    <Position X="0.5" Y="22" Width="2" />
+    <InheritanceLine Type="YalvLib.Model.LogEntryRepository" FixedToPoint="true">
+      <Path>
+        <Point X="1.375" Y="21.267" />
+        <Point X="1.375" Y="22" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\LogEntryFileRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="YalvLib.Model.LogEntryRepository" Collapsed="true">
-    <Position X="1.75" Y="11.5" Width="1.5" />
+  <Class Name="YalvLib.Model.LogEntryRepository">
+    <Position X="0.5" Y="18.75" Width="1.75" />
+    <Members>
+      <Field Name="_lastLogEntry" Hidden="true" />
+      <Field Name="_logEntries" Hidden="true" />
+      <Field Name="Active" Hidden="true" />
+      <Field Name="Path" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>gCAAAAAACAAAAgIAgBAAAAAAABAAQIAkAAAAAAAAAAA=</HashCode>
       <FileName>Model\LogEntryRepository.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LogEntries" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="YalvLib.Model.LogEntrySqliteRepository" Collapsed="true">
-    <Position X="2.75" Y="12.75" Width="1.5" />
+  <Class Name="YalvLib.Model.LogEntrySqliteRepository">
+    <Position X="3" Y="22" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\LogEntrySqliteRepository.cs</FileName>
@@ -274,49 +289,49 @@
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.AfterOperator" Collapsed="true">
-    <Position X="0.75" Y="5.75" Width="1.5" />
+    <Position X="10.25" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\AfterOperator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.And" Collapsed="true">
-    <Position X="8.5" Y="11.75" Width="1.5" />
+    <Position X="11.25" Y="19.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\And.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.BeforeOperator" Collapsed="true">
-    <Position X="3" Y="5.75" Width="1.5" />
+    <Position X="12.5" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\BeforeOperator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.BinaryExpression" Collapsed="true">
-    <Position X="8.75" Y="8.75" Width="1.5" />
+    <Position X="11.5" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAFAAAAACAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\BinaryExpression.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.BinaryOperator" Collapsed="true">
-    <Position X="9.75" Y="10.5" Width="1.5" />
+    <Position X="12.5" Y="18.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\BinaryOperator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.BooleanExpression" Collapsed="true">
-    <Position X="11" Y="7.5" Width="1.5" />
+    <Position X="13.75" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\BooleanExpression.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.ContainsOperator" Collapsed="true">
-    <Position X="5.25" Y="5.75" Width="1.5" />
+    <Position X="14.75" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\ContainsOperator.cs</FileName>
@@ -330,14 +345,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.EqualsOperator" Collapsed="true">
-    <Position X="7.5" Y="5.75" Width="1.5" />
+    <Position X="17" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\EqualsOperator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.HasExpression" Collapsed="true">
-    <Position X="13.25" Y="8.75" Width="1.5" />
+    <Position X="16" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\HasExpression.cs</FileName>
@@ -351,21 +366,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.Operator" Collapsed="true">
-    <Position X="4" Y="4.5" Width="1.5" />
+    <Position X="13.5" Y="13" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\Operator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.Or" Collapsed="true">
-    <Position X="10.75" Y="11.75" Width="1.5" />
+    <Position X="13.5" Y="19.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\Or.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.Model.Filter.SimpleExpression" Collapsed="true">
-    <Position X="11" Y="8.75" Width="1.5" />
+    <Position X="13.75" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EQAAACAACBAAAIAAAAAAAgAAAAgEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Filter\SimpleExpression.cs</FileName>
@@ -486,7 +501,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.ViewModel.ColumnItem" Collapsed="true">
-    <Position X="12.75" Y="3.5" Width="1.5" />
+    <Position X="13.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>DBIAAAAACgAAEBAAASAQAEEAABAAAAEQAAAYAQAAgAQ=</HashCode>
       <FileName>ViewModel\ColumnItem.cs</FileName>
@@ -494,7 +509,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="YalvLib.ViewModel.ColumnsViewModel" Collapsed="true">
-    <Position X="15" Y="3.5" Width="1.5" />
+    <Position X="15.25" Y="2" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAEACAAAgAEBAAAAAAAAAAACAIAAAAAAAAACIAQQA=</HashCode>
       <FileName>ViewModel\ColumnsViewModel.cs</FileName>
@@ -502,28 +517,28 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="YalvLib.ViewModel.DisplayLogViewModel" Collapsed="true">
-    <Position X="17.25" Y="3.5" Width="1.5" />
+    <Position X="17.5" Y="2" Width="1.75" />
     <TypeIdentifier>
       <HashCode>ZBt7cA5tI7paqACQgSIDYWEBW3gmSh1EGx5AdScTIA4=</HashCode>
       <FileName>ViewModel\DisplayLogViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.ViewModel.FilterConverterViewModel" Collapsed="true">
-    <Position X="21.75" Y="3.5" Width="1.5" />
+    <Position X="21.75" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>AACAAAgAAgAABAABAAAARgQAAAAAAQSAAIAQBQQAAAA=</HashCode>
       <FileName>ViewModel\FilterConverterViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.ViewModel.FilterQueryViewModel" Collapsed="true">
-    <Position X="1.5" Y="3.5" Width="1.5" />
+    <Position X="0.5" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAgARAAABABAAAIAhAAAQAAACAAA=</HashCode>
       <FileName>ViewModel\FilterQueryViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.ViewModel.LogEntryRowViewModel" Collapsed="true">
-    <Position X="3.75" Y="3.5" Width="1.5" />
+    <Position X="3" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAgQAAAAAAAAAAAAUAAAAAABBAAAAAAAIAAAAAIAAAA=</HashCode>
       <FileName>ViewModel\LogEntryRowViewModel.cs</FileName>
@@ -531,14 +546,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="YalvLib.ViewModel.ManageRepositoryViewModel" Collapsed="true">
-    <Position X="6" Y="3.5" Width="1.5" />
+    <Position X="5.5" Y="1.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAOCACAIYAAgIBAQAACAACAAACAAAAAAAhAI=</HashCode>
       <FileName>ViewModel\ManageRepositoryViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.ViewModel.ManageTextMarkersViewModel" Collapsed="true">
-    <Position X="8.25" Y="3.5" Width="1.5" />
+    <Position X="8" Y="1.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>ADAACIAAICgAIAAAAGAAAAACAAIABAAIACCSBAIAgAA=</HashCode>
       <FileName>ViewModel\ManageTextMarkersViewModel.cs</FileName>
@@ -546,7 +561,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="YalvLib.ViewModel.RepositoryViewModel" Collapsed="true">
-    <Position X="10.5" Y="3.5" Width="1.5" />
+    <Position X="11" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAABAYSAIBABAIAAIAABAAAAAIQAAAgAAAAAIAAAAA=</HashCode>
       <FileName>ViewModel\RepositoryViewModel.cs</FileName>
@@ -567,14 +582,22 @@
     </TypeIdentifier>
   </Class>
   <Class Name="YalvLib.ViewModel.TextMarkerViewModel" Collapsed="true">
-    <Position X="19.5" Y="3.5" Width="1.5" />
+    <Position X="19.5" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>IACAAAABAAAAgACAkYCQAQAIEAAgACAAEAAAIACBBAE=</HashCode>
       <FileName>ViewModel\TextMarkerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="YalvLib.ViewModel.YalvViewModel" Collapsed="true">
-    <Position X="24" Y="3.5" Width="1.5" />
+  <Class Name="YalvLib.ViewModel.YalvViewModel">
+    <Position X="0.5" Y="3.25" Width="2.25" />
+    <Members>
+      <Field Name="_calculatedDelta" Hidden="true" />
+      <Field Name="_fileLoader" Hidden="true" />
+      <Field Name="_logAnalysis" Hidden="true" />
+      <Field Name="_logEntryRows" Hidden="true" />
+      <Field Name="_manageRepoViewModel" Hidden="true" />
+      <Field Name="_manageTextMarkersViewModel" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>ACQDAAIAAQIICAAAHIAEAIQiIgAAwCAFAABADCACBAI=</HashCode>
       <FileName>ViewModel\YalvViewModel.cs</FileName>
@@ -601,6 +624,10 @@
       <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModel\IManageTextMarkersViewModel.cs</FileName>
     </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Collections.Generic.IList&lt;T&gt;" Collapsed="true">
+    <Position X="3.5" Y="18.75" Width="1.5" />
+    <TypeIdentifier />
   </Interface>
   <Enum Name="YalvLib.Providers.EntriesProviderType" Collapsed="true">
     <Position X="26.5" Y="8.75" Width="1.5" />
