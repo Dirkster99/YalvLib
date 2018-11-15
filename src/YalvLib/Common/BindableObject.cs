@@ -17,7 +17,7 @@ namespace YalvLib.Common
     /// Refs: http://www.codeproject.com/KB/WPF/WPF_NHibernate_Validator.aspx
     /// </summary>
     [Serializable]
-    public abstract class BindableObject : DisposableObject, INotifyPropertyChanged
+    public abstract class BindableObject : INotifyPropertyChanged
     {
         private static readonly Dictionary<string, PropertyChangedEventArgs> _EventArgCache;
         private static readonly object _SyncLock = new object();

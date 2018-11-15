@@ -15,7 +15,7 @@
     using YalvLib.ViewModel;
     using log4netLib.Interfaces;
 
-    internal class MainWindowVM : BindableObject
+    internal class MainWindowVM : BindableObject, IDisposable
     {
         #region fields
         public const string PropTitle = "Title";
@@ -26,6 +26,7 @@
         private readonly YalvViewModel _yalvLogViewModel;
         private readonly LogAnalysisWorkspace _workspace;
         private RecentFileList _recentFileList;
+        private bool _Disposed = false;
 
         /// <summary>
         /// Window to which the viewmodel is attached to
@@ -327,13 +328,53 @@
         }
         #endregion Commands
 
-        protected override void OnDispose()
+        #region IDisposable
+        /// <summary>
+        /// Public implementation of Dispose pattern callable by consumers.
+        /// (required by IDisposable interface)
+        /// </summary>
+        public void Dispose()
         {
-            if (_yalvLogViewModel != null)
-                _yalvLogViewModel.Dispose();
+            this.Dispose(true);
 
-            base.OnDispose();
+            // Use SupressFinalize in case a subclass
+            // of this type implements a finalizer.
+            GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Protected implementation of Dispose pattern -
+        /// to enable inheriting classes to participate in this pattern.
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected void Dispose(bool disposing)
+        {
+            // If you need thread safety, use a lock around these 
+            // operations, as well as in your methods that use the resource.
+            if (!this._Disposed)
+            {
+                if (disposing)
+                {
+////                    if (_yalvLogViewModel != null)
+////                        _yalvLogViewModel.Dispose();
+
+                    this.OnDispose();
+                }
+
+                // Indicate that the instance has been disposed.
+                this._Disposed = true;
+            }
+        }
+
+        /// <summary>
+        /// Protected override-able implementation of Dispose pattern -
+        /// to enable inheriting classes to participate in this pattern
+        /// by overriding the original dispose implementation.
+        /// </summary>
+        protected virtual void OnDispose()
+        {
+        }
+        #endregion IDisposable
 
         private void UpdateJumpList()
         {
@@ -353,16 +394,17 @@
                     try
                     {
                         var myJumpTask = new JumpTask
-                                             {
-                                                 CustomCategory =
-                                                     log4netLib.Strings.Resources.
-                                                     MainWindowVM_updateJumpList_CustomCategoryName,
-                                                 Title = Path.GetFileName(item),
-                                                 ApplicationPath =
-                                                     Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                                                                  AppDomain.CurrentDomain.FriendlyName),
-                                                 Arguments = item
-                                             };
+                        {
+                            CustomCategory =
+                                log4netLib.Strings.Resources.
+                                MainWindowVM_updateJumpList_CustomCategoryName,
+                            Title = Path.GetFileName(item),
+                            ApplicationPath =
+                                Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                            AppDomain.CurrentDomain.FriendlyName),
+                            Arguments = item
+                        };
+
                         ////myJumpTask.Description = "";
                         myJumpList.JumpItems.Add(myJumpTask);
                     }

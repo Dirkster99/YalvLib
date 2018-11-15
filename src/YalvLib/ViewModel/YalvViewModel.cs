@@ -228,11 +228,9 @@
         public ICommandAncestor CommandCancelProcessing { get; protected set; }
 
         #endregion Command
-
         #endregion properties
 
         #region methods
-
         private void ManageRepoViewModelOnPropertyChanged(object sender,
                                                           PropertyChangedEventArgs propertyChangedEventArgs)
         {

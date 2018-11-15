@@ -93,7 +93,6 @@
   <ItemGroup>
     <Compile Include="Common\BindableObject.cs" />
     <Compile Include="Common\CommandRelay.cs" />
-    <Compile Include="Common\DisposableObject.cs" />
     <Compile Include="Common\Exceptions\NotValidValueException.cs" />
     <Compile Include="Common\GlobalHelper.cs" />
     <Compile Include="Common\Converter\StringEmptyToVisibilityConverter.cs" />

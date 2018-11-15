@@ -16,14 +16,6 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="YalvLib.Common.DisposableObject" Collapsed="true">
-    <Position X="12.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAACAAA=</HashCode>
-      <FileName>Common\DisposableObject.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="YalvLib.Common.GlobalHelper" Collapsed="true">
     <Position X="30" Y="2.5" Width="1.5" />
     <TypeIdentifier>
