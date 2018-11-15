@@ -1,29 +1,22 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using System.Text;
-using System.Xml.Linq;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using YalvLib.Exceptions;
-using YalvLib.Infrastructure;
-using YalvLib.Infrastructure.Log4Net;
-using YalvLib.Model;
-
-namespace YalvLib.Providers
+﻿namespace YalvLib.Providers
 {
+    using System.Text;
+    using System.Xml.Schema;
+    using System.Xml.Serialization;
+    using YalvLib.Exceptions;
+    using YalvLib.Infrastructure.Log4Net;
+    using YalvLib.Model;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml;
-
-    using YalvLib.Common;
     using YalvLib.Domain;
-    using YalvLib.ViewModel;
 
     internal class XmlEntriesProvider : AbstractEntriesProviderBase
     {
 
         private const string Log4jNs = "http://jakarta.apache.org/log4j";
-        private List<string> _xmlParserMess = new List<string>(); 
+        private List<string> _xmlParserMess = new List<string>();
 
         public override IEnumerable<LogEntry> GetEntries(string dataSource, FilterParams filter)
         {
@@ -66,13 +59,14 @@ namespace YalvLib.Providers
                         Event log4jEvent = Deserialize(xr);
                         try
                         {
-                             entry = Event2LogEntry.Convert(log4jEvent);
-                        }catch(Exception ex)
-                        {
-                            IXmlLineInfo xmlInfo = (IXmlLineInfo) xr;
-                            throw new Exception(string.Format("Error parsing file {0}, on line number {1}, on position {2}",dataSource, xmlInfo.LineNumber, xmlInfo.LinePosition), ex);
+                            entry = Event2LogEntry.Convert(log4jEvent);
                         }
-                        
+                        catch (Exception ex)
+                        {
+                            IXmlLineInfo xmlInfo = (IXmlLineInfo)xr;
+                            throw new Exception(string.Format("Error parsing file {0}, on line number {1}, on position {2}", dataSource, xmlInfo.LineNumber, xmlInfo.LinePosition), ex);
+                        }
+
                         entries.Add(entry);
                         // [FT] We may need that in the future.
                         //        if (filterByParameters(entry, filter))
@@ -84,7 +78,7 @@ namespace YalvLib.Providers
                 }
             }
             settings.ValidationEventHandler -= settings_ValidationEventHandler;
-            if(entries.Count == 0)
+            if (entries.Count == 0)
             {
                 throw new NotValidValueException("No valid entries were found. Please check your data file.");
             }
@@ -93,16 +87,19 @@ namespace YalvLib.Providers
 
         private void settings_ValidationEventHandler(object sender, ValidationEventArgs e)
         {
-            switch(e.Severity)
+            switch (e.Severity)
             {
-                case XmlSeverityType.Warning: _xmlParserMess.Add(string.Format("Warning : line {0}, Position {1} \n {2}", 
-                    e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
+                case XmlSeverityType.Warning:
+                    _xmlParserMess.Add(string.Format("Warning : line {0}, Position {1} \n {2}",
+e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
                     break;
-                case XmlSeverityType.Error: _xmlParserMess.Add(string.Format("Error : line {0}, Position {1} \n {2}",
-                     e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
+                case XmlSeverityType.Error:
+                    _xmlParserMess.Add(string.Format("Error : line {0}, Position {1} \n {2}",
+e.Exception.LineNumber, e.Exception.LinePosition, e.Exception.Message));
                     break;
-                default: _xmlParserMess.Add(string.Format("Unhandled severity type : {0} {1}",
-                    e.Severity, e.Exception.Message));
+                default:
+                    _xmlParserMess.Add(string.Format("Unhandled severity type : {0} {1}",
+               e.Severity, e.Exception.Message));
                     break;
             }
         }
@@ -125,7 +122,7 @@ namespace YalvLib.Providers
 
         private static XmlRootAttribute CreateRootAttribute()
         {
-            var rootAttribute = new XmlRootAttribute {ElementName = "event", Namespace = Log4jNs, IsNullable = true};
+            var rootAttribute = new XmlRootAttribute { ElementName = "event", Namespace = Log4jNs, IsNullable = true };
             return rootAttribute;
         }
 

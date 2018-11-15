@@ -11,6 +11,7 @@
     using System.Xml.Serialization;
     using YalvLib.Common;
     using log4netLib.Strings;
+    using System.Linq;
 
     /// <summary>
     /// ViewModel class to organize all items that apply on a column of the log4net (YalvView) column.
@@ -20,7 +21,7 @@
     public class ColumnsViewModel : BindableObject, IColumnsViewModel
     {
         #region fields
-        private IList<IColumnItem> _dataGridColumns;
+        private IList<ColumnItem> _dataGridColumns;
         private List<string> _filterProperties;
         #endregion fields
 
@@ -52,7 +53,7 @@
         /// </summary>
         public IList<IColumnItem> DataGridColumns
         {
-            get { return _dataGridColumns; }
+            get { return _dataGridColumns.Cast<IColumnItem>().ToList(); }
         }
         #endregion properties
 
@@ -87,7 +88,7 @@
                     _dataGridColumns[i].Width = _dataGridColumns[i].ActualWidth.Width;
             }
 
-            SaveColumnLayout(pathFileName, DataGridColumns);
+            SaveColumnLayout(pathFileName, _dataGridColumns);
         }
 
         /// <summary>
@@ -101,9 +102,9 @@
             try
             {
                 if (columnCollection != null)
-                    _dataGridColumns = new List<IColumnItem>(columnCollection);
+                    _dataGridColumns = new List<ColumnItem>(columnCollection);
                 else
-                    _dataGridColumns = new List<IColumnItem>();
+                    _dataGridColumns = new List<ColumnItem>();
 
                 ResetColumnProperties(columnFilterUpdate);
             }
@@ -137,7 +138,7 @@
         {
             try
             {
-                _dataGridColumns = new List<IColumnItem>
+                _dataGridColumns = new List<ColumnItem>
                 {
                     new ColumnItem("Entry.GuId", 32, 50, CellAlignment.CENTER)
                         {Header = Resources.MainWindowVM_InitDataGrid_IdMergeColumn_Header},
@@ -199,18 +200,18 @@
 
         #region Load Save Columns Layout
 
-        private static IList<IColumnItem> LoadColumnLayout(string pathFileName)
+        private static IList<ColumnItem> LoadColumnLayout(string pathFileName)
         {
-            IList<IColumnItem> loadedClass = null;
+            IList<ColumnItem> loadedClass = null;
             if (File.Exists(pathFileName))
             {
                 using (var readFileStream = new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     try
                     {
-                        var serializerObj = new XmlSerializer(typeof (List<ColumnItem>));
+                        var serializerObj = new XmlSerializer(typeof(List<ColumnItem>));
 
-                        loadedClass = (List<IColumnItem>) serializerObj.Deserialize(readFileStream);
+                        loadedClass = (List<ColumnItem>)serializerObj.Deserialize(readFileStream);
                     }
                     catch (Exception e)
                     {
@@ -227,11 +228,11 @@
         }
 
         private static bool SaveColumnLayout(string settingsFileName,
-                                             IList<IColumnItem> iList)
+                                             IList<ColumnItem> iList)
         {
             try
             {
-                var vm = new List<IColumnItem>(iList);
+                var vm = new List<ColumnItem>(iList);
 
                 var xws = new XmlWriterSettings();
                 xws.NewLineOnAttributes = true;
@@ -242,7 +243,7 @@
                 using (XmlWriter xw = XmlWriter.Create(settingsFileName, xws))
                 {
                     // Create a new XmlSerializer instance with the type of the class
-                    var serializerObj = new XmlSerializer(typeof (List<ColumnItem>));
+                    var serializerObj = new XmlSerializer(typeof(List<ColumnItem>));
                     serializerObj.Serialize(xw, vm);
                     xw.Close();
                     return true;

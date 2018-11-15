@@ -1,12 +1,12 @@
-using log4netLib.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-
 namespace YalvLib.Model
 {
-    
+    using log4netLib.Interfaces;
+    using YalvLib.Model;
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+
     /// <summary>
     /// This class is some acting as a layer where markers, custom filters and
     /// others features will be add to analyse the datas
@@ -34,7 +34,7 @@ namespace YalvLib.Model
         /// <summary>
         /// Get / Set the filters list
         /// </summary>
-        public IList<CustomFilter> Filters { get; private set; } 
+        public IList<CustomFilter> Filters { get; private set; }
 
         /// <summary>
         /// Return the list of TextMarkers
@@ -44,12 +44,12 @@ namespace YalvLib.Model
             get { return Markers.Where(x => x is TextMarker).Cast<TextMarker>().ToList(); }
             set
             {
-                foreach(var marker in value)
+                foreach (var marker in value)
                 {
-                    if(!Markers.Contains(marker))
+                    if (!Markers.Contains(marker))
                         Markers.Add(marker);
                 }
-                    
+
             }
         }
 
@@ -94,7 +94,7 @@ namespace YalvLib.Model
         /// <param name="author">Author of the TextMarker</param>
         /// <param name="message">Message of the Textmarker</param>
         /// <returns></returns>
-        public TextMarker AddTextMarker(List<ILogEntry> list,
+        public TextMarker AddTextMarker(List<LogEntry> list,
                                         string author,
                                         string message)
         {
@@ -111,7 +111,7 @@ namespace YalvLib.Model
         /// <returns>Markers</returns>
         public TextMarker AddTextMarker(IEnumerable<ILogEntry> list, TextMarker marker)
         {
-            marker.LogEntries = list.ToList();
+            marker.LogEntries = list.Cast<LogEntry>().ToList();
             Markers.Add(marker);
             return marker;
         }
@@ -135,8 +135,8 @@ namespace YalvLib.Model
         public void RemoveTextMarker(LogEntry entry)
         {
             foreach (TextMarker marker in TextMarkers)
-            {   
-                if(marker.LogEntries.Remove(entry) && !IsMultiMarker(marker))
+            {
+                if (marker.LogEntries.Remove(entry) && !IsMultiMarker(marker))
                     DeleteTextMarker(marker);
             }
         }
@@ -161,7 +161,7 @@ namespace YalvLib.Model
         public List<TextMarker> GetTextMarkersForEntry(ILogEntry entry)
         {
             var result = new List<TextMarker>();
-            foreach(var textmarker in TextMarkers)
+            foreach (var textmarker in TextMarkers)
             {
                 if (textmarker.LogEntries != null)
                 {
@@ -180,9 +180,9 @@ namespace YalvLib.Model
         public List<TextMarker> GetTextMarkersForEntries(IEnumerable<ILogEntry> logEntries)
         {
             var markers = new List<TextMarker>();
-            foreach(var entry in logEntries)
+            foreach (var entry in logEntries)
             {
-                markers.AddRange(GetTextMarkersForEntry(entry).Where(x=> !markers.Contains(x)));
+                markers.AddRange(GetTextMarkersForEntry(entry).Where(x => !markers.Contains(x)));
             }
             return markers;
         }
@@ -215,7 +215,7 @@ namespace YalvLib.Model
         /// <param name="color">Color of the marker</param>
         public void SetColorMarker(List<LogEntry> list, Color color)
         {
-            foreach(var entry in list)
+            foreach (var entry in list)
                 GetColorMarker(color).LogEntries.Add(entry);
         }
 

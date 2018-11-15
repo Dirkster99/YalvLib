@@ -1,5 +1,6 @@
 ﻿namespace YalvLib.Model
 {
+    using YalvLib.Model;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;

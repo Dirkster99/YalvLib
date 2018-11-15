@@ -1,9 +1,9 @@
 ﻿namespace YalvLib.UnitTests.Model
 {
     using log4netLib.Enums;
+    using YalvLib.Model;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
-    using YalvLib.Model;
 
     [TestClass]
     public class LogEntryTests

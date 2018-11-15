@@ -1,6 +1,5 @@
 ﻿namespace YalvLib.Model
 {
-    using log4netLib.Interfaces;
     using System.Collections.Generic;
     using System.Drawing;
 
@@ -14,7 +13,7 @@
         /// </summary>
         /// <param name="entries">Entries linked to the marker</param>
         /// <param name="color">highlight color</param>
-        public ColorMarker(List<ILogEntry> entries, Color color)
+        public ColorMarker(List<LogEntry> entries, Color color)
             : base(entries)
         {
             HighlightColor = color;
@@ -26,7 +25,7 @@
         /// </summary>
         /// <param name="color">Color of the ColorMarker</param>
         public ColorMarker(Color color)
-            : this(new List<ILogEntry>(), color)
+            : this(new List<LogEntry>(), color)
         {
         }
 

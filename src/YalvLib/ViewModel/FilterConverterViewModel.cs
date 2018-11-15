@@ -1,15 +1,15 @@
-﻿using log4netLib.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using YalvLib.Common;
-using YalvLib.Model;
-using YalvLib.Model.Filter;
-using YalvLib.ViewModel.Common;
-using StringConverter = YalvLib.Common.Converter.StringConverter;
-
-namespace YalvLib.ViewModel
+﻿namespace YalvLib.ViewModel
 {
+    using log4netLib.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using YalvLib.Common;
+    using YalvLib.Common.Converter;
+    using YalvLib.Model;
+    using YalvLib.Model.Filter;
+    using YalvLib.ViewModel.Common;
+
     /// <summary>
     /// Parse the filter query and evaluate with a specific context
     /// </summary>

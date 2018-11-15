@@ -1,6 +1,5 @@
 ﻿namespace YalvLib.Model
 {
-    using log4netLib.Interfaces;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,7 +11,7 @@
     public abstract class AbstractMarker
     {
         #region fields
-        private List<ILogEntry> _linkedEntries;
+        private List<LogEntry> _linkedEntries;
         #endregion fields
 
         #region Constructors
@@ -20,7 +19,7 @@
         /// Class constructor
         /// </summary>
         /// <param name="entries"></param>
-        protected AbstractMarker(List<ILogEntry> entries)
+        protected AbstractMarker(List<LogEntry> entries)
         {
             _linkedEntries = entries;
             DateCreation = DateTime.Now;
@@ -49,7 +48,7 @@
         /// <summary>
         /// Return logEntries linked with this marker
         /// </summary>
-        public IList<ILogEntry> LogEntries
+        public IList<LogEntry> LogEntries
         {
             get { return _linkedEntries; }
             set { _linkedEntries = value.ToList(); }

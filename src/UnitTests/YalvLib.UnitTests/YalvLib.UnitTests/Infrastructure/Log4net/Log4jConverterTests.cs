@@ -4,10 +4,10 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Linq;
     using YalvLib.Infrastructure.Log4Net;
-    using YalvLib.Model;
     using System.Globalization;
     using System.Threading;
     using log4netLib.Enums;
+    using YalvLib.Model;
 
     [TestClass]
     public class Log4jConverterTests

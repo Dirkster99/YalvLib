@@ -1,6 +1,6 @@
 ﻿namespace YalvLib.Model
 {
-    using log4netLib.Interfaces;
+    using YalvLib.Model;
     using System;
     using System.Collections.Generic;
 
@@ -21,7 +21,7 @@
         /// <param name="entries">Linked LogEntries</param>
         /// <param name="author">Author of the Marker</param>
         /// <param name="message">Given message</param>
-        public TextMarker(List<ILogEntry> entries,
+        public TextMarker(List<LogEntry> entries,
                           string author, string message)
             : base(entries)
         {

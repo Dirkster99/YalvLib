@@ -107,7 +107,7 @@
             _filterViewModel.PropertyChanged += (sender, args) => RefreshView();
 
             interfaceTextMarkerViewModel.MarkerDeleted +=
-                (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs) args);
+                (sender, args) => OnMarkerDeleteExecuted(sender, (TextMarkerEventArgs)args);
             interfaceTextMarkerViewModel.MarkerAdded += (sender, args) => RefreshView();
 
             // Default constructor contains column definitions
@@ -316,7 +316,7 @@
             get { return mShowLevelInfo; }
             set
             {
-                if(value != mShowLevelInfo)
+                if (value != mShowLevelInfo)
                 {
                     mShowLevelInfo = value;
                     RaisePropertyChanged(PROP_ShowLevelInfo);
@@ -334,7 +334,7 @@
             get { return mShowLevelWarn; }
             set
             {
-                if(value != mShowLevelWarn)
+                if (value != mShowLevelWarn)
                 {
                     mShowLevelWarn = value;
                     RaisePropertyChanged(PROP_ShowLevelWarn);
@@ -352,7 +352,7 @@
             get { return mShowLevelError; }
             set
             {
-                if(value != mShowLevelError)
+                if (value != mShowLevelError)
                 {
                     mShowLevelError = value;
                     RaisePropertyChanged(PROP_ShowLevelError);
@@ -370,7 +370,7 @@
             get { return mShowLevelFatal; }
             set
             {
-                if(value != mShowLevelFatal)
+                if (value != mShowLevelFatal)
                 {
                     mShowLevelFatal = value;
                     RaisePropertyChanged(PROP_ShowLevelFatal);
@@ -744,7 +744,7 @@
                         {
                             string valToCompare;
                             if (val is DateTime)
-                                valToCompare = ((DateTime) val).ToString(GlobalHelper.DisplayDateTimeFormat,
+                                valToCompare = ((DateTime)val).ToString(GlobalHelper.DisplayDateTimeFormat,
                                                                          CultureInfo.GetCultureInfo
                                                                              (Resources.CultureName));
                             else
@@ -1035,7 +1035,7 @@
                     LogEntryRowViewModels.Add(item);
             else
                 LogEntryRowViewModels = new ObservableCollection<LogEntryRowViewModel>();
-            LogView = (CollectionView) CollectionViewSource.GetDefaultView(LogEntryRowViewModels);
+            LogView = (CollectionView)CollectionViewSource.GetDefaultView(LogEntryRowViewModels);
             LogView.Filter = OnFilterLogItems;
             RefreshView();
         }
@@ -1184,26 +1184,26 @@
         {
             Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal,
-                (Action) delegate
-                             {
-                                 RemoveAllItems();
-                                 foreach (RepositoryViewModel repo in repositories)
-                                 {
-                                     if (repo.Active)
-                                     {
-                                         foreach (LogEntry entry in repo.Repository.LogEntries)
-                                         {
-                                             var entryRow = new LogEntryRowViewModel(entry);
-                                             entryRow.UpdateTextMarkerQuantity();
-                                             LogEntryRowViewModels.Add(entryRow);
-                                         }
-                                     }
-                                 }
-                                 SelectedLogItem = LogEntryRowViewModels.Any()
-                                                       ? LogEntryRowViewModels.Last()
-                                                       : null;
-                                 UpdateCounters();
-                             });
+                (Action)delegate
+                            {
+                                RemoveAllItems();
+                                foreach (RepositoryViewModel repo in repositories)
+                                {
+                                    if (repo.Active)
+                                    {
+                                        foreach (LogEntry entry in repo.Repository.LogEntries)
+                                        {
+                                            var entryRow = new LogEntryRowViewModel(entry);
+                                            entryRow.UpdateTextMarkerQuantity();
+                                            LogEntryRowViewModels.Add(entryRow);
+                                        }
+                                    }
+                                }
+                                SelectedLogItem = LogEntryRowViewModels.Any()
+                                                      ? LogEntryRowViewModels.Last()
+                                                      : null;
+                                UpdateCounters();
+                            });
         }
         #endregion Methodes
     }

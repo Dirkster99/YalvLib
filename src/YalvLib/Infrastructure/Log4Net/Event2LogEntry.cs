@@ -1,8 +1,8 @@
 ﻿namespace YalvLib.Infrastructure.Log4Net
 {
+    using YalvLib.Model;
     using System;
     using System.Linq;
-    using YalvLib.Model;
 
     internal class Event2LogEntry
     {

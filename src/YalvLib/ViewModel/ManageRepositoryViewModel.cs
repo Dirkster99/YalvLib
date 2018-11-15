@@ -44,7 +44,7 @@
         private void InitRepositories()
         {
             _repositories = new ObservableCollection<RepositoryViewModel>();
-            foreach(var repo in YalvRegistry.Instance.ActualWorkspace.SourceRepositories)
+            foreach (var repo in YalvRegistry.Instance.ActualWorkspace.SourceRepositories)
             {
                 _repositories.Add(new RepositoryViewModel(repo));
             }
@@ -185,62 +185,62 @@
         }
 
 
-       /* public void LoadFiles(List<string> paths, EntriesProviderType providerType)
-        {
-            try
-            {
-                ProviderType = providerType;
-                if (ProviderType.Equals(EntriesProviderType.Yalv))
-                {
-                    LogAnalysisWorkspace loadedWorkspace = new LogAnalysisWorkspaceLoader(paths.ElementAt(0)).Load();
+        /* public void LoadFiles(List<string> paths, EntriesProviderType providerType)
+         {
+             try
+             {
+                 ProviderType = providerType;
+                 if (ProviderType.Equals(EntriesProviderType.Yalv))
+                 {
+                     LogAnalysisWorkspace loadedWorkspace = new LogAnalysisWorkspaceLoader(paths.ElementAt(0)).Load();
 
-                    YalvRegistry.Instance.SetActualLogAnalysisWorkspace(loadedWorkspace);
+                     YalvRegistry.Instance.SetActualLogAnalysisWorkspace(loadedWorkspace);
 
-                    YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis =
-                        YalvRegistry.Instance.ActualWorkspace.Analyses.First();
+                     YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis =
+                         YalvRegistry.Instance.ActualWorkspace.Analyses.First();
 
-                    _repositories.Clear();
+                     _repositories.Clear();
 
-                    AddRepositories(YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());
-                }
-                else
-                {
-                    var listRepo = new List<LogEntryRepository>();
-                    List<string> reposPath =
-                        Repositories.Select(x => x.Repository.Path).ToList();
+                     AddRepositories(YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());
+                 }
+                 else
+                 {
+                     var listRepo = new List<LogEntryRepository>();
+                     List<string> reposPath =
+                         Repositories.Select(x => x.Repository.Path).ToList();
 
-                    foreach (string path in paths)
-                    {
-                        if (!File.Exists(path))
-                        {
-                            MessageBox.Show(Resources.GlobalHelper_CantAccessFile_Error_Text, path);
-                            return;
-                        }
+                     foreach (string path in paths)
+                     {
+                         if (!File.Exists(path))
+                         {
+                             MessageBox.Show(Resources.GlobalHelper_CantAccessFile_Error_Text, path);
+                             return;
+                         }
 
-                        // If this is the first file or the file hasnt be loaded yet, we can add it to the repo
-                        if ((Repositories.Any() && !reposPath.Contains(path)) || !Repositories.Any())
-                        {
-                            listRepo.Add(CreateLogFileEntryRepository(path));
-                        }
-                        else
-                        {
-                            MessageBox.Show(Resources.GlobalHelper_RepositoryAlreadyExists_Error_Text);
-                        }
-                    }
-                    foreach (LogEntryRepository logEntryRepository in listRepo)
-                    {
-                        YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Add(logEntryRepository);
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                string message = string.Format(Resources.GlobalHelper_ParseLogFile_Error_Text, paths,
-                                               exception.Message);
-                MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
-                                MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-        }*/
+                         // If this is the first file or the file hasnt be loaded yet, we can add it to the repo
+                         if ((Repositories.Any() && !reposPath.Contains(path)) || !Repositories.Any())
+                         {
+                             listRepo.Add(CreateLogFileEntryRepository(path));
+                         }
+                         else
+                         {
+                             MessageBox.Show(Resources.GlobalHelper_RepositoryAlreadyExists_Error_Text);
+                         }
+                     }
+                     foreach (LogEntryRepository logEntryRepository in listRepo)
+                     {
+                         YalvRegistry.Instance.ActualWorkspace.SourceRepositories.Add(logEntryRepository);
+                     }
+                 }
+             }
+             catch (Exception exception)
+             {
+                 string message = string.Format(Resources.GlobalHelper_ParseLogFile_Error_Text, paths,
+                                                exception.Message);
+                 MessageBox.Show(message, Resources.GlobalHelper_ParseLogFile_Error_Title,
+                                 MessageBoxButton.OK, MessageBoxImage.Exclamation);
+             }
+         }*/
 
         /// <summary>
         /// Load the list of files with the given provider type.
@@ -264,23 +264,23 @@
 
                     YalvRegistry.Instance.ActualWorkspace = (loadedWorkspace);
 
-                        cancelToken.ThrowIfCancellationRequested();
+                    cancelToken.ThrowIfCancellationRequested();
 
                     YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis =
                         YalvRegistry.Instance.ActualWorkspace.Analyses.First();
 
-                        cancelToken.ThrowIfCancellationRequested();
+                    cancelToken.ThrowIfCancellationRequested();
 
 
                     Application.Current.Dispatcher.Invoke(
                         DispatcherPriority.Normal,
-                        (Action) delegate
-                                     {
-                                         vm._repositories.Clear();
+                        (Action)delegate
+                                    {
+                                        vm._repositories.Clear();
 
-                                         vm.AddRepositories(
-                                             YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());
-                                     });
+                                        vm.AddRepositories(
+                                            YalvRegistry.Instance.ActualWorkspace.SourceRepositories.ToList());
+                                    });
                 }
                 else
                 {
@@ -289,7 +289,7 @@
 
                     foreach (string path in paths)
                     {
-                            cancelToken.ThrowIfCancellationRequested();
+                        cancelToken.ThrowIfCancellationRequested();
 
                         if (!File.Exists(path))
                         {
@@ -325,7 +325,7 @@
         {
             Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal,
-                (Action) delegate { AddRepositories(repositories); });
+                (Action)delegate { AddRepositories(repositories); });
 
             foreach (LogEntryRepository logEntryRepository in repositories)
             {

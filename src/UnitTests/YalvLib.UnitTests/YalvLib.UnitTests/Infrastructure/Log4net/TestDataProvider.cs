@@ -2,8 +2,8 @@
 {
     using System;
     using log4netLib.Enums;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using YalvLib.Model;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class TestDataProvider

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YalvLib.Model;
-
-namespace YalvLib.Infrastructure.Log4Net
+﻿namespace YalvLib.Infrastructure.Log4Net
 {
+    using YalvLib.Model;
+    using System;
 
     internal class LogEntry2Event
     {
@@ -66,5 +62,4 @@ namespace YalvLib.Infrastructure.Log4Net
         }
 
     }
-
 }

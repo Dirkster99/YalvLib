@@ -1,8 +1,8 @@
-﻿using System;
-using YalvLib.Model;
-
-namespace YalvLib.Infrastructure.Log4Net
+﻿namespace YalvLib.Infrastructure.Log4Net
 {
+    using System;
+    using YalvLib.Model;
+
     /// <summary>
     /// Implements a converter to convert object values between
     ///   LogEntry (class) -> log4jEvent (event) and
@@ -55,7 +55,7 @@ namespace YalvLib.Infrastructure.Log4Net
         public static Event Convert(LogEntry entry)
         {
             LogEntry2Event converter = new LogEntry2Event(entry);
-            return converter.GetEvent();            
+            return converter.GetEvent();
         }
     }
 }

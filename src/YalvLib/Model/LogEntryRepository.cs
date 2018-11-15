@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using YalvLib.Common;
-
-namespace YalvLib.Model
+﻿namespace YalvLib.Model
 {
+    using YalvLib.Model;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using YalvLib.Common;
+
     /// <summary>
     /// This class represent a repository of log entries
     /// </summary>

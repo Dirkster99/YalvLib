@@ -5,8 +5,8 @@
     using System.Data;
     using System.Linq;
     using YalvLib.Infrastructure;
-    using YalvLib.Model;
     using YalvLib.Domain;
+    using YalvLib.Model;
 
     /// <summary>
     /// Base class for file based log file providers. 

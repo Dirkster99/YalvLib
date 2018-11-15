@@ -25,7 +25,7 @@
         public ManageTextMarkersViewModel(LogAnalysis analysis)
         {
             _analysis = analysis;
-            _textMarkerAdd = new TextMarkerViewModel(new TextMarker(new List<ILogEntry>(), string.Empty, string.Empty));
+            _textMarkerAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty));
             _textMarkerVmList = new ObservableCollection<TextMarkerViewModel>();
             _textMarkerAdd.CommandChangeTextMarker.Executed += ExecuteChange;
             _textMarkerAdd.TextMarkerDeleted += ExecuteCancel;
@@ -188,7 +188,7 @@
         {
             TextMarkerToAdd.TextMarkerDeleted -= ExecuteCancel;
             TextMarkerToAdd.CommandChangeTextMarker.Executed -= ExecuteChange;
-            TextMarkerToAdd = new TextMarkerViewModel(new TextMarker(new List<ILogEntry>(), string.Empty, string.Empty));
+            TextMarkerToAdd = new TextMarkerViewModel(new TextMarker(new List<LogEntry>(), string.Empty, string.Empty));
             TextMarkerToAdd.CommandChangeTextMarker.Executed += ExecuteChange;
             TextMarkerToAdd.TextMarkerDeleted += ExecuteCancel;
         }

@@ -1,7 +1,6 @@
 namespace YalvLib.UnitTests.Model
 {
     using log4netLib.Enums;
-    using log4netLib.Interfaces;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;
@@ -42,7 +41,7 @@ namespace YalvLib.UnitTests.Model
         [TestMethod]
         public void CreateTextMarkerTest()
         {
-            var list = new List<ILogEntry> { _logEntry };
+            var list = new List<LogEntry> { _logEntry };
 
             var tm = new TextMarker(list, _author, _message);
             Assert.AreEqual(tm.Author, _author);
@@ -56,7 +55,7 @@ namespace YalvLib.UnitTests.Model
         [TestMethod]
         public void EditTextMarkerTest()
         {
-            var list = new List<ILogEntry> { _logEntry };
+            var list = new List<LogEntry> { _logEntry };
 
             var tm = new TextMarker(list, _author, _message)
                          {Author = "Toto", Message = "On va sur la planete des doudounes quoi!"};

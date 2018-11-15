@@ -27,7 +27,7 @@
         [TestMethod]
         public void GetTextMarkersViewModelsTest()
         {
-            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<ILogEntry>() { _entry }, "plop", "Coincoin");
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<LogEntry>() { _entry }, "plop", "Coincoin");
             List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
             _manageTextMarkers.GenerateViewModels(textMarkers);
             Assert.AreEqual(_manageTextMarkers.TextMarkerViewModels.Count, textMarkers.Count);
@@ -53,7 +53,7 @@
         [TestMethod]
         public void NotificationMarkerDelete()
         {
-            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<ILogEntry>() {_entry}, "Hallo",
+            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<LogEntry>() {_entry}, "Hallo",
                                                                          "c'est cotelette que vous comprenez pas?");
             List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
             _manageTextMarkers.GenerateViewModels(textMarkers);

@@ -1,14 +1,11 @@
-﻿using YalvLib.Model;
-
-namespace YalvLib.Common
+﻿namespace YalvLib.Common
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
-    using YalvLib.Domain;
+    using YalvLib.Model;
     using YalvLib.Providers;
-    using YalvLib.ViewModel;
 
     /// <summary>
     /// Class to supply global utility properties and methods
