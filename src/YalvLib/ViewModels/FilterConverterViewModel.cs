@@ -5,9 +5,8 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using YalvLib.Common;
-    using YalvLib.Common.Converter;
     using YalvLib.Model;
-    using YalvLib.Model.Filter;
+    using Filters.Models;
     using YalvLib.ViewModels.Common;
 
     /// <summary>
@@ -15,7 +14,7 @@
     /// </summary>
     public class FilterConverterViewModel : BindableObject
     {
-        private readonly StringConverter _converter;
+        private readonly Filters.Converters.StringConverter _converter;
         private readonly List<FilterQueryViewModel> _queries;
         private Context _context;
         private List<AutoCompleteEntry> _autoCompleteList;
@@ -26,7 +25,7 @@
         /// <param name="logAnalysis">Log analysis for the textmarkers informations</param>
         public FilterConverterViewModel(LogAnalysis logAnalysis)
         {
-            _converter = new StringConverter();
+            _converter = new Filters.Converters.StringConverter();
             _context = new Context {Analysis = logAnalysis};
             _queries = new List<FilterQueryViewModel>();
             GenerateFiltersFromAnalysis(logAnalysis);

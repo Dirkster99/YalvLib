@@ -1,11 +1,6 @@
 ﻿namespace YalvLib.Common
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows;
-    using YalvLib.Model;
-    using YalvLib.Providers;
 
     /// <summary>
     /// Class to supply global utility properties and methods
@@ -13,11 +8,6 @@
     public class GlobalHelper
     {
         #region fields
-        /// <summary>
-        /// XML namespace for log4net logger XML format
-        /// </summary>
-        public const string LAYOUT_LOG4J = "http://jakarta.apache.org/log4j";
-
         // Default date time format (used if there is no localized version available)
         private const string DISPLAY_DATETIME_FORMAT = "MMM d, HH:mm:ss.fff";
         #endregion fields

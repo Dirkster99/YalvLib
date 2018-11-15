@@ -9,7 +9,7 @@
     /// If empty string then collapsed
     /// </summary>
     [ValueConversion(typeof(LevelIndex), typeof(Visibility))]
-    public class StringEmptyToVisibilityConverter
+    public class LevelIndexToVisibilityConverter
         : IValueConverter
     {
         /// <summary>

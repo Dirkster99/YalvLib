@@ -9,7 +9,7 @@
 
         xmlns:common="clr-namespace:YALV.View.Components"
         xmlns:converters="clr-namespace:YalvLib.Common.Converters;assembly=YalvLib"
-        xmlns:BusyIndicatorBehavior="clr-namespace:YalvLib.View.BusyIndicatorBehavior;assembly=YalvLib"
+        xmlns:BusyIndicatorBehavior="clr-namespace:YalvLib.Views.BusyIndicatorBehavior;assembly=YalvLib"
 
         Height="850" Width="1250"
         Title="{Binding Title}"
@@ -17,8 +17,6 @@
     <Window.Resources>
         <conv:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <!--converters:LevelToSolidColorConverter x:Key="LevelToSolidColorConverter" /-->
-        <converters:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter" />
     </Window.Resources>
 
     <Window.InputBindings>

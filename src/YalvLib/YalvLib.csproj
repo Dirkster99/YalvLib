@@ -95,10 +95,10 @@
     <Compile Include="Common\CommandRelay.cs" />
     <Compile Include="Common\Exceptions\NotValidValueException.cs" />
     <Compile Include="Common\GlobalHelper.cs" />
-    <Compile Include="Common\Converter\StringEmptyToVisibilityConverter.cs" />
-    <Compile Include="Common\Exceptions\InterpreterException.cs" />
-    <Compile Include="Common\Converter\FilterStringConverter.cs" />
-    <Compile Include="Infrastructure\Filter\YalvGrammar.cs" />
+    <Compile Include="Common\Converters\LevelIndexToVisibilityConverter.cs" />
+    <Compile Include="Filters\Converters\FilterStringConverter.cs" />
+    <Compile Include="Filters\Exceptions\InterpreterException.cs" />
+    <Compile Include="Filters\YalvGrammar.cs" />
     <Compile Include="Infrastructure\LevelConverter.cs" />
     <Compile Include="Infrastructure\Log4Net\Event2LogEntry.cs" />
     <Compile Include="Infrastructure\Log4Net\Log4j.Designer.cs" />
@@ -118,20 +118,20 @@
     <Compile Include="Model\AbstractMarker.cs" />
     <Compile Include="Model\ColorMarker.cs" />
     <Compile Include="Model\CustomFilter.cs" />
-    <Compile Include="Model\Filter\AfterOperator.cs" />
-    <Compile Include="Model\Filter\And.cs" />
-    <Compile Include="Model\Filter\BeforeOperator.cs" />
-    <Compile Include="Model\Filter\BinaryExpression.cs" />
-    <Compile Include="Model\Filter\BinaryOperator.cs" />
-    <Compile Include="Model\Filter\BooleanExpression.cs" />
-    <Compile Include="Model\Filter\ContainsOperator.cs" />
-    <Compile Include="Model\Filter\Context.cs" />
-    <Compile Include="Model\Filter\EqualsOperator.cs" />
-    <Compile Include="Model\Filter\HasExpression.cs" />
-    <Compile Include="Model\Filter\Not.cs" />
-    <Compile Include="Model\Filter\Operator.cs" />
-    <Compile Include="Model\Filter\Or.cs" />
-    <Compile Include="Model\Filter\SimpleExpression.cs" />
+    <Compile Include="Filters\Models\AfterOperator.cs" />
+    <Compile Include="Filters\Models\And.cs" />
+    <Compile Include="Filters\Models\BeforeOperator.cs" />
+    <Compile Include="Filters\Models\BinaryExpression.cs" />
+    <Compile Include="Filters\Models\BinaryOperator.cs" />
+    <Compile Include="Filters\Models\BooleanExpression.cs" />
+    <Compile Include="Filters\Models\ContainsOperator.cs" />
+    <Compile Include="Filters\Models\Context.cs" />
+    <Compile Include="Filters\Models\EqualsOperator.cs" />
+    <Compile Include="Filters\Models\HasExpression.cs" />
+    <Compile Include="Filters\Models\Not.cs" />
+    <Compile Include="Filters\Models\Operator.cs" />
+    <Compile Include="Filters\Models\Or.cs" />
+    <Compile Include="Filters\Models\SimpleExpression.cs" />
     <Compile Include="Model\LogAnalysis.cs" />
     <Compile Include="Model\LogAnalysisWorkspace.cs" />
     <Compile Include="Model\LogEntry.cs" />
@@ -167,18 +167,18 @@
     <Compile Include="ViewModels\TextMarkerEventArgs.cs" />
     <Compile Include="ViewModels\TextMarkerViewModel.cs" />
     <Compile Include="ViewModels\YalvViewModel.cs" />
-    <Compile Include="View\BusyIndicatorBehavior\BusyIndicatorBehavior.cs" />
-    <Compile Include="View\BusyIndicatorBehavior\CircularProgressBar.xaml.cs">
+    <Compile Include="Views\BusyIndicatorBehavior\BusyIndicatorBehavior.cs" />
+    <Compile Include="Views\BusyIndicatorBehavior\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BusyIndicatorBehavior\FrameRateHelper.cs" />
+    <Compile Include="Views\BusyIndicatorBehavior\FrameRateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\BusyIndicatorBehavior\CircularProgressBar.xaml">
+    <Page Include="Views\BusyIndicatorBehavior\CircularProgressBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
