@@ -13,6 +13,7 @@
 
         Height="850" Width="1250"
         Title="{Binding Title}"
+        Icon="{StaticResource Icon_App}"
         >
     <Window.Resources>
         <conv:BoolToOppositeVisibilityConverter x:Key="BoolToOppositeVisibilityConverter" />
@@ -79,8 +80,7 @@
                                     VerticalAlignment="Center" Margin="3" Padding="3"
                                     Grid.Column="0">
                                 <StackPanel>
-                                    <Image Source="/YALV;component/Resources/Icons/open_file.png" 
-                                            Height="32" />
+                                    <Image Source="{StaticResource Icon_FileOpen}" Height="32" />
                                 </StackPanel>
                             </Button>
 
@@ -90,8 +90,7 @@
                                     Background="Transparent"
                                     VerticalAlignment="Center" Margin="3" Padding="3"
                                     Grid.Column="1">
-                                <Image Source="/Resources/Icons/Refresh/Refresh_32.png"
-                                        Height="32" />
+                                <Image Source="{StaticResource Icon_Refresh}" Height="32" />
                             </Button>
 
                             <Button ToolTip="{x:Static Properties:Resources.Common_Components_MainToolbar_ClearFilters_Tooltip}"
@@ -101,8 +100,7 @@
                                     VerticalAlignment="Center" Margin="3" Padding="3"
                                     Grid.Column="2">
                                 <StackPanel>
-                                    <Image Source="/YALV;component/Resources/Icons/ClearFilter/ClearFilters_32.png"
-                                            Height="32" />
+                                    <Image Source="{StaticResource Icon_ClearFilter}" Height="32" />
                                 </StackPanel>
                             </Button>
 
@@ -118,16 +116,14 @@
                                         <Setter Property="Background" Value="Transparent" />
                                         <Setter Property="Content">
                                             <Setter.Value>
-                                                <Image Source="/Resources/Icons/Filter/filter_NotApplied_32.png"
-                                                        Height="32" />
+                                                <Image Source="{StaticResource Icon_TextBoxFilterNOTChecked}" Height="32" />
                                             </Setter.Value>
                                         </Setter>
                                         <Style.Triggers>
                                             <Trigger Property="IsChecked" Value="True">
                                                 <Setter Property="Content">
                                                     <Setter.Value>
-                                                        <Image Source="/Resources/Icons/Filter/filter_Applied_32.png"
-                                                                Height="32" />
+                                                        <Image Source="{StaticResource Icon_TextBoxFilterChecked}" Height="32" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>

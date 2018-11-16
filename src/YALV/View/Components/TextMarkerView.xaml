@@ -54,13 +54,13 @@
         <Button x:Name="ConfirmButton"
                 Margin="3" Grid.Row="0"
                 Command="{Binding CommandChangeTextMarker}" Click="ConfirmButton_Click" Height="23" Width="65">
-          <Image Source="/YALV;component/Resources/Icons/confirm.png" Width="16" Height="16" />
-      </Button>
+            <Image Source="{StaticResource Icon_OK}" Width="16" />
+        </Button>
       <Button x:Name="DeleteSimpleButton"
         		  Command="{Binding CommandCancelTextMarker}"
         		  Margin="3" Grid.Row="1">
-          <Image Source="/YALV;component/Resources/Icons/delete.png" Width="16" Height="16" />
-      </Button>
+            <Image Source="{StaticResource Icon_Cancel}" Width="16" />
+        </Button>
     </Grid>
 
     <!-- Main TextBox Entry -->

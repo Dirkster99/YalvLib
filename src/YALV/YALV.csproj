@@ -122,7 +122,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icons\Light\Search_16x.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
@@ -227,6 +227,10 @@
     <Compile Include="View\Components\PropertiesView.xaml.cs">
       <DependentUpon>PropertiesView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\LightIcons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Components\AutoCompleteTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -338,9 +342,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="app.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\log4netLib\log4netLib.csproj">
       <Project>{5881dd09-2e74-4e58-94c4-d9f74c4512bf}</Project>
       <Name>log4netLib</Name>
@@ -349,64 +350,6 @@
       <Project>{5891D6C4-E0CE-4511-B689-B845491470F0}</Project>
       <Name>YalvLib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\About_DescriptionXml.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\app.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\open_file.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\refresh.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\selection.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Refresh_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Filter\filter_Applied_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Filter\filter_NotApplied_64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Filter\filter_Applied_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Filter\filter_Applied_64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Filter\filter_NotApplied_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Filter\filter_NotApplied_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Refresh\Refresh_16.png" />
-    <Resource Include="Resources\Icons\Refresh\Refresh_32.png" />
-    <Resource Include="Resources\Icons\Refresh\Refresh_64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\ClearFilter\ClearFilters_16.png" />
-    <Resource Include="Resources\Icons\ClearFilter\ClearFilters_32.png" />
-    <Resource Include="Resources\Icons\ClearFilter\ClearFilters_64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\delete.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\confirm.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -429,6 +372,25 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Light\Checkmark_16x.ico" />
+    <Resource Include="Resources\Icons\Light\Cancel_16x.ico" />
+    <Resource Include="Resources\Icons\Light\Search_16x.ico" />
+    <Resource Include="Resources\Icons\Light\VSO_Filter_16x.ico" />
+    <Content Include="Resources\Icons\Light\VSO_Filter_16x.svg" />
+    <Resource Include="Resources\Icons\Light\StopFilter_16x.ico" />
+    <Content Include="Resources\Icons\Light\StopFilter_16x.svg" />
+    <Resource Include="Resources\Icons\Light\Refresh_grey_16x.ico" />
+    <Content Include="Resources\Icons\Light\Refresh_grey_16x.svg" />
+    <Resource Include="Resources\Icons\Light\OpenFolder_16x.ico" />
+    <Content Include="Resources\Icons\Light\OpenFolder_16x.svg" />
+    <Resource Include="Resources\Icons\Light\FilterTextbox_16x.ico" />
+    <Content Include="Resources\Icons\Light\FilterTextbox_16x.svg" />
+    <Resource Include="Resources\Icons\Light\Filter_16x.ico" />
+    <Content Include="Resources\Icons\Light\Filter_16x.svg" />
+    <Resource Include="Resources\Icons\Light\BuildMatchAllFilter_16x.ico" />
+    <Content Include="Resources\Icons\Light\BuildMatchAllFilter_16x.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net40\System.Data.SQLite.Core.targets')" />

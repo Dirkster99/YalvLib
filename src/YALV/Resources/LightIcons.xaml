@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:YALV.Resources">
+
+    <BitmapImage x:Key="Icon_App" UriSource="/Yalv;component/Resources/Icons/Light/Search_16x.ico"/>
+
+    <BitmapImage x:Key="Icon_Refresh" UriSource="/Yalv;component/Resources/Icons/Light/Refresh_grey_16x.ico"/>
+    <BitmapImage x:Key="Icon_FileOpen" UriSource="/Yalv;component/Resources/Icons/Light/OpenFolder_16x.ico"/>
+
+    <BitmapImage x:Key="Icon_ClearFilter" UriSource="/Yalv;component/Resources/Icons/Light/StopFilter_16x.ico"/>
+
+    <BitmapImage x:Key="Icon_TextBoxFilterChecked" UriSource="/Yalv;component/Resources/Icons/Light/FilterTextBox_16x.ico"/>
+    <BitmapImage x:Key="Icon_TextBoxFilterNOTChecked" UriSource="/Yalv;component/Resources/Icons/Light/Filter_16x.ico"/>
+
+    <BitmapImage x:Key="Icon_OK" UriSource="/Yalv;component/Resources/Icons/Light/CheckMark_16x.ico"/>
+    <BitmapImage x:Key="Icon_Cancel" UriSource="/Yalv;component/Resources/Icons/Light/Cancel_16x.ico"/>
+
+</ResourceDictionary>

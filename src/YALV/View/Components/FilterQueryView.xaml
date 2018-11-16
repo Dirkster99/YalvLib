@@ -24,7 +24,7 @@
         		    x:Name="DeleteButton"
         		    Command="{Binding CommandCancelQuery}" >
                 <StackPanel>
-                    <Image Source="/YALV;component/Resources/Icons/delete.png" Width="10" Height="10" />
+                    <Image Source="{StaticResource Icon_Cancel}" Width="16" />
                 </StackPanel>
             </Button>
         </StackPanel>
