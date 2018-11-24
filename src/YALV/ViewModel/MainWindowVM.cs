@@ -60,7 +60,6 @@
             CommandExit = new CommandRelay(CommandExitExecute, p => true);
             CommandOpenFile = new CommandRelay(CommandOpenFileExecute, CommandOpenFileCanExecute);
 
-            CommandAbout = new CommandRelay(CommandAboutExecute, p => true);
             CommandExport = new CommandRelay(CommandExportExecute, p => true);
             CommandOpenSqliteDatabase = new CommandRelay(CommandOpenSqliteDatabaseExecute, p => true);
             CommandOpenLogAnalysisSession = new CommandRelay(CommandOpenLogAnalysisSessionExecute, p => true);
@@ -92,11 +91,6 @@
         /// OpenFile Command
         /// </summary>
         public ICommandAncestor CommandOpenFile { get; protected set; }
-
-        /// <summary>
-        /// About Command
-        /// </summary>
-        public ICommandAncestor CommandAbout { get; protected set; }
 
         public ICommandAncestor CommandExport { get; protected set; }
         public ICommandAncestor CommandOpenSqliteDatabase { get; protected set; }
@@ -246,14 +240,6 @@
         protected virtual bool CommandOpenFileCanExecute(object parameter)
         {
             return true;
-        }
-
-        protected virtual object CommandAboutExecute(object parameter)
-        {
-            var win = new View.About{ Owner = _callingWin as Window };
-            win.ShowDialog();
-
-            return null;
         }
 
         protected virtual object CommandExportExecute(object parameter)

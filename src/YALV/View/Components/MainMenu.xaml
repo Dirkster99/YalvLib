@@ -70,9 +70,4 @@
         </MenuItem>
     </MenuItem>
 
-    <!-- About Items -->
-    <MenuItem
-        Header="{x:Static strs:Resources.Common_Components_MainMenu_AboutMenu_Header}"
-        Command="{Binding Path=CommandAbout}"/>
-
 </Menu>
