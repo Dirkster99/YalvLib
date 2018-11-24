@@ -50,7 +50,7 @@
                                       FontSize="{DynamicResource {x:Static reskeys:ResourceKeys.DefaultFontSize}}"
                                       FontWeight="Normal"
                                       SelectionMode="Extended"
-                                      Margin="3,1,0,0"
+                                      Margin="0"
                                       IsSynchronizedWithCurrentItem="True"
                                       SelectedItem="{Binding Path=LogEntryRows.SelectedLogItem}"
                                       ItemsSource="{Binding Path=LogEntryRows.LogView}"
