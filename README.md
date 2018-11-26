@@ -22,7 +22,7 @@ https://yalv.codeplex.com/
 Please review the Documentation page to see its full list of features.
 This control is MVVM compliant and can be used in a theming context as the EDI project, which is based on AvalonDock:
 
-https://edi.codeplex.com/wikipage?title=Log4Net%20Log%20Document%20Viewer
+https://github.com/Dirkster99/Edi/wiki/Log4Net-Document-Viewer
 
 # Download
 The release version is updated at regular intervals but you are always welcome to download the current version and compile it with VS 2012 Express or better to see what we are up to.
