@@ -25,7 +25,4 @@ This control is MVVM compliant and can be used in a theming context as the EDI p
 https://github.com/Dirkster99/Edi/wiki/Log4Net-Document-Viewer
 
 # Download
-The release version is updated at regular intervals but you are always welcome to download the current version and compile it with VS 2012 Express or better to see what we are up to.
-
-I have originally developed this project based on Yalv! with two other software developers on CodePlex:
-* https://yalvlib.codeplex.com</li>
+The release version is updated at regular intervals but you are always welcome to download the current version and compile it with VS 2017 Community Edition or better to see what we are up to.
