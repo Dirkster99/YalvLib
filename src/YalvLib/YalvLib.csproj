@@ -96,6 +96,7 @@
     <Compile Include="Common\Exceptions\NotValidValueException.cs" />
     <Compile Include="Common\GlobalHelper.cs" />
     <Compile Include="Common\Converters\LevelIndexToVisibilityConverter.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Filters\Converters\FilterStringConverter.cs" />
     <Compile Include="Filters\Exceptions\InterpreterException.cs" />
     <Compile Include="Filters\YalvGrammar.cs" />

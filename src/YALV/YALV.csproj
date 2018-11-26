@@ -153,7 +153,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Printing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -191,9 +190,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ViewModel\MainWindowVM.cs" />
-    <Compile Include="View\About.xaml.cs">
-      <DependentUpon>About.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Components\AutoCompleteTextBox.xaml.cs">
       <DependentUpon>AutoCompleteTextBox.xaml</DependentUpon>
     </Compile>
@@ -211,9 +207,6 @@
     </Compile>
     <Compile Include="View\Components\RepositoryView.xaml.cs">
       <DependentUpon>RepositoryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Components\TextMarkerView.xaml.cs">
-      <DependentUpon>TextMarkerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Components\TextMarkerToolBoxView.xaml.cs">
       <DependentUpon>TextMarkerToolBoxView.xaml</DependentUpon>
@@ -259,10 +252,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Components\TextMarkerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Components\TextMarkerToolBoxView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -290,10 +279,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\About.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\Components\PropertiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -342,6 +327,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EditableListLib\EditableListLib.csproj">
+      <Project>{47326f3d-0f8b-4393-b5ab-ea3d820d7278}</Project>
+      <Name>EditableListLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\log4netLib\log4netLib.csproj">
       <Project>{5881dd09-2e74-4e58-94c4-d9f74c4512bf}</Project>
       <Name>log4netLib</Name>

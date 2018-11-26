@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    
+                    xmlns:reskeys="clr-namespace:EditableListLib.Themes"
+                    >
+
+    <!-- Accent Keys -->
+    <Color x:Key="{x:Static reskeys:ResourceKeys.ControlAccentColorKey}">#1ba1e2</Color>
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ControlAccentBrushKey}"
+                     Color="{DynamicResource {x:Static reskeys:ResourceKeys.ControlAccentColorKey}}" />
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ItemSelectedBackgroundBrushKey}"
+                     Color="{DynamicResource {x:Static reskeys:ResourceKeys.ControlAccentColorKey}}"
+                     Opacity=".25"
+                     />
+
+    <!-- Item Not Focused -->
+    <Color x:Key="{x:Static reskeys:ResourceKeys.ItemSelectedNotFocusedColorKey}">#FFE2E2E2</Color>
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ItemSelectedNotFocusedBorderBrushKey}"
+                     Color="{DynamicResource {x:Static reskeys:ResourceKeys.ItemSelectedNotFocusedColorKey}}"
+                     />
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ItemSelectedNotFocusedBackgroundBrushKey}"
+                     Color="{DynamicResource {x:Static reskeys:ResourceKeys.ItemSelectedNotFocusedColorKey}}"
+                     Opacity=".25"
+                     />
+    <!-- End of Item Not Focused -->
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ItemMouseOverBorderBrushKey}"
+                     Color="{DynamicResource {x:Static reskeys:ResourceKeys.ControlAccentColorKey}}"
+                     Opacity=".25"
+                     />
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ItemMouseOverBackgroundBrushKey}"
+                     Color="{DynamicResource {x:Static reskeys:ResourceKeys.ControlAccentColorKey}}"
+                     Opacity=".125"
+                     />
+
+    <SolidColorBrush x:Key="{x:Static reskeys:ResourceKeys.ItemSeperatorBackgroundBrushKey}"
+                     Color="Gray"
+                     Opacity=".125"
+                     />
+    
+</ResourceDictionary>

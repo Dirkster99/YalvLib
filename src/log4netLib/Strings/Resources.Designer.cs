@@ -1010,7 +1010,7 @@ namespace log4netLib.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Markers :.
+        ///   Looks up a localized string similar to Markers.
         /// </summary>
         public static string MainWindow_MarkerBox_Title_Text {
             get {

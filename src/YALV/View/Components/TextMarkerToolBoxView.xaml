@@ -1,71 +1,155 @@
-﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:YALV.View.Components"
-             xmlns:Strings="clr-namespace:log4netLib.Strings;assembly=log4netLib"
-             xmlns:converters="clr-namespace:log4netLib.Converters;assembly=log4netLib"
-             x:Class="YALV.View.Components.TextMarkerToolBoxView" 
-                                
-              mc:Ignorable="d"
-              d:DesignHeight="300" d:DesignWidth="500"             
->
-  <UserControl.Resources>
-    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-  </UserControl.Resources>
+﻿<UserControl x:Class="YALV.View.Components.TextMarkerToolBoxView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:YALV.View.Components"
+             
+    xmlns:ctrl="clr-namespace:EditableListLib;assembly=EditableListLib"
+    xmlns:behav="clr-namespace:EditableListLib.Behaviors;assembly=EditableListLib"
+    xmlns:vm="clr-namespace:YalvLib.ViewModels;assembly=YalvLib"
+    xmlns:Strings="clr-namespace:log4netLib.Strings;assembly=log4netLib"
+             
+    mc:Ignorable="d" 
+    d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="ItemViewTemplate">
+                <Grid HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              >
+                    <TextBlock Text="{Binding Message}"
+                               behav:TextBlockLinesBehavior.MaxLines="4"
+                               TextWrapping="NoWrap"
+                               TextAlignment="Left"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               TextTrimming="CharacterEllipsis">
+                        <TextBlock.ToolTip>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
+                                <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="0" Text="Author:"/>
+                                <TextBlock HorizontalAlignment="Left"  Grid.Column="1" Grid.Row="0" Text="{Binding Author}"/>
 
-    <Label Grid.Column="0" Grid.Row="0"
+                                <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1" Text="Message:"/>
+                                <TextBlock HorizontalAlignment="Left"  Grid.Column="1" Grid.Row="1" Text="{Binding Message}"/>
+                            </Grid>
+                        </TextBlock.ToolTip>
+                    </TextBlock>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ItemEditTemplate">
+                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                              behav:IsKeyboardFocusWithinChanged.Command="{Binding IsKeyboardFocusWithinChangedCommand, RelativeSource={RelativeSource AncestorType=ctrl:EditableList}}"
+                              KeyboardNavigation.TabNavigation="Cycle"
+                              KeyboardNavigation.DirectionalNavigation="Cycle">
+
+                    <TextBox Margin="0" Padding="0"
+                                     MinHeight="80"
+                                     MaxLines="4"
+                                     Text="{Binding Message, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+
+                                     AcceptsReturn="False"
+                                     behav:TextBoxKeyPressBehavior.TranslateEnter="True"
+                                     behav:TextBoxSelectAllOnFocus.IsSelectAll="True"
+
+                                     TextWrapping="NoWrap"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Top"
+                                     VerticalScrollBarVisibility="Auto"
+                                     HorizontalScrollBarVisibility="Auto"
+                                    />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:TextMarkerViewModel}" >
+                <ContentControl Name="ItemHost"
+                                Focusable="False"
+                                Content="{Binding}"
+                                ContentTemplate="{StaticResource ItemViewTemplate}" />
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                        <Setter TargetName="ItemHost" Property="ContentTemplate" 
+                                Value="{StaticResource ItemEditTemplate}" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Grid.Row="0"
            Content="{x:Static Strings:Resources.MainWindow_MarkerBox_Title_Text}" 
            HorizontalAlignment="Left" 
            VerticalAlignment="Top" 
-           FontSize="20"
-          />
+           FontSize="20" />
 
-    <CheckBox Margin="3" Grid.Column="1" Grid.Row="0"
+        <CheckBox Margin="3" Grid.Column="0" Grid.Row="1"
               VerticalAlignment="Center" HorizontalAlignment="Right"
               Content="{x:Static Strings:Resources.MainWindow_Markerbox_Checkbox_Text}"
               IsChecked="{Binding Path=ManageTextMarkersViewModel.DisplayOnlyCommonMarkers}"
           />
 
-    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+        <Grid Grid.Column="0" Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-        
-            <local:TextMarkerView Grid.Row="0"
-                x:Name="TextMarkerAdd"
-                DataContext="{Binding Path=ManageTextMarkersViewModel.TextMarkerToAdd}"
-        />
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-        <ItemsControl Name="TextMarkersToDisplay"
-                          HorizontalAlignment="Stretch" 
-                          VerticalAlignment="Stretch"
-                ItemsSource="{Binding Path=ManageTextMarkersViewModel.TextMarkerViewModels}" >
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                      <local:TextMarkerView />
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </ScrollViewer>
-    </Grid>
+            <!-- Comment Items List -->
+            <Label Content="Author:"
+                   Target="{Binding ElementName=AuthorTextBox}" Margin="3,3,0,3"/>
+            <TextBox Grid.Column="1" Name="AuthorTextBox" 
+                     TextWrapping="Wrap" 
+                     DataContext="{Binding ManageTextMarkersViewModel}"
+                     Text="{Binding Path=Author, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     VerticalAlignment="Center"
+                     Margin="0,3,3,3"
+            />
 
-  </Grid>
+            <StackPanel Grid.Column="2" Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+
+                <Button Content="+" Grid.Row="0" Margin="3" MinWidth="18"
+                        DataContext="{Binding ManageTextMarkersViewModel}"
+                        Command="{Binding AddTextMarkerCommand}"
+                        VerticalAlignment="Center"/>
+
+                <Button Content="-" Grid.Row="1" Margin="3" MinWidth="18"
+                        DataContext="{Binding ManageTextMarkersViewModel}"
+                        Command="{Binding DeleteTextMarkerCommand}"
+                        CommandParameter="{Binding ElementName=TextMarkerItemsList,Path=SelectedItem}"
+                        VerticalAlignment="Center"/>
+
+            </StackPanel>
+        </Grid>
+
+        <ctrl:EditableList Grid.Column="0" Grid.Row="3"
+            x:Name="TextMarkerItemsList"
+            DataContext="{Binding ManageTextMarkersViewModel}"
+            EditableListems="{Binding TextMarkerViewModels}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            MinWidth="100"
+            MinHeight="200"
+        />
+    </Grid>
 </UserControl>

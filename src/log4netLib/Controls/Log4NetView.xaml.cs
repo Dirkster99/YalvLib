@@ -206,7 +206,19 @@
             if (datacontext != null)
             {
                 if (datacontext.CommandUpdateTextMarkers.CanExecute(list))
+                {
+                    var ctrl = FocusManager.GetFocusedElement(this) as Control;
+                    if (ctrl != null)
+                    {
+                        if (ctrl.Parent != null && ctrl.Parent.GetType() != typeof(DataGridCell))
+                        {
+                            System.Console.WriteLine("outside!");
+                            return;
+                        }
+                    }
+
                     datacontext.CommandUpdateTextMarkers.Execute(list);
+                }
             }
         }
 

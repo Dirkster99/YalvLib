@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using YalvLib.Common;
     using YalvLib.Model;
     using YalvLib.ViewModels;
@@ -48,25 +49,6 @@
             {
                 _manageTextMarkers.PropertyChanged -= delegateViewModelsTextMarker;
             }
-        }
-
-        [TestMethod]
-        public void NotificationMarkerDelete()
-        {
-            YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<LogEntry>() {_entry}, "Hallo",
-                                                                         "c'est cotelette que vous comprenez pas?");
-            List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
-            _manageTextMarkers.GenerateViewModels(textMarkers);
-            _manageTextMarkers.SelectedEntries = new List<ILogEntryRowViewModel>(){new LogEntryRowViewModel(_entry)};
-
-            EventHandler e = (sender, args) => Assert.IsInstanceOfType(sender, typeof(CommandRelay));
-
-            Assert.AreEqual(1, _manageTextMarkers.TextMarkerViewModels.Count);
-
-            _manageTextMarkers.TextMarkerViewModels[0].CommandCancelTextMarker.Executed += e;
-            _manageTextMarkers.TextMarkerViewModels[0].CommandCancelTextMarker.Execute(null);
-
-            Assert.AreEqual(0, _manageTextMarkers.TextMarkerViewModels.Count);
         }
     }
 }

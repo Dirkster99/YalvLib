@@ -552,7 +552,7 @@ It is a WPF Application based on .NET Framework 4.0 and written with C# language
     <value>Warning</value>
   </data>
   <data name="MainWindow_MarkerBox_Title_Text" xml:space="preserve">
-    <value>Markers :</value>
+    <value>Markers</value>
   </data>
   <data name="MainWindow_MarkerRow_ButtonConfirm_Text" xml:space="preserve">
     <value>Confirm</value>
