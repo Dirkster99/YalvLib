@@ -4,7 +4,7 @@
   <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Yalv;component/Resources/LightIcons.xaml"/>
+                <ResourceDictionary Source="/YalvViewModelsLib;component/Resources/LightIcons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
   </Application.Resources>

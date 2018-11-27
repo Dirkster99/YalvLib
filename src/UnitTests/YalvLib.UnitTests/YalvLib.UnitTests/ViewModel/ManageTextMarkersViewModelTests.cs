@@ -1,14 +1,11 @@
 ﻿namespace YalvLib.Tests.ViewModel
 {
-    using log4netLib.Interfaces;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
-    using YalvLib.Common;
     using YalvLib.Model;
-    using YalvLib.ViewModels;
+    using YalvLib.ViewModels.Markers;
 
     [TestClass]
     public class ManageTextMarkersViewModelTests
@@ -31,8 +28,10 @@
             YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.AddTextMarker(new List<LogEntry>() { _entry }, "plop", "Coincoin");
             List<TextMarker> textMarkers = YalvRegistry.Instance.ActualWorkspace.CurrentAnalysis.GetTextMarkersForEntry(_entry);
             _manageTextMarkers.GenerateViewModels(textMarkers);
-            Assert.AreEqual(_manageTextMarkers.TextMarkerViewModels.Count, textMarkers.Count);
-            Assert.AreEqual(_manageTextMarkers.TextMarkerViewModels[0].Marker.Author, "plop");
+            Assert.AreEqual(_manageTextMarkers.TextMarkerViewModels_Count, textMarkers.Count);
+
+            var testTextMarker = _manageTextMarkers.TextMarkerViewModels.First();
+            Assert.AreEqual(testTextMarker.Author, "plop");
         }
 
         [TestMethod]

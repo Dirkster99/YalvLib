@@ -5,8 +5,9 @@
     using System.Globalization;
     using System.Windows;
 
-    using YALV.ViewModel;
     using YalvLib.Views.BusyIndicatorBehavior;
+    using YalvViewModelsLib;
+    using YalvViewModelsLib.Interfaces;
 
     /// <summary>
     /// Interaction logic for App.xaml
@@ -18,11 +19,12 @@
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public View.MainWindow CreateMainWindow(string[] args)
+        public MainWindow CreateMainWindow(string[] args)
         {
-            View.MainWindow win = new View.MainWindow();
+            MainWindow win = new MainWindow();
 
-            MainWindowVM viewmodel = new MainWindowVM(win, win.mainMenu.RecentFileList);
+            IMainWindowVM viewmodel = Factory.CreateMainViewModel(
+                                        win as IWinSimple, win.mainMenu.RecentFileList);
 
             win.DataContext = viewmodel;
 
@@ -56,7 +58,7 @@
 
             this.initCulture();
 
-            View.MainWindow win = this.CreateMainWindow(e.Args);
+            MainWindow win = this.CreateMainWindow(e.Args);
 
             if (win != null)
                 win.Show();

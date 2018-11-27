@@ -15,6 +15,7 @@
     using log4netLib.Strings;
     using log4netLib.Enums;
     using log4netLib.Interfaces;
+    using YalvLib.ViewModels.Markers;
 
     /// <summary>
     /// ViewModel class to organize all items relevant to a loaded logfile display
@@ -118,11 +119,12 @@
 
 
         /// <summary>
-        /// When a marker has been deletedm we update the textmarker quantity of the linked log entries
+        /// When a marker has been deleted we update the textmarker quantity
+        /// of the linked log entries.
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="e"></param>
-        public void OnMarkerDeleteExecuted(object obj, TextMarkerEventArgs e)
+        internal void OnMarkerDeleteExecuted(object obj, TextMarkerEventArgs e)
         {
             TextMarker marker = e.TextMarker;
             foreach (LogEntryRowViewModel row in _rowViewModels)

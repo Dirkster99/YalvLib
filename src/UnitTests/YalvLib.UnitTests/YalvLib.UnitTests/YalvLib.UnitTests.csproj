@@ -74,6 +74,10 @@
       <Project>{5891d6c4-e0ce-4511-b689-b845491470f0}</Project>
       <Name>YalvLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\YalvViewModelsLib\YalvViewModelsLib.csproj">
+      <Project>{999a18eb-08a3-45d5-9bec-763c9eea23a8}</Project>
+      <Name>YalvViewModelsLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

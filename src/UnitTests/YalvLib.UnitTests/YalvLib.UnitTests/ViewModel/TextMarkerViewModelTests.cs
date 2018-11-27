@@ -7,6 +7,7 @@
     using YalvLib.Model;
     using YalvLib.UnitTests.ViewModel;
     using YalvLib.ViewModels;
+    using YalvLib.ViewModels.Markers;
 
     [TestClass]
     public class TextMarkerViewModelTests

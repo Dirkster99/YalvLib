@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "log4netLib", "log4netLib\lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditableListLib", "EditableListLib\EditableListLib.csproj", "{47326F3D-0F8B-4393-B5AB-EA3D820D7278}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YalvViewModelsLib", "YalvViewModelsLib\YalvViewModelsLib.csproj", "{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -168,6 +170,26 @@ Global
 		{47326F3D-0F8B-4393-B5AB-EA3D820D7278}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 		{47326F3D-0F8B-4393-B5AB-EA3D820D7278}.SingleImage|x86.ActiveCfg = Release|Any CPU
 		{47326F3D-0F8B-4393-B5AB-EA3D820D7278}.SingleImage|x86.Build.0 = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.CD_ROM|x86.Build.0 = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.Debug|x86.Build.0 = Debug|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.DVD-5|x86.Build.0 = Debug|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.Release|x86.ActiveCfg = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.Release|x86.Build.0 = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}.SingleImage|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

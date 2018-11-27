@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{999A18EB-08A3-45D5-9BEC-763C9EEA23A8}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>YalvViewModelsLib</RootNamespace>
+    <AssemblyName>YalvViewModelsLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Resources\LightIcons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AutoCompleteTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FilterPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FilterQueryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FilterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MessageTabView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MessageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PropertiesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RepositoriesListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RepositoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TextMarkerToolBoxView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\RecentFileList.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="Interfaces\IWinSimple.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ViewModels\Base\RelayCommand.cs" />
+    <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="Interfaces\IMainWindowVM.cs" />
+    <Compile Include="ViewModels\MainWindowVM.cs" />
+    <Compile Include="Views\AutoCompleteTextBox.xaml.cs">
+      <DependentUpon>AutoCompleteTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterPanel.xaml.cs">
+      <DependentUpon>FilterPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterQueryView.xaml.cs">
+      <DependentUpon>FilterQueryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterView.xaml.cs">
+      <DependentUpon>FilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MessageTabView.xaml.cs">
+      <DependentUpon>MessageTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MessageView.xaml.cs">
+      <DependentUpon>MessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PropertiesView.xaml.cs">
+      <DependentUpon>PropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RepositoriesListView.xaml.cs">
+      <DependentUpon>RepositoriesListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RepositoryView.xaml.cs">
+      <DependentUpon>RepositoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TextMarkerToolBoxView.xaml.cs">
+      <DependentUpon>TextMarkerToolBoxView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Light\BuildMatchAllFilter_16x.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Icons\Light\BuildMatchAllFilter_16x.svg" />
+    <Content Include="Resources\Icons\Light\FilterTextbox_16x.svg" />
+    <Content Include="Resources\Icons\Light\OpenFolder_16x.svg" />
+    <Content Include="Resources\Icons\Light\Refresh_grey_16x.svg" />
+    <Content Include="Resources\Icons\Light\StopFilter_16x.svg" />
+    <Content Include="Resources\Icons\Light\VSO_Filter_16x.svg" />
+    <Resource Include="Resources\Icons\Light\VSO_Filter_16x.ico" />
+    <Resource Include="Resources\Icons\Light\StopFilter_16x.ico" />
+    <Resource Include="Resources\Icons\Light\Search_16x.ico" />
+    <Resource Include="Resources\Icons\Light\Refresh_grey_16x.ico" />
+    <Resource Include="Resources\Icons\Light\OpenFolder_16x.ico" />
+    <Resource Include="Resources\Icons\Light\FilterTextbox_16x.ico" />
+    <Content Include="Resources\Icons\Light\Filter_16x.svg" />
+    <Resource Include="Resources\Icons\Light\Filter_16x.ico" />
+    <Resource Include="Resources\Icons\Light\Checkmark_16x.ico" />
+    <Resource Include="Resources\Icons\Light\Cancel_16x.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EditableListLib\EditableListLib.csproj">
+      <Project>{47326f3d-0f8b-4393-b5ab-ea3d820d7278}</Project>
+      <Name>EditableListLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\log4netLib\log4netLib.csproj">
+      <Project>{5881dd09-2e74-4e58-94c4-d9f74c4512bf}</Project>
+      <Name>log4netLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YalvLib\YalvLib.csproj">
+      <Project>{5891d6c4-e0ce-4511-b689-b845491470f0}</Project>
+      <Name>YalvLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

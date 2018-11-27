@@ -11,6 +11,7 @@
     using log4netLib.Strings;
     using YalvLib.ViewModels.Process;
     using log4netLib.Interfaces;
+    using YalvLib.ViewModels.Markers;
 
     /// <summary>
     /// Main ViewModel of Valv Lib control
